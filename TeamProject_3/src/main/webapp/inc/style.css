@@ -1,0 +1,18 @@
+@charset "UTF-8";
+
+ul, li{
+	list-style: none;
+}
+
+nav{
+	display: flex;
+	flex-direction: column;
+}
+nav li{
+	float: left;
+	margin-right: 10px;
+}
+a:link, a:visited, a:hover{
+	text-decoration: none;
+	color:black;
+}
