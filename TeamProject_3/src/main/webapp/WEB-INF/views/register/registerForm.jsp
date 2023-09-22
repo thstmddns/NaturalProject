@@ -5,6 +5,8 @@
 	<div style="text-align: center; color: #4E657E; font-size: 14px; font-weight: 400; word-wrap: break-word; margin-bottom:50px">오즈에서 실무 능력을 향상시켜보세요.<br/>아래에 있는 간단한 질문 몇 가지에 답해주시면<br/>길동님 관심사에 맞춘 정보를 제공해드릴 수 있어요.</div>
 	<form method="post" class="registerForm">
 		<ul>
+			<li>아이디</li>
+			<li><input type="text" name="userid" id="userid" /></li>
 			<li>이메일</li>
 			<li><input type="text" name="email" id="email" /></li>
 			<li style="margin-top: 30px;">비밀번호</li>

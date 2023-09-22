@@ -14,9 +14,9 @@
 <header>
     <div style="color: black; font-size: 30px;  font-weight: 400; word-wrap: break-word">OZZ</div>
     <ul style="justify-content: center; align-items: center; gap: 20px; display: flex">
-        <li style="color: black; font-size: 16px; font-weight: 400; word-wrap: break-word">미션</li>
-        <li style="color: black; font-size: 16px; font-weight: 400; word-wrap: break-word">전문가</li>
-        <li style="color: black; font-size: 16px; font-weight: 400; word-wrap: break-word">커뮤니티</li>
+        <li style="color: black; font-size: 16px;  word-wrap: break-word">미션</li>
+        <li style="color: black; font-size: 16px;  word-wrap: break-word">전문가</li>
+        <li style="color: black; font-size: 16px;  word-wrap: break-word">커뮤니티</li>
     </ul>
     <input type="text" id="searchWord" placeholder="미션, 전문가, 커뮤니티를 검색해보세요.">
 		 <i class="fa-regular fa-bell" ></i>

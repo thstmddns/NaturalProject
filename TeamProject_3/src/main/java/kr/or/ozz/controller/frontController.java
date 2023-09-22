@@ -21,4 +21,29 @@ public class frontController {
 	public String home() {
 		return "main/landing";
 	}
+	
+	@GetMapping("/idSearch")
+	public String idSearch() {
+		return "register/idSearch";
+	}
+	
+	@GetMapping("/pwSearch")
+	public String pwSearch() {
+		return "register/pwSearch";
+	}
+	
+	@GetMapping("/mainMission")
+	public String mainM() {
+		return "main/mission";
+	}
+	
+	@GetMapping("/mainMaster")
+	public String mainMa() {
+		return "main/master";
+	}
+	
+	@GetMapping("/mainCom")
+	public String mainCommu() {
+		return "main/community";
+	}
 }
