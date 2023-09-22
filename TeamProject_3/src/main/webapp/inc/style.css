@@ -1,5 +1,73 @@
 @charset "UTF-8";
-
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+* {
+	font-family: 'Pretendard-Regular';
+	text-decoration:none;
+}
+ main {
+ 	width: 1000px;
+ 	margin:0 auto;
+ }
+header {
+	width:100%; 
+	height: 100%; 
+	padding-bottom: 10px;
+	background: white; 
+	border-bottom: 1px #C5C5C7 solid; 
+	display: flex;
+	justify-content: center;
+	text-align: center; 
+	align-items: center; 
+	gap: 60px; 
+}
+#searchWord {
+	width: 500px; 
+	height: 20px; 
+	padding: 7px 5px; 
+	background: #F2F2F6;
+	display: inline-flex; 
+	justify-content: flex-start; 
+	align-items: center; 
+	gap: 10px; 
+	display: flex;
+	border: 1px solid #F2F2F6;
+	border-radius: 15px;
+ }
+#searchWord::-webkit-input-placeholder{
+  background-image: url(https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-256.png) ;
+  background-size: contain;
+  background-position:  1px center;
+  background-repeat: no-repeat;
+  text-align: center;
+  text-indent: 0;
+}
+footer {
+	width: 100%; 
+	height: 100%; 
+	margin-top: 100px;
+	padding: 64px 0px; 
+	display: inline-flex;
+	border-top: 1px #DAE2EB solid; 
+	justify-content: center; 
+	align-items: center;
+}
+#info {
+	color: #4E657E; 
+	font-size: 14px; 
+	font-weight: 400; 
+	line-height: 21px; 
+	word-wrap: break-word;
+	padding: 20px;
+}
+.contact {
+	width: 18px;
+	height: 18px;
+}
 ul, li{
 	list-style: none;
 }
@@ -15,4 +83,174 @@ nav li{
 a:link, a:visited, a:hover{
 	text-decoration: none;
 	color:black;
+}
+.logForm {
+	font-size:16px;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.logForm input{ 
+	width: 500px;
+	height: 32px;
+	border-radius: 6px; 
+	border: 1px #DAE2EB solid;
+}
+.logForm li {
+	margin: 10px;
+}
+.registerBtn {
+	background-color: #52B0C5;
+	border-radius: 100px !important;
+	color: white;
+	margin-top: 50px;
+}
+.registerKakao {
+	width: 100%;
+	height: 32px;
+	margin-top: 30px;
+	justify-content: center; 
+	align-items: center;
+	background-color: #FFEB02;
+	border: hidden;
+	border-radius: 100px;
+	text-align:center;
+}
+.find_wrap {
+	text-align:center;
+	margin-top:20px;
+	}
+.find_wrap li {
+	position:relative;
+	display:inline-block;
+	color: #869AAF; 
+	font-size:13px;
+}
+.find_wrap li+li{
+	padding-left:40px;
+}
+.find_wrap li+li::before {
+	content:'';
+	position:absolute;
+	top:3px;
+	left:10px;
+	width:1px;
+	height:12px;
+	border-radius:.5px;
+	background-color:#dadada;
+}.find_wrap .en_find_text{
+	display:inline-block;
+	font-size:14px;
+	line-height:20px;
+	text-decoration:none;
+	color:#888;
+}
+.registerForm {
+	font-size:16px;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.registerForm input{ 
+	width: 500px;
+	height: 32px;
+	border-radius: 6px; 
+	border: 1px #DAE2EB solid;
+}
+.registerForm li {
+	margin: 10px;
+}
+#registerCheck {
+	color: #869AAF; 
+	font-size:13px; 
+	margin: 30px 0 0 0 !important; 
+	justify-content: flex-start !important;
+}
+.keywordTag {
+	margin-top:10px; 
+	padding:0 10 10 10px; 
+}
+#keyword {
+	color: #869AAF;
+	background-color: white;
+	border: #869AAF solid 0.5px; 
+	border-radius: 1000px;
+	padding: 6px 12px; 
+	justify-content: flex-start; 
+	align-items: center;
+	gap: 6px; 
+}
+#keyword:hover {
+	background-color: #52B0C5;
+	border-color: #52B0C5;
+	color: white;
+	cursor: pointer;
+}
+.landBtn {
+	width: 160px;
+	height: 48px; 
+	padding-left: 0 20px; 
+	background: #52B0C5; 
+	border-radius: 100px; 
+	border: hidden; 
+	justify-content: center; 
+	align-items: center; 
+	gap: 10px; 
+	display: inline-flex; 
+	color: white; 
+	font-size: 16px;
+}
+#landing {
+	margin-top: 80px;
+	column-count: 2;
+}
+.search {
+	height: 40px;
+	position: relative;
+}
+#searchLand {
+	width: 88%;
+	height: 40px; 
+    background: #E8FBFF; 
+	box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.10); 
+	border-radius: 13px; 
+	border: 2px #52B0C5 solid; 
+	justify-content: space-between; 
+	align-items: center; 
+	display: inline-flex;
+}
+#searchLand:focus {
+	outline: #52B0C5;
+}
+#searchLand::-webkit-input-placeholder{
+	  background-image: url(https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-256.png) ;
+	  background-size: contain;
+	  background-position:  1px center;
+	  background-repeat: no-repeat;
+	  text-align: center;
+	  text-indent: 0;
+}
+#landInfo {
+	margin-top: 40px;
+	display: grid;
+	grid-template-columns: 330px 330px 330px; 
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	color: black;
+}
+#landImage2 {
+	margin-top: 80px;
+	display: grid;
+	grid-template-columns: 500px 500px;
+}
+#popM {
+	margin-top: 100px;
+}
+#popMList {
+	display:grid;
+	grid-template-columns: 10px 200px 300px;
+	
 }

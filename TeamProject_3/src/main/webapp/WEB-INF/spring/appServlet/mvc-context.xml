@@ -10,7 +10,7 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="#"/>
-			<bean class="kr.or.smhrd.LoginInterceptor"></bean>
+			<bean class="kr.or.ozz.LoginInterceptor"></bean>
 		</mvc:interceptor>
 	</mvc:interceptors>	
 	

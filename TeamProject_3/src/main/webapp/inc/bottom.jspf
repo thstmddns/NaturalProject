@@ -1,7 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <footer>
-	footer
+    <div style="justify-content: flex-start; align-items: center; gap: 30px; display: flex">
+        <div style="color: #222A2F; font-size: 28px; word-wrap: break-word">OZZ</div>
+        <div id="info">
+        <span>상호명 : 연어보다 맛있는 자연어(주)  &nbsp&nbsp&nbsp&nbsp&nbsp 대표자 : 황윤재, 김동현, 김수인, 손승운, 임용진, 장호찬, 최현경</span>
+		<div style="flex-direction: column; justify-content: space-between; align-items: flex-end; display: inline-flex; margin-left:270px">
+		<div style="justify-content: flex-start; align-items: flex-start; gap: 20px; display: inline-flex">
+		<img src="<%= request.getContextPath() %>/img/Lozenge.jpg"/ class="contact">
+		<img src="<%= request.getContextPath() %>/img/Facebook.png"/ class="contact">
+		<img src="<%= request.getContextPath() %>/img/Group.png"/ class="contact">
+		</div>
+		</div>
+        <br/><span>주소 : 서울 강남구 가로수길 43 </span>
+        <br/><span>전화번호 : 02-237-4427 </span>
+        <span style="margin-left:30px;">이메일 : connect@salmon.co.kr</span>
+        <span style="margin-left:240px;"></span>COPYRIGHT© 2021 SalMon. ALL RIGHTS RESERVED.</div>
+    </div>
 </footer>
 </body>
 </html>
