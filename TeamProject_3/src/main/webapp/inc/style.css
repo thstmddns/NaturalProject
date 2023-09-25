@@ -52,9 +52,10 @@ footer {
 	margin-top: 100px;
 	padding: 64px 0px; 
 	display: inline-flex;
-	border-top: 1px #DAE2EB solid; 
+	border-top: 1px #C5C5C7 solid; 
 	justify-content: center; 
 	align-items: center;
+	background: white; 
 }
 #info {
 	color: #4E657E; 
@@ -651,7 +652,24 @@ input[type=checkbox]{
 .taskComplete img {
 	vertical-align: middle;
 }
-
-#line { 
-  border-left: thick solid #52B0C5; 
-  height: 80%;
+.keyword {
+	color: #F93D18;
+}
+#searchContainer {
+	display: grid;
+	grid-template-columns: 330px 330px 330px;
+	border-bottom: 1px solid #C5C5C7;
+	text-align:center;
+	padding: 30px 0 30px 0;
+}
+#searchResult {
+	width: 100%;
+	height: 200px;
+	border-radius: 16px;
+	background: #F1F4F8;
+}
+.searchCom {
+	width: 90%;
+	height: 100%;
+	padding: 30px 0 0 50px;
+}

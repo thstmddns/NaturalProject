@@ -64,6 +64,6 @@ public class frontController {
 	
 	@GetMapping("/search")
 	public String search() {
-		return "main/search";
+		return "main/searchCom";
 	}
 }
