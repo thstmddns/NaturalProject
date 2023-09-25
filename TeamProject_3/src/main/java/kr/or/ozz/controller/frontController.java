@@ -46,4 +46,24 @@ public class frontController {
 	public String mainCommu() {
 		return "main/community";
 	}
+	
+	@GetMapping("/comWrite")
+	public String comWrite() {
+		return "community/comWrite";
+	}
+	
+	@GetMapping("/QnAWrite")
+	public String QnAWrite() {
+		return "mission/QnA";
+	}
+	
+	@GetMapping("/feedbackWrite")
+	public String feedbackWrite() {
+		return "mission/feedback";
+	}
+	
+	@GetMapping("/search")
+	public String search() {
+		return "main/search";
+	}
 }

@@ -6,7 +6,7 @@
 		<ul>
 			<li>아이디</li>
 			<li><input type="text" name="userid" id="userid" /></li>
-			<li style="margin-top: 30px;">이메일</li>
+			<li style="margin: 30px 0 0 10px;">이메일</li>
 			<li><input type="text" name="email" id="email"/></li>
 			<li><input type="submit" value="비밀번호 찾기" class="registerBtn"/></li>
 	</form>

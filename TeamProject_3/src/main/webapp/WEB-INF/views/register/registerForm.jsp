@@ -3,21 +3,22 @@
 <main>
 	<h1 style="text-align:center; justify-content:center; align-items:center; margin:80px 0px 30px 0px">환영합니다!</h1>
 	<div style="text-align: center; color: #4E657E; font-size: 14px; font-weight: 400; word-wrap: break-word; margin-bottom:50px">오즈에서 실무 능력을 향상시켜보세요.<br/>아래에 있는 간단한 질문 몇 가지에 답해주시면<br/>길동님 관심사에 맞춘 정보를 제공해드릴 수 있어요.</div>
-	<form method="post" class="registerForm">
+	<form method="post" class="logForm">
 		<ul>
 			<li>아이디</li>
 			<li><input type="text" name="userid" id="userid" /></li>
-			<li>이메일</li>
+			<li style="margin: 30px 0 0 10px;">이메일</li>
 			<li><input type="text" name="email" id="email" /></li>
-			<li style="margin-top: 30px;">비밀번호</li>
+			<li style="margin-top: 30px; font-size: 16px;">비밀번호</li>
 			<li><input type="password" name="userpwd" id="userpwd"/></li>
 			<li style="color: #869AAF; font-size:13px; margin-top:10px;">*8자 이상이면서 최소한 숫자 하나와 글자 하나를 포함해야 합니다.<li>
-			<li style="margin-top: 30px;"><input type="password" name="userpwd" id="userpwd"/></li>
+			<li style="margin-top: 30px;">비밀번호 확인</li>
+			<li><input type="password" name="userpwd" id="userpwd"/></li>
 			<li style="color: #869AAF; font-size:13px;  margin-top:10px;">*비밀번호를 입력해주세요.<li>
 			<li style="margin-top: 30px;">이름</li>
 			<li><input type="text" name="name" id="name" /></li>
 			<li style="margin-top: 30px;">몇 년 차이신가요?</li>
-			<li><input type="text" name="year" id="year" placeholder="연차를 입력해주세요."/></li>
+			<li><input type="text" name="year" id="year" placeholder="&nbsp;&nbsp;연차를 입력해주세요."/></li>
 			<li style="margin-top: 30px;">어떤 직무를 맡고 계신가요?</li>
 			<li><select class="select" title="직무를 선택해주세요" style="width:100%; height:40px; border-radius: 6px; border: 1px #DAE2EB solid; color:#6e6e6e">
 			    <option value="">직무를 선택해주세요</option>

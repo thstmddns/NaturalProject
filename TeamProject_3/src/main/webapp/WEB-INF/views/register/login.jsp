@@ -2,11 +2,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <main>
 <h1 style="text-align:center; justify-content:center; align-items:center; margin:80px 0px 60px 0px">OZZ</h1>
-<form method="post" class="logForm">
+<form method="post" class="registerForm">
 		<ul>
 			<li>이메일</li>
 			<li><input type="text" name="email" id="email" /></li>
-			<li style="margin-top: 30px;">비밀번호</li>
+			<li style="margin-top: 30px; margin-left:10px;">비밀번호</li>
 			<li><input type="password" name="userpwd" id="userpwd"/></li>
 			<li style="color: #869AAF; font-size:13px;  margin-top:10px;">*8자 이상이면서 최소한 숫자 하나와 글자 하나를 포함해야 합니다.<li>
 			<li><input type="submit" value="로그인" class="registerBtn"/></li>
