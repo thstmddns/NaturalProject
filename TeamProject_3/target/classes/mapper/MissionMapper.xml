@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ozz.dao.MissionDAO">
+	<insert id="MissionwriteOk">
+		insert into t_mission(mission_no, userid, mission_title, mission_tag, mission_content, created_at, mission_data, mission_tool, mission_cate, hit)
+		values(mission_no_seq.nextval, #{userid}, #{mission_title}, #{mission_tag}, #{mission_content}, sysdate, #{mission_data}, #{mission_tool}, #{mission_cate}, 0)
+	</insert>
+	
+	<select id="Missionlist" resultType="kr.or.ozz.dto.MissionDTO">
+		SELECT * FROM
+         (SELECT * FROM
+            (SELECT mission_no, mission_title, mission_tag, userid, to_char(created_at, 'MM-DD HH:MI') created_at, hit FROM t_mission
+            <!-- 검색어가 있을 때 -->
+            <if test="searchWord != null">
+            	where ${searchKey} like '%${searchWord}%'
+            </if>
+            ORDER BY mission_no DESC)
+         WHERE <![CDATA[rownum <= ${nowPage * onePageRecord}]]>
+         ORDER BY mission_no ASC)
+      WHERE <![CDATA[rownum <= ${lastPageRecord}]]>
+      ORDER BY mission_no DESC
+	</select>
+	
+	<select id="totalRecord" resultType="int">
+		select count(mission_no) cnt from t_mission
+		<if test="searchWord != null">
+			where ${searchKey} like '%${searchWord}%'
+		</if>
+	</select>
+	<select id="getMission" resultType="kr.or.ozz.dto.MissionDTO">
+		select mission_no, userid, mission_title, mission_tag, mission_content, created_at, mission_data, mission_tool, mission_cate, hit
+		from t_mission
+		where mission_no = ${param1}
+	</select>
+	<update id="hitCount">
+		update t_mission set hit=hit+1 where mission_no=${param1}
+	</update>
+	<update id="MissionEdit">
+		update t_mission set mission_title=#{mission_title}, mission_content=#{mission_content}, mission_tag=#{mission_tag},
+		mission_data=#{mission_data}, mission_tool=#{mission_tool}, mission_cate=#{mission_cate}, created_at=sysdate
+		where mission_no=${mission_no} and userid=#{userid}
+	</update>
+	<delete id="MissionDel">
+		delete from t_mission where mission_no=${param1} and userid=#{param2}
+	</delete>
+</mapper>

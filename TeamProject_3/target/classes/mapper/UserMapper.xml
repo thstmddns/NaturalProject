@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ozz.dao.UserDAO">
+	<insert id="UserInsert">
+		insert into t_user(userid, pwd, username,
+		email, years, work, concern, hashtag,
+		created_at, usertype)
+		values(#{userid}, #{pwd}, #{username},
+		#{email}, #{years},
+		#{work}, #{concern}, #{hashtag}, sysdate, #{usertype})
+	</insert>
+
+	<select id="loginOk" resultType="kr.or.ozz.dto.UserDTO">
+		select userid, username from
+		t_user
+		where userid=#{param1} and pwd=#{param2}
+	</select>
+
+	<select id="findId" resultType="String">
+		select userid from t_user
+		where username=#{param1} and email=#{param2}
+	</select>
+
+	<select id="dupChk" resultType="String">
+		select userid from t_user
+		where userid=#{param1}
+	</select>
+
+	<select id="findPwd" resultType="String">
+		select pwd from t_user
+		where userid=#{param1} and email=#{param2}
+	</select>
+
+	<select resultType="kr.or.ozz.dto.UserDTO" id="getUser">
+		select
+		userid, pwd, username,
+		email, years, work,
+		concern, hashtag
+		from t_user where userid=#{param1}
+	</select>
+
+	<update id="UserUpdate">
+		update t_user set 
+		pwd = #{pwd},
+		username = #{username},
+		email = #{email},
+		years = #{years},
+		work = #{work},
+		concern = #{concern},
+		hashtag = #{hashtag},
+		usertype = #{usertype}
+		where userid = #{userid}
+	</update>
+</mapper>

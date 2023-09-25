@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ozz.dao.QnaDAO">
+	<insert id="QnawriteOk">
+		insert into t_qna(qna_no, userid, qna_title, qna_content, created_at, file_name)
+		values(qna_no_seq.nextval, #{userid}, #{qna_title}, #{qna_content}, sysdate, #{file_name})
+	</insert>
+	
+	<select id="Qnalist" resultType="kr.or.ozz.dto.QnaDTO">
+		SELECT * FROM
+         (SELECT * FROM
+            (SELECT qna_no, qna_title, userid, to_char(created_at, 'MM-DD HH:MI') created_at, file_name FROM t_qna
+            <!-- 검색어가 있을 때 -->
+            <if test="searchWord != null">
+            	where ${searchKey} like '%${searchWord}%'
+            </if>
+            ORDER BY qna_no DESC)
+         WHERE <![CDATA[rownum <= ${nowPage * onePageRecord}]]>
+         ORDER BY qna_no ASC)
+      WHERE <![CDATA[rownum <= ${lastPageRecord}]]>
+      ORDER BY qna_no DESC
+	</select>
+	
+	<select id="totalRecord" resultType="int">
+		select count(qna_no) cnt from t_qna
+		<if test="searchWord != null">
+			where ${searchKey} like '%${searchWord}%'
+		</if>
+	</select>
+	<select id="getQna" resultType="kr.or.ozz.dto.QnaDTO">
+		select qna_no, userid, qna_title, qna_content, created_at, file_name
+		from t_qna
+		where qna_no = ${param1}
+	</select>
+	<update id="QnaEdit">
+		update t_qna set qna_title=#{qna_title}, qna_content=#{qna_content}, created_at=sysdate
+		where qna_no=${qna_no} and userid=#{userid}
+	</update>
+	<delete id="QnaDel">
+		delete from t_qna where qna_no=${param1} and userid=#{param2}
+	</delete>
+</mapper>

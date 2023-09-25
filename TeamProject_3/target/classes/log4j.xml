@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="kr.or.smhrd">
+	<logger name="kr.or.ozz">
 		<level value="info" />
 	</logger>
 	

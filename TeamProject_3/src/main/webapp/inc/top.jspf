@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>main</title>
-<link rel="stylesheet" href="/smhrd/inc/style.css" type="text/css">
+<link rel="stylesheet" href="/ozz/inc/style.css" type="text/css">
 </head>
 
 <body>
@@ -14,9 +14,11 @@
 <div>
 	<nav>
 		<ul>
-			<li><a href="/smhrd/sample/sampleList"><button>nav bar 1</button></a></li>
-			<li><a href="#"><button>nav bar 2</button></a></li>
-			<li><a href="#"><button>nav bar 3</button></a></li>
+			<li><a href="/ozz/register/login"><button>로그인</button></a></li>
+			<li><a href="/ozz/register/registerJoin"><button>회원가입</button></a></li>
+			<li><a href="/ozz/register/logout"><button>로그아웃</button></a></li>
+			<li><a href="/ozz/mypage/mypage_main"><button>마이페이지</button></a></li>
+			<li><a href="/ozz"><button>메인</button></a></li>
 			<li><a href="#"><button>nav bar 4</button></a></li>
 			<li><a href="#"><button>nav bar 5</button></a></li>
 		</ul>
