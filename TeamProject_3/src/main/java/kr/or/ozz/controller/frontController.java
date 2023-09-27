@@ -62,8 +62,28 @@ public class frontController {
 		return "mission/feedback";
 	}
 	
-	@GetMapping("/search")
-	public String search() {
+	@GetMapping("/searchCom")
+	public String searchC() {
 		return "main/searchCom";
+	}
+	
+	@GetMapping("/searchMission")
+	public String searchM() {
+		return "main/searchMission";
+	}
+	
+	@GetMapping("/searchMa")
+	public String searchMa() {
+		return "main/searchMaster";
+	}
+	
+	@GetMapping("/communityView")
+	public String communityView() {
+		return "community/communityView";
+	}
+	
+	@GetMapping("/myPage")
+	public String myPage() {
+		return "main/mypage";
 	}
 }
