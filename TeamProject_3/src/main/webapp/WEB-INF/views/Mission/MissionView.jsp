@@ -30,7 +30,7 @@
 			<li><a href="/ozz/Step/Stepwrite?m_no=${dto.mission_no}" style="color: red; font-weight: bold;">STEP 리스트를 출력하고 글쓰기가 나와야함</a></li>
        		<c:forEach var="StepDTO" items="${Steplist}">
 				<li>해당스텝 : ${StepDTO.step}</li>
-				<li>스텝제목 : ${StepDTO.step_title}</li>
+				<li><a href="/ozz/Step/StepView?no=${StepDTO.step_no}">스텝제목 : ${StepDTO.step_title}</a></li>
 				<li>소요시간 : ${StepDTO.step_time}</li>
 				<li>스텝스킬 : ${StepDTO.mission_skill}</li>
        		</c:forEach>

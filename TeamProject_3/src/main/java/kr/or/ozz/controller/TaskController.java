@@ -25,26 +25,24 @@ import kr.or.ozz.service.TaskService;
 // @RestController : 모델이 리턴된다.
 //					 Model+viewPage -> ModelAndView로 리턴
 @RestController
-@RequestMapping("/Step")
-public class StepController {
-	@Autowired
-	StepService service;
+@RequestMapping("/Task")
+public class TaskController {
 	
 	@Autowired
-	TaskService Tservice;
+	TaskService service;
 
 	// 글쓰기 폼으로 이동
-	@GetMapping("/Stepwrite")
-	public ModelAndView Stepwrite(int m_no) {
+	@GetMapping("/Taskwrite")
+	public ModelAndView Taskwrite(int s_no) {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("mission_no", m_no);
-		mav.setViewName("Mission/Stepwrite");
+		mav.addObject("step_no", s_no);
+		mav.setViewName("Mission/Taskwrite");
 		return mav;
 	}
 
 	// 글쓰기 DB 기록
-	@PostMapping("/StepwriteOk")
-	public ModelAndView StepwriteOk(StepDTO dto, HttpServletRequest request) {
+	@PostMapping("/TaskwriteOk")
+	public ModelAndView TaskwriteOk(TaskDTO dto, HttpServletRequest request) {
 //		@RequestParam("file_name_base64") String base64ImageData
 //		byte[] imageData;
 //		if (base64ImageData == "") {
@@ -68,7 +66,7 @@ public class StepController {
 
 		int result = 0;
 		try {
-			result = service.StepwriteOk(dto);
+			result = service.TaskwriteOk(dto);
 		} catch (Exception e) {
 			System.out.println("게시판 글 등록 예외발생..." + e.getMessage());
 		}
@@ -88,22 +86,22 @@ public class StepController {
 //		return new ResponseEntity<String>(tag, headers, HttpStatus.OK);
 		ModelAndView mav = new ModelAndView();
 		if (result > 0) { // 성공 또는 실패 모두 해당 URL로 이동
-	        mav.setViewName("redirect:/Mission/MissionView?no="+dto.getMission_no());
+	        mav.setViewName("redirect:/Step/StepView?no="+dto.getStep_no());
 	    } else { // 실패 시 alert 메시지만 띄우고 해당 URL로 이동
 	        mav.addObject("message", "글 등록이 실패하였습니다.");
-	        mav.setViewName("redirect:/Mission/MissionView?no="+dto.getMission_no());
+	        mav.setViewName("redirect:/Step/StepView?no="+dto.getStep_no());
 	    }
 
 	    return mav;
 	}
 
 	// 글내용보기
-	@GetMapping("/StepView")
-	public ModelAndView StepView(int no, PagingDTO pDTO) {
+	@GetMapping("/TaskView")
+	public ModelAndView TaskView(int no, PagingDTO pDTO) {
 		// 레코드선택
-		StepDTO dto = service.getStep(no);
+		TaskDTO dto = service.getTask(no);
 		
-		List<TaskDTO> Tasklist = Tservice.Tasklist(no, pDTO);
+//		List<TaskDTO> Tasklist = Tservice.Tasklist(no, pDTO);
 
 //	    byte[] imageData = dto.getFile_name();
 //        String base64ImageData = Base64.getEncoder().encodeToString(imageData);
@@ -111,56 +109,56 @@ public class StepController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("no", no);
 		mav.addObject("dto", dto);
-		mav.addObject("Tasklist", Tasklist);
+//		mav.addObject("Tasklist", Tasklist);
 		mav.addObject("pDTO", pDTO);
-		mav.setViewName("Mission/StepView");
+		mav.setViewName("Mission/TaskView");
 
 		return mav;
 	}
 
 	// 글 수정 폼
-	@GetMapping("/StepEdit")
-	public ModelAndView StepEdit(int no) {
+	@GetMapping("/TaskEdit")
+	public ModelAndView TaskEdit(int no) {
 //		StepDTO dto = service.getStep(no);
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("dto", service.getStep(no)); // dto 변수 생성 대신 직접입력
-		mav.setViewName("Mission/StepEdit");
+		mav.addObject("dto", service.getTask(no)); // dto 변수 생성 대신 직접입력
+		mav.setViewName("Mission/TaskEdit");
 
 		return mav;
 	}
 
-	@PostMapping("/StepEditOk") // no, subject, content
-	public ModelAndView StepEditOk(StepDTO dto, HttpSession session) {
+	@PostMapping("/TaskEditOk") // no, subject, content
+	public ModelAndView TaskEditOk(TaskDTO dto, HttpSession session) {
 		dto.setUserid((String) session.getAttribute("logId"));
 
-		int result = service.StepEdit(dto);
+		int result = service.TaskEdit(dto);
 
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("no", dto.getStep_no());
+		mav.addObject("no", dto.getTask_no());
 		if (result > 0) { // 글수정성공 -> 글 내용 보기
-			mav.setViewName("redirect:StepView");
+			mav.setViewName("redirect:TaskView");
 		} else { // 글수정실패 -> 수정폼으로
-			mav.setViewName("redirect:StepEdit");
+			mav.setViewName("redirect:TaskEdit");
 		}
 		return mav;
 	}
 
 	// 글삭제
-	@GetMapping("/StepDel")
-	public ModelAndView StepDel(int no, HttpSession session, int mission_no, HttpServletRequest request) {
+	@GetMapping("/TaskDel")
+	public ModelAndView TaskDel(int no, HttpSession session, int step_no, HttpServletRequest request) {
 //		StepDTO sDTO = service.getStep(no);
 //		int m_no = sDTO.getMission_no();
 		
-		int result = service.StepDel(no, (String) session.getAttribute("logId"));
+		int result = service.TaskDel(no, (String) session.getAttribute("logId"));
 
 		ModelAndView mav = new ModelAndView();
 		
 //		System.out.println(m_no);
 		if (result > 0) {// 삭제성공 -> 목록
-			mav.setViewName("redirect:/Mission/MissionView?no=" + mission_no);
+			mav.setViewName("redirect:/Step/StepView?no=" + step_no);
 		} else {// 삭제실패 -> 글내용
 			mav.addObject("no", no);
-			mav.setViewName("redirect:StepView");
+			mav.setViewName("redirect:TaskView");
 		}
 		return mav;
 	}

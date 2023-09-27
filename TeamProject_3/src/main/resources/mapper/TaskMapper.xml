@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ozz.dao.TaskDAO">
+	<insert id="TaskwriteOk">
+		insert into t_mission_task(task_no, step_no, task_title, task_content, userid)
+		values(task_no_seq.nextval, #{step_no}, #{task_title}, #{task_content}, #{userid})
+	</insert>
+	
+	<select id="Tasklist" resultType="kr.or.ozz.dto.TaskDTO">
+        SELECT task_no, step_no, task_title, task_content, userid FROM t_mission_task
+        ORDER BY task_no ASC
+	</select>
+	
+	<select id="getTask" resultType="kr.or.ozz.dto.TaskDTO">
+		select task_no, step_no, task_title, task_content, userid
+		from t_mission_task
+		where task_no = ${param1}
+	</select>
+	
+	<update id="TaskEdit">
+		update t_mission_task set task_title=#{task_title}, task_content=#{task_content}
+		where task_no=${task_no} and userid=#{userid}
+	</update>
+	<delete id="TaskDel">
+		delete from t_mission_task where task_no=${param1} and userid=#{param2}
+	</delete>
+</mapper>
