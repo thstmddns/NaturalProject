@@ -9,7 +9,7 @@
 	</insert>
 	
 	<select id="Steplist" resultType="kr.or.ozz.dto.StepDTO">
-        SELECT step_no, step, step_title, step_time, mission_skill FROM t_mission_step
+        SELECT step_no, mission_no, step, step_title, step_time, mission_skill FROM t_mission_step
         ORDER BY step ASC
 	</select>
 	

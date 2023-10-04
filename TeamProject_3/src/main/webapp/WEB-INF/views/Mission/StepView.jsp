@@ -24,9 +24,12 @@
 		
 		<ul>
 		<li><a href="/ozz/Task/Taskwrite?s_no=${dto.step_no}" style="color: red; font-weight: bold;">태스크 글쓰기</a></li>
+
 		<c:forEach var="TaskDTO" items="${Tasklist}">
-			<li><a href="/ozz/Task/TaskView?no=${TaskDTO.task_no}">태스크제목 : ${TaskDTO.task_title}</a></li>
-			<li>태스크내용 : ${TaskDTO.task_content}</li>
+			<c:if test="${dto.step_no eq TaskDTO.step_no}">
+				<li><a href="/ozz/Task/TaskView?no=${TaskDTO.task_no}">태스크제목 : ${TaskDTO.task_title}</a></li>
+				<li>태스크내용 : ${TaskDTO.task_content}</li>
+			</c:if>
        	</c:forEach>
 		</ul>
 		

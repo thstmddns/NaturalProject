@@ -6,26 +6,26 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
-import kr.or.ozz.dao.ReplyDAO;
-import kr.or.ozz.dto.ReplyDTO;
+import kr.or.ozz.dao.QReplyDAO;
+import kr.or.ozz.dto.QReplyDTO;
 
 @Service
-public class ReplyServiceImp implements ReplyService{
+public class QReplyServiceImp implements QReplyService{
 	@Inject
-	ReplyDAO dao;
+	QReplyDAO dao;
 
 	@Override
-	public int replyInsert(ReplyDTO dto) {
+	public int replyInsert(QReplyDTO dto) {
 		return dao.replyInsert(dto);
 	}
 
 	@Override
-	public List<ReplyDTO> replySelect(int qna_no) {
+	public List<QReplyDTO> replySelect(int qna_no) {
 		return dao.replySelect(qna_no);
 	}
 
 	@Override
-	public int replyUpdate(ReplyDTO dto) {
+	public int replyUpdate(QReplyDTO dto) {
 		return dao.replyUpdate(dto);
 	}
 

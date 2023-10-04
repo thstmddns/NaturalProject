@@ -5,16 +5,17 @@
 	function delChk() {
 	    //확인(true) 취소(false) 버튼
 	    if (confirm("글을 삭제하시겠습니까?")) {
-	       location.href="/ozz/Qna/QnaDel?no=${dto.qna_no}";
+	       location.href="/ozz/Board/BoardDel?no=${dto.board_no}";
 	    }
 	}
+
 	$(function(){
 		//댓글목록 가져오기
 		function replyAllList(){
 			$.ajax({
-				url:'/ozz/Qreply/replyList',
+				url:'/ozz/Breply/replyList',
 				data:{
-					qna_no:${dto.qna_no} //원글 글 번호
+					board_no:${dto.board_no} //원글 글 번호
 				},
 				success:function(replyResult){
 					console.log(replyResult);
@@ -26,7 +27,7 @@
 						//로그인 한 사람이 글을 쓴 댓글일 때
 						if(coment.userid=='${logId}'){//'dong' == 'asd'
 							tag += "<input type='button' value='Edit'/>";
-							tag += "<input type='button' value='Del' title='"+coment.qnr_no+"'/>";
+							tag += "<input type='button' value='Del' title='"+coment.board_r_no+"'/>";
 							tag += "<p>"+coment.coment+"</p></div>"; //댓글내용
 							//수정 폼
 							tag += "<div style='display:none'>";
@@ -35,7 +36,7 @@
 							//글내용수정, 댓글번호
 							tag += coment.coment;
 							tag += "</textarea>";
-							tag += "<input type='hidden' name='qnr_no' value='"+coment.qnr_no+"'/>";
+							tag += "<input type='hidden' name='board_r_no' value='"+coment.board_r_no+"'/>";
 							tag += "<input type='button' value='수정하기'/>";
 							tag += "</form>";
 							tag += "</div>";
@@ -67,7 +68,7 @@
 			
 			//2. ajax실행
 			$.ajax({
-				url:'/ozz/Qreply/replyWrite',
+				url:'/ozz/Breply/replyWrite',
 				type:'POST',
 				data:params,
 				success:function(result){
@@ -94,7 +95,7 @@
 			var params = $(this).parent().serialize(); //re_no=88&coment=asdasd
 			
 			$.ajax({
-				url : '/ozz/Qreply/replyEditOk',
+				url : '/ozz/Breply/replyEditOk',
 				data : params,
 				type : 'POST',
 				success : function(result){
@@ -116,11 +117,11 @@
 			}
 			//댓글번호 attr(), prop()
 			//		attr('title'), attr('title','200')
-			var qnr_no = $(this).attr('title')
+			var board_r_no = $(this).attr('title')
 			$.ajax({
-				url:"/ozz/Qreply/replyDel",
+				url:"/ozz/Breply/replyDel",
 				data : {
-					qnr_no:qnr_no
+					board_r_no:board_r_no
 				},
 				success:function(result){
 					if(result=='0'){
@@ -138,25 +139,27 @@
 		replyAllList();
 	});
 </script>
+
 <main>
-	<h1>글내용보기</h1>
+	<h1>게시판 내용보기</h1>
 	<div>
-		<a href='/ozz/Qna/Qnalist?nowPage=${pDTO.nowPage}<c:if test="${pDTO.searchWord != null}">&searchKey=${pDTO.searchKey}&searchWord=${pDTO.searchWord}</c:if>'>목록</a>
+		<a href='/ozz/Board/Boardlist?nowPage=${pDTO.nowPage}<c:if test="${pDTO.searchWord != null}">&searchKey=${pDTO.searchKey}&searchWord=${pDTO.searchWord}</c:if>'>목록</a>
 	</div>
 	<ul>
-		<li>글번호 : ${dto.qna_no}</li>
+		<li>글번호 : ${dto.board_no}</li>
 		<li>글쓴이 : ${dto.userid}</li>
+		<li>제목 : ${dto.board_title}</li>
+		<li>직무카테고리 : ${dto.work_cate}</li>
 		<li>등록일 : ${dto.created_at}</li>
-		<li>제목 : ${dto.qna_title}</li>
 		<li>글내용<br/>
-			${dto.qna_content}</li>
+			${dto.board_content}</li>
+		<li>파일내용 : ${dto.file_name}</li>
 		<li>조회수 : ${dto.hit}</li>
-		<li>${dto.file_name}</li>
 	</ul>
 	<div>
 		<!-- session의 로그인 아이디(logId)와 현재 글쓴이(userid)가 같으면 수정,삭제 표시한다. -->
 		<c:if test="${logId == dto.userid}">
-			<a href="/ozz/Qna/QnaEdit?no=${dto.qna_no}">수정</a>
+			<a href="/ozz/Board/BoardEdit?no=${dto.board_no}">수정</a>
 			<a href="javascript:delChk()">삭제</a>
 		</c:if>
 	</div>
@@ -170,7 +173,7 @@
 		<!-- 로그인시 댓글 폼 -->
 		<c:if test="${logStatus == 'Y'}">
 			<form method="POST" id="replyFrm">
-				<input type="hidden" name="qna_no" value="${dto.qna_no}"/><!-- 원글번호 -->
+				<input type="hidden" name="board_no" value="${dto.board_no}"/><!-- 원글번호 -->
 				<textarea name="coment" id="coment"></textarea>
 				<input type="submit" value="댓글등록하기"/>
 			</form>

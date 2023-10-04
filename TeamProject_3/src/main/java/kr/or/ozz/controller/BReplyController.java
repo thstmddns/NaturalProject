@@ -7,19 +7,21 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import kr.or.ozz.dto.ReplyDTO;
-import kr.or.ozz.service.ReplyService;
+import kr.or.ozz.dto.BReplyDTO;
+import kr.or.ozz.service.BReplyService;
 
 @RestController
-public class ReplyController {
+@RequestMapping("/Breply")
+public class BReplyController {
 	@Autowired
-	ReplyService service;
+	BReplyService service;
 	
 	//댓글등록
-	@PostMapping("/reply/replyWrite")
-	public String replyWrite(ReplyDTO dto, HttpSession session) {
+	@PostMapping("/replyWrite")
+	public String replyWrite(BReplyDTO dto, HttpSession session) {
 		//session 글쓴이 구하기
 		dto.setUserid((String)session.getAttribute("logId"));
 		
@@ -27,18 +29,18 @@ public class ReplyController {
 		return result+"";
 	}
 	///댓글목록
-	@GetMapping("/reply/replyList")
-	public List<ReplyDTO> replyList(int qna_no) {//원글 글번호
-		return service.replySelect(qna_no);
+	@GetMapping("/replyList")
+	public List<BReplyDTO> replyList(int board_no) {//원글 글번호
+		return service.replySelect(board_no);
 	}
 	//댓글수정(DB:update)
-	@PostMapping("/reply/replyEditOk")
-	 public String replyEditOk(ReplyDTO dto) {
+	@PostMapping("/replyEditOk")
+	 public String replyEditOk(BReplyDTO dto) {
 		return String.valueOf(service.replyUpdate(dto));
 	 }
 	//댓글삭제
-	@GetMapping("/reply/replyDel")
-	public String replyDel(int qnr_no) {
-		return String.valueOf(service.replyDelete(qnr_no));
+	@GetMapping("/replyDel")
+	public String replyDel(int board_r_no) {
+		return String.valueOf(service.replyDelete(board_r_no));
 	}
 }

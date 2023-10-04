@@ -3,11 +3,10 @@ package kr.or.ozz.dto;
 import lombok.Data;
 
 @Data
-public class ReplyDTO {
-	private int qnr_no;
-	private int qna_no;
+public class BReplyDTO {
+	private int board_r_no;
+	private int board_no;
 	private String coment;
 	private String created_at;
 	private String userid;
-	private String file_name;
 }

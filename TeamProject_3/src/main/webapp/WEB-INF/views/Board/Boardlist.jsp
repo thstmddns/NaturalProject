@@ -2,19 +2,19 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <style>
-.Qna_list, .page>ul {
+.Board_list, .page>ul {
 	overflow: auto;
 }
 
-.Qna_list>li {
+.Board_list>li {
 	float: left;
 	height: 40px; line-height =40px;
 	border-bottom: 1px solid #ddd;
 	width: 10%;
 }
 
-.Qna_list>li:nth-child(5n+2) {
-	width: 60%;
+.Board_list>li:nth-child(6n+2) {
+	width: 50%;
 	/*말 줄임 표시*/
 	white-space: nowrap; /*줄바꾸지 않기*/
 	overflow: hidden; /*넘친 값 숨기기*/
@@ -37,35 +37,36 @@
 }
 </style>
 <main>
-	<h1>QnA 목록</h1>
+	<h1>자유게시판</h1>
 	<div>
-		<a href="/ozz/Qna/Qnawrite">글쓰기</a>
+		<a href="/ozz/Board/Boardwrite">글쓰기</a>
 	</div>
 	<div>총 레코드 수 : ${pDTO.totalRecord}개</div>
-	<ul class="Qna_list">
+	<ul class="Board_list">
 
-		<li>no</li>
+		<li></li>
 		<li>제목</li>
 		<li>글쓴이</li>
+		<li>카테고리</li>
 		<li>등록일</li>
 		<li>조회수</li>
 
 		<!--  변수 데이터(List) -->
 		<c:forEach var="dto" items="${list}">
-			<li>${dto.qna_no}</li>
+			<li>${dto.board_no}</li>
 			<li><a
-				href='/ozz/Qna/QnaView?no=${dto.qna_no}&nowPage=${pDTO.nowPage}<c:if test="${pDTO.searchWord != null}">&searchKey=${pDTO.searchKey}&searchWord=${pDTO.searchWord}</c:if>'>${dto.qna_title}</a></li>
+				href='/ozz/Board/BoardView?no=${dto.board_no}&nowPage=${pDTO.nowPage}<c:if test="${pDTO.searchWord != null}">&searchKey=${pDTO.searchKey}&searchWord=${pDTO.searchWord}</c:if>'>${dto.board_title}</a></li>
 <%-- 			<c:choose>
 				<c:when test="${dto.file_name_base64 != 'None'}">
 					<img src="data:image/jpeg;base64,${dto.file_name_base64}"
-						alt="Product Image" 
-						style="width: 200px; height: 200px;"/>
+						alt="Product Image" />
 				</c:when>
 				<c:otherwise>
-					<img src="default-image.jpg" alt="Default Image" style="width: 200px; height: 200px;"/>
+					<img src="default-image.jpg" alt="Default Image" />
 				</c:otherwise>
 			</c:choose> --%>
 			<li>${dto.userid}</li>
+			<li>${dto.work_cate}</li>
 			<li>${dto.created_at}</li>
 			<li>${dto.hit}</li>
 		</c:forEach>
@@ -79,7 +80,7 @@
 
 			<c:if test="${pDTO.nowPage>1}">
 				<li><a
-					href='/ozz/Qna/Qnalist?nowPage=${pDTO.nowPage-1}<c:if test="${pDTO.searchWord != null}">&searchKey=${pDTO.searchKey}&searchWord=${pDTO.searchWord}</c:if>'>prev</a></li>
+					href='/ozz/Board/Boardlist?nowPage=${pDTO.nowPage-1}<c:if test="${pDTO.searchWord != null}">&searchKey=${pDTO.searchKey}&searchWord=${pDTO.searchWord}</c:if>'>prev</a></li>
 			</c:if>
 
 			<!-- 페이지 번호 -->
@@ -90,11 +91,11 @@
 					<!-- 값이 있는 페이지까지만 출력 -->
 					<c:if test="${p==pDTO.nowPage}">
 						<li style="background: yellow"><a
-							href='/ozz/Qna/Qnalist?nowPage=${p}<c:if test="${pDTO.searchWord != null}">&searchKey=${pDTO.searchKey}&searchWord=${pDTO.searchWord}</c:if>'>${p}</a></li>
+							href='/ozz/Board/Boardlist?nowPage=${p}<c:if test="${pDTO.searchWord != null}">&searchKey=${pDTO.searchKey}&searchWord=${pDTO.searchWord}</c:if>'>${p}</a></li>
 					</c:if>
 					<c:if test="${p!=pDTO.nowPage}">
 						<li><a
-							href='/ozz/Qna/Qnalist?nowPage=${p}<c:if test="${pDTO.searchWord != null}">&searchKey=${pDTO.searchKey}&searchWord=${pDTO.searchWord}</c:if>'>${p}</a></li>
+							href='/ozz/Board/Boardlist?nowPage=${p}<c:if test="${pDTO.searchWord != null}">&searchKey=${pDTO.searchKey}&searchWord=${pDTO.searchWord}</c:if>'>${p}</a></li>
 					</c:if>
 				</c:if>
 			</c:forEach>
@@ -105,16 +106,17 @@
 			</c:if>
 			<c:if test="${pDTO.nowPage<pDTO.totalPage}">
 				<li><a
-					href='/ozz/Qna/Qnalist?nowPage=${pDTO.nowPage+1}<c:if test="${pDTO.searchWord != null}">&searchKey=${pDTO.searchKey}&searchWord=${pDTO.searchWord}</c:if>'>next</a></li>
+					href='/ozz/Board/Boardlist?nowPage=${pDTO.nowPage+1}<c:if test="${pDTO.searchWord != null}">&searchKey=${pDTO.searchKey}&searchWord=${pDTO.searchWord}</c:if>'>next</a></li>
 			</c:if>
 		</ul>
 	</div>
 	<div class="search">
-		<form action="/ozz/Qna/Qnalist">
+		<form action="/ozz/Board/Boardlist">
 			<select name="searchKey">
-				<option value="qna_title">제목</option>
-				<option value="qna_content">글내용</option>
+				<option value="Board_title">제목</option>
+				<option value="Board_content">글내용</option>
 				<option value="userid">글쓴이</option>
+				<option value="">카테고리</option>
 			</select> <input type="text" name="searchWord" id="searchWord" /> <input
 				type="submit" value="Search" />
 		</form>
