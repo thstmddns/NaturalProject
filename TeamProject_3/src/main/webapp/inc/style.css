@@ -879,15 +879,15 @@ hr:last-child {
 .comViewMa button {
 	width: 100px;
 	height: 40px;
-	color: white;
-	background: #52B0C5;
 	border-radius: 30px;
-	border: none;
-}
-.comViewMa button:hover {
 	color: #2B94AB; 
 	background-color: #E8FBFF; 
 	border: 1px solid #2B94AB;
+}
+.comViewMa button:hover {
+	border: none;
+	color: white;
+	background: #52B0C5;
 }
 .comViewMaInfo li:first-child span:first-child {
 	font-size: 1.2em;
@@ -919,6 +919,70 @@ hr:last-child {
 	font-size: 0.9em;
 	margin: 0  5px 0 0;
 	padding: 2px 4px;
+}
+#replyFrm{
+	width: 85%;
+	border: none;
+	border-radius: 16px;
+	background: #F1F4F8;
+	padding: 30px 27px;
+	display: flex;
+	align-items:center;
+	justify-content: center;
+}
+#replyFrm textarea {
+	width: 80%;
+	resize: none;
+	border: none;
+	border-radius: 10px;
+	height: 30px;
+	align-items: center;
+}
+#replyFrm input[type="submit"] {
+	border-radius: 20px;
+	color: #52B0C5;
+	border: 1px solid #52B0C5;
+	background: #E8FBFF;
+	width: 13%; 
+	height: 30px;
+	text-align: center;
+	margin-left: 20px;
+}
+#replyFrm input[type="submit"]:hover {
+	border: none;
+	color: white;
+	background: #52B0C5;
+}
+#replyList {
+	width: 85%;
+	border: none;
+	border-radius: 16px;
+	background: #F1F4F8;
+	padding: 30px 27px;
+}
+#replyDetail span{
+	font-size: 0.8em;
+	color: #869AAF;
+	margin-left: 15px;
+}
+#replyContent {
+	border-radius: 10px;
+	background: white;
+	margin-top: 15px;
+	height: 100%;
+	padding: 15px;
+	border-bottom: 
+}
+#replyDetail:after{
+	margin: 30px 0;
+	text-align:center;
+	content: "";
+    display: block;
+	border-bottom: 1px solid white;
+	width: 100%;
+}
+#replyDetail:last-child:after {
+	border: none;
 }
 .commuMission {
 	width: 100%;
@@ -987,6 +1051,9 @@ hr:last-child {
 }
 #btn img {
 	vertical-align: middle;
+}
+#myPage {
+	margin-bottom: 70px;
 }
 #myInfo {
 	margin-top: 60px;
@@ -1058,7 +1125,7 @@ hr:last-child {
 }
 #pageButton button:first-child:hover {
 	color: white;
-	background: #b1e1eb;
+	background: #52B0C5;
 }
 #pageButton button:last-child {
 	width: 145px;
@@ -1076,10 +1143,10 @@ hr:last-child {
 }
 #skill {
 	width: 95%;
-	height: 40%;
+	height: auto;
 	background: #F1F4F8;
 	border-radius: 16px;
-	padding: 10px 0 10px 20px;
+	padding: 10px 0 30px 20px;
 	margin-top: 20px;
 }
 #skill li:first-child, #skill li:nth-child(3), #skill li:nth-child(5) {
@@ -1100,7 +1167,7 @@ hr:last-child {
 }
 #missionTotal {
 	width: 95%;
-	height: 18%;
+	height: auto;
 	background: #F1F4F8;
 	border-radius: 16px;
 	padding: 10px 0 10px 20px;
@@ -1120,10 +1187,199 @@ hr:last-child {
 	font-size: 0.9em;
 }
 #missionGo {
-	width: 95%;
-	height: 40%;
+	width: 89%;
+	height: 20%;
 	background: #F1F4F8;
 	border-radius: 16px;
-	padding: 10px 0 10px 15px;
+	padding: 15px 20px 15px 20px;
+	margin: 20px 0 100px 0;
+}
+#missionGo li:first-child {
+	padding-bottom: 10px; 
+}
+#missionGo li:first-child span {
+	float: right;
+	color: #869AAF;
+	font-size: 0.8em;
+}
+#missionGo li:nth-child(2),li:nth-child(3) {
+	padding-bottom: 5px;
+	font-size: 0.9em;
+}
+#missionGo li:nth-child(3) span {
+	margin-left: 5px;
+}
+#missionGo button{
+	width: 100%; 
+	height: 30px;
+	padding-left: 20px; 
+	padding-right: 20px; 
+	background: #52B0C5; 
+	border-radius: 100px; 
+	gap: 10px; 
+	color: white;
+	border: none;
+	margin-top: 10px;
+}
+#missionGo li:last-child button:hover {
+	color: #52B0C5;
+	border: 1px solid #52B0C5;
+	background: #E8FBFF;
+}
+#progress {
+    appearance: none;
+}
+#progress::-webkit-progress-bar {
+    background: white;
+    border-radius:10px;
+    box-shadow: inset 3px 3px 10px #ccc;
+}
+#progress::-webkit-progress-value {
+    border-radius: 10px;
+    background: #52B0C5;
+    background: -webkit-linear-gradient(to right, #52B0C5, #a2d5df);
+    background: linear-gradient(to right, #52B0C5, #a2d5df);
+}
+#pageRight {
+	border-radius: 16px;
+	margin: 40px 0 0 20px;
+	width:100%;
+}
+.btnList {
+	margin:0;
+    padding:0;
+    display: grid;
+    grid-template-columns: 225px 225px 225px;
+    text-align: center;
+}
+.btnList::after {
+    content:'';
+    display:block;
+    clear:both;
+}
+.btn_tap {
+	display: block;
+	padding: 20px;
+	color: #869AAF;
+	background: white;
+	border-radius: 16px;
+}
+.click {
+	background: #F1F4F8;
+	color: black;
+	border-radius: 16px;
+}
+.pageContent {
+    display:none;
+    padding:20px;
+}
+.show {
+    display:block;
+  	background: #F1F4F8;
+    height:auto;
+    width: 640px;
+    border-radius: 16px;
+}
+.made li {
+	padding: 10px;
+}
+.made:after{
+	margin: 20px 0;
+	text-align:center;
+	content: "";
+    display: block;
+	border-bottom: 1px solid white;
+	width: 100%;
+}
+.made:last-child:after {
+	border: none;
+}
+.made li:last-child  {
+	font-size: 0.9em;
+}
+.made li:last-child span {
+	margin: 0 5px;
+}
+.red {
+	background: #F93D18;
+	color: white;
+	border-radius: 5px;
+	width: 100%;
+	padding: 1px 2px;
+}
+.submit {
+	display:grid;
+	grid-template-columns: 550px 100px;	
+}
+.submit li {
+	padding: 10px;
+}
+.submit li:last-child {
+	font-size: 0.8em;
+	color: #869AAF;
+}
+.submit li:last-child span{
+	margin-left: 10px;
+}
+.submit:after{
+	margin: 20px 0;
+	content: "";
+    display: block;
+	border-bottom: 1px solid white;
+	width: 100%;
+}
+.submit:last-child:after {
+	border: none;
+}
+.submit button {
+	color: white;
+	padding: 10px 20px; 
+	background: #52B0C5; 
+	border-radius: 100px;
+	border: none;
 	margin-top: 20px;
+}
+.submit button:hover {
+	background: #E8FBFF;
+	border: 1px solid #52B0C5; 
+	color: #52B0C5; 
+}
+.write {
+	padding: 10px 15px;
+}
+.write:after{
+	margin: 20px 0;
+	content: "";
+    display: block;
+	border-bottom: 1px solid white;
+	width: 100%;
+}
+.write:last-child:after {
+	border: none;
+}
+.writeContent {
+	background: white;
+	font-size: 0.9em;
+	overflow: hidden;
+	height: 74px;
+	margin: 10px 0;
+	border-radius: 5px;
+	padding: 10px;
+}
+.write li:nth-child(3) span {
+	color: white;
+	width: 100%;
+	height: 100%;
+	border-radius: 10px;
+	background-color: #52B0C5;
+	font-size: 0.8em;
+	margin: 0  5px 0 0;
+	padding: 2px 4px;
+}
+.write li:nth-child(4) {
+	font-size: 0.8em;
+}
+.write li:nth-child(4) span{
+	color: #869AAF;
+	margin-left: 10px;
 }

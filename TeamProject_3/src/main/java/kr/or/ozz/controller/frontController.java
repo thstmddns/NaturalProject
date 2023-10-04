@@ -86,4 +86,9 @@ public class frontController {
 	public String myPage() {
 		return "main/mypage";
 	}
+	
+	@GetMapping("/subscribe")
+	public String popup() {
+		return "main/popup";
+	}
 }

@@ -25,14 +25,31 @@
 				</div>
 			</div>
 		
+			<div style="font-size:1.3em; margin: 60px 0 30px 0;">댓글</div>
 			<div id="reply">
-				<p style="font-size: 1.2em;">댓글</p>
-				<div>
-				
-				
-				</div>
+					<form method="post" id="replyFrm">
+						<!-- 원글 번호 -->
+						<input type="hidden" name="no" value="${dto.no }">  
+						<textarea name="coment" id="coment" placeholder="&nbsp;&nbsp;댓글을 입력하세요."></textarea>
+						<input type="submit" value="댓글 등록하기">
+					</form>
+				<ul id="replyList">
+					<div id="replyDetail">
+						<div><b>이강릉</b><span>2023.10.04</span></div>
+						<div id="replyContent">댓글 미리보기입니다!</div>
+					</div>
+					<div id="replyDetail">
+						<div><b>김동해</b><span>2023.10.04</span></div>
+						<div id="replyContent">222222</div>
+					</div>
+					<div id="replyDetail">
+						<div><b>박양양</b><span>2023.10.04</span></div>
+						<div id="replyContent">33333</div>
+					</div>
+				</ul>
 			</div>
 		</div>
+		
 		<div style="width:100%;">
 			<div id="btn">
 				<p><button>공유하기&nbsp;<img src="<%= request.getContextPath()%>/img/Link.png"/></button></p>

@@ -23,7 +23,7 @@
 					<span>진행률 20%</span>
 					<span>남은 스텝 수 00개</span>
 				</li>
-				<li>프로그래스바</li>
+				<li><progress id="progress" value="20" min="0" max="100"></li>
 				<li><button>이어서 진행하기</button></li>
 			</div>
 		</div>
@@ -34,7 +34,7 @@
 					<span>진행률 20%</span>
 					<span>남은 스텝 수 00개</span>
 				</li>
-				<li>프로그래스바</li>
+				<li><progress id="progress" value="20" min="0" max="100"></li>
 				<li><button>이어서 진행하기</button></li>
 			</div>
 		</div>
@@ -45,7 +45,7 @@
 					<span>진행률 20%</span>
 					<span>남은 스텝 수 00개</span>
 				</li>
-				<li>프로그래스바</li>
+				<li><progress id="progress" value="20" min="0" max="100"></li>
 				<li><button>이어서 진행하기</button></li>
 			</div>
 		</div>
