@@ -16,7 +16,7 @@
 header {
 	width:100%; 
 	height: 100%; 
-	padding-bottom: 10px;
+	padding: 10px 0;
 	background: white; 
 	border-bottom: 1px #C5C5C7 solid; 
 	display: flex;
@@ -26,7 +26,7 @@ header {
 	gap: 60px; 
 }
 #searchWord {
-	width: 500px; 
+	width: 450px; 
 	height: 20px; 
 	padding: 7px 5px; 
 	background: #F2F2F6;
@@ -59,8 +59,7 @@ footer {
 }
 #info {
 	color: #4E657E; 
-	font-size: 14px; 
-	font-weight: 400; 
+	font-size: 14px;  
 	line-height: 21px; 
 	word-wrap: break-word;
 	padding: 20px;
@@ -1122,6 +1121,7 @@ hr:last-child {
 	border: 1px solid #52B0C5;
 	border-radius: 100px;
 	background: #E8FBFF; 
+	cursor: pointer;
 }
 #pageButton button:first-child:hover {
 	color: white;
@@ -1135,6 +1135,7 @@ hr:last-child {
 	color: #4E657E;
 	border-radius: 100px;
 	background: white; 
+	cursor: pointer;
 }
 #pageButton button:last-child:hover {
 	background: #e4ebf1;
@@ -1188,10 +1189,10 @@ hr:last-child {
 }
 #missionGo {
 	width: 89%;
-	height: 20%;
+	height: auto;
 	background: #F1F4F8;
 	border-radius: 16px;
-	padding: 15px 20px 15px 20px;
+	padding: 20px;
 	margin: 20px 0 100px 0;
 }
 #missionGo li:first-child {
@@ -1228,17 +1229,31 @@ hr:last-child {
 }
 #progress {
     appearance: none;
+    width: 100%;
 }
 #progress::-webkit-progress-bar {
-    background: white;
+    background: #F1F4F8;
     border-radius:10px;
-    box-shadow: inset 3px 3px 10px #ccc;
+    height: 6px;
 }
 #progress::-webkit-progress-value {
     border-radius: 10px;
     background: #52B0C5;
-    background: -webkit-linear-gradient(to right, #52B0C5, #a2d5df);
-    background: linear-gradient(to right, #52B0C5, #a2d5df);
+    
+}
+#progress2 {
+    appearance: none;
+    width: 100%;
+}
+#progress2::-webkit-progress-bar {
+    background: white;
+    border-radius:10px;
+    height: 6px;
+}
+#progress2::-webkit-progress-value {
+    border-radius: 10px;
+    background: #52B0C5;
+    
 }
 #pageRight {
 	border-radius: 16px;
@@ -1252,17 +1267,19 @@ hr:last-child {
     grid-template-columns: 225px 225px 225px;
     text-align: center;
 }
-.btnList::after {
+/* .btnList::after {
     content:'';
     display:block;
     clear:both;
-}
+} */
 .btn_tap {
 	display: block;
-	padding: 20px;
+	padding: 15px;
 	color: #869AAF;
 	background: white;
 	border-radius: 16px;
+	cursor: pointer;
+	margin: 0;
 }
 .click {
 	background: #F1F4F8;
@@ -1382,4 +1399,276 @@ hr:last-child {
 .write li:nth-child(4) span{
 	color: #869AAF;
 	margin-left: 10px;
+}
+#missionView {
+	display: grid;
+	grid-template-columns: 800px 200px;
+}
+#missionLeft {
+	margin-top: 60px;
+}
+#missionInfo {
+	width: 90%;
+	height: auto;
+	background: #F1F4F8;
+	border: none;
+	border-radius: 16px;
+	padding: 30px;
+	box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.10);
+}
+#missionInfo li,div{
+	margin-bottom: 15px;
+}
+#missionInfo li:first-child {
+	font-size: 1.5em;
+}
+#missionInfo li:nth-child(2) span {
+	color: white;
+	width: 100%;
+	height: 100%;
+	border-radius: 10px;
+	background-color: #52B0C5;
+	font-size: 0.7em;
+	margin: 0 5px 0 0;
+	padding: 3px 5px;
+}
+#missionInfo div,li:last-child {
+	font-size: 0.9em;
+}
+#missionInfo li:last-child span {
+	margin-left: 10px;
+}
+#missionInfo li:last-child span:first-child {
+	margin-right: 20px;
+}
+#missionMaster, #learnSkill, #require {
+	margin-top: 20px;
+	width: 90%;
+	height: auto;
+	background: #F1F4F8;
+	border: none;
+	border-radius: 16px;
+	padding: 20px 30px;
+	box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.10);
+}
+#missionMaster li:first-child,#missionMaster li:nth-child(2),#learnSkill li:first-child{
+	margin-bottom: 10px;
+}
+#missionMaster li:first-child,#learnSkill li:first-child {
+	font-size: 1.2em;
+}
+#missionMaster li:nth-child(2) span, #missionMaster li:last-child {
+	font-size: 0.8em;
+}
+#missionMaster li:last-child span {
+	margin-left: 5px;
+}
+#missionMaster li:nth-child(2) span, #missionMaster li:last-child span:nth-child(2) {
+	margin-left: 20px;
+}
+#learnSkill li:nth-child(2) {
+	font-size: 0.8em;
+	color: #869AAF;
+	margin-bottom: 20px;
+}
+#learnSkill li:last-child span {
+	color: #4E657E;
+	width: 100%;
+	height: 100%;
+	border-radius: 10px;
+	border: 1px solid #9AE5F5;
+	background-color: #E8FBFF;
+	font-size: 0.7em;
+	margin: 0 5px 0 0;
+	padding: 3px 5px;
+}
+.ingredients {
+	display: grid;
+	grid-template-columns: 340px 340px;	
+}
+.ingredient {
+	background: white;
+	width: 280px;
+	height: auto;
+	padding: 20px;
+	border-radius: 16px;
+}
+.ingredient li span{
+	font-size: 0.8em;
+	color: #869AAF;
+	float:right;
+}
+.ingredient li::after {
+	margin: 10px 0 20px 0;
+	content: "";
+    display: block;
+	border-bottom: 1px solid #4E657E;
+	width: 100%;
+}
+.ingredient div span {
+	background: #E8FBFF;
+	border: 1px solid #9AE5F5;
+	border-radius: 1000px;
+	padding: 7px 5px;
+	font-size: 0.8em; 
+	margin-right: 5px;
+}
+#missionComplete {
+	margin-top: 20px;
+	width: 95%;
+	height: auto;
+	border: 1px solid #F1F4F8;
+	border-radius: 16px;
+	padding: 20px 30px 15px 30px;
+	box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.10);
+	text-align: center;
+	padding: 30px 0;
+}
+#missionComplete li, div {
+	padding: 5px;
+}
+#missionComplete li:nth-child(2) {
+	font-size: 1.7em;
+}
+#missionComplete li:nth-child(4) {
+	font-size: 0.9em;
+	color: #4E657E;
+}
+ .missionReviewExam {
+  	margin-top: 20px;
+	width: 100%;
+	height: auto;
+	background: #F1F4F8;
+	border: none;
+	border-radius: 16px;
+	padding: 20px 30px 15px 30px;
+	box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.10);
+ }
+ .missionReviewExam li:first-child span:first-child {
+ 	margin:0 100px 0 15px;
+ 	color: #869AAF;
+ 	font-size: 0.8em;
+ }
+  .missionReviewExam li:first-child span:nth-child(2), .missionReviewExam li:first-child span:nth-child(3){
+	float:right;
+	font-size: 0.9em;
+  }
+ .reviewText {
+ 	background:white; 
+ 	height:auto; 
+ 	padding: 10px 15px;
+ 	border-radius: 16px;
+ 	margin-top: 20px;
+ }
+#missionQnA {
+	width: 90%;
+	height: auto;
+}
+ #QnAContent {
+ 	margin-top: 20px;
+	width: 100%;
+	height: auto;
+	background: #F1F4F8;
+	border: none;
+	border-radius: 16px;
+	padding: 20px 30px 15px 30px;
+	box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.10);
+ }
+ #QnAContent button {
+ 	width: 100%;
+ 	height: auto;
+ 	border-radius: 100px;
+ 	border: 1px solid #2B94AB;
+	background: #E8FBFF;
+	padding: 13px;
+	text-align: center;
+	color: #2B94AB;
+ }
+ #QnAContent button:hover {
+ 	color: white;
+ 	background: #52B0C5;
+ }
+ .QnADetail {
+ 	margin-top: 30px;
+}
+.QnADetail::after {
+	margin: 20px 0;
+	content: "";
+    display: block;
+	border-bottom: 2px solid white;
+	width: 100%;
+}
+.QnADetail:last-child::after {
+	border: none;
+}
+ .QnADetail li {
+ 	padding: 7px;
+ }
+ .QnADetail li:first-child {
+ 	font-size: 1.2em;
+ }
+ .QnADetail li:nth-child(2) span {
+ 	color: white;
+	width: 100%;
+	height: 100%;
+	border-radius: 10px;
+	background-color: #52B0C5;
+	font-size: 0.7em;
+	margin: 0 5px 0 0;
+	padding: 2px 4px;
+ }
+  .QnADetail input[type=textarea] {
+  	height: 40px;
+  	width:100%;
+  	border-radius: 10px;
+  	border: 1px solid #869AAF;
+  }
+  .QnADetail li:last-child span {
+  	margin-left: 30px;
+  	font-size: 0.8em;
+  	color: #869AAF;
+  }
+ #missionRight {
+ 	margin-top: 100px;
+ }
+ #date {
+ 	width: 75%;
+ 	height: auto;
+ 	background: #F1F4F8;
+ 	border-radius: 16px;
+ 	font-size: 0.9em;
+ 	padding: 20px 30px;
+ }
+#date li {
+	padding: 5px;
+}
+#date span {
+	margin-left: 15px;
+}
+#missionBtn {
+	width:100%;
+	padding-left: 7px;
+}
+#missionBtn img {
+	vertical-align: bottom;
+}
+#missionBtn button:first-child {
+	width:100%;
+	color: #2B94AB;
+	border: 1px solid #2B94AB;
+	background: #E8FBFF;
+	text-align: center;
+	margin:10px 0; 
+	border-radius: 100px;
+	padding: 10px 0;
+}
+#missionBtn button:last-child {
+	width:100%;
+	color: #869AAF;
+	border: 1px solid #869AAF;
+	background: white;
+	text-align: center;
+	margin:10px 0; 
+	border-radius: 100px;
+	padding: 10px 0;
 }

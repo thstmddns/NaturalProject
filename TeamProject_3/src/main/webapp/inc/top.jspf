@@ -17,6 +17,7 @@
     float: left;
     clear: left;
     margin-top: 0;
+    cursor: pointer;
 }
 .menu label::before{ content: '\e5d2'; }
 .menu li:nth-child(1) a::before{ content: '\e7fd'; }
@@ -35,7 +36,7 @@
 }
 .menu {
     display: block;
-    width: 90px;
+    width: 80px;
     background-color: white;
     color: black;
     padding: 10px;
@@ -85,18 +86,32 @@
 .menu #expand-menu:not(:checked) ~ ul { /* 데스크탑 화면에서도 메뉴를 접었더 펼칠 수 있음 */
     display: none;
 }
+#mainSearch {
+	gap: 0 !important;
+	margin: 0 !important;
+	border-radius: 16px;
+	padding: 10.2px 15px;
+	border: none;
+	background: #F2F2F6;
+}
+#mainSearch:hover {
+	border: 2px solid;
+}
 </style>
 
 <header>
-    <div style="font-size: 30px;  font-weight: 400; word-wrap: break-word; margin-left:60px;">OZZ</div>
-    <ul style="justify-content: center; align-items: center; gap: 20px; display: flex">
-        <li style="color: black; font-size: 16px;">미션</li>
-        <li style="color: black; font-size: 16px;">전문가</li>
-        <li style="color: black; font-size: 16px; margin-top: 15px;">커뮤니티</li>
+    <div style="font-size: 32px;  font-weight: 400; word-wrap: break-word; margin-left:60px; padding-top:5px;">OZZ</div>
+    <ul style="justify-content: center; align-items: center; gap: 20px; display: flex;">
+        <li style="color: black; font-size: 17px;">미션</li>
+        <li style="color: black; font-size: 17px;">전문가</li>
+        <li style="color: black; font-size: 17px; margin-top: 15px;">커뮤니티</li>
     </ul>
+    <div style="display: grid; grid-template-columns: 470px 70px; margin-top:10px;">
     <input type="text" id="searchWord" placeholder="미션, 전문가, 커뮤니티를 검색해보세요.">
-		 <i class="fa-regular fa-bell" ></i>
-	<div class="menu">
+	<button id="mainSearch">검색</button>
+	</div>
+		 <i class="fa-regular fa-bell" style="font-size:1.1em;"></i>
+	<div class="menu" style="margin-top: 12px;">
 		<label for="expand-menu"><div></div></label>
     <input type="checkbox" id="expand-menu" name="expand-menu">
     <ul>

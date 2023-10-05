@@ -91,4 +91,14 @@ public class frontController {
 	public String popup() {
 		return "main/popup";
 	}
+	
+	@GetMapping("/missionIng")
+	public String missionGoPopup() {
+		return "main/missionGoPopup";
+	}
+	
+	@GetMapping("/missionView")
+	public String missionView() {
+		return "mission/missionView";
+	}
 }

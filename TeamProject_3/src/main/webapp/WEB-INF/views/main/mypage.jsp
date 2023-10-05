@@ -39,11 +39,11 @@
 					<li>진행 중인 미션<span>10</span></li>
 				</div>
 				<div id="missionGo">
-					<li>진행 중인 미션<span>더보기 ></span></li>
+					<li>진행 중인 미션<span id="more" style="cursor:pointer;">더보기 ></span></li>
 					<li>Persona(페르소나) 분석 미션</li>
 					<li>진행률<span>20%</span><span>남은 스텝 수</span><span>00</span></li>
-					<li><progress id="progress" value="20" min="0" max="100"></progress></li>
-					<li><button>이어서 진행하기</button></li>
+					<li><progress id="progress2" value="20" min="0" max="100" style="margin: 5px 0 8px 0;"></progress></li>
+					<li><button style="cursor:pointer;">이어서 진행하기</button></li>
 				</div>			
 			</div>
 			<div id="pageRight">
@@ -169,11 +169,17 @@
         let popupbtn = document.querySelector('button#subscribe');
         
         popupbtn.onclick = function() {
-        	let option = "width = 900px, height = 600px, top = 300px, left = 200px, scrollbars = no"
+        	let option = "width = 900px, height = 600px, top = 300px, left = 200px, scrollbars = no,  location=no"
         	let openurl = '/ozz/main/subscribe'
         	window.open(openurl, 'popup', option)
         }
 
-
+		let missionGoPopup = document.querySelector('span#more');
+		
+		missionGoPopup.onclick = function() {
+			let option2 = "width = 900px, height = 600px, top = 300px, left = 200px, scrollbars = yes,  location=no"
+			let openurl2 = '/ozz/main/missionIng'
+			window.open(openurl2, 'missionGoPopup', option2)
+		}
 
     </script>

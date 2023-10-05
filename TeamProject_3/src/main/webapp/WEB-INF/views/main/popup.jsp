@@ -15,6 +15,13 @@ header, footer {
 .subService {
 	display: none;
 }
+h2::after {
+	content:'';
+    display:block;
+    clear:both;
+	border-bottom: solid 2px #DAE2EB;
+	margin-top: 15px;
+}
 .view {
 	display: block;
   	background: white;
@@ -67,7 +74,7 @@ header, footer {
 </style>
 <main style="width:800px; height: 500px;">
 	<div class=subPopup>
-		<h2 style="text-align:center;">OZZ 구독 내역</h2>
+		<h2>OZZ 구독 내역</h2>
 		<div class="subInfo">
 			구독 중인 서비스가 없습니다.
 		</div>
