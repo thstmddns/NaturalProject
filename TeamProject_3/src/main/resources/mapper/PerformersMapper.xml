@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ozz.dao.PerformersDAO">
+	<select id="getUserAchievement" parameterType="string" resultType="kr.or.ozz.dto.PerformersDTO">
+	    SELECT userid, mission_no, 
+	    (COUNT(*) / 
+	    (
+	        SELECT COUNT(task_no)
+	        FROM t_mission_task t
+	        JOIN t_mission_step s ON t.step_no = s.step_no
+	        JOIN t_mission m ON m.mission_no = s.mission_no
+	        WHERE m.mission_no = t_performers.mission_no
+	        GROUP BY m.mission_no
+	    )) * 100 AS mission_rate 
+		FROM t_performers
+		WHERE userid = #{param1}
+		GROUP BY userid, mission_no;
+	</select>
+	
+    <select id="getPerformersByUserAndMission" parameterType="map" resultType="kr.or.ozz.dto.PerformersDTO">
+        SELECT * FROM t_performers
+        WHERE userid = #{param1} AND mission_no = #{mission_no}
+    </select>
+</mapper>
