@@ -9,21 +9,34 @@
 <link rel="stylesheet" href="/ozz/inc/style.css" type="text/css">
 </head>
 
-<body>
-<header>
-<div>
+
+
 	<nav>
-		<ul>
-			<li><a href="/ozz/register/login"><button>로그인</button></a></li>
-			<li><a href="/ozz/register/registerJoin"><button>회원가입</button></a></li>
-			<li><a href="/ozz/register/logout"><button>로그아웃</button></a></li>
+		<div>
 			<li><a href="/ozz/mypage/mypage_main"><button>마이페이지</button></a></li>
 			<li><a href="/ozz"><button>메인</button></a></li>
-			<li><a href="/ozz/Board/Boardlist"><button>자유게시판</button></a></li>
-			<li><a href="/ozz/review/reviewlist">리뷰</a></li>
-			<li><a href="/ozz/Community/"><button>커뮤니티</button></a></li>
-		</ul>
-	</nav>
-</div>
+		    <li><div class="element-wrapper">
+                <div class="element"><a href="/ozz/register/registerJoin">회원가입</a></div>
+            </div>
+			</li>
 
-</header>
+		
+		<c:if test="${not empty logId}">
+		    <div class="div-wrapper">
+		        <div class="element"><a href="/ozz/register/logout">로그아웃</a></div>
+		    </div>
+		</c:if>
+		
+	    <div id="welcomeMessage">
+	        <% if (session.getAttribute("logStatus") != null && session.getAttribute("logStatus").equals("Y")) { %>
+	            <p><span id="userid"><%= session.getAttribute("logId") %></span>님, 환영합니다.</p>
+	        <% } else { %>
+	            	<div class="div-wrapper">
+			        <div class="element"><a href="/ozz/register/login">로그인</a></div>
+			    </div>
+	        <% } %>
+    	</div>
+    	
+    	</div>
+	</nav>
+	

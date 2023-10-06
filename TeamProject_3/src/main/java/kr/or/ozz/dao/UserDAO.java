@@ -3,6 +3,7 @@ package kr.or.ozz.dao;
 import kr.or.ozz.dto.UserDTO;
 
 public interface UserDAO {
+	
 	public int UserInsert(UserDTO dto);
 
 	public UserDTO loginOk(String userid, String pwd);

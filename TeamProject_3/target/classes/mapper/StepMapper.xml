@@ -9,22 +9,22 @@
 	</insert>
 	
 	<select id="Steplist" resultType="kr.or.ozz.dto.StepDTO">
-        SELECT step_no, mission_no, step, step_title, step_time, mission_skill FROM t_mission_step
-        ORDER BY step ASC
+        SELECT step_no, step, step_title, step_time, mission_skill FROM t_mission_step
+        ORDER BY step_no ASC
 	</select>
 	
 	<select id="getStep" resultType="kr.or.ozz.dto.StepDTO">
-		select step_no, mission_no, step, step_title, step_content, step_time, mission_skill, userid
+		select mission_no, step, step_title, step_content, step_time, mission_skill, userid
 		from t_mission_step
-		where step_no = ${param1}
+		<!-- where mission_no = ${param1} -->
 	</select>
 	
-	<update id="StepEdit">
-		update t_mission_step set step=#{step}, step_title=#{step_title}, step_content=#{step_content},
-		step_time=#{step_time}, mission_skill=#{mission_skill}
-		where step_no=${step_no} and userid=#{userid}
+	<update id="MissionEdit">
+		update t_mission set mission_title=#{mission_title}, mission_content=#{mission_content}, mission_tag=#{mission_tag},
+		mission_data=#{mission_data}, mission_tool=#{mission_tool}, mission_cate=#{mission_cate}, created_at=sysdate
+		where mission_no=${mission_no} and userid=#{userid}
 	</update>
-	<delete id="StepDel">
-		delete from t_mission_step where step_no=${param1} and userid=#{param2}
+	<delete id="MissionDel">
+		delete from t_mission where mission_no=${param1} and userid=#{param2}
 	</delete>
 </mapper>

@@ -19,8 +19,11 @@
             <li>해시태그 : <input type="text" name="hashtag" id="hashtag"></li>
             <li>회원유형 : <input type="text" name="usertype" id="usertype"></li>         
             <li><button type="submit">회원가입하기</button></li>
+            
         </ul>
     </form>
+        <form method="post" action="/register/kakaoJoinOk" >
+    <li><button type="submit">카카오회원가입하기</button></li>
     <div id="dupCheckResult"></div>
 
     <script>
