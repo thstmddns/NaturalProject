@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.ozz.dao.PerformersDAO">
-	<select id="getUserAchievement" parameterType="string" resultType="kr.or.ozz.dto.PerformersDTO">
+	<select id="getPerfomersList" resultType="kr.or.ozz.dto.PerformersDTO">
 	    SELECT userid, mission_no, 
 	    (COUNT(*) / 
 	    (
@@ -19,8 +19,8 @@
 		GROUP BY userid, mission_no;
 	</select>
 	
-    <select id="getPerformersByUserAndMission" parameterType="map" resultType="kr.or.ozz.dto.PerformersDTO">
-        SELECT * FROM t_performers
-        WHERE userid = #{param1} AND mission_no = #{mission_no}
-    </select>
+	<insert id="insertPayment">
+		insert into t_performers(PERFORMER_NO, MISSION_NO, USERID, TASK_NO, STARTED_AT, COMPLETED_AT, STEP_NO)
+		values(PERFORMER_NO_seq.nextval, #{userid}, #{TASK_NO}, #{STARTED_AT}, #{STARTED_AT}, #{STEP_NO})
+	</insert>
 </mapper>

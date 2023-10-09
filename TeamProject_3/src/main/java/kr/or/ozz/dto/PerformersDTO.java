@@ -20,6 +20,7 @@ public class PerformersDTO {
 	    private Date started_at;
 	    private Date completed_at;
 	    private int step_no;
+	    private float mission_rate;
 }
 
 	

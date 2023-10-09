@@ -14,10 +14,6 @@ public class PaymentServiceImpl implements PaymentService {
     @Autowired
     private PaymentDAO dao;
 
-    @Override
-    public int GetPayment(String userid) {
-        return dao.GetPayment(userid);
-    }
 
     @Override
     public void insertPayment(PaymentDTO dto) {

@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
-import kr.or.ozz.dao.PaymentDAO;
 import kr.or.ozz.dao.SubscriptionDAO;
 import kr.or.ozz.dto.SubscriptionDTO;
 
@@ -17,10 +16,9 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 	@Autowired
 	SubscriptionDAO dao;
 
-
 	@Override
-	public List<SubscriptionDTO> getAllSubscriptions() {
-		return dao.getAllSubscriptions();
+	public List<SubscriptionDTO> getAllSubscriptions(String logId) {
+		return dao.getAllSubscriptions(logId);
 	}
 
 

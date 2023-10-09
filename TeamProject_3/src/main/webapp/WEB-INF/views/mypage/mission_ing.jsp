@@ -9,23 +9,22 @@
 <title>Insert title here</title>
 </head>
 <body>
+
     <h1>진행 중인 미션 목록</h1>
-    
+
+    <h2>미션 목록</h2>
     <table>
         <tr>
-            <th>미션 번호</th>
-            <th>미션 제목</th>
-
+            <th>미션번호</th>
+            <th>달성률</th>
         </tr>
-        <c:forEach items="${list}" var="dto">
+        <c:forEach items="${mymissionList}" var="mission_ing">
             <tr>
-                <td>${dto.mission_no}</td>
-                <td>${dto.mission_title}</td>
-
+                <td>${mission_ing.mission_no}</td>
+                <td>${mission_ing.mission_rate}%</td>
             </tr>
         </c:forEach>
     </table>
-
 
 </body>
 </html>

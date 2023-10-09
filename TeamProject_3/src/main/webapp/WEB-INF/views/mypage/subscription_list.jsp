@@ -7,14 +7,7 @@
     <!-- JavaScript 라이브러리를 포함 -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 </head>
-<body>
-<ul>
-<c:forEach var="dto" items="${list}" varStatus="status">
-		<li>구독번호:${dto.payno}</li>
-		<li>구독옵션:${dto.suboption}</li>
-		<li>구독요금:${dto.payamount }</li>
-</c:forEach>		
-</ul>
+
 <body>
 <%
     // 여기에서 데이터베이스로부터 사용자의 만료 날짜를 가져와야 합니다.
@@ -33,6 +26,10 @@
 %>
 
 <ul>
+	<c:forEach var="dto" items="${mysublist}" varStatus="status">
+			<li>구독옵션:${dto.sub_option}</li>
+			<li>구독요금:${dto.pay_amount}</li>
+	</c:forEach>
     <c:if test="<%= !isSubscriptionExpired %>">
         <li>구독 중입니다.</li>
     </c:if>

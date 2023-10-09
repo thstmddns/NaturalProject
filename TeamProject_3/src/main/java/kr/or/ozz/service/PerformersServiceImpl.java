@@ -16,50 +16,15 @@ public class PerformersServiceImpl implements PerformersService {
 	PerformersDAO dao;
 
 	@Override
-	public int insertPerformers(PerformersDTO performersDTO) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertPerformers(PerformersDTO dto) {
+		return dao.insertPerformers(dto);
 	}
 
 	@Override
-	public List<PerformersDTO> getPerformersByUserId(String userid) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<PerformersDTO> getPerfomersList(String userid) {
+		return dao.getPerfomersList(userid);
 	}
 
-	@Override
-	public List<PerformersDTO> getPerformersByDateRange(Date started_at, Date completed_at) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<PerformersDTO> getPerformersByInProgressStep(int step_no) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<PerformersDTO> getPerformersByUserAndMission(String userid, int mission_no) {
-		return dao.getPerformersByUserAndMission(userid, mission_no);
-	}
-
-	@Override
-	public List<PerformersDTO> getInProgressTasks(String userid, int task_no) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int updateInProgressTask(PerformersDTO dto) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public List<PerformersDTO> getUserAchievement(String userid) {
-		return null;
-	}
 
 
 }

@@ -5,8 +5,6 @@ import java.util.List;
 import kr.or.ozz.dto.PaymentDTO;
 
 public interface PaymentDAO {
-
-	public int GetPayment(String userid);
 	
     // 결제 정보를 저장하는 메서드
 	public void insertPayment(PaymentDTO dto);
