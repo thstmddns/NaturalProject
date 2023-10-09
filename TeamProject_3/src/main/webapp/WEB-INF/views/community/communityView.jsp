@@ -52,7 +52,6 @@
 		
 		<div style="width:100%;">
 			<div id="btn">
-				<p><button>공유하기&nbsp;<img src="<%= request.getContextPath()%>/img/Link.png"/></button></p>
 				<p><button>마음에 들어요&nbsp;<img src="<%= request.getContextPath()%>/img/Component 2.png"/></button></p>
 			</div>
 			<div id="recommend">

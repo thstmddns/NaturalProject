@@ -22,13 +22,14 @@
 			<li style="margin-top: 30px;">어떤 직무를 맡고 계신가요?</li>
 			<li><select class="select" title="직무를 선택해주세요" style="width:100%; height:40px; border-radius: 6px; border: 1px #DAE2EB solid; color:#6e6e6e">
 			    <option value="">직무를 선택해주세요</option>
-			    <option value="naver.com">naver.com</option>
-			    <option value="gmail.com">gmail.com</option>
-			    <option value="hanmail.net">hanmail.net</option>
-			    <option value="hotmail.com">hotmail.com</option>
-			    <option value="korea.com">korea.com</option>
-			    <option value="nate.com">nate.com</option>
-			    <option value="yahoo.com">yahoo.com</option>
+			    <option value="경영·사무">경영·사무</option>
+			    <option value="무역·유통">무역·유통</option>
+			    <option value="영업·고객상담">영업·고객상담</option>
+			    <option value="서비스">서비스</option>
+			    <option value="마케팅·광고·홍보">마케팅·광고·홍보</option>
+			    <option value="IT·인터넷">IT·인터넷</option>
+			    <option value="디자인">디자인</option>
+			    <option value="생산·제조">생산·제조</option>
 			</select></li>
 			<li style="margin-top: 30px;">어떤 업무에 관심을 갖고 계신가요?</li>
 			<li style="color: #869AAF; font-size:13px;  margin-top:13px;">관심 있는 주제를 선택해서 오즈를 맞춤 설정해보세요.<li>
@@ -40,7 +41,7 @@
 			<button id="keyword"># python</button>
 			<button id="keyword"># c, c++</button>
 			<button id="keyword"># typescript</button>
-			</br><button id="keyword" style="margin-top:10px">#next.js</button>
+			</br><button id="keyword" style="margin-top:10px"># next.js</button>
 			</div>
 			<li><input type="submit" value="회원가입" class="registerBtn"/></li>
 	</form>

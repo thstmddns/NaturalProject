@@ -15,7 +15,7 @@
 				<div class="searchMaInfo">
 					<li><span>신세경</span><span>가전제품 상품기획 DCX Analyst</span></li>
 					<li><span>팔로우 100</span><span>팔로잉 100</span></li>
-					<li>자기소개 칸</li>
+					<div>자기소개 칸</div>
 				</div>
 				<div><button>팔로우 하기</button></div>
 			</div>
@@ -25,7 +25,7 @@
 				<div class="searchMaInfo">
 					<li><span>임시완</span><span>가전제품 상품기획 DCX Analyst</span></li>
 					<li><span>팔로우 100</span><span>팔로잉 100</span></li>
-					<li>자기소개 칸</li>
+					<div>자기소개 칸</div>
 				</div>
 				<div><button>팔로우 하기</button></div>
 			</div>
@@ -35,7 +35,7 @@
 				<div class="searchMaInfo">
 					<li><span>이준기</span><span>가전제품 상품기획 DCX Analyst</span></li>
 					<li><span>팔로우 100</span><span>팔로잉 100</span></li>
-					<li>자기소개 칸</li>
+					<div>자기소개 칸</div>
 				</div>
 				<div><button>팔로우 하기</button></div>
 			</div>
@@ -45,10 +45,10 @@
 				<div class="searchMaInfo">
 					<li><span>아이유</span><span>가전제품 상품기획 DCX Analyst</span></li>
 					<li><span>팔로우 100</span><span>팔로잉 100</span></li>
-					<li>자기소개칸에 얼마나 써야 이 칸이 넘어가는지 실험 중입니다. 몇 줄이나 써야 생략이 될까요? 닭볶음탕 참 맛있었는데 정말 죽을 거 같네요
+					<div>자기소개칸에 얼마나 써야 이 칸이 넘어가는지 실험 중입니다. 몇 줄이나 써야 생략이 될까요? 닭볶음탕 참 맛있었는데 정말 죽을 거 같네요
 					계단이라도 올라야 할까봐요.. 제 위는 왜 점점 작아지는 걸까요 슬프네요 먹고싶은 건 참 많은데요ㅜㅜ 아니 대체 언제까지 얼마나 써야 이 글이 경계를 넘어가는 걸까요
 					대표님이랑 상담하기 무섭네요 대체 무슨 말을 해야하는 거죠 집에 가고 싶어요 흐엉엉 집에 좀 보내주세요 제발 아니 얼마나 더 써야하는 거에요 힘들어죽겠네 정말 화딱지 나게 하지 말구
-					얼른 보여줘 생략을 제발</li>
+					얼른 보여줘 생략을 제발</div>
 				</div>
 				<div><button>팔로우 하기</button></div>
 			</div>
@@ -58,10 +58,10 @@
 				<div class="searchMaInfo">
 					<li><span>송중기</span><span>가전제품 상품기획 DCX Analyst</span></li>
 					<li><span>팔로우 100</span><span>팔로잉 100</span></li>
-					<li>자기소개칸에 얼마나 써야 이 칸이 넘어가는지 실험 중입니다. 몇 줄이나 써야 생략이 될까요? 닭볶음탕 참 맛있었는데 정말 죽을 거 같네요
+					<div>자기소개칸에 얼마나 써야 이 칸이 넘어가는지 실험 중입니다. 몇 줄이나 써야 생략이 될까요? 닭볶음탕 참 맛있었는데 정말 죽을 거 같네요
 					계단이라도 올라야 할까봐요.. 제 위는 왜 점점 작아지는 걸까요 슬프네요 먹고싶은 건 참 많은데요ㅜㅜ 아니 대체 언제까지 얼마나 써야 이 글이 경계를 넘어가는 걸까요
 					대표님이랑 상담하기 무섭네요 대체 무슨 말을 해야하는 거죠 집에 가고 싶어요 흐엉엉 집에 좀 보내주세요 제발 아니 얼마나 더 써야하는 거에요 힘들어죽겠네 정말 화딱지 나게 하지 말구
-					얼른 보여줘 생략을 제발</li>
+					얼른 보여줘 생략을 제발</div>
 				</div>
 				<div><button>팔로우 하기</button></div>
 			</div>

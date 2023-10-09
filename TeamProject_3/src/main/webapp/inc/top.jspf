@@ -20,12 +20,14 @@
     cursor: pointer;
 }
 .menu label::before{ content: '\e5d2'; }
-.menu li:nth-child(1) a::before{ content: '\e7fd'; }
-.menu li:nth-child(2) a::before{ content: '\e87d'; }
-.menu li:nth-child(3) a::before{ content: '\e0ca'; }
-.menu li:nth-child(4) a::before{ content: '\e866'; }
-.menu li:nth-child(5) a::before{ content: '\e8b8'; }
-.menu li:nth-child(6) a::before{ content: '\e9ba'; }
+.menu li:nth-child(1) a::before{ content: '\ea77'; }
+.menu li:nth-child(2) a::before{ content: '\e7fe'; }
+.menu li:nth-child(3) a::before{ content: '\e7fd'; }
+.menu li:nth-child(4) a::before{ content: '\e87d'; }
+.menu li:nth-child(5) a::before{ content: '\e0ca'; }
+.menu li:nth-child(6) a::before{ content: '\e866'; }
+.menu li:nth-child(7) a::before{ content: '\e8b8'; }
+.menu li:nth-child(8) a::before{ content: '\e9ba'; }
 
 #expand-menu { /* 체크박스 폼 요소 감춤 */
     display: none;
@@ -54,6 +56,9 @@
 	position: absolute;
 	background: white;
 	text-align: center;
+}
+.menu li:nth-child(3) {
+	margin-bottom: 0;
 }
 .menu a:hover {
     color: white;
@@ -115,12 +120,18 @@
 		<label for="expand-menu"><div></div></label>
     <input type="checkbox" id="expand-menu" name="expand-menu">
     <ul>
+    	<%-- <c:if  test="${}"> --%>
+    	<li><a href="#" class="item"><div>로그인</div></a></li>
+    	<li><a href="#" class="item"><div>회원가입</div></a></li>
+    	<%-- 	</c:if> --%>
+    	<%-- <c:if  test="${}"> --%>
         <li><a href="#" class="item"><div>마이페이지</div></a></li>
         <li><a href="#" class="item"><div>구독</div></a></li>
         <li><a href="#" class="item"><div>메시지</div></a></li>
         <li><a href="#" class="item"><div>북마크</div></a></li>
         <li><a href="#" class="item"><div>설정</div></a></li>
         <li><a href="#" class="item"><div>로그아웃</div></a></li>
+        <%-- 	</c:if> --%>
     </ul>
 	
 	</div>

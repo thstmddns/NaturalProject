@@ -32,45 +32,47 @@
 			<div id="cate">
 				<div>
 					<li style="font-size:1.0em; margin-bottom:5px; color:#6e6e6e;">개발·프로그래밍</li>
-					<li><input type="checkbox">웹 개발</li>
-					<li><input type="checkbox">프론트엔드</li>
-					<li><input type="checkbox" >백엔드</li>
-					<li><input type="checkbox">풀스택</li>
-					<li><input type="checkbox">데이터베이스</li>
+					<li><input type="checkbox" value="웹 개발">웹 개발</li>
+					<li><input type="checkbox" value="프론트엔드">프론트엔드</li>
+					<li><input type="checkbox" value="백엔드">백엔드</li>
+					<li><input type="checkbox" value="풀스택">풀스택</li>
+					<li><input type="checkbox" value="데이터베이스">데이터베이스</li>
 				</div>
 				<div>
 					<li style="font-size:1.0em; margin-bottom:5px; color:#6e6e6e;">보안·네트워크</li>
-					<li><input type="checkbox">보안</li>
-					<li><input type="checkbox">네트워크</li>
-					<li><input type="checkbox">시스템</li>
-					<li><input type="checkbox">클라우드</li>
-					<li><input type="checkbox">블록체인</li>
+					<li><input type="checkbox" value="보안">보안</li>
+					<li><input type="checkbox" value="네트워크">네트워크</li>
+					<li><input type="checkbox" value="시스템">시스템</li>
+					<li><input type="checkbox" value="클라우드">클라우드</li>
+					<li><input type="checkbox" value="블록체인">블록체인</li>
 				</div>
 				<div>
 					<li style="font-size:1.0em; margin-bottom:5px; color:#6e6e6e;">데이터 사이언스</li>
-					<li><input type="checkbox">데이터 분석</li>
-					<li><input type="checkbox">인공지능</li>
-					<li><input type="checkbox">데이터 시각화</li>
-					<li><input type="checkbox">데이터 수집·처리</li>
-					<li><input type="checkbox">자격증</li>
+					<li><input type="checkbox" value="데이터 분석">데이터 분석</li>
+					<li><input type="checkbox" value="인공지능">인공지능</li>
+					<li><input type="checkbox" value="데이터 시각화">데이터 시각화</li>
+					<li><input type="checkbox" value="데이터 수집·처리">데이터 수집·처리</li>
+					<li><input type="checkbox" value="자격증">자격증</li>
 				</div>
 				<div>
 					<li style="font-size:1.0em; margin-bottom:5px; color:#6e6e6e;">하드웨어</li>
-					<li><input type="checkbox">컴퓨터 구조</li>
-					<li><input type="checkbox">반도체</li>
-					<li><input type="checkbox">로봇공학</li>
-					<li><input type="checkbox">모빌리티</li>
-					<li><input type="checkbox">자격증</li>
+					<li><input type="checkbox" value="컴퓨터 구조">컴퓨터 구조</li>
+					<li><input type="checkbox" value="반도체">반도체</li>
+					<li><input type="checkbox" value="로봇공학">로봇공학</li>
+					<li><input type="checkbox" value="모빌리티">모빌리티</li>
+					<li><input type="checkbox" value="자격증">자격증</li>
 				</div>
 				<div>
 					<li style="font-size:1.0em; margin-bottom:5px; color:#6e6e6e;">비즈니스·마케팅</li>
-					<li><input type="checkbox">오피스</li>
-					<li><input type="checkbox">마케팅</li>
-					<li><input type="checkbox">업무 자동화</li>
-					<li><input type="checkbox">경영</li>
-					<li><input type="checkbox">자격증</li>
+					<li><input type="checkbox" value="오피스">오피스</li>
+					<li><input type="checkbox" value="마케팅">마케팅</li>
+					<li><input type="checkbox" value="업무 자동화">업무 자동화</li>
+					<li><input type="checkbox" value="경영">경영</li>
+					<li><input type="checkbox" value="자격증">자격증</li>
 				</div>	
-			</div>
+			</div>	
+			
+		<div>
 			<li style="font-size: 18px; margin-bottom: 15px">내용 입력</li>
 			<li><textarea name="content" id="content"></textarea></li>
 		</ul>

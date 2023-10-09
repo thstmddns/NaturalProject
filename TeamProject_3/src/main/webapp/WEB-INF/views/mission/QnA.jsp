@@ -28,9 +28,9 @@
 		<ul>
 			<li class="subject">미션 명</li>
 			<li style="font-size: 18px; margin-top: 60px;">QnA 제목</li>		
-			<li style="margin: 15px 0 60px 0;"><input type="text" name="subject"  placeholder="&nbsp;&nbsp;&nbsp;제목을 입력해주세요."/></li>
+			<li style="margin: 15px 0 60px 0;"><input type="text" name=""  placeholder="&nbsp;&nbsp;&nbsp;제목을 입력해주세요."/></li>
 			<li style="font-size: 18px; margin-bottom: 15px">QnA 내용 입력</li>
-			<li><textarea name="content" id="content"></textarea></li>
+			<li><textarea name="" id="content"></textarea></li>
 		</ul>
 	
 	</form>

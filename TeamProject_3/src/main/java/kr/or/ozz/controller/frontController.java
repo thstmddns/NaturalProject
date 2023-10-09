@@ -101,4 +101,14 @@ public class frontController {
 	public String missionView() {
 		return "mission/missionView";
 	}
+	
+	@GetMapping("/missionStep")
+	public String missionStep() {
+		return "mission/missionStep";
+	}
+	
+	@GetMapping("/missionMake")
+	public String missionMake() {
+		return "mission/missionMake";
+	}
 }
