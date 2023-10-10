@@ -17,7 +17,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		String logStatus = (String) session.getAttribute("logStatus");
 
 		if (userid == null || logStatus == null || userid.equals("") || !logStatus.equals("Y")) {
-			response.sendRedirect("#");
+
+			response.sendRedirect("/ozz/register/login");
+
 			return false;
 		}
 		

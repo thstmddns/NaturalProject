@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
+
 <footer>
     <div style="justify-content: flex-start; align-items: center; gap: 30px; display: flex">
         <div style="color: #222A2F; font-size: 28px; word-wrap: break-word">OZZ</div>
@@ -19,3 +20,4 @@
     	</div>
 </footer>
 </html>
+

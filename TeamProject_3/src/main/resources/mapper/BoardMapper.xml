@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ozz.dao.BoardDAO">
+	<insert id="BoardwriteOk">
+		insert into t_board(board_no, board_title, board_content, created_at, hit, userid, file_name, work_cate)
+		values(com_no_seq.nextval, #{board_title}, #{board_content}, sysdate, 0, #{userid}, #{file_name}, #{work_cate})
+	</insert>
+	
+	<select id="Boardlist" resultType="kr.or.ozz.dto.BoardDTO">
+		SELECT * FROM
+         (SELECT * FROM
+            (SELECT board_no, board_title, board_content, to_char(created_at, 'MM-DD HH:MI') created_at, hit, userid, file_name, work_cate FROM t_board
+            <!-- 검색어가 있을 때 -->
+            <if test="searchWord != null">
+            	where ${searchKey} like '%${searchWord}%'
+            </if>
+            ORDER BY board_no DESC)
+         WHERE <![CDATA[rownum <= ${nowPage * onePageRecord}]]>
+         ORDER BY board_no ASC)
+      WHERE <![CDATA[rownum <= ${lastPageRecord}]]>
+      ORDER BY board_no DESC
+	</select>
+	
+	<select id="totalRecord" resultType="int">
+		select count(board_no) cnt from t_board
+		<if test="searchWord != null">
+			where ${searchKey} like '%${searchWord}%'
+		</if>
+	</select>
+	<select id="getBoard" resultType="kr.or.ozz.dto.BoardDTO">
+		select board_no, userid, board_title, work_cate, board_content, created_at, file_name, hit
+		from t_board
+		where board_no = ${param1}
+	</select>
+	<update id="hitCount">
+		update t_board set hit=hit+1 where board_no=${param1}
+	</update>
+	<update id="BoardEdit">
+		update t_board set board_title=#{board_title}, board_content=#{board_content}, file_name=#{file_name},
+		work_cate=#{work_cate}, created_at=sysdate
+		where board_no=${board_no} and userid=#{userid}
+	</update>
+	<delete id="BoardDel">
+		delete from t_board where board_no=${param1} and userid=#{param2}
+	</delete>
+</mapper>

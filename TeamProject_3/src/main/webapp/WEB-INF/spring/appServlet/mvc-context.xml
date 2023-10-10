@@ -9,7 +9,23 @@
 	
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="#"/>
+			<mvc:mapping path="/Qna/Qnawrite"/>
+			<mvc:mapping path="/Qna/QnawriteOk"/>
+			<mvc:mapping path="/Qna/QnaEdit"/>
+			<mvc:mapping path="/Qna/QnaEditOk"/>
+			<mvc:mapping path="/Qna/QnaDel"/>
+			
+			<mvc:mapping path="/Mission/Missionwrite"/>
+			<mvc:mapping path="/Mission/MissionwriteOk"/>
+			<mvc:mapping path="/Mission/MissionEdit"/>
+			<mvc:mapping path="/Mission/MissionEditOk"/>
+			<mvc:mapping path="/Mission/MissionDel"/>
+			
+			<mvc:mapping path="/Step/Stepwrite"/>
+			<mvc:mapping path="/Step/StepwriteOk"/>
+			<mvc:mapping path="/Step/StepEdit"/>
+			<mvc:mapping path="/Step/StepEditOk"/>
+			<mvc:mapping path="/Step/StepDel"/>
 			<bean class="kr.or.ozz.LoginInterceptor"></bean>
 		</mvc:interceptor>
 	</mvc:interceptors>	

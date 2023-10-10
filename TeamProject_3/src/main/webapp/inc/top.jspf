@@ -6,9 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>main</title>
+
 <script src="https://kit.fontawesome.com/9f692e76bf.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="/ozz/inc/style.css" type="text/css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 </head>
 <style>
 	.menu ::before{
@@ -104,6 +106,7 @@
 }
 </style>
 
+<<<<<<< HEAD
 <header>
     <div style="font-size: 32px;  font-weight: 400; word-wrap: break-word; margin-left:60px; padding-top:5px;">OZZ</div>
     <ul style="justify-content: center; align-items: center; gap: 20px; display: flex;">
@@ -136,3 +139,36 @@
 	
 	</div>
 </header>
+=======
+
+
+	<nav>
+		<div>
+			<li><a href="/ozz/mypage/mypage_main"><button>마이페이지</button></a></li>
+			<li><a href="/ozz"><button>메인</button></a></li>
+		    <li><div class="element-wrapper">
+                <div class="element"><a href="/ozz/register/registerJoin">회원가입</a></div>
+            </div>
+			</li>
+
+		
+		<c:if test="${not empty logId}">
+		    <div class="div-wrapper">
+		        <div class="element"><a href="/ozz/register/logout">로그아웃</a></div>
+		    </div>
+		</c:if>
+		
+	    <div id="welcomeMessage">
+	        <% if (session.getAttribute("logStatus") != null && session.getAttribute("logStatus").equals("Y")) { %>
+	            <p><span id="userid"><%= session.getAttribute("logId") %></span>님, 환영합니다.</p>
+	        <% } else { %>
+	            	<div class="div-wrapper">
+			        <div class="element"><a href="/ozz/register/login">로그인</a></div>
+			    </div>
+	        <% } %>
+    	</div>
+    	
+    	</div>
+	</nav>
+	
+>>>>>>> a033add6c356c649c0791ade45fc63ba51428a30

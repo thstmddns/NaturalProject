@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ozz.dao.QReplyDAO">
+	<insert id="replyInsert">
+		insert into t_qna_reply(qnr_no, qna_no, coment, userid, created_at)
+		values (qnr_no_seq.nextval, ${qna_no}, #{coment}, #{userid}, sysdate)
+	</insert>
+	
+	<select id="replySelect" resultType="kr.or.ozz.dto.QReplyDTO">
+		select qnr_no, coment, userid, created_at
+		from t_qna_reply where qna_no=${param1}
+		order by qnr_no desc
+	</select>
+	<update id="replyUpdate">
+		update t_qna_reply set coment=#{coment} where qnr_no=${qnr_no}
+	</update>
+	<delete id="replyDelete">
+		delete from t_qna_reply where qnr_no=${param1}
+	</delete>
+</mapper>
