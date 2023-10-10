@@ -112,7 +112,7 @@
 		<div>
 			<li class="title" style="margin-bottom: 10px;">스텝</li>
 			<ul id="step-list"></ul>
-			<button class="plus" style="margin-bottom: 50px;">+  스텝 추가하기</button>
+			<button class="plus" id="addStep" style="margin-bottom: 50px;">+  스텝 추가하기</button>
 		</div>
 		
 		<div id="stepPlus">
@@ -132,7 +132,7 @@
 				<li><input type="text" name="" placeholder="설명을 입력해주세요."></li>
 				<button class="removeButton" style="background:white; border:none;"><img src="<%= request.getContextPath()%>/img/Variant5.jpg"/></button>
 			</div>
-			<button class="plus">+  태스크 추가하기</button>
+			<button class="plus" id="addTask">+  태스크 추가하기</button>
 		</div>
 	</form>
 
@@ -207,4 +207,44 @@
 	    	$(this).closest("div").remove();
 	        }
 	  });
+    
+    	$(document).ready(function(){
+    		$(document).on("click", "#addStep", function() {
+    			 event.preventDefault(); 
+    			
+    			var tag = "<div id='stepPlus' style='margin-top: 60px;'>";
+     			tag += "<li class='title'>스텝 제목</li>";
+     			tag += "<li><input type='text' name='' placeholder='제목을 입력해주세요.'></li>";
+     			tag += "<li class='title' style='margin-bottom:0;'>소요 시간</li>";
+     			tag += "<li><input type='text' placeholder='00' class='totalTime' name=''>";
+    			tag += "<span style='margin: 0 10px'>시간</span>";
+    			tag += "<input type='text' placeholder='00'  class='totalTime' name=''>";
+    			tag += "<span style='margin: 0 10px'>분 소요</span></li>";
+    			tag += "<div class='task'>";
+    			tag += "<li class='title'>태스크 제목</li>";
+    			tag += "<li><input type='text' name='' placeholder='태스크 제목을 입력해주세요.''></li>";
+    			tag += "<li class='title' style='margin-bottom:0;'>태스크 내용</li>";
+    			tag += "<li><input type='text' name='' placeholder='설명을 입력해주세요.'></li>";
+    			tag += '<button class="removeButton" style="background:white; border:none;"><img src="<%= request.getContextPath()%>/img/Variant5.jpg"/></button></div>';
+    			tag += "<button class='plus'>+  태스크 추가하기</button>";
+    				
+    			$("#stepPlus").append(tag);
+    		})
+    	});
+    	
+    	$(document).ready(function(){
+    		$(document).on("click", "#addTask", function() {
+    			 event.preventDefault(); 
+    			
+    			var tag = "<div class='task' style='margin-top:20px;'>";
+    			tag += "<li class='title'>태스크 제목</li>";
+    			tag += "<li><input type='text' name='' placeholder='태스크 제목을 입력해주세요.''></li>";
+    			tag += "<li class='title' style='margin-bottom:0;'>태스크 내용</li>";
+    			tag += "<li><input type='text' name='' placeholder='설명을 입력해주세요.'></li>";
+    			tag += '<button class="removeButton" style="background:white; border:none;"><img src="<%= request.getContextPath()%>/img/Variant5.jpg"/></button></div>'
+    				
+    			$("#stepPlus").append(tag);
+    		})
+    	});
+    
 </script>
