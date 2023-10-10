@@ -177,6 +177,29 @@ a:link, a:visited, a:hover{
 	margin-top:10px; 
 	padding:0 10 10 10px; 
 }
+.keywordTag input[type="checkbox"] {
+	display:none;
+}
+.keywordTag input[type="checkbox"]+ label {
+	display: inline-block; 
+	width:auto; 
+	height: auto; 
+	cursor: pointer; 
+	border-radius: 3px;
+	color: #869AAF;
+	background-color: white;
+	border: #869AAF solid 0.5px; 
+	border-radius: 1000px;
+	padding: 6px 12px; 
+	justify-content: flex-start; 
+	align-items: center;
+	gap: 6px; 
+}
+.keywordTag input[type="checkbox"]:checked + label {
+	background-color: #52B0C5;
+	border-color: #52B0C5;
+	color: white;
+}
 #keyword {
 	color: #869AAF;
 	background-color: white;

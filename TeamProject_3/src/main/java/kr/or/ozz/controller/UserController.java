@@ -32,7 +32,7 @@ public class UserController {
 	// 회원가입 폼으로 이동
 	@GetMapping("/registerJoin")
 	public String UserRegForm() {
-		return "register/registerJoin";
+		return "register/registerForm";
 	}
 	
 	// 회원가입

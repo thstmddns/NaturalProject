@@ -106,7 +106,7 @@
 }
 </style>
 
-<<<<<<< HEAD
+
 <header>
     <div style="font-size: 32px;  font-weight: 400; word-wrap: break-word; margin-left:60px; padding-top:5px;">OZZ</div>
     <ul style="justify-content: center; align-items: center; gap: 20px; display: flex;">
@@ -123,23 +123,26 @@
 		<label for="expand-menu"><div></div></label>
     <input type="checkbox" id="expand-menu" name="expand-menu">
     <ul>
-    	<%-- <c:if  test="${}"> --%>
-    	<li><a href="#" class="item"><div>로그인</div></a></li>
-    	<li><a href="#" class="item"><div>회원가입</div></a></li>
-    	<%-- 	</c:if> --%>
-    	<%-- <c:if  test="${}"> --%>
+    	<% if (session.getAttribute("logStatus") != null && session.getAttribute("logStatus").equals("Y")) { %>
+	    <p><span id="userid"><%= session.getAttribute("logId") %></span>님, 환영합니다.</p>
+	     <% } %>
+    	<c:if test="${empty logId}">
+    	<li><a href="/ozz/register/login" class="item"><div>로그인</div></a></li>
+    	<li><a href="/ozz/register/registerJoin" class="item"><div>회원가입</div></a></li>
+    	</c:if>
+    	<c:if test="${not empty logId}">
         <li><a href="#" class="item"><div>마이페이지</div></a></li>
         <li><a href="#" class="item"><div>구독</div></a></li>
         <li><a href="#" class="item"><div>메시지</div></a></li>
         <li><a href="#" class="item"><div>북마크</div></a></li>
         <li><a href="#" class="item"><div>설정</div></a></li>
         <li><a href="#" class="item"><div>로그아웃</div></a></li>
-        <%-- 	</c:if> --%>
+       </c:if> 
     </ul>
 	
 	</div>
 </header>
-=======
+
 
 
 	<nav>
@@ -171,4 +174,4 @@
     	</div>
 	</nav>
 	
->>>>>>> a033add6c356c649c0791ade45fc63ba51428a30
+
