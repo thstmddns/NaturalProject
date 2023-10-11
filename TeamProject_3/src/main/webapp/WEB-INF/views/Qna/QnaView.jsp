@@ -12,7 +12,7 @@
 		//댓글목록 가져오기
 		function replyAllList(){
 			$.ajax({
-				url:'/ozz/Qreply/replyList',
+				url:'/ozz/reply/replyList',
 				data:{
 					qna_no:${dto.qna_no} //원글 글 번호
 				},
@@ -67,7 +67,7 @@
 			
 			//2. ajax실행
 			$.ajax({
-				url:'/ozz/Qreply/replyWrite',
+				url:'/ozz/reply/replyWrite',
 				type:'POST',
 				data:params,
 				success:function(result){
@@ -94,7 +94,7 @@
 			var params = $(this).parent().serialize(); //re_no=88&coment=asdasd
 			
 			$.ajax({
-				url : '/ozz/Qreply/replyEditOk',
+				url : '/ozz/reply/replyEditOk',
 				data : params,
 				type : 'POST',
 				success : function(result){
@@ -118,7 +118,7 @@
 			//		attr('title'), attr('title','200')
 			var qnr_no = $(this).attr('title')
 			$.ajax({
-				url:"/ozz/Qreply/replyDel",
+				url:"/ozz/reply/replyDel",
 				data : {
 					qnr_no:qnr_no
 				},
@@ -150,7 +150,7 @@
 		<li>제목 : ${dto.qna_title}</li>
 		<li>글내용<br/>
 			${dto.qna_content}</li>
-		<li>조회수 : ${dto.hit}</li>
+		
 		<li>${dto.file_name}</li>
 	</ul>
 	<div>

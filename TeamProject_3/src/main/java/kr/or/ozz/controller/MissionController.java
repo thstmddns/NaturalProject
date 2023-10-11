@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.or.ozz.dto.ReplyDTO;
+
 import kr.or.ozz.dto.MissionDTO;
 import kr.or.ozz.dto.PagingDTO;
 import kr.or.ozz.dto.QnaDTO;
@@ -84,7 +86,7 @@ public class MissionController {
 	@GetMapping("/Missionwrite")
 	public ModelAndView Missionwrite() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("Mission/Missionwrite");
+		mav.setViewName("mission/missionMake");
 		return mav;
 	}
 
@@ -121,7 +123,7 @@ public class MissionController {
 		// 등록결과에 따른 스크립트 생성하기
 		String tag = "<script>";
 		if (result > 0) { // 성공 -> 게시판 목록
-			tag += "location.href='/ozz/Mission/Missionlist';";
+			tag += "location.href='/ozz/main/mainMission';";
 		} else { // 실패 -> 글 등록 폼으로 이동
 			tag += "alert('글 등록이 실패하였습니다.');";
 			tag += "history.back();";
@@ -200,4 +202,16 @@ public class MissionController {
 		}
 		return mav;
 	}
+	
+	/*
+	 * // 리뷰 등록
+	 * 
+	 * @PostMapping("/review/reviewWrite") public String reviewWrite(ReplyDTO dto,
+	 * HttpSession session) { // session 글쓴이 구하기
+	 * dto.setUserid((String)session.getAttribute("logId"));
+	 * 
+	 * int result = service.replyInsert(dto);
+	 * 
+	 * return result+""; }
+	 */
 }

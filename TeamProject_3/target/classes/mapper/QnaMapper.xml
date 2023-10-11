@@ -18,6 +18,7 @@
 		SELECT * FROM
          (SELECT * FROM
             (SELECT qna_no, mission_no, qna_title, userid, to_char(created_at, 'MM-DD HH:MI') created_at, file_name, hit FROM t_qna
+
             <!-- 검색어가 있을 때 -->
             <if test="searchWord != null">
             	where ${searchKey} like '%${searchWord}%'
@@ -40,16 +41,13 @@
 		</if>
 	</select>
 	<select id="getQna" resultType="kr.or.ozz.dto.QnaDTO">
-		select qna_no, userid, qna_title, qna_content, created_at, file_name, hit
+		select qna_no, userid, qna_title, qna_content, created_at, file_name
 		from t_qna
 		where qna_no = ${param1}
 	</select>
 	<update id="QnaEdit">
 		update t_qna set qna_title=#{qna_title}, qna_content=#{qna_content}, created_at=sysdate
 		where qna_no=${qna_no} and userid=#{userid}
-	</update>
-	<update id="hitCount">
-		update t_qna set hit=hit+1 where qna_no=${param1}
 	</update>
 	<delete id="QnaDel">
 		delete from t_qna where qna_no=${param1} and userid=#{param2}

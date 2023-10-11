@@ -9,8 +9,8 @@
         <ul>
             <li>아이디 : <input type="text" name="userid" value="${dto.userid}" /></li>
             <button type="button" id="dupChk">아이디 중복 확인</button>
-            <li>비밀번호 : <input type="password" id="pwd"></li>
-            <li>비밀번호 확인 : <input type="password" id="pwd2"></li> 
+            <li>비밀번호 : <input type="password" name="pwd" id="pwd">></li>
+            <li>비밀번호 확인 : <input type="password" name="pwd2" id="pwd2"></li> 
             <li>이름 : <input type="text" name="username" value="${dto.username}" /></li>
             <li>이메일 : <input type="email" name="email" value="${dto.email}" /></li>
             <li>경력 : <input type="text" name="years" value="${dto.years}" /></li>

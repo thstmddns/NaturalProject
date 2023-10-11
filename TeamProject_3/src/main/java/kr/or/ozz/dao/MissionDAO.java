@@ -20,4 +20,6 @@ public interface MissionDAO {
 	public int MissionEdit(MissionDTO dto);
 	//미션 삭제(delete)
 	public int MissionDel(int no, String userid);
+	// 인기미션 가져오기
+	public List<MissionDTO> MissionToplist();
 }

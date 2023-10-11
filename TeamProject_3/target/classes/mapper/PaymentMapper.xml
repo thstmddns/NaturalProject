@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ozz.dao.PaymentDAO">
+	<select resultType="int" id="GetPayment">
+		select * from t_payment
+		where userid=#{param1}
+	</select>
+	<insert id="insertPayment">
+		insert into t_payment(payno, userid, suboption, payamount)
+		values(payno_seq.nextval, #{userid}, ${suboption}, #{payamount})
+	</insert>
+	
+	<select id="getUserPayment" resultType="kr.or.ozz.dto.PaymentDTO">
+		select * from t_payment
+		where userid=#{param1}
+	</select>
+	
+</mapper>

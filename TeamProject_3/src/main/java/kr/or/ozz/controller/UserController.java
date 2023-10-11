@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -31,14 +32,14 @@ public class UserController {
 	// 회원가입 폼으로 이동
 	@GetMapping("/registerJoin")
 	public String UserRegForm() {
-		return "register/registerJoin";
+		return "register/registerForm";
 	}
 	
 	// 회원가입
 	@PostMapping("/registerJoinOk")
 	public ModelAndView UserRegOk(UserDTO dto) {
+	    
 	    System.out.println(dto.toString());
-
 	    // DB에 insert
 	    int result = 0;
 	    try {
@@ -51,7 +52,7 @@ public class UserController {
 	    if (result > 0) {
 	        mav.setViewName("redirect:/"); // 회원가입 성공 시 홈 페이지로 리다이렉트
 	    } else {
-	        mav.setViewName("registerJoin"); // 회원가입 실패 시 회원가입 폼으로 이동
+	        mav.setViewName("register/registerForm"); // 회원가입 실패 시 회원가입 폼으로 이동
 	    }
 	    
 	    return mav; // ModelAndView 객체를 반환
@@ -79,7 +80,7 @@ public class UserController {
 	         session.setAttribute("logName", dto.getUsername());
 	         session.setAttribute("logStatus", "Y");
 	         
-	         mav.setViewName("redirect:/");
+	         mav.setViewName("main/landing");
 	      }else { //실패
 	         //로그인 폼으로 이동하기
 	         mav.setViewName("redirect:login");
@@ -100,7 +101,7 @@ public class UserController {
 	// 아이디 찾기 화면으로 이동 -> 완료
 	@GetMapping("/findId")
 	public String findIdForm() {
-		return "register/findId";
+		return "register/idSearch";
 	}
 	
 	// 아이디 찾아서 아이디만 반환
@@ -163,7 +164,7 @@ public class UserController {
 	// 비밀번호 찾기 페이지 이동 -> 완료
 	@GetMapping("/findPw")
 	public String findPwdForm() {
-		return "register/findPw";
+		return "register/pwSearch";
 	}
 
 	// 비밀번호 찾기 -> 완료
@@ -199,4 +200,13 @@ public class UserController {
 		}
 		return result;
 	}
-}
+	
+	// 카카오로그인이동
+	@GetMapping("/kakaologin")
+	public String kakaologin() {
+		return "register/kakaologin";
+	}
+	
+
+	}
+

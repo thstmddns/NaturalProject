@@ -45,4 +45,13 @@
 	<delete id="MissionDel">
 		delete from t_mission where mission_no=${param1} and userid=#{param2}
 	</delete>
+	
+	<select id="MissionToplist" resultType="kr.or.ozz.dto.MissionDTO">
+   		<![CDATA[
+	      SELECT mission_no, mission_title, mission_tag, userid     
+	      FROM (SELECT t.* FROM t_mission t ORDER BY t.hit DESC)
+	      WHERE ROWNUM <= 10
+   		]]>
+	</select>
+	
 </mapper>

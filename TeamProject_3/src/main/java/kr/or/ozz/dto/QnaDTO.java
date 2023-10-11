@@ -10,8 +10,8 @@ public class QnaDTO {
 	private String qna_title;		// qna 제목
 	private String qna_content;		// qna 내용
 	private String created_at;		// qna 작성일
-	private int hit;				// qna 조회수
-	private byte[] file_name;		// qna 첨부파일명
 
+	private byte[] file_name;		// qna 첨부파일명
+	
 	private String file_name_base64;
 }

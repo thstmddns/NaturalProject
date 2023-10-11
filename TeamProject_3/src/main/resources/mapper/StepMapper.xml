@@ -16,15 +16,16 @@
 	<select id="getStep" resultType="kr.or.ozz.dto.StepDTO">
 		select step_no, mission_no, step, step_title, step_time, userid
 		from t_mission_step
-		where step_no = ${param1}
+		<!-- where mission_no = ${param1} -->
 	</select>
 	
+
 	<update id="StepEdit">
 		update t_mission_step set step=#{step}, step_title=#{step_title}, 
 		step_time=#{step_time}
 		where step_no=${step_no} and userid=#{userid}
 	</update>
-	<delete id="StepDel">
-		delete from t_mission_step where step_no=${param1} and userid=#{param2}
+	<delete id="MissionDel">
+		delete from t_mission where mission_no=${param1} and userid=#{param2}
 	</delete>
 </mapper>

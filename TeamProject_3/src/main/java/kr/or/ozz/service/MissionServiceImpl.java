@@ -48,4 +48,10 @@ public class MissionServiceImpl implements MissionService{
 	public int MissionDel(int no, String userid) {
 		return dao.MissionDel(no, userid);
 	}
+
+	@Override
+	public List<MissionDTO> MissionToplist(){
+	   return dao.MissionToplist();
+	   }
+
 }
