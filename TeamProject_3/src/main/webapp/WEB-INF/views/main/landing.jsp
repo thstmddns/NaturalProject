@@ -4,7 +4,9 @@
 	<div id="landing">
 	    <div style="flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 20px; display: inline-flex;">
 	        <div style="margin-top: 10px;"><span style="color: #222A2F; font-size: 30px; word-wrap: break-word;">어떻게 일 할까 고민될 땐,<br/></span><span style="color: #222A2F; font-size: 40px; word-wrap: break-word">워크레시피 Ozz!</span></div>
-	            <button id="landBtn">회원가입하기</button>
+	            <c:if test="${empty logId}">
+	            <button id="landBtn" onclick="location.href='<%=request.getContextPath() %>/register/registerJoin'">회원가입하기</button>
+	            </c:if>
 	    </div>
 	    <div id="landingImage" style="display:flex; margin-left:90px;">
 	        <div style="position:absolute"><img src="<%= request.getContextPath() %>/img/Ellipse.png" style="width: 115.45px; height: 115.45px;"/>
@@ -17,6 +19,7 @@
 	
 	<div class="search"><input type="text" id="searchLand" placeholder="지금 어떤 업무 도움이 필요하신가요?"/>
 	<button id="landBtn2">검색하기</button></div>
+	<c:if test="${not empty logId}">
 	<div id="landInfo">
 		 <div>
 		 	<li style="font-size:2em; margin-bottom: 10px;">0</li>
@@ -31,6 +34,7 @@
 		 	<li>회원 수</li>
 		 </div>
 	</div>
+	</c:if>
 	
 	<div id="landImage2">
 		<div>
@@ -52,21 +56,21 @@
 		</div>
 	</div>
 	
+	<c:if test="${not empty logId}">
 	<div style="margin-top:90px;">
 		<span style="font-size:1.6em;">진행 중인 미션</span>
-		<span><a style="font-size:0.8em; color: #869AAF; float:right;">더보기 ></a></span>
+		<span><a href="/ozz/mypage/mypage_main" style="font-size:0.8em; color: #869AAF; float:right;">더보기 ></a></span>
 	</div>
 	<div id="mIng">
 		<div id="ingList">
+			<c:forEach items="${participatingChallenges}" var="mission">
 			<div class="ingM">
-				<li>PM을 위한 데이터 리터러시</li>
-				<li>
-					<span>진행률 20%</span>
-					<span>남은 스텝 수 00개</span>
-				</li>
-				<li>프로그래스바</li>
-				<li><button>이어서 진행하기</button></li>
+		            <li>${mission.mission_title}</li>
+		            <li>${mission.achievementRate}%<span>남은 스텝 수 00개</span></li>
+		            <li><progress id="progress" value="${mission.achievementRate}" min="0" max="100" style="margin: 5px 0 8px 0;"></progress></li>
+		            <li><button>이어서 진행하기</button></li>
 			</div>
+		    </c:forEach>
 		</div>
 		<div id="ingList">
 			<div class="ingM">
@@ -75,7 +79,7 @@
 					<span>진행률 20%</span>
 					<span>남은 스텝 수 00개</span>
 				</li>
-				<li>프로그래스바</li>
+				<li><progress id="progress" value="20" min="0" max="100" style="margin: 5px 0 8px 0;"></progress></li>
 				<li><button>이어서 진행하기</button></li>
 			</div>
 		</div>
@@ -86,7 +90,7 @@
 					<span>진행률 20%</span>
 					<span>남은 스텝 수 00개</span>
 				</li>
-				<li>프로그래스바</li>
+				<li><progress id="progress" value="20" min="0" max="100" style="margin: 5px 0 8px 0;"></progress></li>
 				<li><button>이어서 진행하기</button></li>
 			</div>
 		</div>
@@ -143,7 +147,7 @@
 	
 	
 		<div id="popM">
-			<li style="font-size:1.6em">주간 인기 미션 Top 10</li>
+			<li style="font-size:1.6em">인기 미션 Top 10</li>
 			<li style="color: #869AAF; margin-top:5px; font-size:0.9em">지금 가장 많이 도전하고 있는 미션</li>
 		</div>
 		<div id="popMList">
@@ -185,6 +189,7 @@
 			</div>
 		</div>
 	</div>
+	</c:if>
 	
 	<div id="popMas">
 		<div style="font-size:1.6em; margin: 90px 0 35px 0">이 달의 마스터</div>

@@ -23,7 +23,7 @@
 			<li><input type="text" name="userid" id="userid" /></li>
 			<button type="button" id="dupChk">아이디 중복 확인</button>
 			<div id="dupCheckResult" style="margin-top: 10px;"></div>
-			<li style="margin: 30px 0 0 10px;">이메일</li>
+			<li style="margin: 30px 0 0 10px; font-size: 1.0em;">이메일</li>
 			<li><input type="text" name="email" id="email" /></li>
 			<li style="margin-top: 30px; font-size: 16px;">비밀번호</li>
 			<li><input type="password" name="pwd" id="pwd"/></li>
@@ -49,23 +49,15 @@
 			</select></li>
 			<li style="margin-top: 30px;">어떤 업무에 관심을 갖고 계신가요?</li>
 			<li style="color: #869AAF; font-size:13px;  margin-top:13px;">관심 있는 주제를 선택해서 오즈를 맞춤 설정해보세요.<li>
-			<li style="margin-top: 30px;">키워드</li>
-			<div class="keywordTag">
-			<input type="checkbox" id="keyword" name="javascript">
-			<label for="check"><span># javascript</span></label>
-			<input type="checkbox" id="keyword" name="react">
-			<label for="check"><span># react</span></label>
-			<input type="checkbox" id="keyword" name="java">
-			<label for="check"><span># java</span></label>
-			<input type="checkbox" id="keyword" name="python">
-			<label for="check"><span># python</span></label>
-			<input type="checkbox" id="keyword" name="c,c++">
-			<label for="check"><span># c, c++</span></label>
-			<input type="checkbox" id="keyword" name="typescript">
-			<label for="check"><span># typescript</span></label>
-			</br><input type="checkbox"  id="keyword" style="margin-top:10px" name="next.js">
-			<label for="check"><span># next.js</span></label>
-			</div>
+			<li><select class="select" name="concern" id="concern" title="관심사를 선택해주세요" style="width:100%; height:40px; border-radius: 6px; border: 1px #DAE2EB solid; color:#6e6e6e">
+			    <option value="">관심사를 선택해주세요</option>
+			    <option value="Pthyon"># Pthyon</option>
+			    <option value="JavaScript"># JavaScript</option>
+			    <option value="Spring"># Spring</option>
+			    <option value="React"># React</option>
+			    <option value="Kotlin"># Kotlin</option>
+			    <option value="Docker"># Docker</option>
+			</select></li>
 			<li><input type="submit" value="회원가입" class="registerBtn"/></li>
 	</form>
 	<form method="post" action="/register/kakaoJoinOk">

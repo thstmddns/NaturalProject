@@ -42,70 +42,70 @@
 		<img src="<%= request.getContextPath()%>/img/__ (1).png"/> 이전으로 돌아가기
 		<span>
 			<button>임시저장</button>
-			<button>완료</button>		
+			<button type="submit" form="main">완료</button>		
 		</span>
 	</div>
 	
-	<form id="main">
+	<form id="main" method="post" action="/ozz/Mission/MissionwriteOk">
 		<div class="fileUpload">
 		<label class="file-label" for="chooseFile">파일 선택</label>
 		<input class="file" id="chooseFile" type="file" multiple>
 		</div>
 		<li class="title">미션 제목</li>
-		<li><input type="text" placeholder="제목을 입력해주세요." name=""></li>
+		<li><input type="text" placeholder="제목을 입력해주세요." name="mission_title" id="mission_title"></li>
 		<li class="title">미션 태그</li>
             <div class="form-group">
-            	<input type="hidden" value="" name="tag" id="rdTag" />
-            	<input type="text" id="tag" size="7" name="" placeholder="엔터로 해시태그를 등록해주세요." style="width: 180px;"/>
+            	<input type="hidden" value=""  name="mission_tag" id="mission_tag"/>
+            	<input type="text"   id="tag" size="7" placeholder="엔터로 해시태그를 등록해주세요." style="width: 180px;"/>
            </div>
              <ul id="tag-list"></ul>           
 		<li></li>
 		<li class="title">미션 재료</li>
-		<li><input type="text" placeholder="데이터를 입력해주세요." name="" style="margin-bottom:0 !important"></li>
-		<li><input type="text" placeholder="툴을 입력해주세요." name="" style="margin-top:5px !important"></li>	
+		<li><input type="text" placeholder="데이터를 입력해주세요." name="mission_data" id="mission_data" style="margin-bottom:0 !important"></li>
+		<li><input type="text" placeholder="툴을 입력해주세요." name="mission_tool" id="mission_tool" style="margin-top:5px !important"></li>	
 		<li class="title">미션 소개</li>
-		<textarea cols="98" rows="5" name="" style="resize:none;"></textarea>
+		<textarea cols="96" rows="5" name="mission_content" id="mission_content" style="resize:none;" name="mission_content" id="mission_content"></textarea>
 		<li class="title">카테고리</li>
 		<div id="cate2">
 				<div>
 					<li style="font-size:1.0em; margin-bottom:5px; color:#6e6e6e;">개발·프로그래밍</li>
-					<li><input type="checkbox" value="웹 개발">웹 개발</li>
-					<li><input type="checkbox" value="프론트엔드">프론트엔드</li>
-					<li><input type="checkbox" value="백엔드">백엔드</li>
-					<li><input type="checkbox" value="풀스택">풀스택</li>
-					<li><input type="checkbox" value="데이터베이스">데이터베이스</li>
+					<li><input type="checkbox" name="mission_cate" id="mission_cate" value="웹 개발">웹 개발</li>
+					<li><input type="checkbox" name="mission_cate" id="mission_cate" value="프론트엔드">프론트엔드</li>
+					<li><input type="checkbox" name="mission_cate" id="mission_cate" value="백엔드">백엔드</li>
+					<li><input type="checkbox" name="mission_cate" id="mission_cate" value="풀스택">풀스택</li>
+					<li><input type="checkbox" name="mission_cate" id="mission_cate" value="데이터베이스">데이터베이스</li>
 				</div>
 				<div>
 					<li style="font-size:1.0em; margin-bottom:5px; color:#6e6e6e;">보안·네트워크</li>
-					<li><input type="checkbox" value="보안">보안</li>
-					<li><input type="checkbox" value="네트워크">네트워크</li>
-					<li><input type="checkbox" value="시스템">시스템</li>
-					<li><input type="checkbox" value="클라우드">클라우드</li>
-					<li><input type="checkbox" value="블록체인">블록체인</li>
+					<li><input type="checkbox" name="mission_cate" id="mission_cate" value="보안">보안</li>
+					<li><input type="checkbox" name="mission_cate" id="mission_cate" value="네트워크">네트워크</li>
+					<li><input type="checkbox" name="mission_cate" id="mission_cate" value="시스템">시스템</li>
+					<li><input type="checkbox" name="mission_cate" id="mission_cate" value="클라우드">클라우드</li>
+					<li><input type="checkbox" name="mission_cate" id="mission_cate" value="블록체인">블록체인</li>
 				</div>
 				<div>
 					<li style="font-size:1.0em; margin-bottom:5px; color:#6e6e6e;">데이터 사이언스</li>
-					<li><input type="checkbox" value="데이터 분석">데이터 분석</li>
-					<li><input type="checkbox" value="인공지능">인공지능</li>
-					<li><input type="checkbox" value="데이터 시각화">데이터 시각화</li>
-					<li><input type="checkbox" value="데이터 수집·처리">데이터 수집·처리</li>
-					<li><input type="checkbox" value="자격증">자격증</li>
+					<li><input type="checkbox" name="mission_cate" id="mission_cate" value="데이터 분석">데이터 분석</li>
+					<li><input type="checkbox" name="mission_cate" id="mission_cate" value="인공지능">인공지능</li>
+					<li><input type="checkbox" name="mission_cate" id="mission_cate" value="데이터 시각화">데이터 시각화</li>
+					<li><input type="checkbox" name="mission_cate" id="mission_cate" value="데이터 수집·처리">데이터 수집·처리</li>
+					<li><input type="checkbox" name="mission_cate" id="mission_cate" value="자격증">자격증</li>
 				</div>
 				<div>
 					<li style="font-size:1.0em; margin-bottom:5px; color:#6e6e6e;">하드웨어</li>
-					<li><input type="checkbox" value="컴퓨터 구조">컴퓨터 구조</li>
-					<li><input type="checkbox" value="반도체">반도체</li>
-					<li><input type="checkbox" value="로봇공학">로봇공학</li>
-					<li><input type="checkbox" value="모빌리티">모빌리티</li>
-					<li><input type="checkbox" value="자격증">자격증</li>
+					<li><input type="checkbox" name="mission_cate" id="mission_cate" value="컴퓨터 구조">컴퓨터 구조</li>
+					<li><input type="checkbox" name="mission_cate" id="mission_cate" value="반도체">반도체</li>
+					<li><input type="checkbox" name="mission_cate" id="mission_cate" value="로봇공학">로봇공학</li>
+					<li><input type="checkbox" name="mission_cate" id="mission_cate" value="모빌리티">모빌리티</li>
+					<li><input type="checkbox" name="mission_cate" id="mission_cate" value="자격증">자격증</li>
 				</div>
 				<div>
 					<li style="font-size:1.0em; margin-bottom:5px; color:#6e6e6e;">비즈니스·마케팅</li>
-					<li><input type="checkbox" value="오피스">오피스</li>
-					<li><input type="checkbox" value="마케팅">마케팅</li>
-					<li><input type="checkbox" value="업무 자동화">업무 자동화</li>
-					<li><input type="checkbox" value="경영">경영</li>
-					<li><input type="checkbox" value="자격증">자격증</li>
+					<li><input type="checkbox" name="mission_cate" id="mission_cate" value="오피스">오피스</li>
+					<li><input type="checkbox" name="mission_cate" id="mission_cate" value="마케팅">마케팅</li>
+					<li><input type="checkbox" name="mission_cate" id="mission_cate" value="업무 자동화">업무 자동화</li>
+					<li><input type="checkbox" name="mission_cate" id="mission_cate" value="경영">경영</li>
+					<li><input type="checkbox" name="mission_cate" id="mission_cate" value="자격증">자격증</li>
 				</div>	
 			</div>	
 			
@@ -143,10 +143,17 @@
         var tag = {};
         var counter = 0;
 
+     // mission_tag 업데이트
+        function updateMissionTag() {
+            var value = marginTag().join(" "); // 배열을 공백으로 구분된 문자열로 변환
+            $("#mission_tag").val(value);
+        }
+     
         // 입력한 값을 태그로 생성한다.
         function addTag (value) {
             tag[counter] = value;
             counter++; // del-btn 의 고유 id 가 된다.
+            updateMissionTag();
         }
 
         // tag 안에 있는 값을 array type 으로 만들어서 넘긴다.
@@ -156,13 +163,7 @@
             });
         }
     
-        // 서버에 제공
-        $("#tag-form").on("submit", function (e) {
-            var value = marginTag(); // return array
-            $("#rdTag").val(value); 
-
-            $(this).submit();
-        });
+     
 
         $("#tag").on("keypress", function (e) {
             var self = $(this);
@@ -202,6 +203,14 @@
         });
 })
 
+        // 서버에 제공
+        $("#tag-form").on("submit", function (e) {
+            var value = marginTag(); // return array
+            $("#mission_tag").val(value); 
+
+            $(this).submit();
+        });
+    
 	    $(document).on("click", ".removeButton", function(){
 	        if(confirm("태스크를 삭제하시겠습니까?")) {
 	    	$(this).closest("div").remove();

@@ -24,22 +24,25 @@
   
 <body>    
 <main>
-   <h1>로그인 폼</h1>
-   <form method="post" action="/ozz/register/loginOk" onsubmit="return logChk()">
+  	<h1 style="text-align:center; justify-content:center; align-items:center; margin:80px 0px 60px 0px">OZZ</h1>
+   <form method="post" action="/ozz/register/loginOk" onsubmit="return logChk()" class="registerForm">
       <ul>
-         <li><input type="text" name="userid" id="userid" placeholder="아이디입력"/></li>
-         <li><input type="password" name="pwd" id="pwd" placeholder="비밀번호입력"/></li>
-         <li><input type="submit" value="로그인"/></li>
-
+		 <li>아이디</li>
+         <li><input type="text" name="userid" id="userid" /></li>
+         <li style="margin-top: 30px; margin-left:10px;">비밀번호</li>
+         <li><input type="password" name="pwd" id="pwd"/></li>
+         <li><input type="submit" class="registerBtn" value="로그인"/></li>
+		
          <li>
+			<button class="registerKakao"><img src="<%= request.getContextPath() %>/img/ri_kakao-talk-fill.png" style="height:16px; vertical-align:text-bottom;"/>&nbsp&nbsp&nbsp카카오톡으로 로그인하기</button>
             <!-- 이름과 연락처를 입력받아 DB에서 아이디와 이메일을 조회 후
                 아이디를 메일로 보낸다. -->
-            <div><a href="/ozz/register/findId">아이디찾기</a></div>
-            <div><a href="/ozz/register/findPw">비밀번호찾기</a></div>
-            <div><a href="/ozz/register/registerJoinOk">회원가입</a></div>
+           <ul class="find_wrap" style="padding:10px;">
+               <li><a href="/ozz/register/findId" class="item">아이디 찾기</a></li>
+               <li><a href="/ozz/register/findPw" class="item">비밀번호 찾기</a></li>
+               <li><a href="/ozz/register/registerJoin">회원가입</a></li>
+            </ul>
 
-			<button id="kakao-logout-btn">카카오 로그아웃</button>
-			
          </li>
       </ul>
        

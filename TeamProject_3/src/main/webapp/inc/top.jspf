@@ -22,14 +22,15 @@
     cursor: pointer;
 }
 .menu label::before{ content: '\e5d2'; }
-.menu li:nth-child(1) a::before{ content: '\ea77'; }
-.menu li:nth-child(2) a::before{ content: '\e7fe'; }
-.menu li:nth-child(3) a::before{ content: '\e7fd'; }
-.menu li:nth-child(4) a::before{ content: '\e87d'; }
-.menu li:nth-child(5) a::before{ content: '\e0ca'; }
-.menu li:nth-child(6) a::before{ content: '\e866'; }
-.menu li:nth-child(7) a::before{ content: '\e8b8'; }
-.menu li:nth-child(8) a::before{ content: '\e9ba'; }
+.menu li:nth-child(1) a::before{ content: '\e7fe'; }
+.menu li:nth-child(2) a::before{ content: '\e7fd'; }
+.menu li:nth-child(3) a::before{ content: '\e87d'; }
+.menu li:nth-child(4) a::before{ content: '\e0ca'; }
+.menu li:nth-child(5) a::before{ content: '\e866'; }
+.menu li:nth-child(6) a::before{ content: '\e8b8'; }
+.menu li:nth-child(7) a::before{ content: '\e9ba'; }
+
+
 
 #expand-menu { /* 체크박스 폼 요소 감춤 */
     display: none;
@@ -110,9 +111,9 @@
 <header>
     <div style="font-size: 32px;  font-weight: 400; word-wrap: break-word; margin-left:60px; padding-top:5px;">OZZ</div>
     <ul style="justify-content: center; align-items: center; gap: 20px; display: flex;">
-        <li style="color: black; font-size: 17px;">미션</li>
-        <li style="color: black; font-size: 17px;">전문가</li>
-        <li style="color: black; font-size: 17px; margin-top: 15px;">커뮤니티</li>
+        <li style="color: black; font-size: 17px;"><a href="/ozz/main/mainMission">미션</a></li>
+        <li style="color: black; font-size: 17px;"><a href="/ozz/main/mainMaster">전문가</a></li>
+        <li style="color: black; font-size: 17px; margin-top: 15px;"><a href="/ozz/main/mainCom">커뮤니티</a></li>
     </ul>
     <div style="display: grid; grid-template-columns: 470px 70px; margin-top:10px;">
     <input type="text" id="searchWord" placeholder="미션, 전문가, 커뮤니티를 검색해보세요.">
@@ -131,47 +132,17 @@
     	<li><a href="/ozz/register/registerJoin" class="item"><div>회원가입</div></a></li>
     	</c:if>
     	<c:if test="${not empty logId}">
-        <li><a href="#" class="item"><div>마이페이지</div></a></li>
+        <li><a href="/ozz/mypage/mypage_main" class="item"><div>마이페이지</div></a></li>
         <li><a href="#" class="item"><div>구독</div></a></li>
         <li><a href="#" class="item"><div>메시지</div></a></li>
         <li><a href="#" class="item"><div>북마크</div></a></li>
         <li><a href="#" class="item"><div>설정</div></a></li>
-        <li><a href="#" class="item"><div>로그아웃</div></a></li>
+        <li><a href="/ozz/register/logout" class="item"><div>로그아웃</div></a></li>
        </c:if> 
     </ul>
 	
 	</div>
 </header>
 
-
-
-	<nav>
-		<div>
-			<li><a href="/ozz/mypage/mypage_main"><button>마이페이지</button></a></li>
-			<li><a href="/ozz"><button>메인</button></a></li>
-		    <li><div class="element-wrapper">
-                <div class="element"><a href="/ozz/register/registerJoin">회원가입</a></div>
-            </div>
-			</li>
-
-		
-		<c:if test="${not empty logId}">
-		    <div class="div-wrapper">
-		        <div class="element"><a href="/ozz/register/logout">로그아웃</a></div>
-		    </div>
-		</c:if>
-		
-	    <div id="welcomeMessage">
-	        <% if (session.getAttribute("logStatus") != null && session.getAttribute("logStatus").equals("Y")) { %>
-	            <p><span id="userid"><%= session.getAttribute("logId") %></span>님, 환영합니다.</p>
-	        <% } else { %>
-	            	<div class="div-wrapper">
-			        <div class="element"><a href="/ozz/register/login">로그인</a></div>
-			    </div>
-	        <% } %>
-    	</div>
-    	
-    	</div>
-	</nav>
 	
 

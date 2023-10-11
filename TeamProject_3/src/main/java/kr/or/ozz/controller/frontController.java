@@ -1,12 +1,22 @@
 package kr.or.ozz.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import kr.or.ozz.dto.MissionDTO;
+import kr.or.ozz.service.MissionService;
 
 @Controller
 @RequestMapping("/main")
 public class frontController {
+	@Autowired
+	MissionService Mservice;
+	
 	@GetMapping("/login")
 	public String login() {
 		return "register/login";
@@ -31,10 +41,17 @@ public class frontController {
 	public String pwSearch() {
 		return "register/pwSearch";
 	}
-	
+
 	@GetMapping("/mainMission")
-	public String mainM() {
-		return "main/mission";
+	public ModelAndView MissionToplist() {
+	   List<MissionDTO> MissionToplist = Mservice.MissionToplist();
+
+	   ModelAndView mav = new ModelAndView();
+	   mav.addObject("MissionToplist", MissionToplist);
+	   
+	   mav.setViewName("main/mission");
+	   
+	   return mav;
 	}
 	
 	@GetMapping("/mainMaster")

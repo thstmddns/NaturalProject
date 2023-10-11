@@ -3,8 +3,8 @@
 <main>
 	<div id="landingM">
 	    <div style="flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 20px; display: inline-flex;">
-	        <div style="margin-top: 80px;"><span style="color: #222A2F; font-size: 30px; word-wrap: break-word;">오즈의 마스터들과 이야기를 나누어보세요.</span></div>
-	            <button id="landBtn">커뮤니티에 글쓰기</button>
+	        <div style="margin-top: 60px;"><span style="color: #222A2F; font-size: 30px; word-wrap: break-word;">오즈의 마스터들과 이야기를 나누어보세요.</span></div>
+	            <button id="landBtn" onclick="location.href='<%=request.getContextPath() %>/Board/Boardwrite'">커뮤니티에 글쓰기</button>
 	    </div>
 	    <div id="landingImage" style="display:flex; margin-left:70px; width: 580px; height: 280px;">
 	        <img src="<%= request.getContextPath()%>/img/8.png"/>

@@ -13,4 +13,5 @@ public interface MissionService {
 	public void hitCount(int no);
 	public int MissionEdit(MissionDTO dto);
 	public int MissionDel(int no, String userid);
+	public List<MissionDTO> MissionToplist();
 }
