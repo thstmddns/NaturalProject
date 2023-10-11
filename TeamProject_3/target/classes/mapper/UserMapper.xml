@@ -44,13 +44,10 @@
 	<update id="UserUpdate">
 		update t_user set 
 		pwd = #{pwd},
-		username = #{username},
 		email = #{email},
 		years = #{years},
 		work = #{work},
-		concern = #{concern},
-		hashtag = #{hashtag},
-		usertype = #{usertype}
+		concern = #{concern}
 		where userid = #{userid}
 	</update>
 </mapper>

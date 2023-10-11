@@ -25,6 +25,7 @@
 	</div>
 	<form id="feedbackWriteForm" style="width:500px;">
 		<ul>
+			<input type="hidden" name="mission_no" value="${dto.no }">
 			<div class="taskSubject">
 				<li>미션 명</li>
 				<li>제출일 2023.09.25</li>	
@@ -47,10 +48,10 @@
 			</div>
 			<li style="font-size: 18px; margin-bottom: 10px">점수 입력</li>
 			<li class="sub">제출자가 미션 스텝을 잘 수행했나요? 미션 수행에 대한 점수를 입력해 주세요.</li>
-			<li><input type="text" style="width:70px; margin-bottom: 60px;" name="" placeholder="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;10">&nbsp;&nbsp;&nbsp;점</li>
+			<li><input type="text" style="width:70px; margin-bottom: 60px;" name="feedback_score" id="feedback_score" placeholder="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;10">&nbsp;&nbsp;&nbsp;점</li>
 			<li style="font-size: 18px; margin-bottom: 10px">피드백 입력</li>
 			<li class="sub">좋았던 점이나 개선해야 할 점들을 알려주면 제출자에게 도움이 될거에요.</li>
-			<li><textarea name="" id="content"></textarea></li>
+			<li><textarea name="feedback_content" id="feedback_content"></textarea></li>
 		</ul>
 	
 	</form>

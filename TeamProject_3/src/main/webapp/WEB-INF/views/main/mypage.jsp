@@ -23,7 +23,7 @@
 			<div id="pageLeft">
 				<div id="pageButton">
 					<button id="subscribe">구독 내역</button>
-					<button>프로필 수정하기</button>
+					<button onclick="location.href='<%=request.getContextPath() %>/mypage/myInfoEdit'">프로필 수정하기</button>
 				</div>
 				<div id="skill">
 					<li># 직무 스킬</li>
@@ -169,7 +169,7 @@
         let popupbtn = document.querySelector('button#subscribe');
         
         popupbtn.onclick = function() {
-        	let option = "width = 900px, height = 600px, top = 300px, left = 200px, scrollbars = no,  location=no"
+        	let option = "width = 700px, height = 600px, top = 300px, left = 200px, scrollbars = no,  location=no"
         	let openurl = '/ozz/main/subscribe'
         	window.open(openurl, 'popup', option)
         }

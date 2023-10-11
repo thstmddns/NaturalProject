@@ -46,7 +46,7 @@ public class MypageController {
 	}
 	
 	// 회원수정 폼으로 이동 ->
-	@GetMapping("/myinfo")
+	@GetMapping("/myInfoEdit")
 	public ModelAndView UserUpdateForm(HttpSession session) {
 		String logId = (String)session.getAttribute("logId");
 		ModelAndView mav = new ModelAndView();
@@ -76,8 +76,9 @@ public class MypageController {
 
 		ModelAndView mav = new ModelAndView();
 		if (result > 0) {
-			mav.setViewName("home");
+			mav.setViewName("main/landing");
 		} else {
+			mav.addObject("errorMessage", "프로필 수정에 실패했습니다.");
 			mav.setViewName("mypage/myinfo");
 		}
 		return mav;

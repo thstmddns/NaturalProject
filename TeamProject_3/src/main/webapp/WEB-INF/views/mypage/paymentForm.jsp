@@ -1,21 +1,81 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+
+<style>
+	header, footer {
+	display: none;
+	}
+	
+	#paymentForm p{
+		width: 100%;
+		font-size: 1.2em;
+		height: 50px;
+		border-radius: 10px;
+		background: #FFF56E;
+		text-align: center;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-left: 0;
+	}
+	#paymentForm p img {
+		vertical-align: base-line;
+	}
+	#subOption {
+		width: 100%;
+		display: grid;
+		grid-template-columns: 300px 300px;
+		margin: 20px 0 0 10px;
+	
+	}
+	.box-radio-input {
+		width: 200px;
+		border: 1px solid #DAE2EB;
+		border-radius: 10px;
+		padding: 20px 30px;
+		margin-bottom: 20px;
+	}
+	
+	#charge_kakao {
+		width: 150px;
+		border-radius: 16px;
+		border: 1px solid #52B0C5;
+		background:  #E8FBFF;
+		color: #52B0C5;
+		padding: 5px 10px;
+		margin: 20px 0 0 435px;
+		height: 30px;
+	}
+	
+	#charge_kakao:hover {
+		color: white;
+		background: #52B0C5;
+	}
+</style>
+
+
+
+<main style="width:600px; height: 500px;">
 <c:if test="${logStatus=='Y'}">
 	<p>로그인중</p>
 </c:if>
+<<<<<<< HEAD
+<div class="card-body bg-white mt-0 shadow" id="paymentForm">
+    <p style="font-weight: bold"><img src="<%= request.getContextPath() %>/img/ri_kakao-talk-fill.png" style="height:16px;"/> 카카오페이 현재 사용가능</p>
+    <div id="subOption">
+    <label class="box-radio-input"><input type="radio" name="cp_item" value="1"><span> 1개월 : 10000원</span></label>
+    <label class="box-radio-input"><input type="radio" name="cp_item" value="3"><span> 3개월 : 30000원</span></label>
+    <label class="box-radio-input"><input type="radio" name="cp_item" value="6"><span> 6개월 : 50000원</span></label>
+    <label class="box-radio-input"><input type="radio" name="cp_item" value="12"><span> 12개월 : 100000원</span></label>
+	</div>
+=======
 <div class="card-body bg-white mt-0 shadow">
     <p style="font-weight: bold">카카오페이 현재 사용가능</p>
     <label class="box-radio-input"><input type="radio" name="cp_item" value="10000"><span>1개월 : 10000원</span></label>
     <label class="box-radio-input"><input type="radio" name="cp_item" value="30000"><span>3개월 : 30000원</span></label>
     <label class="box-radio-input"><input type="radio" name="cp_item" value="50000"><span>6개월 : 50000원</span></label>
     <label class="box-radio-input"><input type="radio" name="cp_item" value="100000"><span>12개월 : 100000원</span></label>
+>>>>>>> 78d6df0ee23faf5a100eeb56b5f0ccb8119050d4
     <button type="button" class="btn btn-lg btn-block btn-custom" id="charge_kakao">결제하기</button>
 </div>
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -102,5 +162,5 @@ $('#charge_kakao').click(function () {
     });
 });
 </script>
-</body>
-</html>
+</main>
+
