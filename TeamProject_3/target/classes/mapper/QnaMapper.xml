@@ -4,14 +4,21 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.ozz.dao.QnaDAO">
 	<insert id="QnawriteOk">
-		insert into t_qna(qna_no, userid, qna_title, qna_content, created_at, file_name, hit)
-		values(qna_no_seq.nextval, #{userid}, #{qna_title}, #{qna_content}, sysdate, #{file_name}, 0)
+		<if test="mission_no != 0">
+			insert into t_qna(qna_no, mission_no, userid, qna_title, qna_content, created_at, file_name, hit)
+			values(qna_no_seq.nextval, #{mission_no}, #{userid}, #{qna_title}, #{qna_content}, sysdate, #{file_name}, 0)
+		</if>
+		<if test="mission_no == 0">
+			insert into t_qna(qna_no, userid, qna_title, qna_content, created_at, file_name, hit)
+			values(qna_no_seq.nextval, #{userid}, #{qna_title}, #{qna_content}, sysdate, #{file_name}, 0)
+		</if>
 	</insert>
 	
 	<select id="Qnalist" resultType="kr.or.ozz.dto.QnaDTO">
 		SELECT * FROM
          (SELECT * FROM
-            (SELECT qna_no, qna_title, userid, to_char(created_at, 'MM-DD HH:MI') created_at, file_name FROM t_qna
+            (SELECT qna_no, mission_no, qna_title, userid, to_char(created_at, 'MM-DD HH:MI') created_at, file_name, hit FROM t_qna
+
             <!-- 검색어가 있을 때 -->
             <if test="searchWord != null">
             	where ${searchKey} like '%${searchWord}%'
@@ -21,6 +28,10 @@
          ORDER BY qna_no ASC)
       WHERE <![CDATA[rownum <= ${lastPageRecord}]]>
       ORDER BY qna_no DESC
+	</select>
+	
+	<select id="M_Qnalist" resultType="kr.or.ozz.dto.QnaDTO">
+		select qna_no, mission_no, qna_title, userid, created_at, hit from t_qna
 	</select>
 	
 	<select id="totalRecord" resultType="int">
@@ -41,4 +52,11 @@
 	<delete id="QnaDel">
 		delete from t_qna where qna_no=${param1} and userid=#{param2}
 	</delete>
+	
+	<select id="QnaToplist" resultType="kr.or.ozz.dto.QnaDTO">
+		<![CDATA[
+			SELECT qna_no, qna_title, userid, created_at, hit FROM (SELECT t.* FROM t_qna t ORDER BY t.hit DESC)
+			WHERE ROWNUM <= 5
+		]]>
+	</select>
 </mapper>

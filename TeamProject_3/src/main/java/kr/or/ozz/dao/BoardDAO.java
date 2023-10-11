@@ -20,4 +20,7 @@ public interface BoardDAO {
 	public int BoardEdit(BoardDTO dto);
 	//글 삭제(delete)
 	public int BoardDel(int no, String userid);
+	
+	// TOP5 출력
+	public List<BoardDTO> BoardToplist();
 }

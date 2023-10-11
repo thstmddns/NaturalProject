@@ -45,4 +45,11 @@
 	<delete id="BoardDel">
 		delete from t_board where board_no=${param1} and userid=#{param2}
 	</delete>
+	
+	<select id="BoardToplist" resultType="kr.or.ozz.dto.BoardDTO">
+		<![CDATA[
+			SELECT board_no, board_title, userid, created_at, hit FROM (SELECT t.* FROM t_board t ORDER BY t.hit DESC)
+			WHERE ROWNUM <= 5
+		]]>
+	</select>
 </mapper>

@@ -13,4 +13,7 @@ public interface QnaService {
 	public void hitCount(int no);
 	public int QnaEdit(QnaDTO dto);
 	public int QnaDel(int no, String userid);
+	public List<QnaDTO> M_Qnalist(int no);
+	
+	public List<QnaDTO> QnaToplist();
 }

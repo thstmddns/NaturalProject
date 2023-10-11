@@ -32,9 +32,10 @@
 </script>
 
 <main>
-	<h1>게시판 글쓰기</h1>
+	<h1>QnA 글쓰기</h1>
 	<form method="post" action="/ozz/Qna/QnawriteOk">
 		<ul>
+			<li><input type="hidden" name="mission_no" id="mission_no" value="${m_no}" /></li>
 			<li>제목</li>
 			<li><input type="text" name="qna_title" id="qna_title"/></li>
 			<li>글내용</li>

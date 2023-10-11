@@ -26,6 +26,18 @@
 			<mvc:mapping path="/Step/StepEdit"/>
 			<mvc:mapping path="/Step/StepEditOk"/>
 			<mvc:mapping path="/Step/StepDel"/>
+			
+			<mvc:mapping path="/Board/Boardwrite"/>
+			<mvc:mapping path="/Board/BoardwriteOk"/>
+			<mvc:mapping path="/Board/BoardEdit"/>
+			<mvc:mapping path="/Board/BoardEditOk"/>
+			<mvc:mapping path="/Board/BoardDel"/>
+			
+			<mvc:mapping path="/Review/Reviewwrite"/>
+			<mvc:mapping path="/Review/ReviewwriteOk"/>
+			<mvc:mapping path="/Review/ReviewEdit"/>
+			<mvc:mapping path="/Review/ReviewEditOk"/>
+			<mvc:mapping path="/Review/ReviewDel"/>
 			<bean class="kr.or.ozz.LoginInterceptor"></bean>
 		</mvc:interceptor>
 	</mvc:interceptors>	

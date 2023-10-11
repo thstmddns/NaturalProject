@@ -48,4 +48,14 @@ public class QnaServiceImpl implements QnaService {
 	public int QnaDel(int no, String userid) {
 		return dao.QnaDel(no, userid);
 	}
+	
+	@Override
+	public List<QnaDTO> M_Qnalist(int no) {
+		return dao.M_Qnalist(no);
+	}
+	
+	@Override
+	public List<QnaDTO> QnaToplist() {
+		return dao.QnaToplist();
+	}
 }

@@ -48,4 +48,9 @@ public class BoardServiceImpl implements BoardService{
 	public int BoardDel(int no, String userid) {
 		return dao.BoardDel(no, userid);
 	}
+	
+	@Override
+	public List<BoardDTO> BoardToplist(){
+		return dao.BoardToplist();
+	}
 }

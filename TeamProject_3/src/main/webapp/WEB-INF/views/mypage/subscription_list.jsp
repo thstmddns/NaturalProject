@@ -7,42 +7,49 @@
     <!-- JavaScript 라이브러리를 포함 -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 </head>
+
 <body>
-<ul>
-<c:forEach var="dto" items="${list}" varStatus="status">
-		<li>구독번호:${dto.payno}</li>
-		<li>구독옵션:${dto.suboption}</li>
-		<li>구독요금:${dto.payamount }</li>
-</c:forEach>		
-</ul>
-<body>
-<%
-    // 여기에서 데이터베이스로부터 사용자의 만료 날짜를 가져와야 합니다.
-    // 사용자의 만료 날짜를 endDate 변수에 할당하세요.
-    String endDate = "2023-10-4"; // 예시로 임시로 지정한 만료 날짜
+    <p id="subscriptionMessage"></p>
+    <a href="/ozz/mypage/paymentForm"><button>구독하기</button></a>
 
-    // 현재 날짜를 가져오는 Java 코드
-    java.util.Date currentDate = new java.util.Date();
+		<c:forEach var="dto" items="${mysublist}" varStatus="status">
+		<li>구독옵션:${dto.sub_option}</li>
+		<li>구독요금:${dto.pay_amount}</li>
+		<li>구독날짜:${dto.started_at}</li>
+		</c:forEach>
 
-    // 만료 날짜를 파싱하여 Date 객체로 변환
-    java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd");
-    java.util.Date expirationDate = dateFormat.parse(endDate);
+    <h1>구독 상태 확인</h1>
+    <p id="subscriptionMessage"></p>
+    <button id="subscribeButton" style="display:none">구독하기</button>
 
-    // 구독 가능 여부를 판단
-    boolean isSubscriptionExpired = currentDate.after(expirationDate);
-%>
+    <script>
+        // 사용자 아이디를 파라미터로 받음
+        var userId = "<%= request.getParameter("userId") %>";
 
-<ul>
-    <c:if test="<%= !isSubscriptionExpired %>">
-        <li>구독 중입니다.</li>
-    </c:if>
-    <c:if test="<%= isSubscriptionExpired %>">
-        <li>구독이 만료되었습니다. 결제 가능합니다.</li>
-        <a href="/ozz/mypage/paymentForm"><button>구독하기</button></a>
-        
-    </c:if>
-</ul>
+        // JavaScript로 구독 상태 확인
+        var isSubscribed = checkSubscription(userId);
 
+        // 결과에 따라 메시지와 버튼을 업데이트
+        var messageElement = document.getElementById("subscriptionMessage");
+        var buttonElement = document.getElementById("subscribeButton");
 
+        if (isSubscribed) {
+            messageElement.textContent = "구독 중입니다.";
+        } else {
+            messageElement.textContent = "구독 만료";
+            buttonElement.style.display = "block";
+            buttonElement.addEventListener("click", function() {
+                // 구독 버튼을 클릭했을 때 실행할 동작
+                window.location.href = "/subscribe?userId=" + userId;
+            });
+        }
+
+        // JavaScript 함수로 구독 확인 로직 구현
+        function checkSubscription(userId) {
+            // 여기에서 사용자의 구독 상태를 확인하는 로직을 구현
+            // 예시: 구독 여부에 따라 true 또는 false 반환
+            return true; // 가정: 항상 구독 중으로 설정
+        }
+    </script>
 </body>
 </html>

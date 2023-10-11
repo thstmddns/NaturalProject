@@ -2,10 +2,20 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.or.ozz.dao.PaymentDAO">
+<mapper namespace="kr.or.ozz.dao.SubscriptionDAO">
 	
 	<select id="getAllSubscriptions" resultType="kr.or.ozz.dto.SubscriptionDTO">
 		select * from t_subscription
+	</select>
+	
+	<select id = "getSubstaus" resultType = "kr.or.ozz.dto.SubscriptionDTO">
+	SELECT u.userid,
+       CASE
+           WHEN s.expired_at >= SYSDATE THEN 1
+           ELSE 0
+       END AS subscription_status
+	FROM t_user u
+	LEFT JOIN t_subscription s ON u.userid = s.userid;
 	</select>
 	
 </mapper>

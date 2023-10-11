@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ozz.dao.ReviewDAO">
+	<insert id="ReviewwriteOk">
+<!-- 		<if test="mission_no != 0"> -->
+			insert into t_mission_review(review_no, mission_no, review_title, review_score, review_content, created_at, userid, file_name, hit)
+			values(review_no_seq.nextval, #{mission_no}, #{review_title}, #{review_score}, #{review_content}, sysdate, #{userid}, #{file_name}, 0)
+<!-- 		</if>
+		<if test="mission_no == 0">
+			insert into t_mission_review(review_no, review_title, review_score, review_content, created_at, userid, file_name, hit)
+			values(review_no_seq.nextval, #{review_title}, #{review_score}, #{review_content}, sysdate, #{userid}, #{file_name}, 0)
+		</if> -->
+	</insert>
+	
+	<select id="Reviewlist" resultType="kr.or.ozz.dto.ReviewDTO">
+		SELECT * FROM
+         (SELECT * FROM
+            (SELECT review_no, review_title, review_score, to_char(created_at, 'MM-DD HH:MI') created_at, userid, hit FROM t_mission_review
+            <!-- 검색어가 있을 때 -->
+            <if test="searchWord != null">
+            	where ${searchKey} like '%${searchWord}%'
+            </if>
+            ORDER BY review_no DESC)
+         WHERE <![CDATA[rownum <= ${nowPage * onePageRecord}]]>
+         ORDER BY review_no ASC)
+      WHERE <![CDATA[rownum <= ${lastPageRecord}]]>
+      ORDER BY review_no DESC
+	</select>
+
+	<select id="M_Reviewlist" resultType="kr.or.ozz.dto.ReviewDTO">
+		select review_no, mission_no, review_title, review_score, userid, created_at, hit from t_mission_review
+	</select>
+
+	<select id="totalRecord" resultType="int">
+		select count(review_no) cnt from t_mission_review
+		<if test="searchWord != null">
+			where ${searchKey} like '%${searchWord}%'
+		</if>
+	</select>
+	<select id="getReview" resultType="kr.or.ozz.dto.ReviewDTO">
+		select review_no, review_title, review_score, review_content, userid, created_at, file_name, hit
+		from t_mission_review
+		where review_no = ${param1}
+	</select>
+	<update id="hitCount">
+		update t_mission_review set hit=hit+1 where review_no=${param1}
+	</update>
+	<update id="ReviewEdit">
+		update t_mission_review set review_title=#{review_title}, review_score=#{review_score}, review_content=#{review_content},
+		file_name=#{file_name}, created_at=sysdate
+		where review_no=${review_no} and userid=#{userid}
+	</update>
+	<delete id="ReviewDel">
+		delete from t_mission_review where review_no=${param1} and userid=#{param2}
+	</delete>
+</mapper>
