@@ -149,19 +149,21 @@
 		<%-- <c:if  test="${}"> --%>
 			<form id="reviewWriteForm">
 				<div id="reviewWrite">
+					<input type="hidden" name="mission_no" value="${dto.no }">
 					<p>Persona(페르소나) 분석</p>
 					<p>피드백까지 미션 스텝이 모두 완료되었습니다!</p>
 					<p>평점을 입력해주세요!</p>
-					<div>미션은 어떠셨나요? 
-					</br>좋았던 점들이나 개선해야할 점들을 알려주면 마스터에게 도움이 될거에요.</div>
 					<li><select class="select" title="평점">
 					    <option value="">평점</option>
-					    <option value="5">★★★★★</option>
-					    <option value="4">★★★★</option>
-					    <option value="3">★★★</option>
-					    <option value="2">★★</option>
-					    <option value="1">★</option>
+					    <option name="review_score" id="review_score" value="5">★★★★★</option>
+					    <option name="review_score" id="review_score" value="4">★★★★</option>
+					    <option name="review_score" id="review_score" value="3">★★★</option>
+					    <option name="review_score" id="review_score" value="2">★★</option>
+					    <option name="review_score" id="review_score" value="1">★</option>
 					</select></li>
+					<div>미션은 어떠셨나요? 
+					</br>좋았던 점들이나 개선해야할 점들을 알려주면 마스터에게 도움이 될거에요.</div>
+					<input type="text" name="review_title" id="review_title" placeholder="제목을 입력해주세요." style="width: 97%; border-radius: 10px; border: 1px solid #DAE2EB; height: 30px; margin: 0 0 15px 10px;">	
 					<input type="textarea" name="review_content" id="review_content">
 					<button type="submit" form="reviewWriteForm">미션 리뷰 등록하기</button>
 				</div>
