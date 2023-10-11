@@ -1124,7 +1124,7 @@ hr:last-child {
 }
 #myInfoBottom {
 	display:grid;
-	grid-template-columns: 300px 700px;
+	grid-template-columns: 290px 700px;
 }
 #pageButton {
 	margin-top: 40px;
