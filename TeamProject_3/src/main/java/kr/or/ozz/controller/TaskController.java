@@ -1,21 +1,22 @@
 package kr.or.ozz.controller;
 
-import java.util.List;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import kr.or.ozz.dto.PagingDTO;
-import kr.or.ozz.dto.StepDTO;
 import kr.or.ozz.dto.TaskDTO;
-import kr.or.ozz.service.StepService;
 import kr.or.ozz.service.TaskService;
 
 // @Controller : 모델, 뷰를 리턴해준다.
@@ -96,25 +97,25 @@ public class TaskController {
 	}
 
 	// 글내용보기
-	@GetMapping("/TaskView")
-	public ModelAndView TaskView(int no, PagingDTO pDTO) {
-		// 레코드선택
-		TaskDTO dto = service.getTask(no);
-		
-//		List<TaskDTO> Tasklist = Tservice.Tasklist(no, pDTO);
-
-//	    byte[] imageData = dto.getFile_name();
-//        String base64ImageData = Base64.getEncoder().encodeToString(imageData);
-//        dto.setFile_name_base64(base64ImageData);
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("no", no);
-		mav.addObject("dto", dto);
-//		mav.addObject("Tasklist", Tasklist);
-		mav.addObject("pDTO", pDTO);
-		mav.setViewName("Mission/TaskView");
-
-		return mav;
-	}
+//	@GetMapping("/TaskView")
+//	public ModelAndView TaskView(int no, PagingDTO pDTO) {
+//		// 레코드선택
+//		TaskDTO dto = service.getTask(no);
+//		
+////		List<TaskDTO> Tasklist = Tservice.Tasklist(no, pDTO);
+//
+////	    byte[] imageData = dto.getFile_name();
+////        String base64ImageData = Base64.getEncoder().encodeToString(imageData);
+////        dto.setFile_name_base64(base64ImageData);
+//		ModelAndView mav = new ModelAndView();
+//		mav.addObject("no", no);
+//		mav.addObject("dto", dto);
+////		mav.addObject("Tasklist", Tasklist);
+//		mav.addObject("pDTO", pDTO);
+//		mav.setViewName("Mission/TaskView");
+//
+//		return mav;
+//	}
 
 	// 글 수정 폼
 	@GetMapping("/TaskEdit")
@@ -128,7 +129,7 @@ public class TaskController {
 	}
 
 	@PostMapping("/TaskEditOk") // no, subject, content
-	public ModelAndView TaskEditOk(TaskDTO dto, HttpSession session) {
+	public ModelAndView TaskEditOk(TaskDTO dto, int step_no, HttpSession session) {
 		dto.setUserid((String) session.getAttribute("logId"));
 
 		int result = service.TaskEdit(dto);
@@ -136,7 +137,7 @@ public class TaskController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("no", dto.getTask_no());
 		if (result > 0) { // 글수정성공 -> 글 내용 보기
-			mav.setViewName("redirect:TaskView");
+			mav.setViewName("redirect:/Step/StepView?no=" + step_no);
 		} else { // 글수정실패 -> 수정폼으로
 			mav.setViewName("redirect:TaskEdit");
 		}
@@ -158,7 +159,7 @@ public class TaskController {
 			mav.setViewName("redirect:/Step/StepView?no=" + step_no);
 		} else {// 삭제실패 -> 글내용
 			mav.addObject("no", no);
-			mav.setViewName("redirect:TaskView");
+			mav.setViewName("redirect:/Step/StepView?no=" + step_no);
 		}
 		return mav;
 	}

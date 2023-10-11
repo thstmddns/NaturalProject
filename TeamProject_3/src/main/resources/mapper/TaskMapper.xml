@@ -4,23 +4,23 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.ozz.dao.TaskDAO">
 	<insert id="TaskwriteOk">
-		insert into t_mission_task(task_no, step_no, task_title, task_content, userid)
-		values(task_no_seq.nextval, #{step_no}, #{task_title}, #{task_content}, #{userid})
+		insert into t_mission_task(task_no, step_no, task_title, task_content, userid, file_name)
+		values(task_no_seq.nextval, #{step_no}, #{task_title}, #{task_content}, #{userid}, #{file_name})
 	</insert>
 	
 	<select id="Tasklist" resultType="kr.or.ozz.dto.TaskDTO">
-        SELECT task_no, step_no, task_title, task_content, userid FROM t_mission_task
+        SELECT task_no, step_no, task_title, task_content, userid, file_name FROM t_mission_task
         ORDER BY task_no ASC
 	</select>
 	
 	<select id="getTask" resultType="kr.or.ozz.dto.TaskDTO">
-		select task_no, step_no, task_title, task_content, userid
+		select task_no, step_no, task_title, task_content, userid, file_name
 		from t_mission_task
 		where task_no = ${param1}
 	</select>
 	
 	<update id="TaskEdit">
-		update t_mission_task set task_title=#{task_title}, task_content=#{task_content}
+		update t_mission_task set task_title=#{task_title}, task_content=#{task_content}, file_name=#{file_name}
 		where task_no=${task_no} and userid=#{userid}
 	</update>
 	<delete id="TaskDel">

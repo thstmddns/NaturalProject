@@ -13,4 +13,6 @@ public interface BoardService {
 	public void hitCount(int no);
 	public int BoardEdit(BoardDTO dto);
 	public int BoardDel(int no, String userid);
+	
+	public List<BoardDTO> BoardToplist();
 }

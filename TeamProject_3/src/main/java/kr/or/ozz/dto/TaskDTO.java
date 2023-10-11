@@ -9,4 +9,6 @@ public class TaskDTO {
 	private String task_title;		// 태스크 제목
 	private String task_content;	// 태스크 내용
 	private String userid;			// 작성자
+	private int task_yn;			// 태스크 완료여부
+	private String file_name;		// 태스크 첨부파일
 }

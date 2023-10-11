@@ -24,12 +24,8 @@
 			<li><input type="text" name="step" id="step" value="${dto.step}"/></li>
 			<li>스텝제목</li>
 			<li><input type="text" name="step_title" id="step_title" value="${dto.step_title}"/></li>
-			<li>스텝내용</li>
-			<li><textarea name="step_content" id="step_content">${dto.step_content}</textarea></li>
 			<li>소요시간</li>
 			<li><input type="text" name="step_time" id="step_time" value="${dto.step_time}"/></li>
-			<li>미션스킬</li>
-			<li><input type="text" name="mission_skill" id="mission_skill" value="${dto.mission_skill}"/></li>
 			
 			<li><input type="submit" value="글 수정하기"/></li>
 		</ul>

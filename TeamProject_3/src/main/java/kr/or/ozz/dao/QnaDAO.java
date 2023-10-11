@@ -20,4 +20,10 @@ public interface QnaDAO {
 	public int QnaEdit(QnaDTO dto);
 	//글 삭제(delete)
 	public int QnaDel(int no, String userid);
+	
+	//미션에서 출력받는 QnA
+	public List<QnaDTO> M_Qnalist(int no);
+	
+	// 커뮤니티에서 탑 뽑는 DAO
+	public List<QnaDTO> QnaToplist();
 }

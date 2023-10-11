@@ -39,7 +39,7 @@
 <main>
 	<h1>QnA 목록</h1>
 	<div>
-		<a href="/ozz/Qna/Qnawrite">글쓰기</a>
+		<a href="/ozz/Qna/Qnawrite?m_no=0">글쓰기</a>
 	</div>
 	<div>총 레코드 수 : ${pDTO.totalRecord}개</div>
 	<ul class="Qna_list">

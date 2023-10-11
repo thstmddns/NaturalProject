@@ -20,7 +20,7 @@
 			<li><a href="/ozz/mypage/mypage_main"><button>마이페이지</button></a></li>
 			<li><a href="/ozz"><button>메인</button></a></li>
 			<li><a href="/ozz/Board/Boardlist"><button>자유게시판</button></a></li>
-			<li><a href="/ozz/review/reviewlist">리뷰</a></li>
+			<li><a href="/ozz/Review/Reviewlist"><button>리뷰</button></a></li>
 			<li><a href="/ozz/Community/"><button>커뮤니티</button></a></li>
 		</ul>
 	</nav>

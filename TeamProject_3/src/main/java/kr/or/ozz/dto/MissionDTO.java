@@ -14,4 +14,6 @@ public class MissionDTO {
 	private String mission_tool;	// 미션 활용 툴
 	private String mission_cate;	// 미션 카테고리
 	private int hit;				// 조회수
+	private String mission_skill;	// 미션 스킬
+	private int mission_yn;			// 미션 완료여부
 }
