@@ -14,5 +14,8 @@ public interface PerformersDAO {
 
     // 특정 유저의 Performers 데이터 조회
     public List<PerformersDTO> getPerfomersList(String userid);
+    
+    // 종료된 미션 리스트 조회
+    public List<PerformersDTO> getPerfomersEndList(String userid);
 
 }

@@ -14,6 +14,8 @@ public class PaymentDTO {
 	    private String sub_option;
 	    // 결제 요금
 	    private int pay_amount;
+	    
+	    private Date started_at;
 
 }
 

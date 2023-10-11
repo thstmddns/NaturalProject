@@ -15,12 +15,14 @@ public class PerformersDTO {
 
 	    // 회원 아이디
 	    private String userid;
-	    
 	    private int task_no;
 	    private Date started_at;
 	    private Date completed_at;
 	    private int step_no;
 	    private float mission_rate;
+	    private String mission_title;
+	    private int feedback_score;
+
 }
 
 	

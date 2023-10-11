@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.ozz.dto.PaymentDTO;
+import kr.or.ozz.dto.PerformersDTO;
 import kr.or.ozz.service.PaymentService;
 
 
@@ -57,19 +58,24 @@ public class PaymentController {
 		 
 	    }
 	
-	@PostMapping("/subscription_list")
-	public ModelAndView mysublist(String userid) {
-		ModelAndView mav = new ModelAndView();
-		List<PaymentDTO> mysublist = null;
-		try {
-			mysublist = service.getUserPayment(userid);
-		} catch (Exception e) {
-			e.printStackTrace();
+		//구독내역(결제내역) 리스트
+		@GetMapping("/subscription_list")
+		public ModelAndView mysublist(HttpSession session) {
+			ModelAndView mav = new ModelAndView();
+			List<PaymentDTO> mysublist = null;
+			System.out.println((String)session.getAttribute("logId"));
+			System.out.println("hi");
+			try {
+				mysublist = service.getUserPayment((String)session.getAttribute("logId"));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			mav.addObject("mysublist", mysublist);
+			mav.setViewName("/mypage/subscription_list");
+			return mav;
 		}
-		mav.addObject("mysublist", mysublist);
-		mav.setViewName("${pageContext.request.contextPath}/mypage/subscription_list");
-		return mav;
-	}
+	
+	
 }
 	
 	

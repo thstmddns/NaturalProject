@@ -81,10 +81,13 @@ $('#charge_kakao').click(function () {
                         alert("결제 실패");
                         window.location.reload();
                     } else {
-                        var form = $('<form method="post" action="${pageContext.request.contextPath}/mypage/subscription_list">');
+                        /* var form = $('<form method="post" action="${pageContext.request.contextPath}/mypage/subscription_list">');
                         form.append($('<input type="hidden" name="userid" value="' + result + '">'));
                         $('body').append(form);
-                        form.submit();
+                        form.submit(); */
+                        
+                        /*get방식으로 경로 설정*/
+                    	window.location.href= "${pageContext.request.contextPath}/mypage/subscription_list";
                     }
                 },
                 error: function (e) {

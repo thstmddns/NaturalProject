@@ -15,15 +15,16 @@
     <h2>미션 목록</h2>
     <table>
         <tr>
-            <th>미션번호</th>
+            <th>미션제목</th>
             <th>달성률</th>
         </tr>
         <c:forEach items="${mymissionList}" var="mission_ing">
             <tr>
-                <td>${mission_ing.mission_no}</td>
+                <td>${mission_ing.mission_title}</td>
                 <td>${mission_ing.mission_rate}%</td>
             </tr>
         </c:forEach>
+        
     </table>
 
 </body>
