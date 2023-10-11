@@ -32,6 +32,8 @@
 			<li><input type="text" name="mission_data" id="mission_data" value="${dto.mission_data}"/></li>
 			<li>사용 툴</li>
 			<li><input type="text" name="mission_tool" id="mission_tool" value="${dto.mission_tool}"/></li>
+			<li>사용 스킬</li>
+			<li><input type="text" name="mission_skill" id="mission_skill" value="${dto.mission_skill}"/></li>
 			<li>카테고리</li>
 			<li><input type="text" name="mission_cate" id="mission_cate" value="${dto.mission_cate}"/></li>
 			

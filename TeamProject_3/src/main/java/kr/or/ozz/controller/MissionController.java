@@ -17,11 +17,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.or.ozz.dto.ReplyDTO;
+
 import kr.or.ozz.dto.MissionDTO;
 import kr.or.ozz.dto.PagingDTO;
+import kr.or.ozz.dto.QnaDTO;
+import kr.or.ozz.dto.ReviewDTO;
 import kr.or.ozz.dto.StepDTO;
+import kr.or.ozz.dto.TaskDTO;
 import kr.or.ozz.service.MissionService;
+import kr.or.ozz.service.QnaService;
+import kr.or.ozz.service.ReviewService;
 import kr.or.ozz.service.StepService;
+import kr.or.ozz.service.TaskService;
 
 // @Controller : 모델, 뷰를 리턴해준다.
 //				 ModelAndView,
@@ -37,6 +45,15 @@ public class MissionController {
 	
 	@Autowired
 	StepService Sservice;
+	
+	@Autowired
+	TaskService Tservice;
+	
+	@Autowired
+	QnaService Qservice;
+	
+	@Autowired
+	ReviewService Rservice;
 
 	@GetMapping("/Missionlist")
 	public ModelAndView Missionlist(PagingDTO pDTO) {
@@ -69,7 +86,7 @@ public class MissionController {
 	@GetMapping("/Missionwrite")
 	public ModelAndView Missionwrite() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("Mission/Missionwrite");
+		mav.setViewName("mission/missionMake");
 		return mav;
 	}
 
@@ -106,7 +123,7 @@ public class MissionController {
 		// 등록결과에 따른 스크립트 생성하기
 		String tag = "<script>";
 		if (result > 0) { // 성공 -> 게시판 목록
-			tag += "location.href='/ozz/Mission/Missionlist';";
+			tag += "location.href='/ozz/main/mainMission';";
 		} else { // 실패 -> 글 등록 폼으로 이동
 			tag += "alert('글 등록이 실패하였습니다.');";
 			tag += "history.back();";
@@ -127,6 +144,8 @@ public class MissionController {
 		// 레코드선택
 		MissionDTO dto = service.getMission(no);
 		List<StepDTO> Steplist = Sservice.Steplist(no, pDTO);
+		List<QnaDTO> M_Qnalist = Qservice.M_Qnalist(no);
+		List<ReviewDTO> M_Reviewlist = Rservice.M_Reviewlist(no);
 
 //	    byte[] imageData = dto.getFile_name();
 //        String base64ImageData = Base64.getEncoder().encodeToString(imageData);
@@ -134,6 +153,8 @@ public class MissionController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("dto", dto);
 		mav.addObject("Steplist", Steplist);
+		mav.addObject("M_Qnalist", M_Qnalist);
+		mav.addObject("M_Reviewlist", M_Reviewlist);
 		mav.addObject("pDTO", pDTO);
 		mav.setViewName("Mission/MissionView");
 
@@ -181,4 +202,16 @@ public class MissionController {
 		}
 		return mav;
 	}
+	
+	/*
+	 * // 리뷰 등록
+	 * 
+	 * @PostMapping("/review/reviewWrite") public String reviewWrite(ReplyDTO dto,
+	 * HttpSession session) { // session 글쓴이 구하기
+	 * dto.setUserid((String)session.getAttribute("logId"));
+	 * 
+	 * int result = service.replyInsert(dto);
+	 * 
+	 * return result+""; }
+	 */
 }

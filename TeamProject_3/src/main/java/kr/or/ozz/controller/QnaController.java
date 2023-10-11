@@ -64,10 +64,12 @@ public class QnaController {
 		mav.setViewName("Qna/Qnalist");
 		return mav;
 	}
+
 	//글쓰기 폼으로 이동
 	@GetMapping("/Qnawrite")
-	public ModelAndView Qnawrite() {
+	public ModelAndView Qnawrite(int m_no) {
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("m_no", m_no);
 		mav.setViewName("Qna/Qnawrite");
 		return mav;
 	}
@@ -94,6 +96,7 @@ public class QnaController {
 		//dto.setUserid(userid);
 		//세개 합치면 아래 코드랑 동일
 		dto.setUserid( (String)request.getSession().getAttribute("logId") );
+		int m_no = dto.getMission_no();
 		
 		int result = 0;
 		try {
@@ -104,7 +107,12 @@ public class QnaController {
 		//등록결과에 따른 스크립트 생성하기
 		String tag = "<script>";
 		if(result>0) { //성공 -> 게시판 목록
-			tag += "location.href='/ozz/Qna/Qnalist';";
+			if(m_no == 0) {
+				tag += "location.href='/ozz/Qna/Qnalist';";
+			} else {
+				tag += "location.href='/ozz/Mission/MissionView?no="+m_no+"';";
+			}
+				
 		}else { //실패 -> 글 등록 폼으로 이동
 			tag += "alert('글 등록이 실패하였습니다.');";
 			tag += "history.back();";

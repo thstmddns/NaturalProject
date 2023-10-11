@@ -1,18 +1,18 @@
 package kr.or.ozz.dto;
 
 public class PagingDTO {
-	private int nowPage = 1; // ÇöÀçÆäÀÌÁö
-	private int onePageRecord = 5; // ÇÑ ÆäÀÌÁö¿¡ Ç¥½ÃÇÒ ·¹ÄÚµå ¼ö 
-	private int totalRecord; //ÃÑ ·¹ÄÚµå¼ö
-	private int totalPage; //ÃÑ ÆäÀÌÁö¼ö
+	private int nowPage = 1; // í˜„ì¬í˜ì´ì§€
+	private int onePageRecord = 5; // í•œ í˜ì´ì§€ì— í‘œì‹œí•  ë ˆì½”ë“œ ìˆ˜ 
+	private int totalRecord; //ì´ ë ˆì½”ë“œìˆ˜
+	private int totalPage; //ì´ í˜ì´ì§€ìˆ˜
 	
-	private int onePageNumCount = 5; //ÇÑ ÆäÀÌÁö¿¡ Ç¥½ÃµÇ´Â ÆäÀÌÁö ¼ö
-	private int startPageNum = 1; //½ÃÀÛÆäÀÌÁö
+	private int onePageNumCount = 5; //í•œ í˜ì´ì§€ì— í‘œì‹œë˜ëŠ” í˜ì´ì§€ ìˆ˜
+	private int startPageNum = 1; //ì‹œì‘í˜ì´ì§€
 	
-	private int lastPageRecord = 5; //¸¶Áö¸· ÆäÀÌÁö¿¡ ³²¾ÆÀÖ´Â ·¹ÄÚµå ¼ö
+	private int lastPageRecord = 5; //ë§ˆì§€ë§‰ í˜ì´ì§€ì— ë‚¨ì•„ìˆëŠ” ë ˆì½”ë“œ ìˆ˜
 	
-	private String searchKey; //°Ë»öÅ°
-	private String searchWord; //°Ë»ö¾î
+	private String searchKey; //ê²€ìƒ‰í‚¤
+	private String searchWord; //ê²€ìƒ‰ì–´
 	
 	public int getNowPage() {
 		return nowPage;
@@ -20,8 +20,8 @@ public class PagingDTO {
 	public void setNowPage(int nowPage) {
 		this.nowPage = nowPage;
 		
-		//ÆäÀÌÁöÀÇ ½ÃÀÛ¹øÈ£ »ı¼ºÇÏ±â
-		//½ÃÀÛ¹øÈ£ = ((ÇöÀçÆäÀÌÁö - 1)/ÇÑÆäÀÌÁö¿¡ Ç¥½ÃÇÒ ÆäÀÌÁö ¼ö)*ÇÑÆäÀÌÁö¿¡ Ç¥½ÃÇÒ ÆäÀÌÁö ¼ö + 1;
+		//í˜ì´ì§€ì˜ ì‹œì‘ë²ˆí˜¸ ìƒì„±í•˜ê¸°
+		//ì‹œì‘ë²ˆí˜¸ = ((í˜„ì¬í˜ì´ì§€ - 1)/í•œí˜ì´ì§€ì— í‘œì‹œí•  í˜ì´ì§€ ìˆ˜)*í•œí˜ì´ì§€ì— í‘œì‹œí•  í˜ì´ì§€ ìˆ˜ + 1;
 		startPageNum = ((nowPage-1) / onePageNumCount)*onePageNumCount + 1;
 	}
 	public int getOnePageRecord() {
@@ -36,16 +36,16 @@ public class PagingDTO {
 	public void setTotalRecord(int totalRecord) {
 		this.totalRecord = totalRecord;
 		
-		//ÃÑÆäÀÌÁö¼ö °è»êÇÏ±â		16 -> 4, 15 -> 3
+		//ì´í˜ì´ì§€ìˆ˜ ê³„ì‚°í•˜ê¸°		16 -> 4, 15 -> 3
 		//					3.44444   3.000
-		// ceil():¿Ã¸², round():¹İ¿Ã¸², floor():¹ö¸²
+		// ceil():ì˜¬ë¦¼, round():ë°˜ì˜¬ë¦¼, floor():ë²„ë¦¼
 		totalPage = (int)Math.ceil((double)totalRecord/onePageRecord);
 		
-		//¸¶Áö¸·ÆäÀÌÁö¿¡ ³²¾ÆÀÖ´Â ·¹ÄÚµå ¼ö
+		//ë§ˆì§€ë§‰í˜ì´ì§€ì— ë‚¨ì•„ìˆëŠ” ë ˆì½”ë“œ ìˆ˜
 		lastPageRecord = onePageRecord; //5
 		if(totalPage==nowPage) {
 			if(totalRecord%onePageRecord!=0) {
-				lastPageRecord = totalRecord % onePageRecord; //1,2,3,4 Áß
+				lastPageRecord = totalRecord % onePageRecord; //1,2,3,4 ì¤‘
 			}
 		}
 	}

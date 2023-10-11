@@ -4,8 +4,8 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.ozz.dao.MissionDAO">
 	<insert id="MissionwriteOk">
-		insert into t_mission(mission_no, userid, mission_title, mission_tag, mission_content, created_at, mission_data, mission_tool, mission_cate, hit)
-		values(mission_no_seq.nextval, #{userid}, #{mission_title}, #{mission_tag}, #{mission_content}, sysdate, #{mission_data}, #{mission_tool}, #{mission_cate}, 0)
+		insert into t_mission(mission_no, userid, mission_title, mission_tag, mission_content, created_at, mission_data, mission_tool, mission_cate, hit, mission_skill)
+		values(mission_no_seq.nextval, #{userid}, #{mission_title}, #{mission_tag}, #{mission_content}, sysdate, #{mission_data}, #{mission_tool}, #{mission_cate}, 0, #{mission_skill})
 	</insert>
 	
 	<select id="Missionlist" resultType="kr.or.ozz.dto.MissionDTO">
@@ -30,7 +30,7 @@
 		</if>
 	</select>
 	<select id="getMission" resultType="kr.or.ozz.dto.MissionDTO">
-		select mission_no, userid, mission_title, mission_tag, mission_content, created_at, mission_data, mission_tool, mission_cate, hit
+		select mission_no, userid, mission_title, mission_tag, mission_content, created_at, mission_data, mission_tool, mission_cate, hit, mission_skill
 		from t_mission
 		where mission_no = ${param1}
 	</select>
@@ -39,10 +39,19 @@
 	</update>
 	<update id="MissionEdit">
 		update t_mission set mission_title=#{mission_title}, mission_content=#{mission_content}, mission_tag=#{mission_tag},
-		mission_data=#{mission_data}, mission_tool=#{mission_tool}, mission_cate=#{mission_cate}, created_at=sysdate
+		mission_data=#{mission_data}, mission_tool=#{mission_tool}, mission_cate=#{mission_cate}, created_at=sysdate, mission_skill=#{mission_skill}
 		where mission_no=${mission_no} and userid=#{userid}
 	</update>
 	<delete id="MissionDel">
 		delete from t_mission where mission_no=${param1} and userid=#{param2}
 	</delete>
+	
+	<select id="MissionToplist" resultType="kr.or.ozz.dto.MissionDTO">
+   		<![CDATA[
+	      SELECT mission_no, mission_title, mission_tag, userid     
+	      FROM (SELECT t.* FROM t_mission t ORDER BY t.hit DESC)
+	      WHERE ROWNUM <= 10
+   		]]>
+	</select>
+	
 </mapper>

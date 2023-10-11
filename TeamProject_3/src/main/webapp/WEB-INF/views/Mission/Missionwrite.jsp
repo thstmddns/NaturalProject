@@ -35,20 +35,25 @@
 	<h1>게시판 글쓰기</h1>
 	<form method="post" action="/ozz/Mission/MissionwriteOk">
 		<ul>
-			<li>미션제목</li>
+			<li>미션 제목</li>
 			<li><input type="text" name="mission_title" id="mission_title"/></li>
-			<li>미션내용</li>
+			<li>미션 설명</li>
 			<li><textarea name="mission_content" id="mission_content"></textarea></li>
 			
 			<!-- 여기 미션 입력하는 곳인데 해시태그나 이런거 어떻게할지 생각해보고 다시 해야함 ! ! ! -->
-			<li>미션태그</li>
+			<li>미션 태그</li>
 			<li><input type="text" name="mission_tag" id="mission_tag"/></li>
-			<li>미션데이터</li>
+			<li>사용 데이터</li>
 			<li><input type="text" name="mission_data" id="mission_data"/></li>
 			<li>사용 툴</li>
 			<li><input type="text" name="mission_tool" id="mission_tool"/></li>
+			<li>사용 스킬</li>
+			<li><input type="text" name="mission_skill" id="mission_skill"/></li>
 			<li>카테고리</li>
 			<li><input type="text" name="mission_cate" id="mission_cate"/></li>
+			
+			
+			<!-- 스텝 입력 -->
 			
 			
 <!-- 			<li>
@@ -59,7 +64,7 @@
             	</div>
       		</li> -->
 			
-			<li><input type="submit" value="글등록"/></li>
+			<li><input type="submit" value="미션등록"/></li>
 		</ul>
 	</form>
 </main>

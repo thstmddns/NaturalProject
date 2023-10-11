@@ -1,0 +1,716 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Spring]]></title><description><![CDATA[Level up your Java code and explore what Spring can do for you.]]></description><link>https://spring.io</link><generator>GatsbyJS</generator><lastBuildDate>Wed, 20 Sep 2023 02:32:28 GMT</lastBuildDate><item><title><![CDATA[Hello, Java 21]]></title><link>https://spring.io/blog/2023/09/20/hello-java-21</link><guid isPermaLink="true">https://spring.io/blog/2023/09/20/hello-java-21</guid><dc:creator><![CDATA[Josh Long]]></dc:creator><pubDate>Wed, 20 Sep 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Hi, Spring fans!&lt;/p&gt;
+&lt;h2&gt;Get the bits&lt;/h2&gt;
+&lt;p&gt;Before we get started, do something for me quickly. If you haven¡¯t already, go &lt;a href=&quot;https://sdkman.io/&quot;&gt;download SKDMAN&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Then run:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-shell&quot;&gt;sdk install java 21-graalce &amp;#x26;&amp;#x26; sdk default java 21-graalce
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;There you have it. You now have Java 21 and graalvm supporting Java 21 on your machine, ready to go. Java 21 is, in my estimation, the most critical release of Java, perhaps ever, in that it implies a whole new world of opportunities for people using Java. It brings a slew of nice APIs and additions, like pattern matching, culminating years of features slowly and steadily adding to the platform. But the most prominent feature, by far, is the new support for violent threads project Loom). Virtual threads and graalvm native images mean that today, you can write code that delivers performance and scalability on par with the likes of C, Rust, or Go while retaining the robust and familiar ecosystem of the JVM.&lt;/p&gt;
+&lt;p&gt;There¡¯s never been a better time to be a JVM developer.&lt;/p&gt;
+&lt;p&gt;I just posted a video exploring new features and opportunities in Java 21 and GraalVM.&lt;/p&gt;
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/8VJ_dSdV3pY?si=D7ecMMusRby85GC4&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&quot; allowfullscreen&gt;&lt;/iframe&gt;
+&lt;p&gt;In this blog, I hope to visit the same things, with some added data that lends itself to text.&lt;/p&gt;
+&lt;h2&gt;Why GraalVM instead of plain ol&apos; Java?&lt;/h2&gt;
+&lt;p&gt;First things first. If it wasn¡¯t apparent from the above installation, I recommend installing graalvm first. It is OpenJDK, so you get all the OpenJDK bits, but it can also create GraalVM native images.&lt;/p&gt;
+&lt;p&gt;Why graalvm native images? well, it¡¯s &lt;em&gt;fast&lt;/em&gt; and super resource efficient. traditionally, that truism always had a rebuttal: &quot;Yah, well, the JIT is still faster in plain old Java,&quot; to which I¡¯d counter, &quot;Yah, well, you can much more readily scale up new instances at a fraction of the footprint to account for whatever lost throughput you  had, and &lt;em&gt;still&lt;/em&gt; be ahead in terms of resource consumption spend!&quot; Which was true.&lt;/p&gt;
+&lt;p&gt;But now we don¡¯t even have to have that nuanced discussion. Per the &lt;a href=&quot;https://medium.com/graalvm/graalvm-for-jdk-21-is-here-ee01177dd12d&quot;&gt;graalvm release blog&lt;/a&gt;, Oracle¡¯s GraalVM native image with profile-guided optimization performance is now consistently &lt;em&gt;ahead&lt;/em&gt; of JIT on benchmarks where it was only in some places ahead. Oracle GraalVM isn¡¯t necessarily the same as the open-source GraalVM distribution, but the point is that the higher echelons of performance now exceed the JRE JIT.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://miro.medium.com/v2/resize:fit:4800/format:webp/1*01_HtHD4jfuXOsgDMhkljQ.png&quot; alt=&quot;1*01_HtHD4jfuXOsgDMhkljQ&quot;&gt;&lt;/p&gt;
+&lt;p&gt;This excellent post from &lt;a href=&quot;https://www.digitalsanctuary.com/10minutemail/migrating-10minutemail-from-java-to-graalvm-native.htmlhttps://www.digitalsanctuary.com/10minutemail/migrating-10minutemail-from-java-to-graalvm-native.html&quot;&gt;10MinuteMail&lt;/a&gt; looks at how they used GraalVM and Spring Boot 3 to reduce their startup time from ~30 seconds down to about 3 milliseconds, and memory usage from 6.6GB down to 1GB, with the same throughput and CPU utilization. Amazing.&lt;/p&gt;
+&lt;h2&gt;Java 17&lt;/h2&gt;
+&lt;p&gt;So many features in Java 21 build upon features first introduced in Java 17 (and, in some cases, earlier than that!). Let¡¯s review some of those features before examining their final manifestation in Java 21.&lt;/p&gt;
+&lt;h3&gt;Multiline Strings&lt;/h3&gt;
+&lt;p&gt;Do you know that Java supports multiline strings? It¡¯s one of my favorite features, and it has made using JSON, JDBC, JPA QL, etc., more pleasant than ever:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Java&quot;&gt;package bootiful.java21;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+class MultilineStringTest {
+
+    @Test
+    void multiline() throws Exception {
+
+        var shakespeare = &quot;&quot;&quot;
+
+                To be, or not to be, that is the question:
+                Whether &apos;tis nobler in the mind to suffer
+                The slings and arrows of outrageous fortune,
+                Or to take arms against a sea of troubles
+                And by opposing end them. To die?to sleep,
+                No more; and by a sleep to say we end
+                The heart-ache and the thousand natural shocks
+                That flesh is heir to: &apos;tis a consummation
+                Devoutly to be wish&apos;d. To die, to sleep;
+                To sleep, perchance to dream?ay, there&apos;s the rub:
+                For in that sleep of death what dreams may come,
+                &quot;&quot;&quot;;
+        Assertions.assertNotEquals(shakespeare.charAt(0), &apos;T&apos;);
+
+        shakespeare = shakespeare.stripLeading();
+        Assertions.assertEquals(shakespeare.charAt(0), &apos;T&apos;);
+    }
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Nothing too surprising. Easy to understand. Triple quotes start and stop the multiline string. You can strip the leading, trailing, and indent space, too.&lt;/p&gt;
+&lt;h3&gt;Records&lt;/h3&gt;
+&lt;p&gt;Records are one of my favorite features of Java! They¡¯re freaking fantastic! Do you have a class whose identity is equivalent to the fields in the class? Sure you do. Think about your basic entities, your events, your DTOs, etc. Whenever you¡¯ve used Lombok¡¯s &lt;code&gt;@Data&lt;/code&gt;, you could just as easily use a &lt;code&gt;record&lt;/code&gt;. They have  analogs in Kotlin  (&lt;code&gt;data class&lt;/code&gt;) and Scala (&lt;code&gt;case class&lt;/code&gt;), so plenty of people know about them, too. It¡¯s great that they¡¯re finally in Java.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Java&quot;&gt;package bootiful.java21;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+class RecordTest {
+
+    record JdkReleasedEvent(String name) { }
+
+    @Test
+    void records() throws Exception {
+        var event = new JdkReleasedEvent(&quot;Java21&quot;);
+        Assertions.assertEquals( event.name() , &quot;Java21&quot;);
+        System.out.println(event);
+
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This concise syntax results in a class with a constructor, associated storage in the course, getters (e.g.: &lt;code&gt;event.name()&lt;/code&gt;), a valid &lt;code&gt;equals&lt;/code&gt;, and a good &lt;code&gt;toString()&lt;/code&gt; implementation.&lt;/p&gt;
+&lt;h3&gt;Enhanced Switch&lt;/h3&gt;
+&lt;p&gt;I rarely used the existing &lt;code&gt;switch&lt;/code&gt; statement because it was clunky, and usually, there were other patterns, like the &lt;a href=&quot;https://en.wikipedia.org/wiki/Visitor_pattern&quot;&gt;&lt;em&gt;visitor pattern&lt;/em&gt;&lt;/a&gt;, that got me most of the benefits. Now there¡¯s a new &lt;code&gt;switch&lt;/code&gt; that is an &lt;em&gt;expression&lt;/em&gt;, not a statement, so I can assign the results of the &lt;code&gt;switch&lt;/code&gt; to a variable, or return it.&lt;/p&gt;
+&lt;p&gt;Here¡¯s an example of reworking a classic switch to use the new enhanced &lt;code&gt;switch&lt;/code&gt;:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Java&quot;&gt;package bootiful.java21;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import java.time.DayOfWeek;
+
+class EnhancedSwitchTest {
+
+    // ¨ç
+    int calculateTimeOffClassic(DayOfWeek dayOfWeek) {
+        var timeoff = 0;
+        switch (dayOfWeek) {
+            case MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY:
+                timeoff = 16;
+                break;
+            case SATURDAY, SUNDAY:
+                timeoff = 24;
+                break;
+        }
+        return timeoff;
+    }
+
+    // ¨è
+    int calculateTimeOff(DayOfWeek dayOfWeek) {
+        return switch (dayOfWeek) {
+            case MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY -&gt; 16;
+            case SATURDAY, SUNDAY -&gt; 24;
+        };
+    }
+
+    @Test
+    void timeoff() {
+        Assertions.assertEquals(calculateTimeOffClassic(DayOfWeek.SATURDAY), calculateTimeOff (DayOfWeek.SATURDAY));
+        Assertions.assertEquals(calculateTimeOff(DayOfWeek.FRIDAY), 16);
+        Assertions.assertEquals(calculateTimeOff(DayOfWeek.FRIDAY), 16);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol&gt;
+&lt;li&gt;This is a classic implementation with the older, clunkier switch statement&lt;/li&gt;
+&lt;li&gt;This is the new switch expression&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;The Enhanced &lt;code&gt;instanceof&lt;/code&gt; Check&lt;/h3&gt;
+&lt;p&gt;The new &lt;code&gt;instanceof&lt;/code&gt; test allows us to avoid the clunky check-and-cast of yore, which looks like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Java&quot;&gt;var animal = (Object) new Dog ();
+if (animal instanceof Dog ){
+var fido  = (Dog) animal;
+fido.bark();
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And replace it with:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Java&quot;&gt;var animal = (Object) new Dog ();
+if (animal instanceof Dog fido ){
+fido.bark();
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The smart &lt;code&gt;instanceof&lt;/code&gt; automatically assigns a downcast variable for use in the scope of the test. There¡¯s no need to specify the class &lt;code&gt;Dog&lt;/code&gt; twice in the same block. The smart  &lt;code&gt;instanceof&lt;/code&gt; operator usage is the first real taste of pattern matching in the Java platform. The idea behind pattern matching is simple: match types and extract data from those types.&lt;/p&gt;
+&lt;h3&gt;Sealed types&lt;/h3&gt;
+&lt;p&gt;Technically sealed types are part of Java 17, too, but they don¡¯t buy you much yet. The basic idea is that, in the olden times, the only way to limit the extensibility of a type was through visibility modifiers (&lt;code&gt;public&lt;/code&gt;, &lt;code&gt;private&lt;/code&gt;, etc.). In the &lt;code&gt;sealed&lt;/code&gt; keyword, you can explicitly permit which classes may subclass another class. This is a fantastic leap forward because it gives the compiler visibility into which type might extend a given type, which allows it to do optimizations and to help us at compile time to understand whether all possible cases say in an enhanced &lt;code&gt;switch&lt;/code&gt; expression - have been covered. Let¡¯s take a look at it in action.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Java&quot;&gt;package bootiful.java21;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+class SealedTypesTest {
+
+    // ¨ç
+    sealed interface Animal permits Bird, Cat, Dog {
+    }
+
+    // ¨è
+    final class Cat implements Animal {
+        String meow() {
+            return &quot;meow&quot;;
+        }
+    }
+
+    final class Dog implements Animal {
+        String bark() {
+            return &quot;woof&quot;;
+        }
+    }
+
+    final class Bird implements Animal {
+        String chirp() {
+            return &quot;chirp&quot;;
+        }
+    }
+
+    @Test
+    void doLittleTest() {
+        Assertions.assertEquals(communicate(new Dog()), &quot;woof&quot;);
+        Assertions.assertEquals(communicate(new Cat()), &quot;meow&quot;);
+    }
+
+    // ¨é
+    String classicCommunicate(Animal animal) {
+        var message = (String) null;
+        if (animal instanceof Dog dog) {
+            message = dog.bark();
+        }
+        if (animal instanceof Cat cat) {
+            message = cat.meow();
+        }
+        if (animal instanceof Bird bird) {
+            message = bird.chirp();
+        }
+        return message;
+    }
+
+    // ¨ê
+    String communicate(Animal animal) {
+        return switch (animal) {
+            case Cat cat -&gt; cat.meow();
+            case Dog dog -&gt; dog.bark();
+            case Bird bird -&gt; bird.chirp();
+        };
+    }
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol&gt;
+&lt;li&gt;We have an explicitly sealed interactive that only permits three types. The enhanced &lt;code&gt;switch&lt;/code&gt; expression below will fail if we add a new class.&lt;/li&gt;
+&lt;li&gt;Classes that implement that sealed interface must either be declared &lt;code&gt;sealed&lt;/code&gt; and thus declare which classes it permits as subclasses, or it must be declared as &lt;code&gt;final&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;We could use the new &lt;code&gt;instance of&lt;/code&gt; check to make shorter work of working with each possible type, but we get no compiler help here.&lt;/li&gt;
+&lt;li&gt;unless we use the enhahced &lt;code&gt;switch&lt;/code&gt; &lt;em&gt;with&lt;/em&gt; pattern matching, as we do here.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Notice how clunky the classic version is. Ugh. I am so glad to be done with that. Another nice thing is that the &lt;code&gt;switch&lt;/code&gt; expression will now tell us whether we¡¯ve covered all possible cases, like with the &lt;code&gt;enum&lt;/code&gt;. Thanks, compiler!&lt;/p&gt;
+&lt;h2&gt;Beyond Java 17&lt;/h2&gt;
+&lt;p&gt;With all these things combined, we¡¯re starting to wade comfortably into Java 21 land. From here on down, we¡¯ll look at features that have come &lt;em&gt;since&lt;/em&gt; java 17.&lt;/p&gt;
+&lt;h3&gt;Next Level Pattern Matching with &lt;code&gt;records&lt;/code&gt;, &lt;code&gt;switch&lt;/code&gt;, and &lt;code&gt;if.&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;The enhanced &lt;code&gt;switch&lt;/code&gt; expression and pattern matching are remarkable, and it makes me wonder how using Akka so many years ago would¡¯ve felt using Java with this excellent new syntax. Pattern matching has an even nicer interaction when taken together with records because records - as discussed earlier - are the resumes of their components, and the compiler knows this. So, it can hoist those components into new variables, too. You can also use this pattern-matching syntax in &lt;code&gt;if&lt;/code&gt; checks.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Java&quot;&gt;package bootiful.java21;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import java.time.Instant;
+
+class RecordsTest {
+
+    record User(String name, long accountNumber) {
+    }
+
+    record UserDeletedEvent(User user) {
+    }
+
+    record UserCreatedEvent(String name) {
+    }
+
+    record ShutdownEvent(Instant instant) {
+    }
+
+    @Test
+    void respondToEvents() throws Exception {
+        Assertions.assertEquals(
+                respond(new UserCreatedEvent(&quot;jlong&quot;)), &quot;the new user with name jlong has been created&quot;
+        );
+        Assertions.assertEquals(
+                respond(new UserDeletedEvent(new User(&quot;jlong&quot;, 1))),
+                &quot;the user jlong has been deleted&quot;
+        );
+    }
+
+    String respond(Object o) {
+        // ¨ç
+        if (o instanceof ShutdownEvent(Instant instant)) {
+            System.out.println(
+                &quot;going to to shutdown the system at &quot; + instant.toEpochMilli());
+        }
+        return switch (o) {
+            // ¨è
+            case UserDeletedEvent(var user) -&gt; &quot;the user &quot; + user.name() + &quot; has been deleted&quot;;
+            // ¨é
+            case UserCreatedEvent(var name) -&gt; &quot;the new user with name &quot; + name + &quot; has been created&quot;;
+            default -&gt; null;
+        };
+    }
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol&gt;
+&lt;li&gt;We have a special case where if we get a particular event, we want to shut down, not produce a &lt;code&gt;String&lt;/code&gt;, so we¡¯ll use the new pattern matching support with an &lt;code&gt;if&lt;/code&gt; statement.&lt;/li&gt;
+&lt;li&gt;Here, we¡¯re matching not just the type but extracting out the &lt;code&gt;User user&lt;/code&gt; of the &lt;code&gt;UserDeletedEvent&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Here, we¡¯re matching not just the type, but we¡¯re extracting out the &lt;code&gt;String name&lt;/code&gt; of the &lt;code&gt;UserCreatedEvent&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;All these things started to take root in earlier versions of Java but culminate here in Java 21 in what you might call data-oriented programming. It is not a replacement for object-oriented programming but a compliment to it. You can use things like pattern matching, enhanced switch, and the &lt;code&gt;instanceof&lt;/code&gt; operator to give your code a new polymorphism without exposing the dispatch point in your public API.&lt;/p&gt;
+&lt;p&gt;There are so many other features new in Java 21.  There¡¯s a bunch of small but nice things and, of course, &lt;a href=&quot;https://openjdk.org/projects/loom/&quot;&gt;project Loom&lt;/a&gt; or &lt;em&gt;virtual threads&lt;/em&gt;. (Virtual threads alone are worth the price of admission!) Let¡¯s dive right into some of these fantastic features.&lt;/p&gt;
+&lt;h3&gt;Improved mathematics&lt;/h3&gt;
+&lt;p&gt;In AI and algorithms, efficient mathematics is more important than ever. The new JDK has some nice improvements here, including parallel multiplication for BigIntegers and various overloads for divisions that throw an exception if there¡¯s an overflow. Not just if there¡¯s a divide-by-zero error.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Java&quot;&gt;package bootiful.java21;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import java.math.BigInteger;
+
+class MathematicsTest {
+
+    @Test
+    void divisions() throws Exception {
+        //&amp;#x3C;1&gt;
+        var five = Math.divideExact( 10, 2) ;
+        Assertions.assertEquals( five , 5);
+    }
+
+    @Test
+    void multiplication() throws Exception {
+        var start = BigInteger.valueOf(10);
+        // ¨è
+        var result = start.parallelMultiply(BigInteger.TWO);
+        Assertions.assertEquals(BigInteger.valueOf(10 * 2), result);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol&gt;
+&lt;li&gt;This first operation is one of several overloads that make division safer and more predictable&lt;/li&gt;
+&lt;li&gt;There¡¯s new support for parallelized multiplication with &lt;code&gt;BigInteger&lt;/code&gt; instances. Remember that this is only really useful if the &lt;code&gt;BigInteger&lt;/code&gt; has  thousands of  bits...&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;&lt;code&gt;Future#state&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;If you¡¯re doing asynchronous programming (yes, that¡¯s still a thing, even with Project Loom), then you¡¯ll be pleased to know our old friend &lt;code&gt;Future&amp;#x3C;T&gt;&lt;/code&gt; now makes available a &lt;code&gt;state&lt;/code&gt; instance that you can &lt;code&gt;switch&lt;/code&gt; on to see the status of the  ongoing asynchronous operation.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Java&quot;&gt;package bootiful.java21;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import java.util.concurrent.Executors;
+
+class FutureTest {
+
+    @Test
+    void futureTest() throws Exception {
+        try (var executor = Executors
+                .newFixedThreadPool(Runtime.getRuntime().availableProcessors())) {
+            var future = executor.submit(() -&gt; &quot;hello, world!&quot;);
+            Thread.sleep(100);
+            // ¨ç
+            var result = switch (future.state()) {
+                case CANCELLED, FAILED -&gt; throw new IllegalStateException(&quot;couldn&apos;t finish the work!&quot;);
+                case SUCCESS -&gt; future.resultNow();
+                default -&gt; null;
+            };
+            Assertions.assertEquals(result, &quot;hello, world!&quot;);
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol&gt;
+&lt;li&gt;This returns a &lt;code&gt;state&lt;/code&gt; object that lets us enumerate the submitted &lt;code&gt;Thread&lt;/code&gt; states. It pairs nicely with the enhanced &lt;code&gt;switch&lt;/code&gt; feature.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;AutoCloseable HTTP Client&lt;/h3&gt;
+&lt;p&gt;The HTTP client API is where you might want to wrap async operations in the future and use Project Loom. The HTTP  Client API has existed since Java 11, which is now a full ten releases in the distant past! But, now it has
+this spiffy new auto-closeable API.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Java&quot;&gt;package bootiful.java21;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+class HttpTest {
+
+    @Test
+    void http () throws Exception {
+
+        // ¨ç
+        try (var http = HttpClient
+                .newHttpClient()){
+            var request = HttpRequest.newBuilder(URI.create(&quot;https://www.adobe.com&quot;))
+                    .GET()
+                    .build() ;
+            var response = http.send( request, HttpResponse.BodyHandlers.ofString());
+            Assertions.assertEquals( response.statusCode() , 200);
+            System.out.println(response.body());
+        }
+    }
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol&gt;
+&lt;li&gt;We want to close the &lt;code&gt;HttpClient&lt;/code&gt; automatically. Note that if you do launch any threads and send HTTP requests in them, you should &lt;em&gt;not&lt;/em&gt; use auto-closeable unless care is taken only to let it reach the end of the scope &lt;em&gt;after&lt;/em&gt; all the threads have finished executing.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;String Enhancements&lt;/h3&gt;
+&lt;p&gt;I used &lt;code&gt;HttpResponse.BodyHandlers.ofString&lt;/code&gt; to get a &lt;code&gt;String&lt;/code&gt; response in that example. You can get all sorts of objects back, not just &lt;code&gt;String&lt;/code&gt;. But &lt;code&gt;String&lt;/code&gt; results are nice because they are a great segue to another fantastic feature in Java
+21:  the new support for working with &lt;code&gt;String&lt;/code&gt; instances. This class shows two of my favorites: a &lt;code&gt;repeat&lt;/code&gt; operation for &lt;code&gt;StringBuilder&lt;/code&gt; and a way to detect the presence of Emojis in a &lt;code&gt;String&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Java&quot;&gt;package bootiful.java21;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+class StringsTest {
+
+    @Test
+    void repeat() throws Exception {
+        // ¨ç
+        var line = new StringBuilder()
+                .repeat(&quot;-&quot;, 10)
+                .toString();
+        Assertions.assertEquals(&quot;----------&quot;, line);
+    }
+
+    @Test
+    void emojis() throws Exception {
+        // ¨è
+        var shockedFaceEmoji = &quot;\uD83E\uDD2F&quot;;
+        var cp = Character.codePointAt(shockedFaceEmoji.toCharArray(), 0);
+        Assertions.assertTrue(Character.isEmoji(cp));
+        System.out.println(shockedFaceEmoji);
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol&gt;
+&lt;li&gt;This first example demonstrates using the &lt;code&gt;StringBuilder&lt;/code&gt; to repeat a &lt;code&gt;String&lt;/code&gt; (can we all collectively get rid of our various &lt;code&gt;StringUtils&lt;/code&gt;, yet?)&lt;/li&gt;
+&lt;li&gt;This second example demonstrates detecting an emoji in a &lt;code&gt;String&lt;/code&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Small quality-of-life improvements, I agree, but nice nonetheless.&lt;/p&gt;
+&lt;h3&gt;Sequenced Collections&lt;/h3&gt;
+&lt;p&gt;You¡¯ll need an ordered collection to sort those &lt;code&gt;String&lt;/code&gt; instance. Java offers a few of them, &lt;code&gt;LinkedHashMap&lt;/code&gt;, &lt;code&gt;List&lt;/code&gt;, etc., but they didn¡¯t have a common ancestor. Now they do; welcome, &lt;code&gt;SequencedCollection&lt;/code&gt;! In this example, we work with a simple &lt;code&gt;ArrayList&amp;#x3C;String&gt;&lt;/code&gt; and use the fancy new factory methods for things like a &lt;code&gt;LinkedHashSet&lt;/code&gt;. This new factory method  does some math internally to guarantee that it won¡¯t have to rebalance (and thus slowly rehash everything) before you¡¯ve added as many elements as you¡¯ve stipulated in the constructor.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;package bootiful.java21;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import java.util.LinkedHashSet;
+import java.util.SequencedCollection;
+
+class SequencedCollectionTest {
+
+    @Test
+    void ordering() throws Exception {
+        var list = LinkedHashSet.&amp;#x3C;String&gt;newLinkedHashSet(100);
+        if (list instanceof SequencedCollection&amp;#x3C;String&gt; sequencedCollection) {
+            sequencedCollection.add(&quot;ciao&quot;);
+            sequencedCollection.add(&quot;hola&quot;);
+            sequencedCollection.add(&quot;ni hao&quot;);
+            sequencedCollection.add(&quot;salut&quot;);
+            sequencedCollection.add(&quot;hello&quot;);
+            sequencedCollection.addFirst(&quot;ola&quot;); //&amp;#x3C;1&gt;
+            Assertions.assertEquals(sequencedCollection.getFirst(), &quot;ola&quot;); // ¨è
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol&gt;
+&lt;li&gt;This overrides the first-place element&lt;/li&gt;
+&lt;li&gt;This returns the first-place element&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;There are similar methods for &lt;code&gt;getLast&lt;/code&gt; and &lt;code&gt;addLast&lt;/code&gt;, and there¡¯s even support for reversing a collection, with the &lt;code&gt;reverse&lt;/code&gt; method.&lt;/p&gt;
+&lt;h3&gt;Virtual Threads and Project Loom&lt;/h3&gt;
+&lt;p&gt;Finally, we get to Loom. You¡¯ve no doubt heard a lot about Loom. The basic idea is to make scalable the code you wrote in college! What do I mean by that? Let¡¯s write a  simple network service that prints out whatever is given to us. We must read from one &lt;code&gt;InputStream&lt;/code&gt; and accrue everything into a new buffer (a &lt;code&gt;ByteArrayOutputStream&lt;/code&gt;). Then, when the request finishes, we¡¯ll print the contents o the &lt;code&gt;ByteArrayOutputStream&lt;/code&gt;. The problem is we might get a lot of data simultaneously. So, we will use threads to handle more than one request at the same time.&lt;/p&gt;
+&lt;p&gt;Here¡¯s the code:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Java&quot;&gt;package bootiful.java21;
+
+import java.io.ByteArrayOutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.concurrent.Executors;
+
+class NetworkServiceApplication {
+
+    public static void main(String[] args) throws Exception {
+        try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+            try (var serverSocket = new ServerSocket(9090)) {
+                while (true) {
+                    var clientSocket = serverSocket.accept();
+                    executor.submit(() -&gt; {
+                        try {
+                            handleRequest(clientSocket);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+                }
+            }
+        }
+    }
+
+    static void handleRequest(Socket socket) throws Exception {
+        var next = -1;
+        try (var baos = new ByteArrayOutputStream()) {
+            try (var in = socket.getInputStream()) {
+                while ((next = in.read()) != -1) {
+                    baos.write(next);
+                }
+            }
+            var inputMessage = baos.toString();
+            System.out.println(&quot;request: %s&quot;.formatted(inputMessage));
+        }
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;It¡¯s pretty trivial Networking-101 stuff. Create a &lt;code&gt;ServerSocket&lt;/code&gt;, and wait for new clients (represented by instances of &lt;code&gt;Socket&lt;/code&gt;) to appear. As each one arrives, hand it off to a thread from a threadpool. Each Thread reads data from the client &lt;code&gt;Socket&lt;/code&gt; instance¡¯s &lt;code&gt;InputStream&lt;/code&gt; references. Clients might disconnect,  experience latency, or have a large chunk  of data to send, all of which is a problem because there are only so many threads available and we must not waste our precious little time on them.&lt;/p&gt;
+&lt;p&gt;We¡¯re using threads to avoid a pileup of requests we can¡¯t handle fast enough. But here again  we¡¯re defeated  because, before Java 21, threads were expensive! They cost about two megabytes of RAM for each &lt;code&gt;Thread&lt;/code&gt;. And so we pool them in a thread pool and reuse them. But even there, if we have too many requests, we¡¯ll end up in a situation where none of the threads in the pool are available. They¡¯re all stuck waiting on some request or another to finish. Well, sort of. Many are just sitting there, waiting for the next &lt;code&gt;byte&lt;/code&gt; from the &lt;code&gt;InputStream&lt;/code&gt;, but they¡¯re unavailable for use.&lt;/p&gt;
+&lt;p&gt;The threads are blocked. They¡¯re probably waiting for data from the client.  The unfortunate state of things is that the server, waiting on that data, has no choice but to sit there, parked on a thread, not allowing anybody else to use it.&lt;/p&gt;
+&lt;p&gt;Until &lt;em&gt;now&lt;/em&gt;, that is. Java 21 introduces a new sort of thread, a &lt;em&gt;virtual thread&lt;/em&gt;. Now, we can create millions of threads for the heap. It¡¯s easy. But fundamentally, the facts on the ground are that the actual threads, on which virtual threads execute, are expensive. So, how can the JRE let us have millions of threads for actual work? It has a vastly improved runtime that now notices when we block and suspend execution on the Thread until the thing we¡¯re waiting for arrives. Then, it quietly puts us back on another thread. The actual threads act as carriers for virtual threads, allowing us to start millions of threads.&lt;/p&gt;
+&lt;p&gt;Java 21 has improvements in all the places that historically block threads, like blocking IO with &lt;code&gt;InputStream&lt;/code&gt; and &lt;code&gt;OutputStream&lt;/code&gt;, and &lt;code&gt;Thread.sleep&lt;/code&gt;, so now they correctly signal to the runtime that it is ok to reclaim the Thread and repurpose it for other virtual threads, allowing work to progress even when a virtual thread is &apos;blocked&apos;. You can see that in this example, which I shamelessly stole from &lt;a href=&quot;https://twitter.com/JosePaumard&quot;&gt;Jos? Paumard&lt;/a&gt;, one of the Java Developer Advocates at Oracle whose work I love.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Java&quot;&gt;package bootiful.java21;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import java.io.ByteArrayOutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.Executors;
+import java.util.stream.IntStream;
+
+class LoomTest {
+
+    @Test
+    void loom() throws Exception {
+
+        var observed = new ConcurrentSkipListSet&amp;#x3C;String&gt;();
+
+        var threads = IntStream
+                .range(0, 100)
+                .mapToObj(index -&gt; Thread.ofVirtual() // ¨ç
+                        .unstarted(() -&gt; {
+                            var first = index == 0;
+                            if (first) {
+                                observed.add(Thread.currentThread().toString());
+                            }
+                            try {
+                                Thread.sleep(100);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+                            if (first) {
+                                observed.add(Thread.currentThread().toString());
+                            }
+                            try {
+                                Thread.sleep(20);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+                            if (first) {
+                                observed.add(Thread.currentThread().toString());
+                            }
+                            try {
+                                Thread.sleep(20);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+                            if (first) {
+                                observed.add(Thread.currentThread().toString());
+                            }
+                        }))
+                .toList();
+
+        for (var t : threads)
+            t.start();
+
+        for (var t : threads)
+            t.join();
+
+        System.out.println(observed);
+
+        Assertions.assertTrue(observed.size() &gt; 1);
+
+    }
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol&gt;
+&lt;li&gt;We¡¯re using a new factory method in Java 21 to create a virtual thread. There¡¯s an alternative factory method to create a &lt;code&gt;factory&lt;/code&gt; method.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This example launches a lot of threads, to the point where it creates contention and will need to share the operating system carrier threads. Then it causes the threads to &lt;code&gt;sleep&lt;/code&gt;. Sleeping would typically block, but not in virtual threads.&lt;/p&gt;
+&lt;p&gt;We¡¯ll sample one of the threads (the first one launched) before and after each sleep to note the name of the carrier thread on which our virtual thread is running before and after each sleep. Notice that they¡¯ve changed! The runtime has moved our virtual thread on and off different carrier threads with no changes to our code!  That¡¯s the magic of Project Loom. &lt;em&gt;Virtually&lt;/em&gt; (pardon the pun) no code changes,  and much improved scalability (thread reuse), on par with what you might otherwise only be able to get with something like reactive programming.&lt;/p&gt;
+&lt;p&gt;What about our network service? We do require &lt;em&gt;one&lt;/em&gt; change. But it¡¯s a basic one. Swap out the thread pool, like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Java&quot;&gt;try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+...
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Everything else remains the same, and now we get unparalleled scale! Spring Boot applications typically have a lot of &lt;code&gt;Executor&lt;/code&gt; instances in play for all sorts of things, like integration, messaging, web services, etc. If you¡¯re using Spring Boot 3.2, coming out in November 2023, and Java 21, then you can use this new property, and Spring Boot will automatically plug in virtual thread pools for you! Neat.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-properties&quot;&gt;spring.threads.virtual.enabled=true
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Java 21 is a huge deal. It offers syntax on par with many more modern languages and scalability that¡¯s as good or better than many modern languages without complicating the code with things like async/await, reactive programming, etc.&lt;/p&gt;
+&lt;p&gt;If you want a native image, there is also the GraalVM project, which provides an ahead-of-time (AOT) compiler for Java 21.  You can GraalVM to compile your highly scalable Boot applications into GraalVM native images that start in no time and take a tiny fraction of the RAM they took on the JVM. These applications also benefit from the beauty of Project Loom, blessing them with the unparalleled scale.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-Java&quot;&gt;./gradlew nativeCompile
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Nice! We¡¯ve now got a small binary that starts up in a small fraction of time, takes a tiny fraction of the RAM, and scales as well as the most scalable runtimes. Congrats! You¡¯re a Java developer, and there¡¯s never been a better time to be a Java developer!&lt;/p&gt;</content:encoded></item><item><title><![CDATA[This Week in Spring - September 19th, 2023 (Java 21 Edition)]]></title><link>https://spring.io/blog/2023/09/19/this-week-in-spring-september-19th-2023-java-21-edition</link><guid isPermaLink="true">https://spring.io/blog/2023/09/19/this-week-in-spring-september-19th-2023-java-21-edition</guid><dc:creator><![CDATA[Josh Long]]></dc:creator><pubDate>Tue, 19 Sep 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Hi, Spring fans! Welcome to another installment of &lt;em&gt;This Week in Spring&lt;/em&gt; - &lt;strong&gt;Java 21 edition&lt;/strong&gt;!&lt;/p&gt;
+&lt;p&gt;The big news, indeed, the &lt;em&gt;biggest&lt;/em&gt; news, is that Java 21 is now available here! You should use &lt;a href=&quot;https://sdkman.io&quot;&gt;SDKMAN&lt;/a&gt; to install it, like this: &lt;code&gt;sdk install java 21-graalce  &amp;#x26;&amp;#x26; sdk default java 21-graalce&lt;/code&gt;. This install givews you both the new Java 21 OpenJDK distribution and the new GraalVM native image support for Java 21. It works just fine with existing versions of Spring Boot, but the real payoff will be with Spring Boot 3.2, where you&apos;ll be able to plug in virtual threads with nary but a flick of a property: &lt;code&gt;spring.threads.virtual.enabled=true&lt;/code&gt;. Spring Boot 3.2 drops in November. Get ready!&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Did I mention that Java 21 is available? if not, I also put out a &lt;a href=&quot;https://www.youtube.com/watch?v=8VJ_dSdV3pY&amp;#x26;list=PLgGXSWYM2FpPw8rV0tZoMiJYSCiLhPnOc&amp;#x26;index=1&quot;&gt;&lt;em&gt;Spring Tips&lt;/em&gt;&lt;/a&gt; video for you to watch looking at a ton of te new features!&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://medium.com/@mailto.dipmazumder/spring-boot-exception-handling-best-practices-e8ebe97e8ce&quot;&gt;Spring Boot: Exception Handling Best Practices&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2023/09/15/spring-data-2023-0-4-2022-0-10-and-2021-2-16-released&quot;&gt;Spring Data 2023.0.4, 2022.0.10, and 2021.2.16 released&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2023/09/15/spring-data-2023-1-0-m3-released&quot;&gt;Spring Data 2023.1.0-M3 released&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2023/09/14/spring-framework-5-3-30-and-6-0-12-available-now&quot;&gt;Spring Framework 5.3.30 and 6.0.12 available now&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2023/09/13/spring-tools-4-20-0-released&quot;&gt;Spring Tools 4.20.0 released&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2023/09/18/spring-for-apache-pulsar-1-0-0-m2-available-now&quot;&gt;Spring for Apache Pulsar 1.0.0-M2 available now&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2023/09/19/spring-for-graphql-1-0-5-1-1-6-1-2-3-released&quot;&gt;Spring for GraphQL 1.0.5, 1.1.6, 1.2.3 released&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://twitter.com/maciejwalkowiak/status/1702038479071273117&quot;&gt;Maciej Walkowiak shares another great thing&lt;/a&gt;: the fabulous asynchronouss testing library, Awaitility, is going to be included in &lt;code&gt;spring-boot-starter-test&lt;/code&gt;. Hurray!&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://foojay.io/today/openrewrite-automatic-code-refactoring-and-maintenance-part-2/&quot;&gt;OpenRewrite: Automatic Code Refactoring and More - Part 2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://twitter.com/piotr_minkowski/status/1701958545850126773&quot;&gt;Piotr Mi?kowski has a great point&lt;/a&gt;: If you are looking for a gRPC and Spring Boot integration [you can use that starter](&lt;a href=&quot;https://github.com/LogNet/grpc-spring-boot-starter&quot;&gt;https://github.com/LogNet/grpc-spring-boot-starter&lt;/a&gt;. In comparison to more popular &lt;code&gt;net.devh:grpc-spring-boot-starter&lt;/code&gt;  - it is more often released and has support for Spring Boot v3.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://twitter.com/sam_brannen/status/1702039543665307843&quot;&gt;Spring Test lead Sam Brannen&lt;/a&gt; shares that   Spring Framework 6.1 M5 introduces &lt;code&gt;@ContextCustomizerFactories&lt;/code&gt; to register a &lt;code&gt;ContextCustomizerFactory&lt;/code&gt;, superseding &lt;code&gt;@ContextConfiguration(initializers)&lt;/code&gt; when you need access to the test class. Nice!&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/spring-projects-experimental/spring-openapi-aggregator&quot;&gt;the good and the great Dr. David Syer has an interesting   project here that looks at aggregating OpenAPI schema, here spring-projects-experimental/spring-openapi-aggregator&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Speaking of the good and great Dr. Syer, he and I are &lt;a href=&quot;https://www.vmware.com/explore/sg/springone.html?src=ps_tnjzm6avhm6i4&amp;#x26;cid=701Hr000001hoxKIAQ&quot;&gt;doing a keynote at this year&apos;s SpringOne in Singapore&lt;/a&gt;, and we&apos;ll be speaking at the local &lt;a href=&quot;https://www.meetup.com/singajug/events/295962725/&quot;&gt;Java User Group&lt;/a&gt; there, too.&lt;/li&gt;
+&lt;li&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://kubernetes.io/blog/2023/09/12/local-k8s-development-tools/&quot;&gt;Blog: Comparing Local Kubernetes Development Tools: Telepresence, Gefyra, and mirrord&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://kubernetes.io/blog/2023/09/13/userns-alpha/&quot;&gt;Blog: User Namespaces: Now Supports Running Stateful Pods in Alpha!&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Spring Authorization Server 1.2.0-M1 available now]]></title><link>https://spring.io/blog/2023/09/19/spring-authorization-server-1-2-0-m1-available-now</link><guid isPermaLink="true">https://spring.io/blog/2023/09/19/spring-authorization-server-1-2-0-m1-available-now</guid><dc:creator><![CDATA[Joe Grandja]]></dc:creator><pubDate>Tue, 19 Sep 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the team and everyone who has contributed, it is my pleasure to announce the release of Spring Authorization Server 1.2.0-M1.&lt;/p&gt;
+&lt;p&gt;See the &lt;a href=&quot;https://github.com/spring-projects/spring-authorization-server/releases/tag/1.2.0-M1&quot;&gt;release notes&lt;/a&gt; for complete details.&lt;/p&gt;
+&lt;p&gt;To get started using Spring Authorization Server, see the &lt;a href=&quot;https://docs.spring.io/spring-authorization-server/reference/getting-started.html&quot;&gt;Getting Started&lt;/a&gt; chapter of the reference documentation and the &lt;a href=&quot;https://github.com/spring-projects/spring-authorization-server/tree/main/samples&quot;&gt;samples&lt;/a&gt; to become familiar with setup and configuration.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://spring.io/projects/spring-authorization-server&quot;&gt;Project Page&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-authorization-server/issues&quot;&gt;GitHub Issues&lt;/a&gt; | &lt;a href=&quot;https://github.com/orgs/spring-projects/projects/8/views/21&quot;&gt;Project Board&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Spring Tips: Making the joyful jump to Java 21]]></title><link>https://spring.io/blog/2023/09/19/spring-tips-making-the-joyful-jump-to-java-21</link><guid isPermaLink="true">https://spring.io/blog/2023/09/19/spring-tips-making-the-joyful-jump-to-java-21</guid><dc:creator><![CDATA[Josh Long]]></dc:creator><pubDate>Tue, 19 Sep 2023 00:00:00 GMT</pubDate><content:encoded>&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/8VJ_dSdV3pY?si=n6pnK1MvX9bwt8BC&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&quot; allowfullscreen&gt;&lt;/iframe&gt;
+&lt;p&gt;Hi, Spring fans! Java 21 and GraalVM supporting Java 21 are at long last here! It&apos;s been a long time in coming, but Java 21 - which comes out later today on the 19th of September, 2023 - brings with it some of the most exciting new features of any Java release. In this video, I (&lt;a href=&quot;https://www.youtube.com/@coffeesoftware&quot;&gt;https://www.youtube.com/@coffeesoftware&lt;/a&gt;) will look at some of the foundational features from Java 17 and see how they culminate in Java 21. I&apos;ll look at the biggest features - virtual threads and pattern matching. I&apos;ll also look at some of the quality-of-life features that you might not otherwise notice, but that are nice to have. And of course, I&apos;ll touch on how virtual threads integrate with Spring Boot 3.2. And, as a bonus, I am joined by two fellow Java Champions (and friends) Enrique Zamudio (&lt;a href=&quot;https://x.com/@chochosmx&quot;&gt;https://x.com/@chochosmx&lt;/a&gt;) and Edd? Mel?ndez (&lt;a href=&quot;https://x.com/eddumelendez&quot;&gt;https://x.com/eddumelendez&lt;/a&gt;). There&apos;s never been a better time to be a Java developer, and the fun starts right here! #GraalVM #Java #Java21 #SpringBoot #Java&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Spring for GraphQL 1.0.5, 1.1.6, 1.2.3 released]]></title><link>https://spring.io/blog/2023/09/19/spring-for-graphql-1-0-5-1-1-6-1-2-3-released</link><guid isPermaLink="true">https://spring.io/blog/2023/09/19/spring-for-graphql-1-0-5-1-1-6-1-2-3-released</guid><dc:creator><![CDATA[Brian Clozel]]></dc:creator><pubDate>Tue, 19 Sep 2023 00:00:00 GMT</pubDate><content:encoded>&lt;blockquote&gt;
+&lt;p&gt;These maintenance releases fix the newly published &lt;a href=&quot;https://spring.io/security/cve-2023-34047&quot;&gt;&quot;CVE-2023-34047: Exposure of data and identity to wrong session in Spring for GraphQL&quot;&lt;/a&gt; - please upgrade at your earliest convenience&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Update: we have just released &lt;a href=&quot;https://github.com/spring-projects/spring-graphql/releases/tag/v1.0.6&quot;&gt;1.0.6&lt;/a&gt; and &lt;a href=&quot;https://github.com/spring-projects/spring-graphql/releases/tag/v1.1.7&quot;&gt;1.1.7&lt;/a&gt; to address a missing backport. This backport is not related to the CVE fix released earlier today.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;I&apos;m pleased to announce that Spring for GraphQL 1.0.6, 1.1.6 and 1.2.3 are now available on Maven Central. With this triple maintenance release ships with many bug fixes and upgrades and are drop-in replacements for your current version in production.&lt;/p&gt;
+&lt;p&gt;The 1.0.5 release includes &lt;a href=&quot;https://github.com/spring-projects/spring-graphql/releases/tag/v1.0.5&quot;&gt;7 fixes and documentation improvements&lt;/a&gt;. This version will be shipped with Spring Boot 2.7.16, &lt;a href=&quot;https://calendar.spring.io/&quot;&gt;to be released later this week&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The 1.1.6 release includes &lt;a href=&quot;https://github.com/spring-projects/spring-graphql/releases/tag/v1.1.6&quot;&gt;12 fixes and documentation improvements&lt;/a&gt;. This version will be shipped with Spring Boot 3.0.11, &lt;a href=&quot;https://calendar.spring.io/&quot;&gt;to be released later this week&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Finally, the 1.2.3 release includes &lt;a href=&quot;https://github.com/spring-projects/spring-graphql/releases/tag/v1.2.3&quot;&gt;24 fixes and documentation improvements&lt;/a&gt;. This version will be shipped with Spring Boot 3.1.4, &lt;a href=&quot;https://calendar.spring.io/&quot;&gt;to be released later this week&lt;/a&gt;.&lt;/p&gt;
+&lt;h3&gt;Spring for GraphQL 1.3&lt;/h3&gt;
+&lt;p&gt;The Spring Boot team is currently working on the 3.2 minor release due in November. Spring Boot 3.2 will remain on the current 1.2.x branch of Spring for GraphQL, but upgrade to GraphQL Java 21.&lt;/p&gt;
+&lt;p&gt;Spring for GraphQL 1.3 will join the next Spring Boot 3.3 release train in May, 2024. There are &lt;a href=&quot;https://github.com/spring-projects/spring-graphql/milestone/29&quot;&gt;a few requests in our backlog right now&lt;/a&gt; and we expect to have more added along the way. In addition, we have began collaborating with the &lt;a href=&quot;https://netflix.github.io/dgs/&quot;&gt;the DGS team&lt;/a&gt; on a closer integration between the two frameworks. Stay tuned for more details!&lt;/p&gt;
+&lt;p&gt;Note that OSS support for 1.2.x is extended to 2024-11-30.&lt;/p&gt;
+&lt;h3&gt;How can you help?&lt;/h3&gt;
+&lt;p&gt;If you have general questions, please ask on &lt;a href=&quot;https://stackoverflow.com&quot;&gt;stackoverflow.com&lt;/a&gt; using the &lt;a href=&quot;https://stackoverflow.com/tags/spring-graphql&quot;&gt;&lt;code&gt;spring-graphql&lt;/code&gt; tag&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://spring.io/projects/spring-graphql/&quot;&gt;Project Page&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-graphql&quot;&gt;GitHub&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-graphql/issues&quot;&gt;Issues&lt;/a&gt; | &lt;a href=&quot;https://docs.spring.io/spring-graphql/reference&quot;&gt;Documentation&lt;/a&gt; | &lt;a href=&quot;https://stackoverflow.com/questions/tagged/spring-graphql&quot;&gt;Stack Overflow&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Spring Security 5.8.7, 6.0.7, 6.1.4, 6.2.0-M1 Released, including fixes for CVE-2023-34042]]></title><link>https://spring.io/blog/2023/09/18/spring-security-5-8-7-6-0-7-6-1-4-6-2-0-m1-released-including-fixes-for-cve</link><guid isPermaLink="true">https://spring.io/blog/2023/09/18/spring-security-5-8-7-6-0-7-6-1-4-6-2-0-m1-released-including-fixes-for-cve</guid><dc:creator><![CDATA[Rob Winch]]></dc:creator><pubDate>Mon, 18 Sep 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the team and everyone who has contributed, I am pleased to announce that the Spring Security &lt;code&gt;5.8.7&lt;/code&gt;, &lt;code&gt;6.0.7&lt;/code&gt;, &lt;code&gt;6.1.4&lt;/code&gt;, and &lt;code&gt;6.2.0-M1 &lt;/code&gt; are available now which fix &lt;a href=&quot;https://spring.io/security/cve-2023-34042&quot;&gt;CVE-2023-34042&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Please refer to the &lt;a href=&quot;https://github.com/spring-projects/spring-security/releases&quot;&gt;releases page&lt;/a&gt; for more detail on what is included in each release.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://projects.spring.io/spring-security/&quot;&gt;Project Page&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-security&quot;&gt;GitHub&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-security/issues&quot;&gt;Issues&lt;/a&gt; | &lt;a href=&quot;https://docs.spring.io/spring-security/reference/&quot;&gt;Documentation&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Spring for Apache Pulsar 1.0.0-M2 available now]]></title><link>https://spring.io/blog/2023/09/18/spring-for-apache-pulsar-1-0-0-m2-available-now</link><guid isPermaLink="true">https://spring.io/blog/2023/09/18/spring-for-apache-pulsar-1-0-0-m2-available-now</guid><dc:creator><![CDATA[Chris Bono]]></dc:creator><pubDate>Mon, 18 Sep 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the team and everyone who has contributed, I¡¯m happy to announce the second Spring for Apache Pulsar milestone release &lt;code&gt;1.0.0-M2&lt;/code&gt; has been released and is now available from &lt;a href=&quot;https://repo.spring.io/milestone&quot;&gt;https://repo.spring.io/milestone&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The most noteable features of this release are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Integration with Spring Boot &lt;code&gt;3.2.0-M3&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Updates to Pulsar &lt;code&gt;3.1.0&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Please see the &lt;a href=&quot;https://github.com/spring-projects/spring-pulsar/releases/tag/v1.0.0-M2&quot;&gt;release notes&lt;/a&gt; for more detail.&lt;/p&gt;
+&lt;p&gt;A great place to get started is the &lt;a href=&quot;https://docs.spring.io/spring-pulsar/docs/1.0.0-M2/reference/html/#quick-tour&quot;&gt;Quick Tour&lt;/a&gt; in the reference docs.&lt;/p&gt;
+&lt;h3&gt;How can you help?&lt;/h3&gt;
+&lt;p&gt;If you&apos;re interested in helping out, look for &lt;a href=&quot;https://github.com/spring-projects/spring-pulsar/issues&quot;&gt;open issues&lt;/a&gt; in the Github repository. If you have general questions, please ask on Stack Overflow using the &lt;a href=&quot;https://stackoverflow.com/tags/spring-pulsar&quot;&gt;&lt;code&gt;spring-pulsar&lt;/code&gt; tag&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/spring-projects/spring-pulsar&quot;&gt;GitHub&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-pulsar/issues&quot;&gt;Issues&lt;/a&gt; | &lt;a href=&quot;https://docs.spring.io/spring-pulsar/docs/1.0.0-M2/reference/html/&quot;&gt;Documentation&lt;/a&gt; | &lt;a href=&quot;https://stackoverflow.com/tags/spring-pulsar&quot;&gt;Stack Overflow&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Spring Data 2023.1.0-M3 released]]></title><link>https://spring.io/blog/2023/09/15/spring-data-2023-1-0-m3-released</link><guid isPermaLink="true">https://spring.io/blog/2023/09/15/spring-data-2023-1-0-m3-released</guid><dc:creator><![CDATA[Mark Paluch]]></dc:creator><pubDate>Fri, 15 Sep 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the team and everyone who has contributed, I¡¯m pleased to announce the third Spring Data milestone release &lt;code&gt;2023.1.0-M3&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The most notable features of this release are:&lt;/p&gt;
+&lt;h2&gt;New Features&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Migrate Documentation to Antora&lt;/li&gt;
+&lt;li&gt;Support for Postgres UUID arrays through Spring Data JDBC. Also, refined conversion support for Single Query Loading&lt;/li&gt;
+&lt;li&gt;Add suport for Mongo&apos;s &lt;code&gt;replaceOne&lt;/code&gt; operation&lt;/li&gt;
+&lt;li&gt;Refinements to &lt;code&gt;Lazy&lt;/code&gt; and &lt;code&gt;PersistentEntity&lt;/code&gt; mapping metadata&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;What&apos;s next&lt;/h2&gt;
+&lt;p&gt;Check out our &lt;a href=&quot;https://github.com/spring-projects/spring-data-commons/wiki/Spring-Data-2023.1-%28Vaughan%29-Release-Notes&quot;&gt;Release Notes&lt;/a&gt; page for details about the specific features shipped so far.&lt;/p&gt;
+&lt;p&gt;The third Spring Boot 3.2 milestone will be &lt;a href=&quot;https://spring.io/blog/2023/09/14/spring-framework-6-1-m5-released#:~:text=will%20be%20released%20next%20week&quot;&gt;released next week&lt;/a&gt;. This is a good opportunity to test existing applications with it and report any wrinkle in the upgrade process.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Spring Data Commons &lt;code&gt;3.2 M3&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/commons/docs/3.2.0-M3/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/commons/reference/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-commons/releases/tag/3.2.0-M3&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data JPA &lt;code&gt;3.2 M3&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/jpa/docs/3.2.0-M3/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/jpa/reference/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-jpa/releases/tag/3.2.0-M3&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data KeyValue &lt;code&gt;3.2 M3&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/keyvalue/docs/3.2.0-M3/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/keyvalue/reference/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-keyvalue/releases/tag/3.2.0-M3&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data MongoDB &lt;code&gt;4.2 M3&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/mongodb/docs/4.2.0-M3/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/mongodb/reference/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-mongodb/releases/tag/4.2.0-M3&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Neo4j &lt;code&gt;7.2 M3&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/neo4j/docs/7.2.0-M3/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/neo4j/reference/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-neo4j/releases/tag/7.2.0-M3&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data for Apache Cassandra &lt;code&gt;4.2 M3&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/cassandra/docs/4.2.0-M3/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/cassandra/reference/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-cassandra/releases/tag/4.2.0-M3&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data LDAP &lt;code&gt;3.2 M3&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/ldap/docs/3.2.0-M3/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/ldap/reference/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-ldap/releases/tag/3.2.0-M3&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data REST &lt;code&gt;4.2 M3&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/rest/docs/4.2.0-M3/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/rest/reference/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-rest/releases/tag/4.2.0-M3&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Redis &lt;code&gt;3.2 M3&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/redis/docs/3.2.0-M3/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/redis/reference/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-redis/releases/tag/3.2.0-M3&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Elasticsearch &lt;code&gt;5.2 M3&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/elasticsearch/docs/5.2.0-M3/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/elasticsearch/reference/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-elasticsearch/releases/tag/5.2.0-M3&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Couchbase &lt;code&gt;5.2 M3&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/couchbase/docs/5.2.0-M3/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/couchbase/reference/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-couchbase/releases/tag/5.2.0-M3&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Relational &lt;code&gt;3.2 M3&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/relational/docs/3.2.0-M3/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/relational/reference/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-relational/releases/tag/3.2.0-M3&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Spring Data 2023.0.4, 2022.0.10, and 2021.2.16 released]]></title><link>https://spring.io/blog/2023/09/15/spring-data-2023-0-4-2022-0-10-and-2021-2-16-released</link><guid isPermaLink="true">https://spring.io/blog/2023/09/15/spring-data-2023-0-4-2022-0-10-and-2021-2-16-released</guid><dc:creator><![CDATA[Mark Paluch]]></dc:creator><pubDate>Fri, 15 Sep 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the team and everyone who has contributed, I¡¯m pleased to announce the availability of 2023.0.4, 2022.0.10, and 2021.2.16 service releases. These releases ship with dependency upgrades, fixes and improvements. Along with the fixes, we adressed two regressions introduced in the previous service releases to the JPA module.&lt;/p&gt;
+&lt;p&gt;The upcoming Spring Boot releases will pick up the above releases.&lt;/p&gt;
+&lt;p&gt;We expect the next set of Spring Data maintenance releases to ship next November, along with the new and exciting 3.2 we have been working on the last few months.&lt;/p&gt;
+&lt;h2&gt;2023.0.4&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Spring Data Commons &lt;code&gt;3.1.4&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/commons/docs/3.1.4/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/commons/docs/3.1.4/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-commons/releases/tag/3.1.4&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data JPA &lt;code&gt;3.1.4&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/jpa/docs/3.1.4/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/jpa/docs/3.1.4/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-jpa/releases/tag/3.1.4&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data KeyValue &lt;code&gt;3.1.4&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/keyvalue/docs/3.1.4/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/keyvalue/docs/3.1.4/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-keyvalue/releases/tag/3.1.4&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data MongoDB &lt;code&gt;4.1.4&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/mongodb/docs/4.1.4/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/mongodb/docs/4.1.4/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-mongodb/releases/tag/4.1.4&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Neo4j &lt;code&gt;7.1.4&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/neo4j/docs/7.1.4/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/neo4j/docs/7.1.4/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-neo4j/releases/tag/7.1.4&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data for Apache Cassandra &lt;code&gt;4.1.4&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/cassandra/docs/4.1.4/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/cassandra/docs/4.1.4/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-cassandra/releases/tag/4.1.4&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data LDAP &lt;code&gt;3.1.4&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/ldap/docs/3.1.4/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/ldap/docs/3.1.4/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-ldap/releases/tag/3.1.4&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data REST &lt;code&gt;4.1.4&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/rest/docs/4.1.4/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/rest/docs/4.1.4/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-rest/releases/tag/4.1.4&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Redis &lt;code&gt;3.1.4&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/redis/docs/3.1.4/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/redis/docs/3.1.4/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-redis/releases/tag/3.1.4&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Elasticsearch &lt;code&gt;5.1.4&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/elasticsearch/docs/5.1.4/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/elasticsearch/docs/5.1.4/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-elasticsearch/releases/tag/5.1.4&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Couchbase &lt;code&gt;5.1.4&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/couchbase/docs/5.1.4/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/couchbase/docs/5.1.4/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-couchbase/releases/tag/5.1.4&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Relational &lt;code&gt;3.1.4&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/jdbc/docs/3.1.4/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/jdbc/docs/3.1.4/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-relational/releases/tag/3.1.4&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;2022.0.10&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Spring Data Commons &lt;code&gt;3.0.10&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/commons/docs/3.0.10/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/commons/docs/3.0.10/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-commons/releases/tag/3.0.10&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data JPA &lt;code&gt;3.0.10&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/jpa/docs/3.0.10/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/jpa/docs/3.0.10/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-jpa/releases/tag/3.0.10&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data KeyValue &lt;code&gt;3.0.10&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/keyvalue/docs/3.0.10/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/keyvalue/docs/3.0.10/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-keyvalue/releases/tag/3.0.10&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data MongoDB &lt;code&gt;4.0.10&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/mongodb/docs/4.0.10/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/mongodb/docs/4.0.10/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-mongodb/releases/tag/4.0.10&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Neo4j &lt;code&gt;7.0.10&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/neo4j/docs/7.0.10/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/neo4j/docs/7.0.10/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-neo4j/releases/tag/7.0.10&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data for Apache Cassandra &lt;code&gt;4.0.10&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/cassandra/docs/4.0.10/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/cassandra/docs/4.0.10/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-cassandra/releases/tag/4.0.10&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data LDAP &lt;code&gt;3.0.10&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/ldap/docs/3.0.10/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/ldap/docs/3.0.10/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-ldap/releases/tag/3.0.10&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data REST &lt;code&gt;4.0.10&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/rest/docs/4.0.10/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/rest/docs/4.0.10/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-rest/releases/tag/4.0.10&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Redis &lt;code&gt;3.0.10&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/redis/docs/3.0.10/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/redis/docs/3.0.10/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-redis/releases/tag/3.0.10&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Elasticsearch &lt;code&gt;5.0.10&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/elasticsearch/docs/5.0.10/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/elasticsearch/docs/5.0.10/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-elasticsearch/releases/tag/5.0.10&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Couchbase &lt;code&gt;5.0.10&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/couchbase/docs/5.0.10/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/couchbase/docs/5.0.10/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-couchbase/releases/tag/5.0.10&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Relational &lt;code&gt;3.0.10&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/jdbc/docs/3.0.10/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/jdbc/docs/3.0.10/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-relational/releases/tag/3.0.10&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;2021.2.16&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Spring Data Commons &lt;code&gt;2.7.16&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/commons/docs/2.7.16/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/commons/docs/2.7.16/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-commons/releases/tag/2.7.16&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data JDBC &lt;code&gt;2.4.16&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/jdbc/docs/2.4.16/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/jdbc/docs/2.4.16/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-relational/releases/tag/2.4.16&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data JPA &lt;code&gt;2.7.16&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/jpa/docs/2.7.16/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/jpa/docs/2.7.16/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-jpa/releases/tag/2.7.16&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data KeyValue &lt;code&gt;2.7.16&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/keyvalue/docs/2.7.16/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/keyvalue/docs/2.7.16/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-keyvalue/releases/tag/2.7.16&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data MongoDB &lt;code&gt;3.4.16&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/mongodb/docs/3.4.16/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/mongodb/docs/3.4.16/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-mongodb/releases/tag/3.4.16&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Neo4j &lt;code&gt;6.3.16&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/neo4j/docs/6.3.16/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/neo4j/docs/6.3.16/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-neo4j/releases/tag/6.3.16&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data for Apache Cassandra &lt;code&gt;3.4.16&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/cassandra/docs/3.4.16/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/cassandra/docs/3.4.16/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-cassandra/releases/tag/3.4.16&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data R2DBC &lt;code&gt;1.5.16&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/r2dbc/docs/1.5.16/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/r2dbc/docs/1.5.16/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-r2dbc/releases/tag/1.5.16&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data for Apache Geode &lt;code&gt;2.7.16&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/geode/docs/2.7.16/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/geode/docs/2.7.16/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-geode/releases/tag/2.7.16&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data LDAP &lt;code&gt;2.7.16&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/ldap/docs/2.7.16/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/ldap/docs/2.7.16/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-ldap/releases/tag/2.7.16&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Envers &lt;code&gt;2.7.16&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/envers/docs/2.7.16/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/envers/docs/2.7.16/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-envers/releases/tag/2.7.16&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data REST &lt;code&gt;3.7.16&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/rest/docs/3.7.16/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/rest/docs/3.7.16/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-rest/releases/tag/3.7.16&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Redis &lt;code&gt;2.7.16&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/redis/docs/2.7.16/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/redis/docs/2.7.16/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-redis/releases/tag/2.7.16&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Elasticsearch &lt;code&gt;4.4.16&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/elasticsearch/docs/4.4.16/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/elasticsearch/docs/4.4.16/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-elasticsearch/releases/tag/4.4.16&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Spring Data Couchbase &lt;code&gt;4.4.16&lt;/code&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/couchbase/docs/4.4.16/api/&quot;&gt;Javadoc&lt;/a&gt; - &lt;a href=&quot;https://docs.spring.io/spring-data/couchbase/docs/4.4.16/reference/html/&quot;&gt;Documentation&lt;/a&gt; - &lt;a href=&quot;https://github.com/spring-projects/spring-data-couchbase/releases/tag/4.4.16&quot;&gt;Changelog&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Spring Framework 6.1 M5 released]]></title><link>https://spring.io/blog/2023/09/14/spring-framework-6-1-m5-released</link><guid isPermaLink="true">https://spring.io/blog/2023/09/14/spring-framework-6-1-m5-released</guid><dc:creator><![CDATA[Brian Clozel]]></dc:creator><pubDate>Thu, 14 Sep 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the Spring Framework team, it is my pleasure to announce that the fifth and final Spring Framework 6.1 milestone release is available from &lt;a href=&quot;https://repo.spring.io/milestone&quot;&gt;repo.spring.io/milestone&lt;/a&gt; now. We initially planned for this release to be the first release candidate, but decided to release another milestone and shorten the release candidate phase.&lt;/p&gt;
+&lt;p&gt;Spring Framework 6.1.0-M5 ships &lt;a href=&quot;https://github.com/spring-projects/spring-framework/milestone/333?closed=1&quot;&gt;99 fixes and improvements&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;New Features&lt;/h2&gt;
+&lt;p&gt;This new milestone ships new interesting features, such as:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Support for one-time &lt;code&gt;@Scheduled&lt;/code&gt; tasks&lt;/li&gt;
+&lt;li&gt;The new &lt;code&gt;RestClient&lt;/code&gt; has now &lt;a href=&quot;https://docs.spring.io/spring-framework/reference/6.1/integration/rest-clients.html#rest-restclient&quot;&gt;its own section in the reference documentation&lt;/a&gt; and is instrumented for Observability&lt;/li&gt;
+&lt;li&gt;Jetty 12 upgrade&lt;/li&gt;
+&lt;li&gt;Context Propagation support for &lt;code&gt;@Async&lt;/code&gt; and &lt;code&gt;@Scheduled&lt;/code&gt; invocations&lt;/li&gt;
+&lt;li&gt;Declarative &lt;code&gt;ContextCustomizer&lt;/code&gt; support with &lt;code&gt;@ContextCustomizerFactories&lt;/code&gt; in Spring Test&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This also ships improvements for all existing applications:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Performance improvements in Spring WebFlux&lt;/li&gt;
+&lt;li&gt;Better error handling in Servlet applications, attempting to reset the response content if possible&lt;/li&gt;
+&lt;li&gt;Many improvements for the Kotlin Coroutine support in web applications&lt;/li&gt;
+&lt;li&gt;Further improvements in the lifecycle of HTTP resources for CRaC support&lt;/li&gt;
+&lt;li&gt;Hibernate footprint optimizations for GraalVM native applications&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;What&apos;s next&lt;/h2&gt;
+&lt;p&gt;Check out our &lt;a href=&quot;https://github.com/spring-projects/spring-framework/wiki/What&amp;#x27;s-New-in-Spring-Framework-6.x&quot;&gt;What&apos;s New page&lt;/a&gt; for details about the specific features shipped so far.&lt;/p&gt;
+&lt;p&gt;The third Spring Boot 3.2 milestone &lt;a href=&quot;https://calendar.spring.io/&quot;&gt;will be released next week&lt;/a&gt;. This is a good opportunity to test existing applications with it and report any wrinkle in the upgrade process.&lt;/p&gt;</content:encoded></item></channel></rss>

@@ -40,6 +40,8 @@
 			<li><input type="text" name="task_title" id="task_title"/></li>
 			<li>태스크내용</li>
 			<li><textarea name="task_content" id="task_content"></textarea></li>
+			<li>첨부파일</li>
+			<li><input type="file" name="file_name" id="file_name"/></li>
 			
 <!-- 			<li>
             	<div id='imglist'>
