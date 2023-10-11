@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.smart.home.dto.ReplyDTO;
+import kr.or.ozz.dto.ReplyDTO;
 
 import kr.or.ozz.dto.MissionDTO;
 import kr.or.ozz.dto.PagingDTO;
