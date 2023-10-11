@@ -5,7 +5,7 @@ header, footer {
 	display: none;
 }
 .subInfo {
-	width: 83%;
+	width: 87%;
 	text-align:center;
 	padding: 50px;
 	height: auto;
@@ -98,7 +98,16 @@ h2::after {
 			    <c:if test="<%= isSubscriptionExpired %>">
 			        <li>구독이 만료되었습니다. 결제 가능합니다.</li>
 			    </c:if>
+			     <p id="subscriptionMessage"></p>
 			</ul> 
+		</div>
+		<div>
+			<h3>지난 결제 내역</h3>
+			<c:forEach var="dto" items="${mysublist}" varStatus="status">
+			<li>구독옵션:${dto.sub_option}</li>
+			<li>구독요금:${dto.pay_amount}</li>
+			<li>구독날짜:${dto.started_at}</li>
+			</c:forEach>
 		</div>
 		<div><a href="/ozz/mypage/paymentForm"><button id="viewSub">구독하기</button></a></div>
 		<!-- <div class="subService">
@@ -132,3 +141,33 @@ h2::after {
         content.classList.add('view');
     })
 </script> -->
+
+<script>
+        // 사용자 아이디를 파라미터로 받음
+        var userId = "<%= request.getParameter("userId") %>";
+
+        // JavaScript로 구독 상태 확인
+        var isSubscribed = checkSubscription(userId);
+
+        // 결과에 따라 메시지와 버튼을 업데이트
+        var messageElement = document.getElementById("subscriptionMessage");
+        var buttonElement = document.getElementById("subscribeButton");
+
+        if (isSubscribed) {
+            messageElement.textContent = "구독 중입니다.";
+        } else {
+            messageElement.textContent = "구독 만료";
+            buttonElement.style.display = "block";
+            buttonElement.addEventListener("click", function() {
+                // 구독 버튼을 클릭했을 때 실행할 동작
+                window.location.href = "/subscribe?userId=" + userId;
+            });
+        }
+
+        // JavaScript 함수로 구독 확인 로직 구현
+        function checkSubscription(userId) {
+            // 여기에서 사용자의 구독 상태를 확인하는 로직을 구현
+            // 예시: 구독 여부에 따라 true 또는 false 반환
+            return true; // 가정: 항상 구독 중으로 설정
+        }
+    </script>

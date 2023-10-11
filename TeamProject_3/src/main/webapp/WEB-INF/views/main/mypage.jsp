@@ -170,7 +170,7 @@
         
         popupbtn.onclick = function() {
         	let option = "width = 700px, height = 600px, top = 300px, left = 200px, scrollbars = no,  location=no"
-        	let openurl = '/ozz/main/subscribe'
+        	let openurl = '/ozz/mypage/subscription_list'
         	window.open(openurl, 'popup', option)
         }
 
