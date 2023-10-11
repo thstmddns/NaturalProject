@@ -74,6 +74,8 @@ public class PaymentController {
 			mav.setViewName("/mypage/subscription_list");
 			return mav;
 		}
+		
+		
 	
 	
 }
