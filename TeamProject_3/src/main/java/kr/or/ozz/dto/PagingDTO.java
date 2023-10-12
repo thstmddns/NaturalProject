@@ -1,88 +1,151 @@
 package kr.or.ozz.dto;
 
 public class PagingDTO {
-	private int nowPage = 1; // í˜„ìž¬íŽ˜ì´ì§€
-	private int onePageRecord = 5; // í•œ íŽ˜ì´ì§€ì— í‘œì‹œí•  ë ˆì½”ë“œ ìˆ˜ 
-	private int totalRecord; //ì´ ë ˆì½”ë“œìˆ˜
-	private int totalPage; //ì´ íŽ˜ì´ì§€ìˆ˜
-	
-	private int onePageNumCount = 5; //í•œ íŽ˜ì´ì§€ì— í‘œì‹œë˜ëŠ” íŽ˜ì´ì§€ ìˆ˜
-	private int startPageNum = 1; //ì‹œìž‘íŽ˜ì´ì§€
-	
-	private int lastPageRecord = 5; //ë§ˆì§€ë§‰ íŽ˜ì´ì§€ì— ë‚¨ì•„ìžˆëŠ” ë ˆì½”ë“œ ìˆ˜
-	
-	private String searchKey; //ê²€ìƒ‰í‚¤
-	private String searchWord; //ê²€ìƒ‰ì–´
-	
-	public int getNowPage() {
-		return nowPage;
-	}
-	public void setNowPage(int nowPage) {
-		this.nowPage = nowPage;
-		
-		//íŽ˜ì´ì§€ì˜ ì‹œìž‘ë²ˆí˜¸ ìƒì„±í•˜ê¸°
-		//ì‹œìž‘ë²ˆí˜¸ = ((í˜„ìž¬íŽ˜ì´ì§€ - 1)/í•œíŽ˜ì´ì§€ì— í‘œì‹œí•  íŽ˜ì´ì§€ ìˆ˜)*í•œíŽ˜ì´ì§€ì— í‘œì‹œí•  íŽ˜ì´ì§€ ìˆ˜ + 1;
-		startPageNum = ((nowPage-1) / onePageNumCount)*onePageNumCount + 1;
-	}
-	public int getOnePageRecord() {
-		return onePageRecord;
-	}
-	public void setOnePageRecord(int onePageRecord) {
-		this.onePageRecord = onePageRecord;
-	}
-	public int getTotalRecord() {
-		return totalRecord;
-	}
-	public void setTotalRecord(int totalRecord) {
-		this.totalRecord = totalRecord;
-		
-		//ì´íŽ˜ì´ì§€ìˆ˜ ê³„ì‚°í•˜ê¸°		16 -> 4, 15 -> 3
-		//					3.44444   3.000
-		// ceil():ì˜¬ë¦¼, round():ë°˜ì˜¬ë¦¼, floor():ë²„ë¦¼
-		totalPage = (int)Math.ceil((double)totalRecord/onePageRecord);
-		
-		//ë§ˆì§€ë§‰íŽ˜ì´ì§€ì— ë‚¨ì•„ìžˆëŠ” ë ˆì½”ë“œ ìˆ˜
-		lastPageRecord = onePageRecord; //5
-		if(totalPage==nowPage) {
-			if(totalRecord%onePageRecord!=0) {
-				lastPageRecord = totalRecord % onePageRecord; //1,2,3,4 ì¤‘
-			}
-		}
-	}
-	public int getTotalPage() {
-		return totalPage;
-	}
-	public void setTotalPage(int totalPage) {
-		this.totalPage = totalPage;
-	}
-	public int getOnePageNumCount() {
-		return onePageNumCount;
-	}
-	public void setOnePageNumCount(int onePageNumCount) {
-		this.onePageNumCount = onePageNumCount;
-	}
-	public int getStartPageNum() {
-		return startPageNum;
-	}
-	public void setStartPageNum(int startPageNum) {
-		this.startPageNum = startPageNum;
-	}
-	public int getLastPageRecord() {
-		return lastPageRecord;
-	}
-	public void setLastPageRecord(int lastPageRecord) {
-		this.lastPageRecord = lastPageRecord;
-	}
-	public String getSearchKey() {
-		return searchKey;
-	}
-	public void setSearchKey(String searchKey) {
-		this.searchKey = searchKey;
-	}
-	public String getSearchWord() {
-		return searchWord;
-	}
-	public void setSearchWord(String searchWord) {
-		this.searchWord = searchWord;
-	}
+   private int nowPage = 1; // ÇöÀçÆäÀÌÁö
+   private int onePageRecord = 5; // ÇÑ ÆäÀÌÁö¿¡ Ç¥½ÃÇÒ ·¹ÄÚµå ¼ö
+   private int m_totalRecord; // ¹Ì¼Ç ÃÑ ·¹ÄÚµå ¼ö
+   private int q_totalRecord; // QnA ÃÑ ·¹ÄÚµå ¼ö
+   private int r_totalRecord; // Review ÃÑ ·¹ÄÚµå ¼ö
+   private int b_totalRecord; // Board ÃÑ ·¹ÄÚµå ¼ö
+   private int u_totalRecord; // User ÃÑ ·¹ÄÚµå ¼ö
+   private int totalPage; //ÃÑ ÆäÀÌÁö¼ö
+   
+   private int onePageNumCount = 5; //ÇÑ ÆäÀÌÁö¿¡ Ç¥½ÃµÇ´Â ÆäÀÌÁö ¼ö
+   private int startPageNum = 1; //½ÃÀÛÆäÀÌÁö
+   
+   private int lastPageRecord = 5; //¸¶Áö¸· ÆäÀÌÁö¿¡ ³²¾ÆÀÖ´Â ·¹ÄÚµå ¼ö
+   
+   private String searchKey; //°Ë»öÅ°
+   private String searchWord; //°Ë»ö¾î
+   
+   public int getNowPage() {
+      return nowPage;
+   }
+   public void setNowPage(int nowPage) {
+      this.nowPage = nowPage;
+      
+      //ÆäÀÌÁöÀÇ ½ÃÀÛ¹øÈ£ »ý¼ºÇÏ±â
+      //½ÃÀÛ¹øÈ£ = ((ÇöÀçÆäÀÌÁö - 1)/ÇÑÆäÀÌÁö¿¡ Ç¥½ÃÇÒ ÆäÀÌÁö ¼ö)*ÇÑÆäÀÌÁö¿¡ Ç¥½ÃÇÒ ÆäÀÌÁö ¼ö + 1;
+      startPageNum = ((nowPage-1) / onePageNumCount)*onePageNumCount + 1;
+   }
+   public int getOnePageRecord() {
+      return onePageRecord;
+   }
+   public void setOnePageRecord(int onePageRecord) {
+      this.onePageRecord = onePageRecord;
+   }
+   public int getTotalPage() {
+      return totalPage;
+   }
+   public void setTotalPage(int totalPage) {
+      this.totalPage = totalPage;
+   }
+   public int getOnePageNumCount() {
+      return onePageNumCount;
+   }
+   public void setOnePageNumCount(int onePageNumCount) {
+      this.onePageNumCount = onePageNumCount;
+   }
+   public int getStartPageNum() {
+      return startPageNum;
+   }
+   public void setStartPageNum(int startPageNum) {
+      this.startPageNum = startPageNum;
+   }
+   public int getLastPageRecord() {
+      return lastPageRecord;
+   }
+   public void setLastPageRecord(int lastPageRecord) {
+      this.lastPageRecord = lastPageRecord;
+   }
+   public String getSearchKey() {
+      return searchKey;
+   }
+   public void setSearchKey(String searchKey) {
+      this.searchKey = searchKey;
+   }
+   public String getSearchWord() {
+      return searchWord;
+   }
+   public void setSearchWord(String searchWord) {
+      this.searchWord = searchWord;
+   }
+   
+   public int getM_totalRecord() {
+      return m_totalRecord;
+   }
+   public void setM_totalRecord(int m_totalRecord) {
+      this.m_totalRecord = m_totalRecord;
+      totalPage = (int)Math.ceil((double)m_totalRecord/onePageRecord);
+      lastPageRecord = onePageRecord; //5
+      if(totalPage==nowPage) {
+         if(m_totalRecord%onePageRecord!=0) {
+            lastPageRecord = m_totalRecord % onePageRecord; //1,2,3,4 Áß
+         }
+      }
+   }
+   public int getQ_totalRecord() {
+      return q_totalRecord;
+   }
+   public void setQ_totalRecord(int q_totalRecord) {
+      this.q_totalRecord = q_totalRecord;
+      totalPage = (int)Math.ceil((double)q_totalRecord/onePageRecord);
+      lastPageRecord = onePageRecord; //5
+      if(totalPage==nowPage) {
+         if(q_totalRecord%onePageRecord!=0) {
+            lastPageRecord = q_totalRecord % onePageRecord; //1,2,3,4 Áß
+         }
+      }
+   }
+   public int getR_totalRecord() {
+      return r_totalRecord;
+   }
+   public void setR_totalRecord(int r_totalRecord) {
+      this.r_totalRecord = r_totalRecord;
+      totalPage = (int)Math.ceil((double)r_totalRecord/onePageRecord);
+      lastPageRecord = onePageRecord; //5
+      if(totalPage==nowPage) {
+         if(r_totalRecord%onePageRecord!=0) {
+            lastPageRecord = r_totalRecord % onePageRecord; //1,2,3,4 Áß
+         }
+      }
+   }
+   public int getB_totalRecord() {
+      return b_totalRecord;
+   }
+   public void setB_totalRecord(int b_totalRecord) {
+      this.b_totalRecord = b_totalRecord;
+      totalPage = (int)Math.ceil((double)b_totalRecord/onePageRecord);
+      lastPageRecord = onePageRecord; //5
+      if(totalPage==nowPage) {
+         if(b_totalRecord%onePageRecord!=0) {
+            lastPageRecord = b_totalRecord % onePageRecord; //1,2,3,4 Áß
+         }
+      }
+   }
+   public int getU_totalRecord() {
+      return u_totalRecord;
+   }
+   public void setU_totalRecord(int u_totalRecord) {
+      this.u_totalRecord = u_totalRecord;
+      totalPage = (int)Math.ceil((double)u_totalRecord/onePageRecord);
+      lastPageRecord = onePageRecord; //5
+      if(totalPage==nowPage) {
+         if(u_totalRecord%onePageRecord!=0) {
+            lastPageRecord = u_totalRecord % onePageRecord; //1,2,3,4 Áß
+         }
+      }
+   }
+   
+   /*
+    * public int getTotalRecord() { return totalRecord; } public void
+    * setTotalRecord(int totalRecord) { this.totalRecord = totalRecord;
+    * 
+    * //ÃÑÆäÀÌÁö¼ö °è»êÇÏ±â 16 -> 4, 15 -> 3 // 3.44444 3.000 // ceil():¿Ã¸², round():¹Ý¿Ã¸²,
+    * floor():¹ö¸² totalPage = (int)Math.ceil((double)totalRecord/onePageRecord);
+    * 
+    * //¸¶Áö¸·ÆäÀÌÁö¿¡ ³²¾ÆÀÖ´Â ·¹ÄÚµå ¼ö lastPageRecord = onePageRecord; //5
+    * if(totalPage==nowPage) { if(totalRecord%onePageRecord!=0) { lastPageRecord =
+    * totalRecord % onePageRecord; //1,2,3,4 Áß } } }
+    */
 }

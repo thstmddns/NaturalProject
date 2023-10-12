@@ -11,7 +11,7 @@ public interface MissionDAO {
 	//미션목록 선택 (paging, search)
 	public List<MissionDTO> Missionlist(PagingDTO pDTO);
 	//총 레코드 수
-	public int totalRecord(PagingDTO pDTO);
+	public int m_totalRecord(PagingDTO pDTO);
 	//1개 레코드 선택(미션내용보기)
 	public MissionDTO getMission(int no);
 	//조회수증가

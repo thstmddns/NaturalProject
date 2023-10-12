@@ -72,15 +72,23 @@ h2::after {
 }
 #expired {
 	display:grid;
-	grid-template-columns: 300px 150px;
+	grid-template-columns: 300px 250px;
 }
 .expiredSub {
-	width: 170px;
-	padding: 50px;
-	height: auto;
+	width: 235px;
+	padding: 30px 20px;
+	height: 150px;
 	background: #F1F4F8;
 	box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.10);
 	margin-right: 20px;
+}
+.expiredSub li {
+	padding: 10px;
+	font-size: 0.9em; 
+
+}
+.expiredSub li:first-child {
+	font-size: 1.1em;
 }
 </style>
 <main style="width:600px; height: 500px;">
@@ -118,9 +126,9 @@ h2::after {
 			<div id="expired">
 				<c:forEach var="dto" items="${mysublist}" varStatus="status">
 				<div class="expiredSub">
-					<li>구독옵션 : ${dto.sub_option}</li>
-					<li>구독요금 : ${dto.pay_amount}</li>
-					<li>구독날짜 : ${dto.started_at}</li>
+					<li>${dto.started_at} 구독</li>
+					<li>정기구독 (${dto.sub_option})</li>
+					<li>₩ ${dto.pay_amount}</li>
 				</div>
 				</c:forEach>
 			</div>

@@ -94,7 +94,7 @@ public class UserController {
 	public ModelAndView logout(HttpSession session) {
 		session.invalidate();
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:/");
+		mav.setViewName("main/landing");
 		return mav;
 	}
 	
