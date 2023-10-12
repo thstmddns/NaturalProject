@@ -11,7 +11,7 @@
 	<select id="Missionlist" resultType="kr.or.ozz.dto.MissionDTO">
 		SELECT * FROM
          (SELECT * FROM
-            (SELECT mission_no, mission_title, mission_tag, userid, to_char(created_at, 'MM-DD HH:MI') created_at, hit FROM t_mission
+            (SELECT mission_no, mission_title, mission_tag, userid, to_char(created_at, 'YYYY-MM-DD') created_at, hit FROM t_mission
             <!-- 검색어가 있을 때 -->
             <if test="searchWord != null">
             	where mission_title like '%${searchWord}%'

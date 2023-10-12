@@ -2,30 +2,24 @@ package kr.or.ozz.service;
 
 import java.util.List;
 
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import kr.or.ozz.dao.PaymentDAO;
 import kr.or.ozz.dao.SubscriptionDAO;
+import kr.or.ozz.dto.PaymentDTO;
+import kr.or.ozz.dto.PerformersDTO;
 import kr.or.ozz.dto.SubscriptionDTO;
 
 @Service
-public class SubscriptionServiceImpl implements SubscriptionService {
+public class SubscriptionServiceImpl implements SubscriptionService{
 
-	@Autowired
-	SubscriptionDAO dao;
-
+	 @Autowired
+	    private SubscriptionDAO dao;
 
 	@Override
-	public List<SubscriptionDTO> getAllSubscriptions() {
-		return dao.getAllSubscriptions();
+	public String getSubstatus(String userid) {
+		return dao.getSubstatus(userid);
 	}
-
-
-	
-	
-
 
 }

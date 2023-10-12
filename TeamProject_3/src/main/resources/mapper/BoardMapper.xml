@@ -4,14 +4,14 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.ozz.dao.BoardDAO">
 	<insert id="BoardwriteOk">
-		insert into t_board(board_no, board_title, board_content, created_at, hit, userid, work_cate)
-		values(com_no_seq.nextval, #{board_title}, #{board_content}, sysdate, 0, #{userid},  #{work_cate})
+		insert into t_board(board_no, board_title, board_content, created_at, hit, userid, work_cate, board_cate)
+		values(com_no_seq.nextval, #{board_title}, #{board_content}, sysdate, 0, #{userid},  #{work_cate}, #{board_cate})
 	</insert>
 	
 	<select id="Boardlist" resultType="kr.or.ozz.dto.BoardDTO">
 		SELECT * FROM
          (SELECT * FROM
-            (SELECT board_no, board_title, board_content, to_char(created_at, 'MM-DD HH:MI') created_at, hit, userid, file_name, work_cate FROM t_board
+            (SELECT board_no, board_title, board_content, to_char(created_at, 'MM-DD HH:MI') created_at, hit, userid, file_name, work_cate, board_cate FROM t_board
             <!-- 검색어가 있을 때 -->
             <if test="searchWord != null">
             	where board_title like '%${searchWord}%'

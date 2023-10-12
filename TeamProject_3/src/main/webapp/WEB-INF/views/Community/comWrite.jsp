@@ -19,7 +19,7 @@
 
 <main>
 	<div id="writeTop">
-		<span style="color:#4E657E; font-size:16px; margin-top:10px;"><a href="/ozz/main/mainCom"><img src="<%= request.getContextPath()%>/img/__.png" style="vertical-align:middle;"/>&nbsp;커뮤니티로 돌아가기</a></span>
+		<span style="color:#4E657E; font-size:16px; margin-top:10px;"><a href="javascript:window.history.back();"><img src="<%= request.getContextPath()%>/img/__.png" style="vertical-align:middle;"/>&nbsp;커뮤니티로 돌아가기</a></span>
 		<span style="float:right;" id="writeBtn">
 			<button>보관</button>
 			<button type="submit" form="comWriteForm">완료</button>
@@ -30,7 +30,6 @@
 			<li style="font-size: 18px; margin-bottom: 20px;">게시글 분류</li>
 			<li style="margin-bottom: 40px;"><select class="select" name="board_cate" id="board_cate" title="분류를 선택해주세요" style="width:100%; height:40px; border-radius: 6px; border: 1px #DAE2EB solid; color:#6e6e6e">
 			    <option value="">분류를 선택해주세요</option>
-			    <option value="QnA">QnA</option>
 			    <option value="태스크">태스크</option>
 			    <option value="자유 게시글">자유 게시글</option>
 			</select></li>
@@ -95,7 +94,7 @@
 </main>
 <script>
 		 CKEDITOR.ClassicEditor.create(document.getElementById("board_content"), option);
-		
+		 CKEDITOR.config.autoParagraph = false;
 		
 		function validate() {
 			

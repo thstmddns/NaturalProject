@@ -66,7 +66,7 @@ public class BoardController {
 	@GetMapping("/Boardwrite")
 	public ModelAndView Boardwrite() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("community/comWrite");
+		mav.setViewName("Community/comWrite");
 		return mav;
 	}
 

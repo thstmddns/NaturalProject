@@ -12,4 +12,5 @@ public class BoardDTO {
 	private String userid;
 	private String file_name;
 	private String work_cate;
+	private String board_cate;
 }

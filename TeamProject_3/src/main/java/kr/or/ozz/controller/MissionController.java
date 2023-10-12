@@ -86,7 +86,7 @@ public class MissionController {
 	@GetMapping("/Missionwrite")
 	public ModelAndView Missionwrite() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("mission/missionMake");
+		mav.setViewName("Mission/missionMake");
 		return mav;
 	}
 

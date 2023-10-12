@@ -95,6 +95,7 @@
     display: none;
 }
 #mainSearch {
+	width: 70px;
 	gap: 0 !important;
 	margin: 0 !important;
 	border-radius: 16px;
@@ -105,6 +106,7 @@
 #mainSearch:hover {
 	border: 2px solid;
 }
+
 </style>
 
 
@@ -115,14 +117,10 @@
         <li style="color: black; font-size: 17px;"><a href="/ozz/main/mainMaster">전문가</a></li>
         <li style="color: black; font-size: 17px; margin-top: 15px;"><a href="/ozz/main/mainCom">커뮤니티</a></li>
     </ul>
-    <!-- <div style="display: grid; grid-template-columns: 470px 70px; margin-top:10px;">
-    <input type="text" id="searchWord" placeholder="미션, 전문가, 커뮤니티를 검색해보세요.">
-	<button id="mainSearch">검색</button>
-	</div> -->
-	<div style="display: grid; grid-template-columns: 470px 70px; margin-top:10px;">
-		<form action="/ozz/main/searchMission">
-			<input type="text" name="searchWord" id="searchWord" placeholder="미션, 전문가, 커뮤니티를 검색해보세요."/>
-			<input type="submit" value="검색" />
+    <div style="margin-top:10px;">
+	    <form action="/ozz/main/searchMission" style="display: flex;" class="input-container">
+	    	<input type="text" name="searchWord" id="searchWord" placeholder="미션, 전문가, 커뮤니티를 검색해보세요.">
+			<input type="submit" id="mainSearch" value="검색">
 		</form>
 	</div>
 	
@@ -139,8 +137,8 @@
     	<li><a href="/ozz/register/registerJoin" class="item"><div>회원가입</div></a></li>
     	</c:if>
     	<c:if test="${not empty logId}">
-        <li><a href="/ozz/mypage/mypage_main" class="item"><div>마이페이지</div></a></li>
-        <li><a href="#" class="item"><div>구독</div></a></li>
+        <li><a href="/ozz/mypage/myPageDetail" class="item"><div>마이페이지</div></a></li>
+        <li><a href="#" class="item" id="subscribe"><div>구독</div></a></li>
         <li><a href="#" class="item"><div>메시지</div></a></li>
         <li><a href="#" class="item"><div>북마크</div></a></li>
         <li><a href="#" class="item"><div>설정</div></a></li>
@@ -150,4 +148,15 @@
 	
 	</div>
 </header>
+<script>
+	let popupbtn2 = document.querySelector('a#subscribe');
+	
+	popupbtn2.onclick = function() {
+		let option = "width = 700px, height = 600px, top = 300px, left = 200px, scrollbars = no,  location=no"
+		let openurl = '/ozz/mypage/subscription_list'
+		window.open(openurl, 'popup', option)
+	}
 
+
+
+</script>

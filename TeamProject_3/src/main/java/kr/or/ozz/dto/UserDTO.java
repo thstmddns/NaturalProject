@@ -4,20 +4,27 @@ import lombok.Data;
 
 public class UserDTO {
 
-		    private String userid; // È¸¿ø ¾ÆÀÌµð
-		    private String pwd; // È¸¿ø ºñ¹Ð¹øÈ£
-		    private String username; // È¸¿ø ÀÌ¸§
-		    private String email; // È¸¿ø ÀÌ¸ÞÀÏ
-		    private Double years; // È¸¿ø °æ·Â
-		    private String work; // È¸¿ø °ü·ÃÁ÷¹«
-		    private String concern; // È¸¿ø °ü½É»ç
-		    private String hashtag; // È¸¿ø ÇØ½ÃÅÂ±×
-		    private String created_at; // È¸¿ø °¡ÀÔÀÏÀÚ
-		    private String usertype; // È¸¿ø À¯Çü
-		    private String intro; // È¸¿ø ÀÚ±â¼Ò°³
+		    private String userid; // È¸ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½
+		    private String pwd; // È¸ï¿½ï¿½ ï¿½ï¿½Ð¹ï¿½È£
+		    private String username; // È¸ï¿½ï¿½ ï¿½Ì¸ï¿½
+		    private String email; // È¸ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½
+		    private Double years; // È¸ï¿½ï¿½ ï¿½ï¿½ï¿½
+		    private String work; // È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		    private String concern; // È¸ï¿½ï¿½ ï¿½ï¿½ï¿½É»ï¿½
+		    private String hashtag; // È¸ï¿½ï¿½ ï¿½Ø½ï¿½ï¿½Â±ï¿½
+		    private String created_at; // È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		    private String usertype; // È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		    private String intro;
 		    
 			public String getUserid() {
 				return userid;
+			}
+			
+			public String getIntro() {
+				return intro;
+			}
+			public void setIntro(String intro) {
+				this.intro = intro;
 			}
 			public void setUserid(String userid) {
 				this.userid = userid;

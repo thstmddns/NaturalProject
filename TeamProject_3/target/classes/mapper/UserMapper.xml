@@ -37,42 +37,41 @@
 		select
 		userid, pwd, username,
 		email, years, work,
-		concern, hashtag
+		concern, intro
 		from t_user where userid=#{param1}
 	</select>
 
 	<update id="UserUpdate">
 		update t_user set 
 		pwd = #{pwd},
-		username = #{username},
 		email = #{email},
 		years = #{years},
 		work = #{work},
 		concern = #{concern},
-		hashtag = #{hashtag},
-		usertype = #{usertype}
+		intro = #{intro}
 		where userid = #{userid}
 	</update>
 	
 	<select id="Userlist" resultType="kr.or.ozz.dto.UserDTO">
-<!-- 		SELECT * FROM
+
+<!--       SELECT * FROM
          (SELECT * FROM -->
             SELECT username, work, intro FROM t_user
             <!-- 검색어가 있을 때 -->
             <if test="searchWord != null">
-            	where intro like '%${searchWord}%'
+               where intro like '%${searchWord}%'
             </if>
 <!--             ORDER BY board_no DESC)
          WHERE <![CDATA[rownum <= ${nowPage * onePageRecord}]]>
          ORDER BY board_no ASC)
       WHERE <![CDATA[rownum <= ${lastPageRecord}]]>
       ORDER BY board_no DESC -->
-	</select>
-	
-	<select id="u_totalRecord" resultType="int">
-		select count(userid) cnt from t_user
-		<if test="searchWord != null">
-			where intro like '%${searchWord}%'
-		</if>
-	</select>
+
+   </select>
+   <select id="u_totalRecord" resultType="int">
+      select count(userid) cnt from t_user
+      <if test="searchWord != null">
+         where intro like '%${searchWord}%'
+      </if>
+   </select>
 </mapper>

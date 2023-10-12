@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.ozz.dto.PaymentDTO;
+import kr.or.ozz.dto.PerformersDTO;
 import kr.or.ozz.service.PaymentService;
+import kr.or.ozz.service.SubscriptionService;
 
 
 
@@ -25,21 +27,8 @@ public class PaymentController {
 	@Autowired
 	PaymentService service;
 	
-	//구독내역 리스트
-	@GetMapping("/subscription_list")
-	public ModelAndView UserPayment(String userid) {
-	    ModelAndView mav = new ModelAndView();
-	    List<PaymentDTO> list = null;
-	    try {
-	        list = service.getUserPayment(userid);
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	    mav.addObject("list", list);
-	    mav.setViewName("/mypage/subscription_list");
-	    return mav;
-	}
-
+	@Autowired
+	SubscriptionService Sservice;
 	
 	//결제페이지 이동
 	@GetMapping("/paymentForm")
@@ -53,20 +42,49 @@ public class PaymentController {
 	@PostMapping("/paymentRequest")
 	@ResponseBody
 	public String paymentRequest(PaymentDTO dto, HttpSession session) {
-		 try {
+		
+		try {
 	            // 세션에서 사용자 아이디를 가져와 PaymentDTO에 설정
-	            String userId = (String) session.getAttribute("logId");
-	            dto.setUserid(userId);
-
+	            dto.setUserid((String)session.getAttribute("logId"));
 	            // 결제 정보를 저장
+				dto.getSub_option();
+				dto.getPay_amount();
 	            service.insertPayment(dto);
-
+	            
 	            // 결제가 성공하면 사용자 아이디를 반환
-	            return userId;
+	            return dto.getUserid();
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	            // 결제 실패 시 "fail"을 반환
 	            return "fail";
 	        }
+		 
 	    }
-	}
+	
+		//구독내역(결제내역) 리스트
+		@GetMapping("/subscription_list")
+		public ModelAndView mysublist(HttpSession session) {
+			ModelAndView mav = new ModelAndView();
+			List<PaymentDTO> mysublist = null;
+			
+			String mysubstatus = null;
+			try {
+				mysublist = service.getUserPayment((String)session.getAttribute("logId"));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			try {
+				mysubstatus = Sservice.getSubstatus((String)session.getAttribute("logId"));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			mav.addObject("mysublist", mysublist);
+			mav.addObject("mysubstatus", mysubstatus);
+			mav.setViewName("/mypage/subscription_list");
+			return mav;
+		}
+	
+}
+	
+	

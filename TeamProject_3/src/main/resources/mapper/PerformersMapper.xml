@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ozz.dao.PerformersDAO">
+	<select id="getPerfomersList"
+		resultType="kr.or.ozz.dto.PerformersDTO">
+		SELECT tp.userid,
+		(COUNT(*) /
+		(
+		SELECT COUNT(task_no)
+		FROM t_mission_task t
+		JOIN t_mission_step s ON t.step_no = s.step_no
+		JOIN t_mission m ON m.mission_no = s.mission_no
+		WHERE m.mission_no = tp.mission_no
+		GROUP BY m.mission_no
+		)) * 100 AS mission_rate,
+		tm.mission_title
+		FROM t_performers tp
+		JOIN t_mission tm ON tp.mission_no = tm.mission_no
+		WHERE tp.userid = 'user01'
+		GROUP BY tp.userid, tp.mission_no, tm.mission_title
+		<![CDATA[HAVING (COUNT(*) /
+		(
+		SELECT COUNT(task_no)
+		FROM t_mission_task t
+		JOIN t_mission_step s ON t.step_no = s.step_no
+		JOIN t_mission m ON m.mission_no = s.mission_no
+		WHERE m.mission_no = tp.mission_no
+		GROUP BY m.mission_no
+		)) * 100 < 100]]>
+	
+	</select>
+
+	<select id="getPerfomersEndList"
+		resultType="kr.or.ozz.dto.PerformersDTO">
+		SELECT tp.userid, tp.mission_no, m.mission_title,
+		    (COUNT(*) / 
+		    (
+		        SELECT COUNT(task_no)
+		        FROM t_mission_task t
+		        JOIN t_mission_step s ON t.step_no = s.step_no
+		        JOIN t_mission m ON m.mission_no = s.mission_no
+		        WHERE m.mission_no = tp.mission_no
+		        GROUP BY m.mission_no
+		    )) * 100 AS mission_rate,
+		    COALESCE(mf.feedback_score, 0) AS feedback_score,
+		    MAX(tp.completed_at) AS latest_completed_at
+		FROM t_performers tp
+		LEFT JOIN t_mission_feedback mf ON tp.userid = mf.userid AND tp.mission_no = mf.mission_no
+		LEFT JOIN t_mission m ON tp.mission_no = m.mission_no
+		WHERE tp.userid = '${param1}'
+		GROUP BY tp.userid, tp.mission_no, mf.feedback_score, m.mission_title
+		HAVING (COUNT(*) / 
+		    (
+		        SELECT COUNT(task_no)
+		        FROM t_mission_task t
+		        JOIN t_mission_step s ON t.step_no = s.step_no
+		        JOIN t_mission m ON m.mission_no = s.mission_no
+		        WHERE m.mission_no = tp.mission_no
+		        GROUP BY m.mission_no
+		    )) * 100 = 100
+	</select>
+
+	<insert id="insertPayment">
+		insert into t_performers(PERFORMER_NO, MISSION_NO,
+		USERID, TASK_NO, STARTED_AT, COMPLETED_AT, STEP_NO)
+		values(PERFORMER_NO_seq.nextval, #{userid}, #{TASK_NO}, #{STARTED_AT},
+		#{COMPLETED_AT}, #{STEP_NO})
+	</insert>
+</mapper>

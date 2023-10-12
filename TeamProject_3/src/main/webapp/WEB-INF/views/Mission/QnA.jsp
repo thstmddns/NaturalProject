@@ -78,6 +78,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 	CKEDITOR.ClassicEditor.create(document.getElementById("qna_content"), option);
+	CKEDITOR.config.autoParagraph = false;
 	
 	$("#file_name").on('change',function(){
 		   var fileName = $("#file_name").val();

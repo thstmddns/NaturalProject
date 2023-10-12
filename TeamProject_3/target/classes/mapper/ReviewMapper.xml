@@ -17,7 +17,8 @@
 	<select id="Reviewlist" resultType="kr.or.ozz.dto.ReviewDTO">
 		SELECT * FROM
          (SELECT * FROM
-            (SELECT review_no, review_title, review_score, review_content, to_char(created_at, 'MM-DD HH:MI') created_at, userid, hit FROM t_mission_review
+
+            (SELECT review_no, review_content, review_title, review_score, to_char(created_at, 'MM-DD HH:MI') created_at, userid, hit FROM t_mission_review
             <!-- 검색어가 있을 때 -->
             <if test="searchWord != null">
             	where review_title like '%${searchWord}%'

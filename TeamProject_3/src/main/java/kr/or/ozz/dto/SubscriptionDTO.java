@@ -6,8 +6,6 @@ import lombok.Data;
 
 @Data
 public class SubscriptionDTO {
-	    // 구독 순번
-	    private int subno;
 	    // 구독 옵션
 	    private String suboption;
 	    // 구독시작일자
@@ -15,5 +13,5 @@ public class SubscriptionDTO {
 	    // 구독만료일자
 	    private Date expired_at;
 	    // 구독 요금
-	    private int subpayment;
+	    private String subpayment;
 	}
