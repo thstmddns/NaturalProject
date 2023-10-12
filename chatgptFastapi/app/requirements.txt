@@ -1,0 +1,27 @@
+- Python version
+3.9.0
+
+** 가상환경 활성화 뒤에 library 설치.
+
+- 가상환경
+python -m venv fastenv
+
+
+- 가상환경 활성화
+.\app\fastenv2\Scripts\activate (fastenv가 어디 있는지에 따라 조금씩 변동 가능)
+
+- Libraries(pip install ___)
+fastapi
+uvicorn
+openai
+konlpy
+transformers
+pdf2image
+timm
+python_docx
+easyocr
+peft
+pandas
+
+-utils.py 144줄 쯤의 pdfImages = convert_from_path(pdfPath,500, poppler_path="C:\\Users\\user24\\Downloads\\poppler-23.08.0\\Library\\bin")
+이 링크는 poppler을 다운 받고, 링크를 저렇게 만들어줘야 합니다. 

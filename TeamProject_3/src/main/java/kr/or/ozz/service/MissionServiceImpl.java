@@ -25,8 +25,8 @@ public class MissionServiceImpl implements MissionService{
 	}
 
 	@Override
-	public int totalRecord(PagingDTO pDTO) {
-		return dao.totalRecord(pDTO);
+	public int m_totalRecord(PagingDTO pDTO) {
+		return dao.m_totalRecord(pDTO);
 	}
 
 	@Override

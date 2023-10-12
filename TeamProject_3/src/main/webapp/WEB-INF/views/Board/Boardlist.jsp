@@ -41,7 +41,7 @@
 	<div>
 		<a href="/ozz/Board/Boardwrite">글쓰기</a>
 	</div>
-	<div>총 레코드 수 : ${pDTO.totalRecord}개</div>
+	<div>총 레코드 수 : ${pDTO.b_totalRecord}개</div>
 	<ul class="Board_list">
 
 		<li></li>

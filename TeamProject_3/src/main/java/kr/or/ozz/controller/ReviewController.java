@@ -36,7 +36,7 @@ public class ReviewController {
 	@GetMapping("/Reviewlist")
 	public ModelAndView Reviewlist(PagingDTO pDTO) {
 		// 총레코드수
-		pDTO.setTotalRecord(service.totalRecord(pDTO));
+		pDTO.setR_totalRecord(service.r_totalRecord(pDTO));
 
 		// 해당페이지의 레코드 선택
 		List<ReviewDTO> list = service.Reviewlist(pDTO);

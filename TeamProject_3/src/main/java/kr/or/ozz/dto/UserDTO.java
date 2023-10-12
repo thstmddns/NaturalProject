@@ -14,9 +14,17 @@ public class UserDTO {
 		    private String hashtag; // 회원 해시태그
 		    private String created_at; // 회원 가입일자
 		    private String usertype; // 회원 유형
+		    private String intro;
 		    
 			public String getUserid() {
 				return userid;
+			}
+			
+			public String getIntro() {
+				return intro;
+			}
+			public void setIntro(String intro) {
+				this.intro = intro;
 			}
 			public void setUserid(String userid) {
 				this.userid = userid;

@@ -25,8 +25,8 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public int totalRecord(PagingDTO pDTO) {
-		return dao.totalRecord(pDTO);
+	public int r_totalRecord(PagingDTO pDTO) {
+		return dao.r_totalRecord(pDTO);
 	}
 
 	@Override

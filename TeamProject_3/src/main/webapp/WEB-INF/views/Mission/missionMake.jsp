@@ -39,7 +39,7 @@
 </style>
 <main>
 	<div id="missionUp">
-		<img src="<%= request.getContextPath()%>/img/__ (1).png"/> 이전으로 돌아가기
+		<img src="<%= request.getContextPath()%>/img/__ (1).png"/><a href="javascript:window.history.back();"> 이전으로 돌아가기</a>
 		<span>
 			<button>임시저장</button>
 			<button type="submit" form="main">완료</button>		
@@ -139,13 +139,14 @@
 </main>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script>
+ 
     $(document).ready(function () {
         var tag = {};
         var counter = 0;
 
      // mission_tag 업데이트
         function updateMissionTag() {
-            var value = marginTag().join(" "); // 배열을 공백으로 구분된 문자열로 변환
+            var value = marginTag().join(","); // 배열을 공백으로 구분된 문자열로 변환
             $("#mission_tag").val(value);
         }
      

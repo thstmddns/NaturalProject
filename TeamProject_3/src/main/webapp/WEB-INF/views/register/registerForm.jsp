@@ -51,8 +51,10 @@
 			<li style="color: #869AAF; font-size:13px;  margin-top:13px;">관심 있는 주제를 선택해서 오즈를 맞춤 설정해보세요.<li>
 			<li><select class="select" name="concern" id="concern" title="관심사를 선택해주세요" style="width:100%; height:40px; border-radius: 6px; border: 1px #DAE2EB solid; color:#6e6e6e">
 			    <option value="">관심사를 선택해주세요</option>
-			    <option value="Pthyon"># Pthyon</option>
+			    <option value="Python"># Python</option>
+			    <option value="Java"># Java</option>
 			    <option value="JavaScript"># JavaScript</option>
+			    <option value="Vue"># Vue</option>
 			    <option value="Spring"># Spring</option>
 			    <option value="React"># React</option>
 			    <option value="Kotlin"># Kotlin</option>

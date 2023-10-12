@@ -45,6 +45,23 @@ public class MypageController {
 	public String Mypage () {
 		return "mypage/mypage_main";
 	}
+	// 회원정보 가져오기
+	@GetMapping("/myPageDetail")
+	public ModelAndView UserInfo(HttpSession session) {
+		String logId = (String)session.getAttribute("logId");
+		ModelAndView mav = new ModelAndView();
+		UserDTO dto = null;
+		try {
+			dto = Uservice.getUser(logId);
+			mav.addObject("dto", dto);
+			mav.setViewName("main/mypage");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println(dto.toString());
+		return mav;
+	}
+
 	
 	// 회원수정 폼으로 이동 ->
 	@GetMapping("/myInfoEdit")
@@ -105,7 +122,7 @@ public class MypageController {
 	        
 	        // 모델에 데이터 추가
 	        mav.addObject("mymissionList", mymissionList);
-	        mav.setViewName("mypage/mission_ing");
+	        mav.setViewName("main/missionGoPopup");
 	        return mav; // 뷰 이름 설정
 	    }
 	 }
