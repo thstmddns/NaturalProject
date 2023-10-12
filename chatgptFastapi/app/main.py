@@ -1,6 +1,7 @@
 from fastapi import FastAPI, File, UploadFile, Form, HTTPException, Request
 from pydantic import BaseModel
 from utils import *
+from dlanding_recommand import *
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
@@ -63,3 +64,10 @@ async def generate_description(input: DescriptionInput):
     except Exception as e:
         return JSONResponse(content={"error": str(e)}, status_code=400)
     
+class landingInput(BaseModel):
+    concern : str    
+    
+@app.post("/dlanding_recommand")
+async def dlanding_recommand(input : landingInput):
+    l_recommand = landing_recommand(input.concern)
+    return l_recommand
