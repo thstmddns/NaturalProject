@@ -4,22 +4,29 @@
 <main>
 	<h1 style="font-weight:300; margin:40px 0 30px 0; background:white;">"<span class="keyword">키워드</span>" 검색 결과</h1>
 	<div id="searchContainer">
-		<div>미션(00)</div>
-		<div>커뮤니티(00)</div>
-		<div  class="select">마스터(00)</div>
+		<div><a href='/ozz/main/searchMission?<c:if test="${pDTO.searchWord != null}">searchWord=${pDTO.searchWord}</c:if>'>미션(${pDTO.m_totalRecord})</a></div>
+		<div><a href='/ozz/main/searchCom?<c:if test="${pDTO.searchWord != null}">searchWord=${pDTO.searchWord}</c:if>'>커뮤니티(${pDTO.q_totalRecord + pDTO.r_totalRecord + pDTO.b_totalRecord})</a></div>
+		<div  class="select">마스터(${pDTO.u_totalRecord})</div>
 	</div>
 	<div id="searchAll">
 		<div id="searchResultMaster">
+		<c:if test="${empty U_list}">
+			<div>${pDTO.searchWord}에 대한 마스터 검색 결과가 없습니다.</div>
+			<li>직접 마스터가 되어보세요. <a href="#">회원가입하기</a></li>
+		</c:if>
+			<c:forEach var="U_dto" items="${U_list}">
 			<div class="searchMa">
-				<div><img src="<%= request.getContextPath()%>/img/Frame 2.png"/></div>
+				<div><img src="<%= request.getContextPath()%>/img/응원사진.jpg"/></div>
 				<div class="searchMaInfo">
-					<li><span>신세경</span><span>가전제품 상품기획 DCX Analyst</span></li>
+					<li><span>${U_dto.username}</span><span>${U_dto.work}</span></li>
 					<li><span>팔로우 100</span><span>팔로잉 100</span></li>
-					<div>자기소개 칸</div>
+					<div>${U_dto.intro}</div>
 				</div>
 				<div><button>팔로우 하기</button></div>
 			</div>
 			<hr/>
+			</c:forEach>
+			
 			<div class="searchMa">
 				<div><img src="<%= request.getContextPath()%>/img/Frame 2.png"/></div>
 				<div class="searchMaInfo">

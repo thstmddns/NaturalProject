@@ -109,16 +109,23 @@
 
 
 <header>
-    <div style="font-size: 32px;  font-weight: 400; word-wrap: break-word; margin-left:60px; padding-top:5px;">OZZ</div>
+    <div style="font-size: 32px;  font-weight: 400; word-wrap: break-word; margin-left:60px; padding-top:5px;"><a href="/ozz/main/landing">OZZ</a></div>
     <ul style="justify-content: center; align-items: center; gap: 20px; display: flex;">
         <li style="color: black; font-size: 17px;"><a href="/ozz/main/mainMission">미션</a></li>
         <li style="color: black; font-size: 17px;"><a href="/ozz/main/mainMaster">전문가</a></li>
         <li style="color: black; font-size: 17px; margin-top: 15px;"><a href="/ozz/main/mainCom">커뮤니티</a></li>
     </ul>
-    <div style="display: grid; grid-template-columns: 470px 70px; margin-top:10px;">
+    <!-- <div style="display: grid; grid-template-columns: 470px 70px; margin-top:10px;">
     <input type="text" id="searchWord" placeholder="미션, 전문가, 커뮤니티를 검색해보세요.">
 	<button id="mainSearch">검색</button>
+	</div> -->
+	<div style="display: grid; grid-template-columns: 470px 70px; margin-top:10px;">
+		<form action="/ozz/main/searchMission">
+			<input type="text" name="searchWord" id="searchWord" placeholder="미션, 전문가, 커뮤니티를 검색해보세요."/>
+			<input type="submit" value="검색" />
+		</form>
 	</div>
+	
 		 <i class="fa-regular fa-bell" style="font-size:1.1em;"></i>
 	<div class="menu" style="margin-top: 12px;">
 		<label for="expand-menu"><div></div></label>

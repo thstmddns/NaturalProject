@@ -1,5 +1,8 @@
 package kr.or.ozz.service;
 
+import java.util.List;
+
+import kr.or.ozz.dto.PagingDTO;
 import kr.or.ozz.dto.UserDTO;
 
 public interface UserService {
@@ -16,4 +19,8 @@ public interface UserService {
 	public UserDTO getUser(String logId); //회원정보 조회
 	
 	public int UserUpdate(UserDTO dto); //회원정보 수정
+	
+	public List<UserDTO> Userlist(PagingDTO pDTO);
+	
+	public int u_totalRecord(PagingDTO pDTO);
 }

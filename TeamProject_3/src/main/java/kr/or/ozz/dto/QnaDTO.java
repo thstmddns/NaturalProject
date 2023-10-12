@@ -10,7 +10,7 @@ public class QnaDTO {
 	private String qna_title;		// qna 力格
 	private String qna_content;		// qna 郴侩
 	private String created_at;		// qna 累己老
-
+	private int hit;
 	private byte[] file_name;		// qna 梅何颇老疙
 	
 	private String file_name_base64;

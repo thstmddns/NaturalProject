@@ -25,8 +25,8 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public int totalRecord(PagingDTO pDTO) {
-		return dao.totalRecord(pDTO);
+	public int b_totalRecord(PagingDTO pDTO) {
+		return dao.b_totalRecord(pDTO);
 	}
 
 	@Override

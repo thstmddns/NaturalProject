@@ -4,28 +4,70 @@
 <main>
 	<h1 style="font-weight:300; margin:40px 0 30px 0; background:white;">"<span class="keyword">키워드</span>" 검색 결과</h1>
 	<div id="searchContainer">
-		<div>미션(00)</div>
-		<div class="select">커뮤니티(00)</div>
-		<div>마스터(00)</div>
+		<div><a href='/ozz/main/searchMission?<c:if test="${pDTO.searchWord != null}">searchWord=${pDTO.searchWord}</c:if>'>미션(${pDTO.m_totalRecord})</a></div>
+		<div class="select">커뮤니티(${pDTO.q_totalRecord + pDTO.r_totalRecord + pDTO.b_totalRecord})</div>
+		<div><a href='/ozz/main/searchMaster?<c:if test="${pDTO.searchWord != null}">searchWord=${pDTO.searchWord}</c:if>'>마스터(${pDTO.u_totalRecord})</a></div>
 	</div>
 	<div id="searchAll">
 		<div id="searchResult">
-			<div class="searchCom">
-					<li>[Q&A] 리액트 파일 업로드 관련</li>
-					<li>안녕하세요 픽스한지 6개월 정도 된 프론트앤드 개발자입니다. 회사에서 기존 프로젝트에 사용 중이던 가변적 회로가 9월에 만료되기 때문에 업데이트 검토 관련 문제가 있었습니다. 버전을 올리...</li>
-					<li><span>UX</span><span>UI</span><span>피그마</span></li>
+		<c:if test="${empty Q_list and empty R_list and empty B_list}">
+			<div>${pDTO.searchWord}에 대한 커뮤니티 검색 결과가 없습니다.</div>
+			<li>QnA, 게시판 직접 작성해보세요. <a href="#">커뮤니티 작성하기</a></li>
+		</c:if>
+			<c:forEach var="Q_dto" items="${Q_list}">
+				<div class="searchCom">
+					<li>${Q_dto.qna_title}</li>
+					<li>${Q_dto.qna_content}</li>
 					<li style="margin:5px 0 0 5px;">
-						<li>김지웅</li>
+						<li>${Q_dto.userid}</li>
 						<li class="masterIcon">
-							<span>2023-09-22</span>
+							<span>${Q_dto.created_at}</span>
 							<span><img src="<%= request.getContextPath()%>/img/Component 3.png"/></span>
-							<span>10</span>
+							<span>${Q_dto.hit}</span>
 							<span><img src="<%= request.getContextPath()%>/img/Component 2.png"/></span>
 							<span>10</span>
 						</li>
 					</li>
 				</div>
 				<hr/>
+			</c:forEach>
+			
+			<c:forEach var="R_dto" items="${R_list}">
+				<div class="searchCom">
+					<li>${R_dto.review_title}</li>
+					<li>${R_dto.review_content}</li>
+					<li style="margin:5px 0 0 5px;">
+						<li>${R_dto.userid}</li>
+						<li class="masterIcon">
+							<span>${R_dto.created_at}</span>
+							<span><img src="<%= request.getContextPath()%>/img/Component 3.png"/></span>
+							<span>${R_dto.hit}</span>
+							<span><img src="<%= request.getContextPath()%>/img/Component 2.png"/></span>
+							<span>10</span>
+						</li>
+					</li>
+				</div>
+				<hr/>
+			</c:forEach>
+			
+			<c:forEach var="B_dto" items="${B_list}">
+				<div class="searchCom">
+					<li>${B_dto.board_title}</li>
+					<li>${B_dto.board_content}</li>
+					<li style="margin:5px 0 0 5px;">
+						<li>${B_dto.userid}</li>
+						<li class="masterIcon">
+							<span>${B_dto.created_at}</span>
+							<span><img src="<%= request.getContextPath()%>/img/Component 3.png"/></span>
+							<span>${B_dto.hit}</span>
+							<span><img src="<%= request.getContextPath()%>/img/Component 2.png"/></span>
+							<span>10</span>
+						</li>
+					</li>
+				</div>
+				<hr/>
+			</c:forEach>
+			
 				<div class="searchCom">
 					<li>[태스크] 페르소나 분석</li>
 					<li>안녕하세요 픽스한지 6개월 정도 된 프론트앤드 개발자입니다. 회사에서 기존 프로젝트에 사용 중이던 가변적 회로가 9월에 만료되기 때문에 업데이트 검토 관련 문제가 있었습니다. 버전을 올리...</li>

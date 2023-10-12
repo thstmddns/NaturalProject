@@ -17,11 +17,10 @@
 	<select id="Qnalist" resultType="kr.or.ozz.dto.QnaDTO">
 		SELECT * FROM
          (SELECT * FROM
-            (SELECT qna_no, mission_no, qna_title, userid, to_char(created_at, 'MM-DD HH:MI') created_at, file_name, hit FROM t_qna
-
+            (SELECT qna_no, mission_no, qna_title, qna_content, userid, to_char(created_at, 'MM-DD HH:MI') created_at, file_name, hit FROM t_qna
             <!-- 검색어가 있을 때 -->
             <if test="searchWord != null">
-            	where ${searchKey} like '%${searchWord}%'
+            	where qna_title like '%${searchWord}%'
             </if>
             ORDER BY qna_no DESC)
          WHERE <![CDATA[rownum <= ${nowPage * onePageRecord}]]>
@@ -34,12 +33,13 @@
 		select qna_no, mission_no, qna_title, userid, created_at, hit from t_qna
 	</select>
 	
-	<select id="totalRecord" resultType="int">
+	<select id="q_totalRecord" resultType="int">
 		select count(qna_no) cnt from t_qna
 		<if test="searchWord != null">
-			where ${searchKey} like '%${searchWord}%'
+			where qna_title like '%${searchWord}%'
 		</if>
 	</select>
+	
 	<select id="getQna" resultType="kr.or.ozz.dto.QnaDTO">
 		select qna_no, userid, qna_title, qna_content, created_at, file_name
 		from t_qna

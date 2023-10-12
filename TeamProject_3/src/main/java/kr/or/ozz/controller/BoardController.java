@@ -38,7 +38,7 @@ public class BoardController {
 	@GetMapping("/Boardlist")
 	public ModelAndView Boardlist(PagingDTO pDTO) {
 		// 총레코드수
-		pDTO.setTotalRecord(service.totalRecord(pDTO));
+		pDTO.setB_totalRecord(service.b_totalRecord(pDTO));
 
 		// 해당페이지의 레코드 선택
 		List<BoardDTO> list = service.Boardlist(pDTO);

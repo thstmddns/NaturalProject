@@ -14,7 +14,7 @@
             (SELECT board_no, board_title, board_content, to_char(created_at, 'MM-DD HH:MI') created_at, hit, userid, file_name, work_cate FROM t_board
             <!-- 검색어가 있을 때 -->
             <if test="searchWord != null">
-            	where ${searchKey} like '%${searchWord}%'
+            	where board_title like '%${searchWord}%'
             </if>
             ORDER BY board_no DESC)
          WHERE <![CDATA[rownum <= ${nowPage * onePageRecord}]]>
@@ -23,12 +23,13 @@
       ORDER BY board_no DESC
 	</select>
 	
-	<select id="totalRecord" resultType="int">
+	<select id="b_totalRecord" resultType="int">
 		select count(board_no) cnt from t_board
 		<if test="searchWord != null">
-			where ${searchKey} like '%${searchWord}%'
+			where board_title like '%${searchWord}%'
 		</if>
 	</select>
+	
 	<select id="getBoard" resultType="kr.or.ozz.dto.BoardDTO">
 		select board_no, userid, board_title, work_cate, board_content, created_at, file_name, hit
 		from t_board

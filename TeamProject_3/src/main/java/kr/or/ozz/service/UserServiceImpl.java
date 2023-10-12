@@ -1,9 +1,12 @@
 package kr.or.ozz.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.ozz.dao.UserDAO;
+import kr.or.ozz.dto.PagingDTO;
 import kr.or.ozz.dto.UserDTO;
 
 @Service
@@ -47,4 +50,13 @@ public class UserServiceImpl implements UserService {
 		return dao.UserUpdate(dto);
 	}
 
+	@Override
+	public List<UserDTO> Userlist(PagingDTO pDTO) {
+		return dao.Userlist(pDTO);
+	}
+	
+	@Override
+	public int u_totalRecord(PagingDTO pDTO) {
+		return dao.u_totalRecord(pDTO);
+	}
 }

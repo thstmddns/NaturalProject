@@ -11,7 +11,7 @@ public interface BoardDAO {
 	//글목록 선택 (paging, search)
 	public List<BoardDTO> Boardlist(PagingDTO pDTO);
 	//총 레코드 수
-	public int totalRecord(PagingDTO pDTO);
+	public int b_totalRecord(PagingDTO pDTO);
 	//1개 레코드 선택(글내용보기)
 	public BoardDTO getBoard(int no);
 	//조회수증가

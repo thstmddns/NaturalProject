@@ -103,6 +103,8 @@
 			</div>
 			
 			
+			
+			
 			<div id="missionQnA">
 				<div style="margin-top: 80px; font-size: 1.5em;">Q&A<span style="font-size: 0.6em; color:#869AAF; float:right;">더보기 ></span></div>
 				<div id="QnAContent">
@@ -226,16 +228,8 @@
 		
 		</div>
 		</div>
-		
-		
 	</div>
-	
-
-
-
-
 </main>
-
 <script>
 
 
@@ -270,7 +264,44 @@
 		});
 			
 	});
-	
-
-
 </script>
+
+
+<%-- <li><a href="/ozz/Qna/Qnawrite?m_no=${dto.mission_no}" style="color: red; font-weight: bold;">QnA</a></li> --%>
+	<!-- 미션에 해당하는 QnA 등록 및 출력 -->
+	<%-- <ul class="M_Qna_list">
+	<li>QnA 번호</li>
+	<li>QnA 제목</li>
+	<li>QnA 작성자</li>
+	<li>QnA 작성일자</li>
+	<li>조회수</li>
+	<c:forEach var="QnaDTO" items="${M_Qnalist}">
+		<c:if test="${dto.mission_no eq QnaDTO.mission_no}">
+			<li>${QnaDTO.qna_no}</li>
+			<li><a href="/ozz/Qna/QnaView?no=${QnaDTO.qna_no}">${QnaDTO.qna_title}</a></li>
+			<li>${QnaDTO.userid}</li>
+			<li>${QnaDTO.created_at}</li>
+			<li>${QnaDTO.hit}</li>
+		</c:if>
+	</c:forEach>
+	</ul> --%>
+<!-- 미션에 해당하는 Review 등록 및 출력 -->
+		<%-- <li><a href="/ozz/Review/Reviewwrite?m_no=${dto.mission_no}" style="color: red; font-weight: bold;">Review</a></li>
+		<ul class="M_Review_list">
+		<li>Review 번호</li>
+		<li>Review 제목</li>
+		<li>Review 점수</li>
+		<li>Review 작성자</li>
+		<li>Review 작성일자</li>
+		<li>조회수</li>
+		<c:forEach var="ReviewDTO" items="${M_Reviewlist}">
+			<c:if test="${dto.mission_no eq ReviewDTO.mission_no}">
+				<li>${ReviewDTO.review_no}</li>
+				<li><a href="/ozz/Review/ReviewView?no=${ReviewDTO.review_no}">${ReviewDTO.review_title}</a></li>
+				<li>${ReviewDTO.review_score}</li>
+				<li>${ReviewDTO.userid}</li>
+				<li>${ReviewDTO.created_at}</li>
+				<li>${ReviewDTO.hit}</li>
+			</c:if>
+		</c:forEach>
+		</ul> --%>

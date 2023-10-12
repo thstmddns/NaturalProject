@@ -11,7 +11,7 @@
 					미션을 만들어<br />다른 사용자의 랜선사수가 되어주세요!
 				</span>
 			</div>
-			<button id="landBtn" onclick="location.href='<%=request.getContextPath() %>/Mission/Missionwrite'">미션 만들기</button>
+			<button id="landBtn" onclick="location.href='<%=request.getContextPath() %>/main/Missionwrite'">미션 만들기</button>
 		</div>
 		<div id="landingImage"
 			style="display: flex; margin-left: 70px; width: 470px; height: 320px;">

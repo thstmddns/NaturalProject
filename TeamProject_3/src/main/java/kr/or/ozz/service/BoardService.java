@@ -8,7 +8,7 @@ import kr.or.ozz.dto.BoardDTO;
 public interface BoardService {
 	public int BoardwriteOk(BoardDTO dto);
 	public List<BoardDTO> Boardlist(PagingDTO pDTO);
-	public int totalRecord(PagingDTO pDTO);
+	public int b_totalRecord(PagingDTO pDTO);
 	public BoardDTO getBoard(int no);
 	public void hitCount(int no);
 	public int BoardEdit(BoardDTO dto);

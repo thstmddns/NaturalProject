@@ -14,7 +14,7 @@
             (SELECT mission_no, mission_title, mission_tag, userid, to_char(created_at, 'MM-DD HH:MI') created_at, hit FROM t_mission
             <!-- 검색어가 있을 때 -->
             <if test="searchWord != null">
-            	where ${searchKey} like '%${searchWord}%'
+            	where mission_title like '%${searchWord}%'
             </if>
             ORDER BY mission_no DESC)
          WHERE <![CDATA[rownum <= ${nowPage * onePageRecord}]]>
@@ -23,12 +23,13 @@
       ORDER BY mission_no DESC
 	</select>
 	
-	<select id="totalRecord" resultType="int">
+	<select id="m_totalRecord" resultType="int">
 		select count(mission_no) cnt from t_mission
 		<if test="searchWord != null">
-			where ${searchKey} like '%${searchWord}%'
+			where mission_title like '%${searchWord}%'
 		</if>
 	</select>
+	
 	<select id="getMission" resultType="kr.or.ozz.dto.MissionDTO">
 		select mission_no, userid, mission_title, mission_tag, mission_content, created_at, mission_data, mission_tool, mission_cate, hit, mission_skill
 		from t_mission

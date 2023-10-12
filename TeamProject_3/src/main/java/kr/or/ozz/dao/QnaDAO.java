@@ -11,7 +11,7 @@ public interface QnaDAO {
 	//글목록 선택 (paging, search)
 	public List<QnaDTO> Qnalist(PagingDTO pDTO);
 	//총 레코드 수
-	public int totalRecord(PagingDTO pDTO);
+	public int q_totalRecord(PagingDTO pDTO);
 	//1개 레코드 선택(글내용보기)
 	public QnaDTO getQna(int no);
 	//조회수증가
