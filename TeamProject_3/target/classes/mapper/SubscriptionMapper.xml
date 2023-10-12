@@ -8,14 +8,16 @@
 		select * from t_subscription
 	</select>
 	
-	<select id = "getSubstaus" resultType = "kr.or.ozz.dto.SubscriptionDTO">
-	SELECT u.userid,
-       CASE
-           WHEN s.expired_at >= SYSDATE THEN 1
-           ELSE 0
-       END AS subscription_status
+	<!-- subscription-mapper.xml -->
+	<select id="getSubstatus" resultType="String">
+	SELECT 
+	    CASE
+	        WHEN (SELECT MAX(expired_at) FROM t_subscription t WHERE t.userid = u.userid) >= SYSDATE THEN '1'
+	        ELSE '0'
+	    END AS subscription_status
 	FROM t_user u
-	LEFT JOIN t_subscription s ON u.userid = s.userid;
+	WHERE u.userid = '${param1}'
 	</select>
+
 	
 </mapper>

@@ -93,16 +93,16 @@ $('#charge_kakao').click(function () {
 	// 선택된 라디오 버튼의 value에 따라 주문명 동적으로 설정
     var suboption = '';
     switch (payamount) {
-        case '10000':
+        case '10,000':
         	suboption = '1개월';
             break;
-        case '30000':
+        case '30,000':
         	suboption = '3개월';
             break;
-        case '50000':
+        case '50,000':
         	suboption = '6개월';
             break;
-        case '100000':
+        case '100,000':
         	suboption = '12개월';
             break;
         default:

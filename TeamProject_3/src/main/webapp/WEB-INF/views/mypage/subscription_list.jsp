@@ -1,55 +1,132 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-    <!-- JavaScript 라이브러리를 포함 -->
-    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-</head>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<body>
-    <p id="subscriptionMessage"></p>
-    <a href="/ozz/mypage/paymentForm"><button>구독하기</button></a>
+<style>
+header, footer {
+   display: none;
+}
+.subInfo {
+   width: 83%;
+   text-align:center;
+   padding: 50px;
+   height: auto;
+   background: #F1F4F8;
+   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.10);
+}
+.subService {
+   display: none;
+}
+h2::after {
+   content:'';
+    display:block;
+    clear:both;
+   border-bottom: solid 2px #DAE2EB;
+   margin-top: 15px;
+}
+.view {
+   display: block;
+     background: white;
+    height:auto;
+    width: 100%;
+    margin-top: 90px;
+    display: grid;
+    grid-template-columns: 405px 405px;
+}
+#viewSub {
+   width: auto;
+   height: auto;
+   padding: 10px 20px; 
+   border-radius: 100px;
+   margin-bottom: 80px;
+   display: block;
+   float: right;
+   border: 1px solid #52B0C5;
+   background:  #E8FBFF;
+   color: #52B0C5;
+}
+#viewSub:hover {
+   color: white;
+   background: #52B0C5;
+}
+.subServiceDetail {
+   border-radius: 5px;
+   border: none;
+   background: #F1F4F8;
+   margin: 0 15px 20px 0;
+   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.10);
+   padding: 10px 0 10px 20px;
+}
+.subServiceDetail  li {
+   margin: 10px 0;
+}
+.subServiceDetail  li:first-child {
+   color: #F93D18;
+}
+.subServiceDetail  li:last-child {
+   font-size: 0.9em;
+}
+.subServiceDetail li:nth-child(2) span:first-child {
+   text-decoration: line-through;
+}
+.subServiceDetail li:first-child span{
+   font-size: 0.9em;
+}
+#expired {
+   display:grid;
+   grid-template-columns: 300px 150px;
+}
+.expiredSub {
+   width: 170px;
+   padding: 50px;
+   height: auto;
+   background: #F1F4F8;
+   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.10);
+   margin-right: 20px;
+}
+</style>
+<main style="width:600px; height: 500px;">
+   <div class=subPopup>
 
-		<c:forEach var="dto" items="${mysublist}" varStatus="status">
-		<li>구독옵션:${dto.sub_option}</li>
-		<li>구독요금:${dto.pay_amount}</li>
-		<li>구독날짜:${dto.started_at}</li>
-		</c:forEach>
+      <h2>나의 구독 상태</h2>
+		<div class="subInfo">
+		    <ul>
+		        <c:choose>
+		            <c:when test="${mysubstatus == '1'}">
+		                <li>구독 중입니다.</li>
+		            </c:when>
+		            <c:otherwise>
+		                <li>구독이 만료되었습니다. 결제 가능합니다.</li>
+		                <div><a href="/ozz/mypage/paymentForm"><button id="viewSub">구독하기</button></a></div>
+		            </c:otherwise>
+		        </c:choose>
+		        <p id="subscriptionMessage"></p>
+		    </ul> 
+		</div>
 
-    <h1>구독 상태 확인</h1>
-    <p id="subscriptionMessage"></p>
-    <button id="subscribeButton" style="display:none">구독하기</button>
 
-    <script>
-        // 사용자 아이디를 파라미터로 받음
-        var userId = "<%= request.getParameter("userId") %>";
+      <div style="margin-top:60px;">
+         <h3 style="color:#F93D18;">지난 결제 내역</h3>
+         <div id="expired">
+            <c:forEach var="dto" items="${mysublist}" varStatus="status">
+	            <div class="expiredSub">
+	               <li>구독옵션 : ${dto.sub_option}</li>
+	               <li>구독요금 : ${dto.pay_amount}</li>
+	               <li>구독날짜 : ${dto.started_at}</li>
+	            </div>
+            </c:forEach>
+         </div>
+      </div>
 
-        // JavaScript로 구독 상태 확인
-        var isSubscribed = checkSubscription(userId);
+   </div>
 
-        // 결과에 따라 메시지와 버튼을 업데이트
-        var messageElement = document.getElementById("subscriptionMessage");
-        var buttonElement = document.getElementById("subscribeButton");
 
-        if (isSubscribed) {
-            messageElement.textContent = "구독 중입니다.";
-        } else {
-            messageElement.textContent = "구독 만료";
-            buttonElement.style.display = "block";
-            buttonElement.addEventListener("click", function() {
-                // 구독 버튼을 클릭했을 때 실행할 동작
-                window.location.href = "/subscribe?userId=" + userId;
-            });
-        }
+</main>
+<!-- <script>
+   let btn = document.querySelector('button#viewSub');
+   const content = document.querySelector('.subService');
 
-        // JavaScript 함수로 구독 확인 로직 구현
-        function checkSubscription(userId) {
-            // 여기에서 사용자의 구독 상태를 확인하는 로직을 구현
-            // 예시: 구독 여부에 따라 true 또는 false 반환
-            return true; // 가정: 항상 구독 중으로 설정
-        }
-    </script>
-</body>
-</html>
+   
+   btn.addEventListener('click', () => {
+        content.classList.add('view');
+    })
+</script> -->

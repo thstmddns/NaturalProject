@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import kr.or.ozz.dto.PaymentDTO;
 import kr.or.ozz.dto.PerformersDTO;
 import kr.or.ozz.service.PaymentService;
+import kr.or.ozz.service.SubscriptionService;
 
 
 
@@ -26,6 +27,8 @@ public class PaymentController {
 	@Autowired
 	PaymentService service;
 	
+	@Autowired
+	SubscriptionService Sservice;
 	
 	//결제페이지 이동
 	@GetMapping("/paymentForm")
@@ -63,18 +66,24 @@ public class PaymentController {
 		public ModelAndView mysublist(HttpSession session) {
 			ModelAndView mav = new ModelAndView();
 			List<PaymentDTO> mysublist = null;
-			System.out.println((String)session.getAttribute("logId"));
-			System.out.println("hi");
+			
+			String mysubstatus = null;
 			try {
 				mysublist = service.getUserPayment((String)session.getAttribute("logId"));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			
+			try {
+				mysubstatus = Sservice.getSubstatus((String)session.getAttribute("logId"));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			mav.addObject("mysublist", mysublist);
+			mav.addObject("mysubstatus", mysubstatus);
 			mav.setViewName("/mypage/subscription_list");
 			return mav;
 		}
-	
 	
 }
 	

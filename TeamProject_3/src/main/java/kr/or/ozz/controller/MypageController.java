@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import kr.or.ozz.dto.MissionDTO;
 import kr.or.ozz.dto.PagingDTO;
 import kr.or.ozz.dto.PerformersDTO;
+import kr.or.ozz.dto.SubscriptionDTO;
 import kr.or.ozz.dto.UserDTO;
 import kr.or.ozz.service.MissionService;
 import kr.or.ozz.service.PerformersService;
@@ -134,5 +135,8 @@ public class MypageController {
 	   	    }
 	   	 }
 	   	 
+	   	
+	   	
+
 
 	 }
