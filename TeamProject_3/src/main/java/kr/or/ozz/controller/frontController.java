@@ -2,6 +2,8 @@ package kr.or.ozz.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,11 +13,13 @@ import org.springframework.web.servlet.ModelAndView;
 import kr.or.ozz.dto.BoardDTO;
 import kr.or.ozz.dto.MissionDTO;
 import kr.or.ozz.dto.PagingDTO;
+import kr.or.ozz.dto.PerformersDTO;
 import kr.or.ozz.dto.QnaDTO;
 import kr.or.ozz.dto.ReviewDTO;
 import kr.or.ozz.dto.UserDTO;
 import kr.or.ozz.service.BoardService;
 import kr.or.ozz.service.MissionService;
+import kr.or.ozz.service.PerformersService;
 import kr.or.ozz.service.QnaService;
 import kr.or.ozz.service.ReviewService;
 import kr.or.ozz.service.UserService;
@@ -37,6 +41,9 @@ public class frontController {
 	   
 	   @Autowired
 	   UserService Uservice;
+	   
+	   @Autowired
+	    PerformersService Pservice;
 	
 	@GetMapping("/login")
 	public String login() {
@@ -49,8 +56,25 @@ public class frontController {
 	}
 	
 	@GetMapping("/landing")
-	public String home() {
-		return "main/landing";
+	public ModelAndView landing(HttpSession session) {
+	   List<MissionDTO> MissionToplist = Mservice.MissionToplist();
+
+	   ModelAndView mav = new ModelAndView();
+	   mav.addObject("MissionToplist", MissionToplist);
+	   
+	   // 세션에서 현재 사용자의 아이디를 가져옴
+       String userid = (String)session.getAttribute("logId");
+       
+       
+       // 현재 사용자의 달성률 정보를 가져옴 (예시: 사용자 아이디로 달성률 정보를 가져옴)
+       List<PerformersDTO> mymissionList = Pservice.getPerfomersList(userid);
+       System.out.println("UserId from session: " + userid);
+       
+       // 모델에 데이터 추가
+       mav.addObject("mymissionList", mymissionList);
+       mav.setViewName("main/landing");
+       return mav; // 뷰 이름 설정
+   
 	}
 	
 	@GetMapping("/idSearch")

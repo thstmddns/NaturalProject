@@ -344,6 +344,9 @@ a:link, a:visited, a:hover{
 	background-color:#E8FBFF;
 	color: #52B0C5;
 }
+.ingM span {
+	margin-left: 10px;
+}
 #recommendMList {
 	display:grid;
 	grid-template-columns: 330px 330px 330px;

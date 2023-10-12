@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <main>
 	<div id="landing">
 	    <div style="flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 20px; display: inline-flex;">
@@ -59,20 +60,20 @@
 	<c:if test="${not empty logId}">
 	<div style="margin-top:90px;">
 		<span style="font-size:1.6em;">진행 중인 미션</span>
-		<span><a href="/ozz/mypage/mypage_main" style="font-size:0.8em; color: #869AAF; float:right;">더보기 ></a></span>
+		<span><a href="/ozz/mypage/myPageDetail" style="font-size:0.8em; color: #869AAF; float:right;">더보기 ></a></span>
 	</div>
 	<div id="mIng">
-		<div id="ingList">
-			<c:forEach items="${participatingChallenges}" var="mission">
-			<div class="ingM">
-		            <li>${mission.mission_title}</li>
-		            <li>${mission.achievementRate}%<span>남은 스텝 수 00개</span></li>
-		            <li><progress id="progress" value="${mission.achievementRate}" min="0" max="100" style="margin: 5px 0 8px 0;"></progress></li>
-		            <li><button>이어서 진행하기</button></li>
+		<c:forEach items="${mymissionList}" var="mission_ing">
+			<div id="ingList">
+				<div class="ingM">
+			            <li>${mission_ing.mission_title}</li>
+			            <li>진행률<span>${mission_ing.mission_rate}%</span><span>남은 스텝 수 00개</span></li>
+			            <li><progress id="progress" value="${mission_ing.mission_rate}" min="0" max="100" style="margin: 5px 0 8px 0;"></progress></li>
+			            <li><button>이어서 진행하기</button></li>
+				</div>
 			</div>
-		    </c:forEach>
-		</div>
-		<div id="ingList">
+		</c:forEach>
+		<!-- <div id="ingList">
 			<div class="ingM">
 				<li>다양한 사례로 익히는 SQL 데이터 분석</li>
 				<li>
@@ -93,7 +94,7 @@
 				<li><progress id="progress" value="20" min="0" max="100" style="margin: 5px 0 8px 0;"></progress></li>
 				<li><button>이어서 진행하기</button></li>
 			</div>
-		</div>
+		</div> -->
 	</div>
 	
 	<div style="font-size:1.6em; margin-top: 90px;">맞춤 추천 미션</div>
@@ -145,51 +146,42 @@
 		
 	</div>
 	
-	
-		<div id="popM">
-			<li style="font-size:1.6em">인기 미션 Top 10</li>
-			<li style="color: #869AAF; margin-top:5px; font-size:0.9em">지금 가장 많이 도전하고 있는 미션</li>
-		</div>
-		<div id="popMList">
-			<div class="popMContent">
-				<div>01</div>
-				<div><img src="<%= request.getContextPath()%>/img/image 70.jpg"/></div>
-				<div class="popMInfo">
-				<li>고객 경험 디자인</li>
-				<li><span>커뮤니케이션</span><span>리액트</span></li>
-				<li>김수인</li>
-				</div>
-			</div>
-			<div class="popMContent">
-				<div>02</div>
-				<div><img src="<%= request.getContextPath()%>/img/image 78.jpg"/></div>
-				<div class="popMInfo">
-				<li>고객 경험 디자인</li>
-				<li><span>UX</span><span>UI</span><span>피그마</span></li>
-				<li>최현경</li>
-				</div>
-			</div>
-			<div class="popMContent">
-				<div>03</div>
-				<div><img src="<%= request.getContextPath()%>/img/image 79.jpg"/></div>
-				<div class="popMInfo">
-				<li>고객 경험 디자인</li>
-				<li><span>프로그래밍</span><span>Python</span><span>Java</span></li>
-				<li>김동현</li>
-				</div>
-			</div>
-			<div class="popMContent">
-				<div>04</div>
-				<div><img src="<%= request.getContextPath()%>/img/image 80.jpg"/></div>
-				<div class="popMInfo">
-				<li>고객 경험 디자인</li>
-				<li><span>태그</span></li>
-				<li>황윤재</li>
-				</div>
-			</div>
-		</div>
-	</div>
 	</c:if>
+	
+	<div id="popM">
+		<li style="font-size: 1.6em">인기 미션 Top 10</li>
+		<li style="color: #869AAF; margin-top: 5px; font-size: 0.9em">지금 가장 많이 도전하고 있는 미션</li>
+	</div>
+	<div id="popMList">
+		<c:forEach var="M_dto" items="${MissionToplist}" varStatus="loop">
+			<div class="popMContent">
+				<c:choose>
+					<c:when test="${loop.index + 1 < 10}">
+						<span style="margin-bottom:20px;">
+							0<c:out value="${loop.index + 1}" />
+						</span>
+						<!-- 01 자리에 반복 인덱스를 표시 -->
+					</c:when>
+					<c:otherwise>
+						<div>
+							<c:out value="${loop.index + 1}" />
+						</div>
+					</c:otherwise>
+				</c:choose>
+				<!-- 01 자리에 반복 인덱스를 표시 -->
+				<div>
+					<img src="<%=request.getContextPath()%>/img/image 70.jpg" />
+				</div>
+				<div class="popMInfo">
+					<li><a href="/ozz/Mission/MissionView?no=${M_dto.mission_no}">${M_dto.mission_title}</a></li>
+					<li><c:forEach items="${fn:split(M_dto.mission_tag, ',')}" var="category"><span class="spanTag">${category}</span></c:forEach></li>
+					<li>${M_dto.userid}</li>
+				</div>
+			</div>
+		</c:forEach>
+	</div>
+	
+	
 	
 	<div id="popMas">
 		<div style="font-size:1.6em; margin: 90px 0 35px 0">이 달의 마스터</div>
