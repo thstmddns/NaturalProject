@@ -136,13 +136,13 @@ public class frontController {
 		List<QnaDTO> Q_list = Qservice.Qnalist(pDTO);
 		List<ReviewDTO> R_list = Rservice.Reviewlist(pDTO);
 		List<BoardDTO> B_list = Bservice.Boardlist(pDTO);
-
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("Q_list", Q_list);
 		mav.addObject("R_list", R_list);
 		mav.addObject("B_list", B_list);
 		mav.addObject("pDTO", pDTO);
+		
 		mav.setViewName("main/searchCom");
 		return mav;
 	}

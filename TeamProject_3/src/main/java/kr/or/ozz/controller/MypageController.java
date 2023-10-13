@@ -45,6 +45,7 @@ public class MypageController {
 	public String Mypage (HttpSession session) {
 		return "mypage/mypage_main";
 	}
+	
 	// 회원정보 가져오기
 	@GetMapping("/myPageDetail")
 	public ModelAndView UserInfo(HttpSession session) {
@@ -58,11 +59,12 @@ public class MypageController {
 	       
 	     // 현재 사용자의 달성률 정보를 가져옴 (예시: 사용자 아이디로 달성률 정보를 가져옴)
 	     List<PerformersDTO> mymissionList = Pservice.getPerfomersList(userid);
+	     List<PerformersDTO> myendmissionList = Pservice.getPerfomersEndList(userid);
 	     System.out.println("UserId from session: " + userid);
 	       
 	       // 모델에 데이터 추가
 	       mav.addObject("mymissionList", mymissionList);
-	       
+	       mav.addObject("myendmissionList", myendmissionList);
 		try {
 			dto = Uservice.getUser(logId);
 			mav.addObject("dto", dto);

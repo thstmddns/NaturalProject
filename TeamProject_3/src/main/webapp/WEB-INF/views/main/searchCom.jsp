@@ -52,7 +52,7 @@
 	         
 			<c:forEach var="B_dto" items="${B_list}">
 	            <div class="searchCom">
-	               <li>[${B_dto.board_cate}] ${B_dto.board_title}</li>
+	               <li><a href='/ozz/Board/BoardView?no=${B_dto.board_no}&nowPage=${pDTO.nowPage}<c:if test="${pDTO.searchWord != null}">&searchKey=${pDTO.searchKey}&searchWord=${pDTO.searchWord}</c:if>'>[${B_dto.board_cate}] ${B_dto.board_title}</a></li>
 	               <li class="searchContent">${B_dto.board_content}</li>
 	               <li><c:forEach items="${fn:split(B_dto.work_cate, ',')}" var="category">
                 <span>${category}</span>
