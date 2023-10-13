@@ -17,8 +17,15 @@
 	    </div>
 	</div>
 	
-	<div class="search"><input type="text" id="searchLand" placeholder="지금 어떤 업무 도움이 필요하신가요?"/>
-	<button id="landBtn2">검색하기</button></div>
+<!-- 	<div class="search"><input type="text" id="searchLand" placeholder="지금 어떤 업무 도움이 필요하신가요?"/>
+	<button id="landBtn2">검색하기</button></div> -->
+    <div style="margin-top:10px;">
+	    <form action="/ozz/main/searchMission" style="display: flex;" class="input-container">
+	    	<input type="text" name="searchWord" id="searchLand" placeholder="지금 어떤 업무 도움이 필요하신가요?">
+			<input type="submit" id="landBtn2" value="검색">
+		</form>
+	</div>
+	
 	<c:if test="${not empty logId}">
 	<div id="landInfo">
 		 <div>
