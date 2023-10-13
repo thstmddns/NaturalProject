@@ -89,9 +89,5 @@ public class UserDTO {
 			public void setIntro(String intro) {
 				this.intro = intro;
 			}
-
-
-
-
 	}
 
