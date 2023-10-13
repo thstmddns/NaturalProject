@@ -55,7 +55,7 @@ public class DescriptionController {
 			body.put("title", title);
 			body.put("pdf_path", path.toString());
 
-			HttpEntity<Map<String, String>> requestEntity = new HttpEntity<>(body, headers);
+			HttpEntity<Map<String, String>> requestEntity = new HttpEntity<Map<String, String>>(body, headers);
 
 			ResponseEntity<List<Map<String, Object>>> response = restTemplate.exchange(fastApiUrl, HttpMethod.POST,
 					requestEntity, new ParameterizedTypeReference<List<Map<String, Object>>>() {

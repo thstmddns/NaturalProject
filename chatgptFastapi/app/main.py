@@ -9,7 +9,7 @@ import time
 import shutil
 
 #initialize fast api
-app  = FastAPI()
+app  = FastAPI(debug=True)
 
 # CORS 미들웨어 추가
 app.add_middleware(
@@ -65,9 +65,10 @@ async def generate_description(input: DescriptionInput):
         return JSONResponse(content={"error": str(e)}, status_code=400)
     
 class landingInput(BaseModel):
-    concern : str    
+    concern : list
+    Tag : list
     
 @app.post("/dlanding_recommand")
 async def dlanding_recommand(input : landingInput):
     l_recommand = landing_recommand(input.concern)
-    return l_recommand
+    return JSONResponse(content = l_recommand)
