@@ -1,5 +1,7 @@
 package kr.or.ozz.controller;
 
+import java.util.List;
+
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
@@ -7,16 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.or.ozz.dto.PerformersDTO;
 import kr.or.ozz.dto.UserDTO;
+import kr.or.ozz.service.PerformersService;
 import kr.or.ozz.service.UserService;
 
 @Controller
@@ -25,6 +26,9 @@ public class UserController {
 	
 	@Autowired
 	UserService service;
+	
+	@Autowired
+	PerformersService Pservice;
 	
 	@Autowired
 	private JavaMailSender mailSender;
@@ -68,7 +72,7 @@ public class UserController {
 	   // 로그인
 	   @PostMapping("/loginOk")
 	   public ModelAndView loginOk(String userid, String pwd, HttpSession session) {
-	      
+		   List<PerformersDTO> Perfomerslist = Pservice.getPerfomersList(userid);
 	      //dto일치하는 정보가 있으면 아이디, 이름 담겨져있음.
 	      //             없으면 null
 	      UserDTO dto = service.loginOk(userid, pwd);
@@ -85,6 +89,7 @@ public class UserController {
 	         //로그인 폼으로 이동하기
 	         mav.setViewName("redirect:login");
 	      }
+		  mav.addObject("Perfomerslist", Perfomerslist);
 	      return mav;
 	   }
 	

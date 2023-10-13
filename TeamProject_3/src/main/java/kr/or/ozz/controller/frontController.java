@@ -11,11 +11,13 @@ import org.springframework.web.servlet.ModelAndView;
 import kr.or.ozz.dto.BoardDTO;
 import kr.or.ozz.dto.MissionDTO;
 import kr.or.ozz.dto.PagingDTO;
+import kr.or.ozz.dto.PerformersDTO;
 import kr.or.ozz.dto.QnaDTO;
 import kr.or.ozz.dto.ReviewDTO;
 import kr.or.ozz.dto.UserDTO;
 import kr.or.ozz.service.BoardService;
 import kr.or.ozz.service.MissionService;
+import kr.or.ozz.service.PerformersService;
 import kr.or.ozz.service.QnaService;
 import kr.or.ozz.service.ReviewService;
 import kr.or.ozz.service.UserService;
@@ -37,6 +39,9 @@ public class frontController {
 	   
 	   @Autowired
 	   UserService Uservice;
+	   
+	   @Autowired
+	   PerformersService Pservice;
 	
 	@GetMapping("/login")
 	public String login() {
@@ -49,8 +54,11 @@ public class frontController {
 	}
 	
 	@GetMapping("/landing")
-	public String home() {
-		return "main/landing";
+	public ModelAndView landing(String userid) {
+	   List<PerformersDTO> Perfomerslist = Pservice.getPerfomersList(userid);
+	   ModelAndView mav = new ModelAndView();
+	   mav.addObject("Perfomerslist", Perfomerslist);
+		return mav;
 	}
 	
 	@GetMapping("/idSearch")
@@ -64,12 +72,15 @@ public class frontController {
 	}
 
 	@GetMapping("/mainMission")
-	public ModelAndView MissionToplist() {
+	public ModelAndView mainMission(String userid, PagingDTO pDTO) {
+	   List<PerformersDTO> Perfomerslist = Pservice.getPerfomersList(userid);
 	   List<MissionDTO> MissionToplist = Mservice.MissionToplist();
-
+	   List<MissionDTO> Missionlist = Mservice.Missionlist(pDTO);
+	   
 	   ModelAndView mav = new ModelAndView();
 	   mav.addObject("MissionToplist", MissionToplist);
-	   
+	   mav.addObject("Perfomerslist", Perfomerslist);
+	   mav.addObject("Missionlist", Missionlist);
 	   mav.setViewName("main/mission");
 	   
 	   return mav;

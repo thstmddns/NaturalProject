@@ -55,7 +55,7 @@
 		<c:forEach var="dto" items="${list}">
 			<li>${dto.board_no}</li>
 			<li><a
-				href='/ozz/Board/BoardView?no=${dto.board_no}&nowPage=${pDTO.nowPage}<c:if test="${pDTO.searchWord != null}">&searchKey=${pDTO.searchKey}&searchWord=${pDTO.searchWord}</c:if>'>${dto.board_title}</a></li>
+				href='/ozz/Board/BoardView?no=${dto.board_no}&nowPage=${pDTO.nowPage}<c:if test="${pDTO.searchWord != null}">&searchKey=${pDTO.searchKey}&searchWord=${pDTO.searchWord}</c:if>'>[${dto.board_cate}] ${dto.board_title}</a></li>
 <%-- 			<c:choose>
 				<c:when test="${dto.file_name_base64 != 'None'}">
 					<img src="data:image/jpeg;base64,${dto.file_name_base64}"

@@ -68,4 +68,5 @@
 		values(PERFORMER_NO_seq.nextval, #{userid}, #{TASK_NO}, #{STARTED_AT},
 		#{COMPLETED_AT}, #{STEP_NO})
 	</insert>
+	
 </mapper>
