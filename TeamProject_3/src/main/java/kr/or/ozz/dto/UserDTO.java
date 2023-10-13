@@ -4,27 +4,20 @@ import lombok.Data;
 
 public class UserDTO {
 
-		    private String userid; // ȸ�� ���̵�
-		    private String pwd; // ȸ�� ��й�ȣ
-		    private String username; // ȸ�� �̸�
-		    private String email; // ȸ�� �̸���
-		    private Double years; // ȸ�� ���
-		    private String work; // ȸ�� ��������
-		    private String concern; // ȸ�� ���ɻ�
-		    private String hashtag; // ȸ�� �ؽ��±�
-		    private String created_at; // ȸ�� ��������
-		    private String usertype; // ȸ�� ����
+		    private String userid; 
+		    private String pwd; 
+		    private String username; 
+		    private String email; 
+		    private Double years; 
+		    private String work;
+		    private String concern; 
+		    private String hashtag; 
+		    private String created_at; 
+		    private String usertype; 
 		    private String intro;
 		    
 			public String getUserid() {
 				return userid;
-			}
-			
-			public String getIntro() {
-				return intro;
-			}
-			public void setIntro(String intro) {
-				this.intro = intro;
 			}
 			public void setUserid(String userid) {
 				this.userid = userid;
