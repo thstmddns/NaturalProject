@@ -56,30 +56,24 @@ public class frontController {
 	}
 	
 	@GetMapping("/landing")
-	public ModelAndView landing(String userid) {
-	   List<PerformersDTO> Perfomerslist = Pservice.getPerfomersList(userid);
-	   ModelAndView mav = new ModelAndView();
-	   mav.addObject("Perfomerslist", Perfomerslist);
-		return mav;
-
 	public ModelAndView landing(HttpSession session) {
 	   List<MissionDTO> MissionToplist = Mservice.MissionToplist();
 
 	   ModelAndView mav = new ModelAndView();
 	   mav.addObject("MissionToplist", MissionToplist);
 	   
-	   // ���ǿ��� ���� ������� ���̵� ������
+	   // 占쏙옙占실울옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占� 占쏙옙占싱듸옙 占쏙옙占쏙옙占쏙옙
        String userid = (String)session.getAttribute("logId");
        
        
-       // ���� ������� �޼��� ������ ������ (����: ����� ���̵�� �޼��� ������ ������)
+       // 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占� 占쌨쇽옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 (占쏙옙占쏙옙: 占쏙옙占쏙옙占� 占쏙옙占싱듸옙占� 占쌨쇽옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙)
        List<PerformersDTO> mymissionList = Pservice.getPerfomersList(userid);
        System.out.println("UserId from session: " + userid);
        
-       // �𵨿� ������ �߰�
+       // 占쏜델울옙 占쏙옙占쏙옙占쏙옙 占쌩곤옙
        mav.addObject("mymissionList", mymissionList);
        mav.setViewName("main/landing");
-       return mav; // �� �̸� ����
+       return mav; // 占쏙옙 占싱몌옙 占쏙옙占쏙옙
 	}
 	
 	@GetMapping("/idSearch")
@@ -93,7 +87,8 @@ public class frontController {
 	}
 
 	@GetMapping("/mainMission")
-	public ModelAndView mainMission(String userid, PagingDTO pDTO) {
+	public ModelAndView mainMission(HttpSession session, PagingDTO pDTO) {
+	   String userid = (String)session.getAttribute("logId");
 	   List<PerformersDTO> Perfomerslist = Pservice.getPerfomersList(userid);
 	   List<MissionDTO> MissionToplist = Mservice.MissionToplist();
 	   List<MissionDTO> Missionlist = Mservice.Missionlist(pDTO);

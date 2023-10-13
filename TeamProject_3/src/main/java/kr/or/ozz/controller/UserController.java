@@ -72,11 +72,11 @@ public class UserController {
 	   // 로그인
 	   @PostMapping("/loginOk")
 	   public ModelAndView loginOk(String userid, String pwd, HttpSession session) {
-		   List<PerformersDTO> Perfomerslist = Pservice.getPerfomersList(userid);
 	      //dto일치하는 정보가 있으면 아이디, 이름 담겨져있음.
 	      //             없으면 null
 	      UserDTO dto = service.loginOk(userid, pwd);
-	      
+	      List<PerformersDTO> mymissionList = Pservice.getPerfomersList(userid);
+
 	      ModelAndView mav = new ModelAndView();
 	      if(dto != null) { //성공
 	         //세션에 아이디, 이름, 로그인상태 기록
@@ -89,7 +89,7 @@ public class UserController {
 	         //로그인 폼으로 이동하기
 	         mav.setViewName("redirect:login");
 	      }
-		  mav.addObject("Perfomerslist", Perfomerslist);
+	       mav.addObject("mymissionList", mymissionList);
 	      return mav;
 	   }
 	

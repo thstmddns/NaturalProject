@@ -33,21 +33,13 @@
 					<div id="ingList">
 						<div class="ingM">
 							<li>${P_dto.mission_title}</li>
-							<li><span>진행률 ${P_dto.mission_rate}%</span> <span>남은 스텝 수 00개</span></li>
+							<li><span>진행률 ${P_dto.mission_rate}%</span> <span>남은 스텝 수 ${P_dto.restcnt}개</span></li>
 							<li><progress id="progress" value="${P_dto.mission_rate}" min="0" max="100"></li>
 							<li><button>이어서 진행하기</button></li>
 						</div>
 					</div>
 				</c:if>
 			</c:forEach>
-		</div>
-		<div id="ingList">
-			<div class="ingM">
-				<li>클라우드 서비스 AWS</li>
-				<li><span>진행률 20%</span> <span>남은 스텝 수 00개</span></li>
-				<li><progress id="progress" value="20" min="0" max="100"></li>
-				<li><button>이어서 진행하기</button></li>
-			</div>
 		</div>
 	</div>
 	<div style="font-size: 1.6em; margin-top: 90px;">맞춤 추천 미션</div>
