@@ -38,7 +38,7 @@
 		 	<li>수행된 미션 수</li>
 		 </div>
 		 <div>
-		 	<li style="font-size:2em; margin-bottom: 10px;">0</li>
+		 	<li style="font-size:2em; margin-bottom: 10px;">256</li>
 		 	<li>회원 수</li>
 		 </div>
 	</div>

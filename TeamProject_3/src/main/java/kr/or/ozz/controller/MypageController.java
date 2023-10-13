@@ -64,18 +64,18 @@ public class MypageController {
 	     System.out.println("UserId from session: " + userid);
 	       
 	       // 모델에 데이터 추가
-	       mav.addObject("mymissionList",mymissionList);
+	       mav.addObject("mymissionList", mymissionList);
 	       mav.addObject("myendmissionList", myendmissionList);
-	       mav.addObject("oneMission", oneMission);
 	       
-	      
-		try {
+	       
+	      try {
 			dto = Uservice.getUser(logId);
 			mav.addObject("dto", dto);
 			mav.setViewName("main/mypage");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	    mav.addObject("oneMission", oneMission);
 		System.out.println(dto.toString());
 		return mav;
 	}
