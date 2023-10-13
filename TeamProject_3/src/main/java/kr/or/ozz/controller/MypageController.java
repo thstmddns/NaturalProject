@@ -60,11 +60,15 @@ public class MypageController {
 	     // 현재 사용자의 달성률 정보를 가져옴 (예시: 사용자 아이디로 달성률 정보를 가져옴)
 	     List<PerformersDTO> mymissionList = Pservice.getPerfomersList(userid);
 	     List<PerformersDTO> myendmissionList = Pservice.getPerfomersEndList(userid);
+	     List<PerformersDTO> oneMission = Pservice.getoneMission(userid);
 	     System.out.println("UserId from session: " + userid);
 	       
 	       // 모델에 데이터 추가
-	       mav.addObject("mymissionList", mymissionList);
+	       mav.addObject("mymissionList",mymissionList);
 	       mav.addObject("myendmissionList", myendmissionList);
+	       mav.addObject("oneMission", oneMission);
+	       
+	      
 		try {
 			dto = Uservice.getUser(logId);
 			mav.addObject("dto", dto);

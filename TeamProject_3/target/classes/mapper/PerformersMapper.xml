@@ -68,4 +68,16 @@
 		values(PERFORMER_NO_seq.nextval, #{userid}, #{TASK_NO}, #{STARTED_AT},
 		#{COMPLETED_AT}, #{STEP_NO})
 	</insert>
+	
+		<select id="getoneMission"
+		resultType="kr.or.ozz.dto.PerformersDTO">
+		SELECT m.*
+		FROM t_performers m
+		WHERE m.userid = '${param1}'
+		AND m.task_no = (
+		    SELECT MAX(task_no)
+		    FROM t_performers
+		    WHERE userid = '${param1}'
+		    )
+	</select>
 </mapper>

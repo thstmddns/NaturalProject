@@ -48,10 +48,10 @@
 				</div>
 				<div id="missionGo">
 					<li>진행 중인 미션<span id="more" style="cursor:pointer;">더보기 ></span></li>
-					<c:forEach items="${mymissionList}" var="mission_ing" varStatus="loop">
-							<li>${mission_ing.mission_title}</li>
-							<li>진행률<span>${mission_ing.mission_rate}%</span><span>남은 스텝 수</span><span>00</span></li>
-							<li><progress id="progress2" value="${mission_ing.mission_rate}" min="0" max="100" style="margin: 5px 0 8px 0;"></progress></li>
+					<c:forEach items="${oneMission}" var="onemission" varStatus="loop">
+							<li>${onemission.mission_title}</li>
+							<li>진행률<span>${onemission.mission_rate}%</span><span>남은 스텝 수</span><span>00</span></li>
+							<li><progress id="progress2" value="${onemission.mission_rate}" min="0" max="100" style="margin: 5px 0 8px 0;"></progress></li>
 							<li><button style="cursor:pointer;">이어서 진행하기</button></li>
 					</c:forEach>	
 				</div>			
