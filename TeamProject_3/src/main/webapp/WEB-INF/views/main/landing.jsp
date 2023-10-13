@@ -74,7 +74,7 @@
 			<div id="ingList">
 				<div class="ingM">
 			            <li>${mission_ing.mission_title}</li>
-			            <li>진행률<span>${mission_ing.mission_rate}%</span><span>남은 스텝 수 00개</span></li>
+			            <li>진행률<span>${mission_ing.mission_rate}%</span><span>남은 스텝 수 ${mission_ing.restcnt}개</span></li>
 			            <li><progress id="progress" value="${mission_ing.mission_rate}" min="0" max="100" style="margin: 5px 0 8px 0;"></progress></li>
 			            <li><button>이어서 진행하기</button></li>
 				</div>
