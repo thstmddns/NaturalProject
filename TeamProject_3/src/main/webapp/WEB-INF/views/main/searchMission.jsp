@@ -35,17 +35,19 @@
 					<li>고객 경험 리디자인</li>
 					<li><span>UX</span><span>UI</span><span>피그마</span></li>
 					<li style="margin:5px 0 0 5px;">
-						<li>김지웅</li>
+						<li>${M_dto.userid}</li>
 						<li class="masterIcon">
-							<span>2023-09-22</span>
+							<span>${M_dto.created_at}</span>
 							<span><img src="<%= request.getContextPath()%>/img/Component 3.png"/></span>
-							<span>10</span>
+							<span>${M_dto.hit}</span>
 							<span><img src="<%= request.getContextPath()%>/img/Component 2.png"/></span>
 							<span>10</span>
 						</li>
 					</li>
 				</div>
 				<hr/>
+			</c:forEach>
+		
 				<div class="searchM">
 					<li>고객 난제 정의</li>
 					<li><span>UX</span><span>UI</span><span>피그마</span></li>

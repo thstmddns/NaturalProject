@@ -123,6 +123,7 @@
 			<input type="submit" id="mainSearch" value="검색">
 		</form>
 	</div>
+	
 		 <i class="fa-regular fa-bell" style="font-size:1.1em;"></i>
 	<div class="menu" style="margin-top: 12px;">
 		<label for="expand-menu"><div></div></label>

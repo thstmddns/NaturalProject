@@ -18,7 +18,6 @@
 		SELECT * FROM
          (SELECT * FROM
             (SELECT qna_no, qna_content, mission_no, qna_title, userid, to_char(created_at, 'MM-DD HH:MI') created_at, file_name, hit FROM t_qna
-
             <!-- 검색어가 있을 때 -->
             <if test="searchWord != null">
             	where qna_title like '%${searchWord}%'
@@ -40,6 +39,7 @@
 			where qna_title like '%${searchWord}%'
 		</if>
 	</select>
+	
 	<select id="getQna" resultType="kr.or.ozz.dto.QnaDTO">
 		select qna_no, userid, qna_title, qna_content, created_at, file_name
 		from t_qna

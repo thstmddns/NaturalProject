@@ -29,6 +29,7 @@
 			where board_title like '%${searchWord}%'
 		</if>
 	</select>
+	
 	<select id="getBoard" resultType="kr.or.ozz.dto.BoardDTO">
 		select board_no, userid, board_title, work_cate, board_content, created_at, file_name, hit
 		from t_board

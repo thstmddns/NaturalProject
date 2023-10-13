@@ -124,6 +124,64 @@ public class frontController {
 		return "mission/feedback";
 	}
 	
+
+	@GetMapping("/searchCom")
+	public ModelAndView searchCom(PagingDTO pDTO) {
+		pDTO.setM_totalRecord(Mservice.m_totalRecord(pDTO));
+		pDTO.setQ_totalRecord(Qservice.q_totalRecord(pDTO));
+		pDTO.setR_totalRecord(Rservice.r_totalRecord(pDTO));
+		pDTO.setB_totalRecord(Bservice.b_totalRecord(pDTO));
+		pDTO.setU_totalRecord(Uservice.u_totalRecord(pDTO));
+		
+		List<QnaDTO> Q_list = Qservice.Qnalist(pDTO);
+		List<ReviewDTO> R_list = Rservice.Reviewlist(pDTO);
+		List<BoardDTO> B_list = Bservice.Boardlist(pDTO);
+
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("Q_list", Q_list);
+		mav.addObject("R_list", R_list);
+		mav.addObject("B_list", B_list);
+		mav.addObject("pDTO", pDTO);
+		mav.setViewName("main/searchCom");
+		return mav;
+	}
+	
+	@GetMapping("/searchMission")
+	public ModelAndView searchMission(PagingDTO pDTO) {
+		pDTO.setM_totalRecord(Mservice.m_totalRecord(pDTO));
+		pDTO.setQ_totalRecord(Qservice.q_totalRecord(pDTO));
+		pDTO.setR_totalRecord(Rservice.r_totalRecord(pDTO));
+		pDTO.setB_totalRecord(Bservice.b_totalRecord(pDTO));
+		pDTO.setU_totalRecord(Uservice.u_totalRecord(pDTO));
+
+		
+		List<MissionDTO> list = Mservice.Missionlist(pDTO);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("M_list", list);
+		mav.addObject("pDTO", pDTO);
+		mav.setViewName("main/searchMission");
+		return mav;
+	}
+	
+	@GetMapping("/searchMaster")
+	public ModelAndView searchMaster(PagingDTO pDTO) {
+		pDTO.setM_totalRecord(Mservice.m_totalRecord(pDTO));
+		pDTO.setQ_totalRecord(Qservice.q_totalRecord(pDTO));
+		pDTO.setR_totalRecord(Rservice.r_totalRecord(pDTO));
+		pDTO.setB_totalRecord(Bservice.b_totalRecord(pDTO));
+		pDTO.setU_totalRecord(Uservice.u_totalRecord(pDTO));
+		
+		List<UserDTO> list = Uservice.Userlist(pDTO);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("U_list", list);
+		mav.addObject("pDTO", pDTO);
+		mav.setViewName("main/searchMaster");
+		return mav;
+	}
+
 	@GetMapping("/communityView")
 	public String communityView() {
 		return "community/communityView";
@@ -158,61 +216,4 @@ public class frontController {
 	public String missionMake() {
 		return "mission/missionMake";
 	}
-	
-	 @GetMapping("/searchCom")
-	   public ModelAndView searchCom(PagingDTO pDTO) {
-		 pDTO.setM_totalRecord(Mservice.m_totalRecord(pDTO));
-		 pDTO.setQ_totalRecord(Qservice.q_totalRecord(pDTO));
-		 pDTO.setR_totalRecord(Rservice.r_totalRecord(pDTO));
-		 pDTO.setB_totalRecord(Bservice.b_totalRecord(pDTO));
-		 pDTO.setU_totalRecord(Uservice.u_totalRecord(pDTO));
-		 
-	     List<QnaDTO> Q_list = Qservice.Qnalist(pDTO);
-	     List<ReviewDTO> R_list = Rservice.Reviewlist(pDTO);
-	     List<BoardDTO> B_list = Bservice.Boardlist(pDTO);
-
-	      
-	     ModelAndView mav = new ModelAndView();
-	     mav.addObject("Q_list", Q_list);
-	     mav.addObject("R_list", R_list);
-	     mav.addObject("B_list", B_list);
-	     mav.addObject("pDTO", pDTO);
-	     mav.setViewName("main/searchCom");
-	     return mav;
-	   }
-	   
-	   @GetMapping("/searchMission")
-	   public ModelAndView searchMission(PagingDTO pDTO) {
-		  pDTO.setM_totalRecord(Mservice.m_totalRecord(pDTO));
-		  pDTO.setQ_totalRecord(Qservice.q_totalRecord(pDTO));
-		  pDTO.setR_totalRecord(Rservice.r_totalRecord(pDTO));
-		  pDTO.setB_totalRecord(Bservice.b_totalRecord(pDTO));
-		  pDTO.setU_totalRecord(Uservice.u_totalRecord(pDTO));
-			 
-	      List<MissionDTO> list = Mservice.Missionlist(pDTO);
-	      
-	      ModelAndView mav = new ModelAndView();
-	      mav.addObject("M_list", list);
-	      mav.addObject("pDTO", pDTO);
-	      mav.setViewName("main/searchMission");
-	      return mav;
-	   }
-	   
-		@GetMapping("/searchMaster")
-		public ModelAndView searchMaster(PagingDTO pDTO) {
-		  pDTO.setM_totalRecord(Mservice.m_totalRecord(pDTO));
-		  pDTO.setQ_totalRecord(Qservice.q_totalRecord(pDTO));
-		  pDTO.setR_totalRecord(Rservice.r_totalRecord(pDTO));
-		  pDTO.setB_totalRecord(Bservice.b_totalRecord(pDTO));
-		  pDTO.setU_totalRecord(Uservice.u_totalRecord(pDTO));
-		  
-		  List<UserDTO> list = Uservice.Userlist(pDTO);
-		  
-		  ModelAndView mav = new ModelAndView();
-		  mav.addObject("U_list", list);
-	      mav.addObject("pDTO", pDTO);
-	      mav.setViewName("main/searchMaster");
-		  
-		  return mav;
-		}
 }

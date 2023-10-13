@@ -10,8 +10,12 @@
 	</insert>
 	
 	<select id="getUserPayment" resultType="kr.or.ozz.dto.PaymentDTO">
-		select * from t_payment
-		where userid=#{param1}
+	SELECT t_payment.*,
+	       t_subscription.started_at,
+	       t_subscription.expired_at
+	FROM t_payment
+	LEFT JOIN t_subscription ON t_payment.userid = t_subscription.userid
+	WHERE t_payment.userid = '${param1}'
 	</select>
 	
 </mapper>

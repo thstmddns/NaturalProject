@@ -89,27 +89,30 @@ h2::after {
 	    // 구독 가능 여부를 판단
 	    boolean isSubscriptionExpired = currentDate.after(expirationDate);
 	%>
-		<h2>OZZ 구독 내역</h2>
-		<div class="subInfo">
-			<ul>
-			    <c:if test="<%= !isSubscriptionExpired %>">
-			        <li>구독 중입니다.</li>
-			    </c:if>
-			    <c:if test="<%= isSubscriptionExpired %>">
-			        <li>구독이 만료되었습니다. 결제 가능합니다.</li>
-			    </c:if>
-			     <p id="subscriptionMessage"></p>
-			</ul> 
-		</div>
-		<div>
-			<h3>지난 결제 내역</h3>
-			<c:forEach var="dto" items="${mysublist}" varStatus="status">
-			<li>구독옵션:${dto.sub_option}</li>
-			<li>구독요금:${dto.pay_amount}</li>
-			<li>구독날짜:${dto.started_at}</li>
-			</c:forEach>
-		</div>
-		<div><a href="/ozz/mypage/paymentForm"><button id="viewSub">구독하기</button></a></div>
+      <h2>OZZ 구독 내역</h2>
+      <div class="subInfo">
+         <ul>
+             <c:if test="<%= !isSubscriptionExpired %>">
+                 <li>구독 중입니다.</li>
+             </c:if>
+             <c:if test="<%= isSubscriptionExpired %>">
+                 <li>구독이 만료되었습니다. 결제 가능합니다.</li>
+                 <div><a href="/ozz/mypage/paymentForm"><button id="viewSub">구독하기</button></a></div>
+             </c:if>
+              <p id="subscriptionMessage"></p>
+         </ul> 
+      </div>
+      <div style="margin-top:60px;">
+         <h3 style="color:#F93D18;">지난 결제 내역</h3>
+         <div id="expired">
+            <c:forEach var="dto" items="${mysublist}" varStatus="status">
+            <div class="expiredSub">
+               <li>구독옵션 : ${dto.sub_option}</li>
+               <li>구독요금 : ${dto.pay_amount}</li>
+               <li>구독날짜 : ${dto.started_at}</li>
+            </div>
+            </c:forEach>
+         </div>
 		<!-- <div class="subService">
 			<div class="subServiceDetail">
 				<li>1개월권</li>

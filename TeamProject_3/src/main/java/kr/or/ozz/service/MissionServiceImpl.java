@@ -28,6 +28,20 @@ public class MissionServiceImpl implements MissionService{
 	public int m_totalRecord(PagingDTO pDTO) {
 		return dao.m_totalRecord(pDTO);
 	}
+	
+	/*
+	 * @Override public int q_totalRecord(PagingDTO pDTO) { return
+	 * dao.q_totalRecord(pDTO); }
+	 * 
+	 * @Override public int r_totalRecord(PagingDTO pDTO) { return
+	 * dao.r_totalRecord(pDTO); }
+	 * 
+	 * @Override public int b_totalRecord(PagingDTO pDTO) { return
+	 * dao.b_totalRecord(pDTO); }
+	 * 
+	 * @Override public int u_totalRecord(PagingDTO pDTO) { return
+	 * dao.u_totalRecord(pDTO); }
+	 */
 
 	@Override
 	public MissionDTO getMission(int no) {

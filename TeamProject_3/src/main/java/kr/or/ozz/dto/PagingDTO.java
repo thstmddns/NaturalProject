@@ -1,22 +1,23 @@
 package kr.or.ozz.dto;
 
 public class PagingDTO {
-   private int nowPage = 1; // ÇöÀçÆäÀÌÁö
-   private int onePageRecord = 5; // ÇÑ ÆäÀÌÁö¿¡ Ç¥½ÃÇÒ ·¹ÄÚµå ¼ö
-   private int m_totalRecord; // ¹Ì¼Ç ÃÑ ·¹ÄÚµå ¼ö
-   private int q_totalRecord; // QnA ÃÑ ·¹ÄÚµå ¼ö
-   private int r_totalRecord; // Review ÃÑ ·¹ÄÚµå ¼ö
-   private int b_totalRecord; // Board ÃÑ ·¹ÄÚµå ¼ö
-   private int u_totalRecord; // User ÃÑ ·¹ÄÚµå ¼ö
-   private int totalPage; //ÃÑ ÆäÀÌÁö¼ö
+
+   private int nowPage = 1; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+   private int onePageRecord = 5; // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Úµï¿½ ï¿½ï¿½
+   private int m_totalRecord; // ï¿½Ì¼ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Úµï¿½ ï¿½ï¿½
+   private int q_totalRecord; // QnA ï¿½ï¿½ ï¿½ï¿½ï¿½Úµï¿½ ï¿½ï¿½
+   private int r_totalRecord; // Review ï¿½ï¿½ ï¿½ï¿½ï¿½Úµï¿½ ï¿½ï¿½
+   private int b_totalRecord; // Board ï¿½ï¿½ ï¿½ï¿½ï¿½Úµï¿½ ï¿½ï¿½
+   private int u_totalRecord; // User ï¿½ï¿½ ï¿½ï¿½ï¿½Úµï¿½ ï¿½ï¿½
+   private int totalPage; //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
    
-   private int onePageNumCount = 5; //ÇÑ ÆäÀÌÁö¿¡ Ç¥½ÃµÇ´Â ÆäÀÌÁö ¼ö
-   private int startPageNum = 1; //½ÃÀÛÆäÀÌÁö
+   private int onePageNumCount = 5; //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ÃµÇ´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+   private int startPageNum = 1; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
    
-   private int lastPageRecord = 5; //¸¶Áö¸· ÆäÀÌÁö¿¡ ³²¾ÆÀÖ´Â ·¹ÄÚµå ¼ö
+   private int lastPageRecord = 5; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½Úµï¿½ ï¿½ï¿½
    
-   private String searchKey; //°Ë»öÅ°
-   private String searchWord; //°Ë»ö¾î
+   private String searchKey; //ï¿½Ë»ï¿½Å°
+   private String searchWord; //ï¿½Ë»ï¿½ï¿½ï¿½
    
    public int getNowPage() {
       return nowPage;
@@ -24,8 +25,8 @@ public class PagingDTO {
    public void setNowPage(int nowPage) {
       this.nowPage = nowPage;
       
-      //ÆäÀÌÁöÀÇ ½ÃÀÛ¹øÈ£ »ý¼ºÇÏ±â
-      //½ÃÀÛ¹øÈ£ = ((ÇöÀçÆäÀÌÁö - 1)/ÇÑÆäÀÌÁö¿¡ Ç¥½ÃÇÒ ÆäÀÌÁö ¼ö)*ÇÑÆäÀÌÁö¿¡ Ç¥½ÃÇÒ ÆäÀÌÁö ¼ö + 1;
+      //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Û¹ï¿½È£ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
+      //ï¿½ï¿½ï¿½Û¹ï¿½È£ = ((ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ - 1)/ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½)*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ + 1;
       startPageNum = ((nowPage-1) / onePageNumCount)*onePageNumCount + 1;
    }
    public int getOnePageRecord() {
@@ -80,7 +81,7 @@ public class PagingDTO {
       lastPageRecord = onePageRecord; //5
       if(totalPage==nowPage) {
          if(m_totalRecord%onePageRecord!=0) {
-            lastPageRecord = m_totalRecord % onePageRecord; //1,2,3,4 Áß
+            lastPageRecord = m_totalRecord % onePageRecord; //1,2,3,4 ï¿½ï¿½
          }
       }
    }
@@ -93,7 +94,7 @@ public class PagingDTO {
       lastPageRecord = onePageRecord; //5
       if(totalPage==nowPage) {
          if(q_totalRecord%onePageRecord!=0) {
-            lastPageRecord = q_totalRecord % onePageRecord; //1,2,3,4 Áß
+            lastPageRecord = q_totalRecord % onePageRecord; //1,2,3,4 ï¿½ï¿½
          }
       }
    }
@@ -106,7 +107,7 @@ public class PagingDTO {
       lastPageRecord = onePageRecord; //5
       if(totalPage==nowPage) {
          if(r_totalRecord%onePageRecord!=0) {
-            lastPageRecord = r_totalRecord % onePageRecord; //1,2,3,4 Áß
+            lastPageRecord = r_totalRecord % onePageRecord; //1,2,3,4 ï¿½ï¿½
          }
       }
    }
@@ -119,7 +120,7 @@ public class PagingDTO {
       lastPageRecord = onePageRecord; //5
       if(totalPage==nowPage) {
          if(b_totalRecord%onePageRecord!=0) {
-            lastPageRecord = b_totalRecord % onePageRecord; //1,2,3,4 Áß
+            lastPageRecord = b_totalRecord % onePageRecord; //1,2,3,4 ï¿½ï¿½
          }
       }
    }
@@ -132,7 +133,7 @@ public class PagingDTO {
       lastPageRecord = onePageRecord; //5
       if(totalPage==nowPage) {
          if(u_totalRecord%onePageRecord!=0) {
-            lastPageRecord = u_totalRecord % onePageRecord; //1,2,3,4 Áß
+            lastPageRecord = u_totalRecord % onePageRecord; //1,2,3,4 ï¿½ï¿½
          }
       }
    }
@@ -141,11 +142,12 @@ public class PagingDTO {
     * public int getTotalRecord() { return totalRecord; } public void
     * setTotalRecord(int totalRecord) { this.totalRecord = totalRecord;
     * 
-    * //ÃÑÆäÀÌÁö¼ö °è»êÇÏ±â 16 -> 4, 15 -> 3 // 3.44444 3.000 // ceil():¿Ã¸², round():¹Ý¿Ã¸²,
-    * floor():¹ö¸² totalPage = (int)Math.ceil((double)totalRecord/onePageRecord);
+    * //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ 16 -> 4, 15 -> 3 // 3.44444 3.000 // ceil():ï¿½Ã¸ï¿½, round():ï¿½Ý¿Ã¸ï¿½,
+    * floor():ï¿½ï¿½ï¿½ï¿½ totalPage = (int)Math.ceil((double)totalRecord/onePageRecord);
     * 
-    * //¸¶Áö¸·ÆäÀÌÁö¿¡ ³²¾ÆÀÖ´Â ·¹ÄÚµå ¼ö lastPageRecord = onePageRecord; //5
+    * //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½Úµï¿½ ï¿½ï¿½ lastPageRecord = onePageRecord; //5
     * if(totalPage==nowPage) { if(totalRecord%onePageRecord!=0) { lastPageRecord =
-    * totalRecord % onePageRecord; //1,2,3,4 Áß } } }
+    * totalRecord % onePageRecord; //1,2,3,4 ï¿½ï¿½ } } }
     */
+
 }

@@ -53,6 +53,7 @@
 	</update>
 	
 	<select id="Userlist" resultType="kr.or.ozz.dto.UserDTO">
+
 <!--       SELECT * FROM
          (SELECT * FROM -->
             SELECT username, work, intro FROM t_user
@@ -65,8 +66,8 @@
          ORDER BY board_no ASC)
       WHERE <![CDATA[rownum <= ${lastPageRecord}]]>
       ORDER BY board_no DESC -->
+
    </select>
-   
    <select id="u_totalRecord" resultType="int">
       select count(userid) cnt from t_user
       <if test="searchWord != null">

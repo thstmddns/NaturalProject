@@ -29,6 +29,7 @@
 			where mission_title like '%${searchWord}%'
 		</if>
 	</select>
+	
 	<select id="getMission" resultType="kr.or.ozz.dto.MissionDTO">
 		select mission_no, userid, mission_title, mission_tag, mission_content, created_at, mission_data, mission_tool, mission_cate, hit, mission_skill
 		from t_mission

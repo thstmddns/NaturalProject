@@ -6,20 +6,27 @@ import kr.or.ozz.dto.PagingDTO;
 import kr.or.ozz.dto.MissionDTO;
 
 public interface MissionDAO {
-	//¹Ì¼Çµî·Ï
+	//ï¿½Ì¼Çµï¿½ï¿½
 	public int MissionwriteOk(MissionDTO dto);
-	//¹Ì¼Ç¸ñ·Ï ¼±ÅÃ (paging, search)
+	//ï¿½Ì¼Ç¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (paging, search)
 	public List<MissionDTO> Missionlist(PagingDTO pDTO);
-	//ÃÑ ·¹ÄÚµå ¼ö
+	//ï¿½ï¿½ ï¿½ï¿½ï¿½Úµï¿½ ï¿½ï¿½
 	public int m_totalRecord(PagingDTO pDTO);
-	//1°³ ·¹ÄÚµå ¼±ÅÃ(¹Ì¼Ç³»¿ëº¸±â)
+
+	/*
+	 * public int q_totalRecord(PagingDTO pDTO); public int r_totalRecord(PagingDTO
+	 * pDTO); public int b_totalRecord(PagingDTO pDTO); public int
+	 * u_totalRecord(PagingDTO pDTO);
+	 */
+
+	//1ï¿½ï¿½ ï¿½ï¿½ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½Ì¼Ç³ï¿½ï¿½ëº¸ï¿½ï¿½)
 	public MissionDTO getMission(int no);
-	//Á¶È¸¼öÁõ°¡
+	//ï¿½ï¿½È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public void hitCount(int no);
-	//¹Ì¼Ç ¼öÁ¤(update)
+	//ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½(update)
 	public int MissionEdit(MissionDTO dto);
-	//¹Ì¼Ç »èÁ¦(delete)
+	//ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½(delete)
 	public int MissionDel(int no, String userid);
-	// ÀÎ±â¹Ì¼Ç °¡Á®¿À±â
+	// ï¿½Î±ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public List<MissionDTO> MissionToplist();
 }

@@ -127,6 +127,8 @@ public class QnaController {
 	//글내용보기
 	@GetMapping("/QnaView")
 	public ModelAndView QnaView(int no, PagingDTO pDTO) {
+		//조회수 증가
+		service.hitCount(no);
 		//레코드선택
 		QnaDTO dto = service.getQna(no);
 		

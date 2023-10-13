@@ -39,6 +39,7 @@
 			where review_title like '%${searchWord}%'
 		</if>
 	</select>
+	
 	<select id="getReview" resultType="kr.or.ozz.dto.ReviewDTO">
 		select review_no, review_title, review_score, review_content, userid, created_at, file_name, hit
 		from t_mission_review

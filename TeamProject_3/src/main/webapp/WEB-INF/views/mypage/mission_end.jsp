@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
@@ -21,7 +21,7 @@
             <tr>
                 <td>${mission_end.mission_title}</td>
                 <td>${mission_end.completed_at}</td>
-                <td>${mission_end.feedback_score}</td>
+                <td>${mission_end.feedback_score}점</td>
             </tr>
         </c:forEach>
     </table>

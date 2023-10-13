@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
 	public int UserUpdate(UserDTO dto) {
 		return dao.UserUpdate(dto);
 	}
-	
+
 	@Override
 	public List<UserDTO> Userlist(PagingDTO pDTO) {
 		return dao.Userlist(pDTO);
