@@ -2,6 +2,8 @@ package kr.or.ozz.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -59,6 +61,25 @@ public class frontController {
 	   ModelAndView mav = new ModelAndView();
 	   mav.addObject("Perfomerslist", Perfomerslist);
 		return mav;
+
+	public ModelAndView landing(HttpSession session) {
+	   List<MissionDTO> MissionToplist = Mservice.MissionToplist();
+
+	   ModelAndView mav = new ModelAndView();
+	   mav.addObject("MissionToplist", MissionToplist);
+	   
+	   // ���ǿ��� ���� ������� ���̵� ������
+       String userid = (String)session.getAttribute("logId");
+       
+       
+       // ���� ������� �޼��� ������ ������ (����: ����� ���̵�� �޼��� ������ ������)
+       List<PerformersDTO> mymissionList = Pservice.getPerfomersList(userid);
+       System.out.println("UserId from session: " + userid);
+       
+       // �𵨿� ������ �߰�
+       mav.addObject("mymissionList", mymissionList);
+       mav.setViewName("main/landing");
+       return mav; // �� �̸� ����
 	}
 	
 	@GetMapping("/idSearch")
@@ -123,13 +144,13 @@ public class frontController {
 		List<QnaDTO> Q_list = Qservice.Qnalist(pDTO);
 		List<ReviewDTO> R_list = Rservice.Reviewlist(pDTO);
 		List<BoardDTO> B_list = Bservice.Boardlist(pDTO);
-
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("Q_list", Q_list);
 		mav.addObject("R_list", R_list);
 		mav.addObject("B_list", B_list);
 		mav.addObject("pDTO", pDTO);
+		
 		mav.setViewName("main/searchCom");
 		return mav;
 	}

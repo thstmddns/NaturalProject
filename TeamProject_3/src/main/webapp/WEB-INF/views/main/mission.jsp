@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <main>
 	<div id="landing">
 		<div
@@ -40,8 +41,15 @@
 				</c:if>
 			</c:forEach>
 		</div>
-	
-	
+		<div id="ingList">
+			<div class="ingM">
+				<li>클라우드 서비스 AWS</li>
+				<li><span>진행률 20%</span> <span>남은 스텝 수 00개</span></li>
+				<li><progress id="progress" value="20" min="0" max="100"></li>
+				<li><button>이어서 진행하기</button></li>
+			</div>
+		</div>
+	</div>
 	<div style="font-size: 1.6em; margin-top: 90px;">맞춤 추천 미션</div>
 	<div id="recommendM">
 		<div id="recommendMList">
@@ -123,7 +131,7 @@
 				</div>
 				<div class="popMInfo">
 					<li><a href="/ozz/Mission/MissionView?no=${M_dto.mission_no}">${M_dto.mission_title}</a></li>
-					<li><span class="spanTag">${M_dto.mission_tag}</span></li>
+					<li><c:forEach items="${fn:split(M_dto.mission_tag, ',')}" var="category"><span class="spanTag">${category}</span></c:forEach></li>
 					<li>${M_dto.userid}</li>
 				</div>
 			</div>

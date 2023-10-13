@@ -22,7 +22,7 @@
     cursor: pointer;
 }
 .menu label::before{ content: '\e5d2'; }
-.menu li:nth-child(1) a::before{ content: '\e7fe'; }
+.menu li:nth-child(1) a::before{ content: '\ea77'; }
 .menu li:nth-child(2) a::before{ content: '\e7fd'; }
 .menu li:nth-child(3) a::before{ content: '\e87d'; }
 .menu li:nth-child(4) a::before{ content: '\e0ca'; }

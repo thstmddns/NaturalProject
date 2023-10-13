@@ -17,4 +17,6 @@ public interface PerformersService  {
 
     public List<PerformersDTO> getPerfomersEndList(String userid);
 
+    public List<PerformersDTO> getoneMission(String userid);
+
 }

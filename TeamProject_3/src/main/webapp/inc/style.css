@@ -344,6 +344,9 @@ a:link, a:visited, a:hover{
 	background-color:#E8FBFF;
 	color: #52B0C5;
 }
+.ingM span {
+	margin-left: 10px;
+}
 #recommendMList {
 	display:grid;
 	grid-template-columns: 330px 330px 330px;
@@ -1391,7 +1394,7 @@ hr:last-child {
 }
 .submit {
 	display:grid;
-	grid-template-columns: 550px 100px;	
+	grid-template-columns: 500px 150px;	
 }
 .submit li {
 	padding: 10px;
@@ -1419,7 +1422,7 @@ hr:last-child {
 	background: #52B0C5; 
 	border-radius: 100px;
 	border: none;
-	margin-top: 20px;
+	margin: 20px 20px;
 }
 .submit button:hover {
 	background: #E8FBFF;

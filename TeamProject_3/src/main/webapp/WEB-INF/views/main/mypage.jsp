@@ -8,7 +8,16 @@
 				<div class="myInfoDetail2">
 					<li>${dto.username}<span>가전제품 상품기획 DCX Analyst</span></li>
 					<li>팔로워 100<span>팔로잉 100</span></li>
-					<li>${dto.intro}</li>
+					<li>
+						<c:choose>
+	                		<c:when test="${empty dto.intro}">
+	                   			 자기소개를 입력해주세요.
+	                		</c:when>
+	                		<c:otherwise>
+	                    		${dto.intro}
+	                		</c:otherwise>
+	            		</c:choose>
+            		</li>
 				</div>
 			</div>
 			<div class="career">
@@ -39,21 +48,19 @@
 				</div>
 				<div id="missionGo">
 					<li>진행 중인 미션<span id="more" style="cursor:pointer;">더보기 ></span></li>
-					<c:forEach items="${yourList}" var="item" varStatus="loop">
-					    <c:if test="${loop.index == yourIndex}">
-							<li>${mission_ing.mission_title}</li>
-							<li>진행률<span>${mission_ing.mission_rate}%</span><span>남은 스텝 수</span><span>00</span></li>
-							<li><progress id="progress2" value="${mission_ing.mission_rate}%" min="0" max="100" style="margin: 5px 0 8px 0;"></progress></li>
-							<li><button style="cursor:pointer;">이어서 진행하기</button></li>
-					    </c:if>
-					</c:forEach>
-					
+				<c:if test="${not empty mymissionList}">
+				    <li>${mymissionList[0].mission_title}</li>
+				    <li>진행률<span>${mymissionList[0].mission_rate}%</span><span>남은 스텝 수</span><span>${mymissionList[0].restcnt}</span></li>
+				    <li><progress id="progress2" value="${mymissionList[0].mission_rate}" min="0" max="100" style="margin: 5px 0 8px 0;"></progress></li>
+				    <li><button style="cursor:pointer;">이어서 진행하기</button></li>
+				</c:if>
+	
 				</div>			
 			</div>
 			<div id="pageRight">
 				<ul class="btnList">
 					<div class="btn_tap click">내가 만든 미션(3)</div>
-					<div class="btn_tap">내가 제출한 미션(1)</div>
+					<div class="btn_tap">내가 완료한 미션(1)</div>
 					<div class="btn_tap">내가 작성한 커뮤니티(3)</div>
 				</ul>
 				<div class="pageContent show">
