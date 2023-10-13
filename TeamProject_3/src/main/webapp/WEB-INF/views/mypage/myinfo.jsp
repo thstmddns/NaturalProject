@@ -70,6 +70,8 @@
 			    <option value="Kotlin"># Kotlin</option>
 			    <option value="Docker"># Docker</option>
 			</select></li>
+			<li>자기소개</li> 
+            <li><textarea name="intro" id="intro" value="${dto.intro}"/>${dto.intro}</textarea></li>
         <button type="submit" class="editOk">수정하기</button>
         </ul>
     </form>

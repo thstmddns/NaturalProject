@@ -11,7 +11,7 @@ public interface ReviewDAO {
 	//글목록 선택 (paging, search)
 	public List<ReviewDTO> Reviewlist(PagingDTO pDTO);
 	//총 레코드 수
-	public int totalRecord(PagingDTO pDTO);
+	public int r_totalRecord(PagingDTO pDTO);
 	//1개 레코드 선택(글내용보기)
 	public ReviewDTO getReview(int no);
 	//조회수증가

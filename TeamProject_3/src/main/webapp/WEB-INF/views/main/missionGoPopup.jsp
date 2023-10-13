@@ -50,38 +50,13 @@ h2::after {
 <main style="width:800px; height: 500px;">
 	<h2>진행중인 미션</h2>
 	<div  id="missionGoList">
+		<c:forEach items="${mymissionList}" var="mission_ing">
 		<div class="missionContent">
-			<li>Persona(페르소나) 분석 미션</li>
-			<li>진행률<span>20%</span><span>남은 스텝 수</span><span>00</span></li>
-			<li><progress id="progress" value="20" min="0" max="100" style="margin-top: 10px;"></progress></li>
+			<li>${mission_ing.mission_title}</li>
+			<li>진행률<span>${mission_ing.mission_rate}%</span><span>남은 스텝 수</span><span>${mission_ing.restcnt}</span></li>
+			<li><progress id="progress" value="${mission_ing.mission_rate}" min="0" max="100" style="margin-top: 10px;"></progress></li>
 			<li><button>이어서 진행하기</button></li>
 		</div>
-		<div class="missionContent">
-			<li>Orange 사용법</li>
-			<li>진행률<span>20%</span><span>남은 스텝 수</span><span>00</span></li>
-			<li><progress id="progress" value="20" min="0" max="100" style="margin-top: 10px;"></progress></li>
-			<li><button>이어서 진행하기</button></li>
-		</div>
-		<div class="missionContent">
-			<li>React 활용법</li>
-			<li>진행률<span>20%</span><span>남은 스텝 수</span><span>00</span></li>
-			<li><progress id="progress" value="20" min="0" max="100" style="margin-top: 10px;"></progress></li>
-			<li><button>이어서 진행하기</button></li>
-		</div>
-		<div class="missionContent">
-			<li>고객 난제 정의</li>
-			<li>진행률<span>20%</span><span>남은 스텝 수</span><span>00</span></li>
-			<li><progress id="progress" value="20" min="0" max="100" style="margin-top: 10px;"></progress></li>
-			<li><button>이어서 진행하기</button></li>
-		</div>
-		<div class="missionContent">
-			<li>고객 경험 리디자인</li>
-			<li>진행률<span>20%</span><span>남은 스텝 수</span><span>00</span></li>
-			<li><progress id="progress" value="20" min="0" max="100" style="margin-top: 10px;"></progress></li>
-			<li><button>이어서 진행하기</button></li>
-		</div>
-	
-	
-	
+		</c:forEach>
 	</div>
 </main>

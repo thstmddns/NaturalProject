@@ -54,7 +54,7 @@
 			<li>${dto.qna_no}</li>
 			<li><a
 				href='/ozz/Qna/QnaView?no=${dto.qna_no}&nowPage=${pDTO.nowPage}<c:if test="${pDTO.searchWord != null}">&searchKey=${pDTO.searchKey}&searchWord=${pDTO.searchWord}</c:if>'>${dto.qna_title}</a></li>
-			<c:choose>
+<%-- 			<c:choose>
 				<c:when test="${dto.file_name_base64 != 'None'}">
 					<img src="data:image/jpeg;base64,${dto.file_name_base64}"
 						alt="Product Image" 
@@ -63,7 +63,7 @@
 				<c:otherwise>
 					<img src="default-image.jpg" alt="Default Image" style="width: 200px; height: 200px;"/>
 				</c:otherwise>
-			</c:choose>
+			</c:choose> --%>
 
 			<li>${dto.userid}</li>
 			<li>${dto.created_at}</li>
