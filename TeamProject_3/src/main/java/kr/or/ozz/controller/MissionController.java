@@ -58,7 +58,7 @@ public class MissionController {
 	@GetMapping("/Missionlist")
 	public ModelAndView Missionlist(PagingDTO pDTO) {
 		// 총레코드수
-		pDTO.setTotalRecord(service.totalRecord(pDTO));
+		pDTO.setM_totalRecord(service.m_totalRecord(pDTO));
 
 		// 해당페이지의 레코드 선택
 		List<MissionDTO> list = service.Missionlist(pDTO);
@@ -86,7 +86,7 @@ public class MissionController {
 	@GetMapping("/Missionwrite")
 	public ModelAndView Missionwrite() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("mission/missionMake");
+		mav.setViewName("Mission/missionMake");
 		return mav;
 	}
 

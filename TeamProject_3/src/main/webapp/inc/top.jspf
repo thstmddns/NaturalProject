@@ -22,7 +22,7 @@
     cursor: pointer;
 }
 .menu label::before{ content: '\e5d2'; }
-.menu li:nth-child(1) a::before{ content: '\e7fe'; }
+.menu li:nth-child(1) a::before{ content: '\ea77'; }
 .menu li:nth-child(2) a::before{ content: '\e7fd'; }
 .menu li:nth-child(3) a::before{ content: '\e87d'; }
 .menu li:nth-child(4) a::before{ content: '\e0ca'; }
@@ -95,6 +95,7 @@
     display: none;
 }
 #mainSearch {
+	width: 70px;
 	gap: 0 !important;
 	margin: 0 !important;
 	border-radius: 16px;
@@ -105,20 +106,24 @@
 #mainSearch:hover {
 	border: 2px solid;
 }
+
 </style>
 
 
 <header>
-    <div style="font-size: 32px;  font-weight: 400; word-wrap: break-word; margin-left:60px; padding-top:5px;">OZZ</div>
+    <div style="font-size: 32px;  font-weight: 400; word-wrap: break-word; margin-left:60px; padding-top:5px;"><a href="/ozz/main/landing">OZZ</a></div>
     <ul style="justify-content: center; align-items: center; gap: 20px; display: flex;">
         <li style="color: black; font-size: 17px;"><a href="/ozz/main/mainMission">미션</a></li>
         <li style="color: black; font-size: 17px;"><a href="/ozz/main/mainMaster">전문가</a></li>
         <li style="color: black; font-size: 17px; margin-top: 15px;"><a href="/ozz/main/mainCom">커뮤니티</a></li>
     </ul>
-    <div style="display: grid; grid-template-columns: 470px 70px; margin-top:10px;">
-    <input type="text" id="searchWord" placeholder="미션, 전문가, 커뮤니티를 검색해보세요.">
-	<button id="mainSearch">검색</button>
+    <div style="margin-top:10px;">
+	    <form action="/ozz/main/searchMission" style="display: flex;" class="input-container">
+	    	<input type="text" name="searchWord" id="searchWord" placeholder="미션, 전문가, 커뮤니티를 검색해보세요.">
+			<input type="submit" id="mainSearch" value="검색">
+		</form>
 	</div>
+	
 		 <i class="fa-regular fa-bell" style="font-size:1.1em;"></i>
 	<div class="menu" style="margin-top: 12px;">
 		<label for="expand-menu"><div></div></label>
@@ -132,8 +137,8 @@
     	<li><a href="/ozz/register/registerJoin" class="item"><div>회원가입</div></a></li>
     	</c:if>
     	<c:if test="${not empty logId}">
-        <li><a href="/ozz/main/myPage" class="item"><div>마이페이지</div></a></li>
-        <li><a href="#" class="item"><div>구독</div></a></li>
+        <li><a href="/ozz/mypage/myPageDetail" class="item"><div>마이페이지</div></a></li>
+        <li><a href="#" class="item" id="subscribe"><div>구독</div></a></li>
         <li><a href="#" class="item"><div>메시지</div></a></li>
         <li><a href="#" class="item"><div>북마크</div></a></li>
         <li><a href="#" class="item"><div>설정</div></a></li>
@@ -143,4 +148,15 @@
 	
 	</div>
 </header>
+<script>
+	let popupbtn2 = document.querySelector('a#subscribe');
+	
+	popupbtn2.onclick = function() {
+		let option = "width = 700px, height = 600px, top = 300px, left = 200px, scrollbars = no,  location=no"
+		let openurl = '/ozz/mypage/subscription_list'
+		window.open(openurl, 'popup', option)
+	}
 
+
+
+</script>

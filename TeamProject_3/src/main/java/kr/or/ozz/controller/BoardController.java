@@ -38,7 +38,7 @@ public class BoardController {
 	@GetMapping("/Boardlist")
 	public ModelAndView Boardlist(PagingDTO pDTO) {
 		// 총레코드수
-		pDTO.setTotalRecord(service.totalRecord(pDTO));
+		pDTO.setB_totalRecord(service.b_totalRecord(pDTO));
 
 		// 해당페이지의 레코드 선택
 		List<BoardDTO> list = service.Boardlist(pDTO);
@@ -66,7 +66,7 @@ public class BoardController {
 	@GetMapping("/Boardwrite")
 	public ModelAndView Boardwrite() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("community/comWrite");
+		mav.setViewName("Community/comWrite");
 		return mav;
 	}
 
@@ -130,7 +130,7 @@ public class BoardController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("dto", dto);
 		mav.addObject("pDTO", pDTO);
-		mav.setViewName("Board/BoardView");
+		mav.setViewName("Communnity/communityView");
 
 		return mav;
 	}

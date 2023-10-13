@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import kr.or.ozz.dto.MissionDTO;
 import kr.or.ozz.dto.PagingDTO;
 import kr.or.ozz.dto.PerformersDTO;
+import kr.or.ozz.dto.SubscriptionDTO;
 import kr.or.ozz.dto.UserDTO;
 import kr.or.ozz.service.MissionService;
 import kr.or.ozz.service.PerformersService;
@@ -41,9 +42,40 @@ public class MypageController {
 	
 	//마이페이지 메인으로 이동
 	@GetMapping("/mypage_main")
-	public String Mypage () {
+	public String Mypage (HttpSession session) {
 		return "mypage/mypage_main";
 	}
+	
+	// 회원정보 가져오기
+	@GetMapping("/myPageDetail")
+	public ModelAndView UserInfo(HttpSession session) {
+		String logId = (String)session.getAttribute("logId");
+		ModelAndView mav = new ModelAndView();
+		UserDTO dto = null;
+		
+		// 세션에서 현재 사용자의 아이디를 가져옴
+	    String userid = (String)session.getAttribute("logId");
+	       
+	       
+	     // 현재 사용자의 달성률 정보를 가져옴 (예시: 사용자 아이디로 달성률 정보를 가져옴)
+	     List<PerformersDTO> mymissionList = Pservice.getPerfomersList(userid);
+	     List<PerformersDTO> myendmissionList = Pservice.getPerfomersEndList(userid);
+	     System.out.println("UserId from session: " + userid);
+	       
+	       // 모델에 데이터 추가
+	       mav.addObject("mymissionList", mymissionList);
+	       mav.addObject("myendmissionList", myendmissionList);
+		try {
+			dto = Uservice.getUser(logId);
+			mav.addObject("dto", dto);
+			mav.setViewName("main/mypage");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println(dto.toString());
+		return mav;
+	}
+
 	
 	// 회원수정 폼으로 이동 ->
 	@GetMapping("/myInfoEdit")
@@ -104,7 +136,7 @@ public class MypageController {
 	        
 	        // 모델에 데이터 추가
 	        mav.addObject("mymissionList", mymissionList);
-	        mav.setViewName("mypage/mission_ing");
+	        mav.setViewName("main/missionGoPopup");
 	        return mav; // 뷰 이름 설정
 	    }
 	 }
@@ -134,5 +166,8 @@ public class MypageController {
 	   	    }
 	   	 }
 	   	 
+	   	
+	   	
+
 
 	 }

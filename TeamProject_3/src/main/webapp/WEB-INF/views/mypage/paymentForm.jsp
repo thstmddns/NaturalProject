@@ -56,27 +56,15 @@
 
 
 <main style="width:600px; height: 500px;">
-<c:if test="${logStatus=='Y'}">
-	<p>로그인중</p>
-</c:if>
-<<<<<<< HEAD
 <div class="card-body bg-white mt-0 shadow" id="paymentForm">
-    <p style="font-weight: bold"><img src="<%= request.getContextPath() %>/img/ri_kakao-talk-fill.png" style="height:16px;"/> 카카오페이 현재 사용가능</p>
-    <div id="subOption">
-    <label class="box-radio-input"><input type="radio" name="cp_item" value="1"><span> 1개월 : 10000원</span></label>
-    <label class="box-radio-input"><input type="radio" name="cp_item" value="3"><span> 3개월 : 30000원</span></label>
-    <label class="box-radio-input"><input type="radio" name="cp_item" value="6"><span> 6개월 : 50000원</span></label>
-    <label class="box-radio-input"><input type="radio" name="cp_item" value="12"><span> 12개월 : 100000원</span></label>
-	</div>
-=======
-<div class="card-body bg-white mt-0 shadow">
     <p style="font-weight: bold">카카오페이 현재 사용가능</p>
+    <div id="subOption">
     <label class="box-radio-input"><input type="radio" name="cp_item" value="10000"><span>1개월 : 10000원</span></label>
     <label class="box-radio-input"><input type="radio" name="cp_item" value="30000"><span>3개월 : 30000원</span></label>
     <label class="box-radio-input"><input type="radio" name="cp_item" value="50000"><span>6개월 : 50000원</span></label>
     <label class="box-radio-input"><input type="radio" name="cp_item" value="100000"><span>12개월 : 100000원</span></label>
->>>>>>> 78d6df0ee23faf5a100eeb56b5f0ccb8119050d4
     <button type="button" class="btn btn-lg btn-block btn-custom" id="charge_kakao">결제하기</button>
+	</div>
 </div>
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
@@ -93,16 +81,16 @@ $('#charge_kakao').click(function () {
 	// 선택된 라디오 버튼의 value에 따라 주문명 동적으로 설정
     var suboption = '';
     switch (payamount) {
-        case '10000':
+        case '10,000':
         	suboption = '1개월';
             break;
-        case '30000':
+        case '30,000':
         	suboption = '3개월';
             break;
-        case '50000':
+        case '50,000':
         	suboption = '6개월';
             break;
-        case '100000':
+        case '100,000':
         	suboption = '12개월';
             break;
         default:

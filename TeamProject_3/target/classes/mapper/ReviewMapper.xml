@@ -17,10 +17,11 @@
 	<select id="Reviewlist" resultType="kr.or.ozz.dto.ReviewDTO">
 		SELECT * FROM
          (SELECT * FROM
-            (SELECT review_no, review_title, review_score, to_char(created_at, 'MM-DD HH:MI') created_at, userid, hit FROM t_mission_review
+
+            (SELECT review_no, review_content, review_title, review_score, to_char(created_at, 'MM-DD HH:MI') created_at, userid, hit FROM t_mission_review
             <!-- 검색어가 있을 때 -->
             <if test="searchWord != null">
-            	where ${searchKey} like '%${searchWord}%'
+            	where review_title like '%${searchWord}%'
             </if>
             ORDER BY review_no DESC)
          WHERE <![CDATA[rownum <= ${nowPage * onePageRecord}]]>
@@ -33,12 +34,13 @@
 		select review_no, mission_no, review_title, review_score, userid, created_at, hit from t_mission_review
 	</select>
 
-	<select id="totalRecord" resultType="int">
+	<select id="r_totalRecord" resultType="int">
 		select count(review_no) cnt from t_mission_review
 		<if test="searchWord != null">
-			where ${searchKey} like '%${searchWord}%'
+			where review_title like '%${searchWord}%'
 		</if>
 	</select>
+	
 	<select id="getReview" resultType="kr.or.ozz.dto.ReviewDTO">
 		select review_no, review_title, review_score, review_content, userid, created_at, file_name, hit
 		from t_mission_review

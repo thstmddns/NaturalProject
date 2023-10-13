@@ -3,14 +3,12 @@ package kr.or.ozz.dao;
 import java.util.List;
 
 import kr.or.ozz.dto.PaymentDTO;
+import kr.or.ozz.dto.PerformersDTO;
 import kr.or.ozz.dto.SubscriptionDTO;
 
 public interface SubscriptionDAO {
-	
-    // 구독중인 
-	public void subscriptionIng(SubscriptionDTO dto);
 
-    // 구독만료된 리스트
-	public List<PaymentDTO> subscriptionEnd(String userid);
+	// 구독 여부 확인
+	public String getSubstatus(String userid);
 	
 }

@@ -25,8 +25,8 @@ public class QnaServiceImpl implements QnaService {
 	}
 
 	@Override
-	public int totalRecord(PagingDTO pDTO) {
-		return dao.totalRecord(pDTO);
+	public int q_totalRecord(PagingDTO pDTO) {
+		return dao.q_totalRecord(pDTO);
 	}
 
 	@Override

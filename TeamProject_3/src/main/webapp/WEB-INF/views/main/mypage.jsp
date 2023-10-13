@@ -6,17 +6,25 @@
 			<div id="myInfoDetail">
 				<div><img src="<%= request.getContextPath()%>/img/Group 7210.png"/></div>
 				<div class="myInfoDetail2">
-					<li>홍길동<span>가전제품 상품기획 DCX Analyst</span></li>
+					<li>${dto.username}<span>가전제품 상품기획 DCX Analyst</span></li>
 					<li>팔로워 100<span>팔로잉 100</span></li>
-					<li>새로운 기술과 트렌드를 습득하고 적용하는 것을 즐기는 개발자입니다. 
-						<br/>함께 일 하는 동료와 지식을 공유하며 성장하는 것이 저의 목표입니다.</li>
+					<li>
+						<c:choose>
+	                		<c:when test="${empty dto.intro}">
+	                   			 자기소개를 입력해주세요.
+	                		</c:when>
+	                		<c:otherwise>
+	                    		${dto.intro}
+	                		</c:otherwise>
+	            		</c:choose>
+            		</li>
 				</div>
 			</div>
 			<div class="career">
-				<li>회사명<span>포지션</span><span>2000.00.00 ~ 현재까지</span></li>
-				<li>회사명<span>프론트엔드 개발자</span><span>2000.00.00 ~ 0000.00.00</span></li>
-				<li>회사명<span>백엔드 개발자</span><span>2000.00.00 ~ 0000.00.00</span></li>
-				<li style="float:right; font-size:0.8em;">더보기 ></li>		
+				<li>랩포디엑스(주)<span>가전제품 상품기획 DCX Analyst</span><span>2022.11.15 ~ 현재까지</span></li>
+				<li>연어보다 맛있는 자연어(주)<span>백엔드 개발자</span><span>2019.08.01 ~ 2022.10.31</span></li>
+				<li>스마트인재개발원<span>백엔드 개발자</span><span>2018.02.21 ~ 2019.06.30</span></li>
+				<li style="float:right; font-size:13px !important;">더보기 ></li>		
 			</div>	
 		</div>
 		<div id="myInfoBottom">
@@ -27,11 +35,11 @@
 				</div>
 				<div id="skill">
 					<li># 직무 스킬</li>
-					<li><span>태그</span><span>태그</span><span>태그</span><span>태그</span><span>태그</span><span>태그</span></li>
+					<li><span>경영기획</span><span>개발</span><span>프로젝트관리</span></li>
 					<li># 업무 스킬</li>
-					<li><span>태그</span><span>태그</span><span>태그</span><span>태그</span><span>태그</span></li>
+					<li><span>분석적 사고</span><span>비판적 사고</span><span>프로그래밍</span></li>
 					<li># 툴 스킬</li>
-					<li><span>태그</span><span>태그</span><span>태그</span></li>
+					<li><span>python</span><span>java</span><span>javascript</span><span>html/css</span></li>
 				</div>
 				<div id="missionTotal">
 					<li>미션 수행 통계</li>
@@ -40,16 +48,18 @@
 				</div>
 				<div id="missionGo">
 					<li>진행 중인 미션<span id="more" style="cursor:pointer;">더보기 ></span></li>
-					<li>Persona(페르소나) 분석 미션</li>
-					<li>진행률<span>20%</span><span>남은 스텝 수</span><span>00</span></li>
-					<li><progress id="progress2" value="20" min="0" max="100" style="margin: 5px 0 8px 0;"></progress></li>
-					<li><button style="cursor:pointer;">이어서 진행하기</button></li>
+					<c:forEach items="${mymissionList}" var="mission_ing" varStatus="loop">
+							<li>${mission_ing.mission_title}</li>
+							<li>진행률<span>${mission_ing.mission_rate}%</span><span>남은 스텝 수</span><span>00</span></li>
+							<li><progress id="progress2" value="${mission_ing.mission_rate}" min="0" max="100" style="margin: 5px 0 8px 0;"></progress></li>
+							<li><button style="cursor:pointer;">이어서 진행하기</button></li>
+					</c:forEach>	
 				</div>			
 			</div>
 			<div id="pageRight">
 				<ul class="btnList">
 					<div class="btn_tap click">내가 만든 미션(3)</div>
-					<div class="btn_tap">내가 제출한 미션(1)</div>
+					<div class="btn_tap">내가 완료한 미션(1)</div>
 					<div class="btn_tap">내가 작성한 커뮤니티(3)</div>
 				</ul>
 				<div class="pageContent show">
@@ -71,14 +81,16 @@
 					</div>
 				</div>
 				<div class="pageContent">
+					<c:forEach items="${myendmissionList}" var="mission_end">
 					<div class="submit">
 						<div class="submitM">
-						<li>Figma 사용법 미션</li>
-						<li>2000-00-00<span>피드백 현황 완료</span></li>
+						<li>${mission_end.mission_title}</li>
+						<li>${mission_end.completed_at}<span>피드백 현황 완료</span></li>
 						</div>
 						<div><button>리뷰하기</button></div>
 					</div>
-					<div class="submit">
+					</c:forEach>
+					<!-- <div class="submit">
 						<div class="submitM">
 						<li>Orange 사용법</li>
 						<li>2000-00-00<span>피드백 현황 완료</span></li>
@@ -91,7 +103,7 @@
 						<li>2000-00-00<span>피드백 현황 완료</span></li>
 						</div>
 						<div><button>리뷰하기</button></div>
-					</div>
+					</div> -->
 				</div>
 				<div class="pageContent">
 					<div class="write">
@@ -170,7 +182,7 @@
         
         popupbtn.onclick = function() {
         	let option = "width = 700px, height = 600px, top = 300px, left = 200px, scrollbars = no,  location=no"
-        	let openurl = '/ozz/main/subscribe'
+        	let openurl = '/ozz/mypage/subscription_list'
         	window.open(openurl, 'popup', option)
         }
 
@@ -178,7 +190,7 @@
 		
 		missionGoPopup.onclick = function() {
 			let option2 = "width = 900px, height = 600px, top = 300px, left = 200px, scrollbars = yes,  location=no"
-			let openurl2 = '/ozz/main/missionIng'
+			let openurl2 = '/ozz/mypage/mission_ing'
 			window.open(openurl2, 'missionGoPopup', option2)
 		}
 

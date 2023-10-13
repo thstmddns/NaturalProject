@@ -12,7 +12,7 @@
 	</div>
 	
 	<div id="mainComPop">
-			<li style="font-size:1.6em">주간 인기 커뮤니티 Top10</li>
+			<li style="font-size:1.6em">인기 커뮤니티 Top10</li>
 			<li style="color: #869AAF; margin-top:5px; font-size:0.9em">지금 가장 핫한 반응의 커뮤니티</li>
 	</div>
 	<div id="mainComPopL">
