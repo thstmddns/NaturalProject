@@ -45,7 +45,11 @@ def initializeModels(modelName="yoonjae97/kobart_AdamW_80000"):
     return tokenizer, model, device
 set_seed(42)
 #Set your OpenAI API key
+<<<<<<< HEAD
+openai.api_key="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"
+=======
 openai.api_key=""
+>>>>>>> 68eef876e4cad441d76bbc2cb0e006dbb3dba191
 
 # EasyOCR 리더 및 모델 초기화
 reader = easyocr.Reader(['ko', 'en'], gpu=True)
@@ -141,7 +145,7 @@ def extractTextFromPdf(pdfPath):
             resultEasyocr : pdf로 부터 ocr을 이용해서 텍스트를 추출하고 페이지별로 나눠 저장한 리스트 반환
 
     """
-    pdfImages = convert_from_path(pdfPath,500, poppler_path="C:\\Users\\user24\\Downloads\\poppler-23.08.0\\Library\\bin")
+    pdfImages = convert_from_path(pdfPath,500, poppler_path="C:\\Users\\user04\\Desktop\\poppler-23.08.0\\Library\\bin")
 
     # EasyOCR 리더 초기화
     reader = easyocr.Reader(['ko', 'en'], gpu=True)  

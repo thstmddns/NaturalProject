@@ -38,7 +38,7 @@
 		 	<li>수행된 미션 수</li>
 		 </div>
 		 <div>
-		 	<li style="font-size:2em; margin-bottom: 10px;">0</li>
+		 	<li style="font-size:2em; margin-bottom: 10px;">256</li>
 		 	<li>회원 수</li>
 		 </div>
 	</div>
@@ -74,34 +74,12 @@
 			<div id="ingList">
 				<div class="ingM">
 			            <li>${mission_ing.mission_title}</li>
-			            <li>진행률<span>${mission_ing.mission_rate}%</span><span>남은 스텝 수 00개</span></li>
+			            <li>진행률<span>${mission_ing.mission_rate}%</span><span>남은 스텝 수 ${mission_ing.restcnt}개</span></li>
 			            <li><progress id="progress" value="${mission_ing.mission_rate}" min="0" max="100" style="margin: 5px 0 8px 0;"></progress></li>
 			            <li><button>이어서 진행하기</button></li>
 				</div>
 			</div>
 		</c:forEach>
-		<!-- <div id="ingList">
-			<div class="ingM">
-				<li>다양한 사례로 익히는 SQL 데이터 분석</li>
-				<li>
-					<span>진행률 20%</span>
-					<span>남은 스텝 수 00개</span>
-				</li>
-				<li><progress id="progress" value="20" min="0" max="100" style="margin: 5px 0 8px 0;"></progress></li>
-				<li><button>이어서 진행하기</button></li>
-			</div>
-		</div>
-		<div id="ingList">
-			<div class="ingM">
-				<li>클라우드 서비스 AWS</li>
-				<li>
-					<span>진행률 20%</span>
-					<span>남은 스텝 수 00개</span>
-				</li>
-				<li><progress id="progress" value="20" min="0" max="100" style="margin: 5px 0 8px 0;"></progress></li>
-				<li><button>이어서 진행하기</button></li>
-			</div>
-		</div> -->
 	</div>
 	
 	<div style="font-size:1.6em; margin-top: 90px;">맞춤 추천 미션</div>

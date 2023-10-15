@@ -25,9 +25,16 @@ public class PerformersServiceImpl implements PerformersService {
 		return dao.getPerfomersList(userid);
 	}
 
+
+
 	@Override
 	public List<PerformersDTO> getPerfomersEndList(String userid) {
 		return dao.getPerfomersEndList(userid);
+	}
+
+	@Override
+	public List<PerformersDTO> getoneMission(String userid) {
+		return dao.getoneMission(userid);
 	}
 
 

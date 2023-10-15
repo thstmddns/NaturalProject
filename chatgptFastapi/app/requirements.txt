@@ -24,4 +24,4 @@ peft
 pandas
 
 -utils.py 144줄 쯤의 pdfImages = convert_from_path(pdfPath,500, poppler_path="C:\\Users\\user24\\Downloads\\poppler-23.08.0\\Library\\bin")
-이 링크는 poppler을 다운 받고, 링크를 저렇게 만들어줘야 합니다. 
+이 링크는 poppler을 다운 받고, poppler의 library의 bin 파일의 링크를 복사해줘야 합니다.

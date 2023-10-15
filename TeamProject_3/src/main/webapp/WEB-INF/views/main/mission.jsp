@@ -24,37 +24,24 @@
 		<span style="font-size: 1.6em;">진행 중인 미션</span> <span><a
 			style="font-size: 0.8em; color: #869AAF; float: right;">더보기 ></a></span>
 	</div>
-	<div id="mIng">
-		<div id="ingList">
-			<div class="ingM">
-				<li>PM을 위한 데이터 리터러시</li>
-				<li><span>진행률 20%</span> <span>남은 스텝 수 00개</span></li>
-				<li><progress id="progress" value="20" min="0" max="100"></li>
-				<li><button>이어서 진행하기</button></li>
-			</div>
-		</div>
-		<div id="ingList">
-			<c:forEach items="${participatingChallenges}" var="mission">
-				<div class="ingM">
-					<li>${mission.mission_title}</li>
-					<li>${mission.achievementRate}%<span>남은 스텝 수 00개</span></li>
-					<li><progress id="progress" value="${mission.achievementRate}"
-							min="0" max="100" style="margin: 5px 0 8px 0;"></progress></li>
-					<li><button>이어서 진행하기</button></li>
-				</div>
+	<c:if test="${empty logId}">
+		로그인 후 사용하세요 <a href="/ozz/register/login">로그인</a>
+	</c:if>
+		<div id="mIng">
+			<c:forEach var="P_dto" items="${Perfomerslist}">
+				<c:if test="${logId == P_dto.userid}">
+					<div id="ingList">
+						<div class="ingM">
+							<li>${P_dto.mission_title}</li>
+							<li><span>진행률 ${P_dto.mission_rate}%</span> <span>남은 스텝 수 ${P_dto.restcnt}개</span></li>
+							<li><progress id="progress" value="${P_dto.mission_rate}" min="0" max="100"></li>
+							<li><button>이어서 진행하기</button></li>
+						</div>
+					</div>
+				</c:if>
 			</c:forEach>
 		</div>
-		
-		<div id="ingList">
-			<div class="ingM">
-				<li>클라우드 서비스 AWS</li>
-				<li><span>진행률 20%</span> <span>남은 스텝 수 00개</span></li>
-				<li><progress id="progress" value="20" min="0" max="100"></li>
-				<li><button>이어서 진행하기</button></li>
-			</div>
-		</div>
 	</div>
-
 	<div style="font-size: 1.6em; margin-top: 90px;">맞춤 추천 미션</div>
 	<div id="recommendM">
 		<div id="recommendMList">
