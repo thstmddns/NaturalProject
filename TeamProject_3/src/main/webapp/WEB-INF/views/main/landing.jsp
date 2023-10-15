@@ -80,28 +80,6 @@
 				</div>
 			</div>
 		</c:forEach>
-		<!-- <div id="ingList">
-			<div class="ingM">
-				<li>다양한 사례로 익히는 SQL 데이터 분석</li>
-				<li>
-					<span>진행률 20%</span>
-					<span>남은 스텝 수 00개</span>
-				</li>
-				<li><progress id="progress" value="20" min="0" max="100" style="margin: 5px 0 8px 0;"></progress></li>
-				<li><button>이어서 진행하기</button></li>
-			</div>
-		</div>
-		<div id="ingList">
-			<div class="ingM">
-				<li>클라우드 서비스 AWS</li>
-				<li>
-					<span>진행률 20%</span>
-					<span>남은 스텝 수 00개</span>
-				</li>
-				<li><progress id="progress" value="20" min="0" max="100" style="margin: 5px 0 8px 0;"></progress></li>
-				<li><button>이어서 진행하기</button></li>
-			</div>
-		</div> -->
 	</div>
 	
 	<div style="font-size:1.6em; margin-top: 90px;">맞춤 추천 미션</div>

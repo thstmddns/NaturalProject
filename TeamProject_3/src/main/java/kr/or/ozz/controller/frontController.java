@@ -43,7 +43,7 @@ public class frontController {
 	   UserService Uservice;
 	   
 	   @Autowired
-	    PerformersService Pservice;
+	   PerformersService Pservice;
 	
 	@GetMapping("/login")
 	public String login() {
@@ -62,15 +62,15 @@ public class frontController {
 	   ModelAndView mav = new ModelAndView();
 	   mav.addObject("MissionToplist", MissionToplist);
 	   
-	   // ¼¼¼Ç¿¡¼­ ÇöÀç »ç¿ëÀÚÀÇ ¾ÆÀÌµğ¸¦ °¡Á®¿È
+	   // å ì™ì˜™å ì‹¤ìš¸ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™å ï¿½ å ì™ì˜™å ì‹±ë“¸ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™
        String userid = (String)session.getAttribute("logId");
        
        
-       // ÇöÀç »ç¿ëÀÚÀÇ ´Ş¼º·ü Á¤º¸¸¦ °¡Á®¿È (¿¹½Ã: »ç¿ëÀÚ ¾ÆÀÌµğ·Î ´Ş¼º·ü Á¤º¸¸¦ °¡Á®¿È)
+       // å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™å ï¿½ å ìŒ¨ì‡½ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™ (å ì™ì˜™å ì™ì˜™: å ì™ì˜™å ì™ì˜™å ï¿½ å ì™ì˜™å ì‹±ë“¸ì˜™å ï¿½ å ìŒ¨ì‡½ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™)
        List<PerformersDTO> mymissionList = Pservice.getPerfomersList(userid);
        //System.out.println("UserId from session: " + userid);
        
-       // ¸ğµ¨¿¡ µ¥ÀÌÅÍ Ãß°¡
+       // å ìœë¸ìš¸ì˜™ å ì™ì˜™å ì™ì˜™å ì™ì˜™ å ìŒ©ê³¤ì˜™
        mav.addObject("mymissionList", mymissionList);
        
        
@@ -81,9 +81,9 @@ public class frontController {
        mav.addObject("mymissioningCnt", mymissioningCnt);
        mav.addObject("mymissionendCnt", mymissionendCnt);
        mav.setViewName("main/landing");
-       
-       return mav; // ºä ÀÌ¸§ ¼³Á¤
-   
+
+       return mav; // å ì™ì˜™ å ì‹±ëªŒì˜™ å ì™ì˜™å ì™ì˜™
+
 	}
 	
 	@GetMapping("/idSearch")
@@ -97,12 +97,16 @@ public class frontController {
 	}
 
 	@GetMapping("/mainMission")
-	public ModelAndView MissionToplist() {
+	public ModelAndView mainMission(HttpSession session, PagingDTO pDTO) {
+	   String userid = (String)session.getAttribute("logId");
+	   List<PerformersDTO> Perfomerslist = Pservice.getPerfomersList(userid);
 	   List<MissionDTO> MissionToplist = Mservice.MissionToplist();
-
+	   List<MissionDTO> Missionlist = Mservice.Missionlist(pDTO);
+	   
 	   ModelAndView mav = new ModelAndView();
 	   mav.addObject("MissionToplist", MissionToplist);
-	   
+	   mav.addObject("Perfomerslist", Perfomerslist);
+	   mav.addObject("Missionlist", Missionlist);
 	   mav.setViewName("main/mission");
 	   
 	   return mav;

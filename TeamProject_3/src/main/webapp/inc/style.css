@@ -1002,7 +1002,7 @@ hr:last-child {
 	align-items:center;
 	justify-content: center;
 }
-#replyFrm textarea {
+#coment {
 	width: 80%;
 	resize: none;
 	border: none;

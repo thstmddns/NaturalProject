@@ -60,6 +60,9 @@
 			    <option value="Kotlin"># Kotlin</option>
 			    <option value="Docker"># Docker</option>
 			</select></li>
+			<li style="margin-top: 30px;">나를 간단히 소개해봐요 !</li>
+			<li style="color: #869AAF; font-size:13px;  margin-top:13px;">마스터들에게 나를 소개해봐요.<li>
+			<li><input type="text" name="intro" id="intro" /></li>
 			<li><input type="submit" value="회원가입" class="registerBtn"/></li>
 	</form>
 	<form method="post" action="/register/kakaoJoinOk">

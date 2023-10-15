@@ -1,6 +1,39 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<style>
+	#btn button{
+		width: 100%;
+		height: 40px;
+		text-align:center;
+		color: #4E657E;
+		border: 1px solid  #DAE2EB;
+		background: white; 
+		border-radius: 100px;
+	} 
+	
+	#btn button:hover {
+		background: #F1F4F8; 
+		color: black;
+	} 
+	#replyList input[value=수정], #replyList input[value=삭제] {
+		border: none;
+		background:#F1F4F8;
+		color: #4E657E;
+		cursor: pointer;
+	}
+	#replyList input[value=수정하기] {
+		width: 15%;
+		padding: 10px 15px;
+		color: #4E657E;
+		border: none; 
+		background:#F1F4F8;
+		border-radius: 100px;
+		margin-left: 20px;
+		margin-top: 0;
+	}
+</style>
+
 <script>
 	function delChk() {
 	    //확인(true) 취소(false) 버튼
@@ -19,19 +52,26 @@
 				success:function(replyResult){
 					console.log(replyResult);
 					$("#replyList").html(""); //원래 있는 목록
+					if (replyResult.length === 0) {
+		                // 댓글 목록이 비어 있는 경우
+		                $("#replyList").hide();
+		            } else {
+		                // 댓글 목록이 비어 있지 않은 경우
+		                $("#replyList").show();
+		            }
 					$(replyResult).each(function(i, coment){
-						var tag = "<li><div>";
-						tag += "<b>"+coment.userid+"("+coment.created_at+")</b>";
+						var tag = "<div id='replyDetail'><div>";
+						tag += "<b>"+coment.userid+"<span>"+coment.created_at+"</span></b>";
 						//수정, 삭제버튼
 						//로그인 한 사람이 글을 쓴 댓글일 때
 						if(coment.userid=='${logId}'){//'dong' == 'asd'
-							tag += "<input type='button' value='Edit'/>";
-							tag += "<input type='button' value='Del' title='"+coment.qnr_no+"'/>";
+							tag += "<input type='button' value='수정' style='margin-left: 20px;'/>";
+							tag += "<input type='button' value='삭제' title='"+coment.qnr_no+"'/>";
 							tag += "<p>"+coment.coment+"</p></div>"; //댓글내용
 							//수정 폼
 							tag += "<div style='display:none'>";
 							tag += "<form>";
-							tag += "<textarea style='width:400px' name='coment'>";
+							tag += "<textarea name='coment' id='coment' placeholder='&nbsp;&nbsp;댓글을 입력하세요.'>";
 							//글내용수정, 댓글번호
 							tag += coment.coment;
 							tag += "</textarea>";
@@ -40,9 +80,9 @@
 							tag += "</form>";
 							tag += "</div>";
 						}else{
-							tag += "<p>"+coment.coment+"</p></div>";
+							tag += "<div id='replyContent'>"+coment.coment+"</div>";
 						}
-						tag += "</li>";
+						tag += "</div>";
 						
 						$("#replyList").append(tag);
 					});
@@ -83,7 +123,7 @@
 			});
 		});
 		//댓글수정폼
-		$(document).on('click','#replyList input[value=Edit]',function(){
+		$(document).on('click','#replyList input[value=수정]',function(){
 			//해당 댓글은 숨기고
 			$(this).parent().css('display','none');
 			//수정폼은 보여주기
@@ -110,7 +150,7 @@
 			});
 		});
 		//댓글삭제
-		$(document).on('click','#replyList input[value=Del]',function(){
+		$(document).on('click','#replyList input[value=삭제]',function(){
 			if(!confirm('댓글을 삭제하시겠습니까?')){
 				return false;
 			}
@@ -139,44 +179,75 @@
 	});
 </script>
 <main>
-	<h1>글내용보기</h1>
-	<div>
-		<a href='/ozz/Qna/Qnalist?nowPage=${pDTO.nowPage}<c:if test="${pDTO.searchWord != null}">&searchKey=${pDTO.searchKey}&searchWord=${pDTO.searchWord}</c:if>'>목록</a>
-	</div>
-	<ul>
-		<li>글번호 : ${dto.qna_no}</li>
-		<li>글쓴이 : ${dto.userid}</li>
-		<li>등록일 : ${dto.created_at}</li>
-		<li>제목 : ${dto.qna_title}</li>
-		<li>글내용<br/>
-			${dto.qna_content}</li>
+	<input type="hidden" value="${dto.qna_no}">
+	<div id="commuView">
+		<div>
+			<div class="comViewMa">
+					<div><img src="<%= request.getContextPath()%>/img/Frame 2.png"/></div>
+					<div class="comViewMaInfo">
+						<ul>
+							<li>${dto.userid}<span></span><span>가전제품 상품기획 DCX Analyst</span></li>
+							<li><span>팔로우 100</span><span>팔로잉 100</span></li>
+						</ul>
+					</div>
+					<div><button>팔로우 하기</button></div>
+			</div>
 		
-		<li>${dto.file_name}</li>
-	</ul>
-	<div>
-		<!-- session의 로그인 아이디(logId)와 현재 글쓴이(userid)가 같으면 수정,삭제 표시한다. -->
-		<c:if test="${logId == dto.userid}">
-			<a href="/ozz/Qna/QnaEdit?no=${dto.qna_no}">수정</a>
-			<a href="javascript:delChk()">삭제</a>
-		</c:if>
-	</div>
-	
-	<!-- 댓글달기 -->
-	<style>
-		#coment{width:500px; height:80px;}
-		#replyList>li{border-bottom:1px solid #ddd; padding:5px 0px}
-	</style>
-	<div id="reply">
-		<!-- 로그인시 댓글 폼 -->
-		<c:if test="${logStatus == 'Y'}">
-			<form method="POST" id="replyFrm">
-				<input type="hidden" name="qna_no" value="${dto.qna_no}"/><!-- 원글번호 -->
-				<textarea name="coment" id="coment"></textarea>
-				<input type="submit" value="댓글등록하기"/>
-			</form>
-		</c:if>
-		<hr/>
-		<ul id="replyList">
-		</ul>
+		
+			<div id="commuInfo">
+				<div style="font-size:1.5em; margin-bottom: 10px;">[QnA] ${dto.qna_title}</div>
+				<div id="commuContent">${dto.qna_content}
+					<c:if test="${not empty dto.file_name}">
+				        <div id="download">
+				            <img src="<%= request.getContextPath()%>/img/Download.png" />
+				            <p>${dto.file_name}</p>
+				        </div>
+				    </c:if>
+				</div>
+			</div>
+		
+			<div style="font-size:1.3em; margin: 60px 0 30px 0;">댓글</div>
+			<div id="reply">
+					<c:if test="${logStatus == 'Y'}">
+						<form method="post" id="replyFrm">
+							<!-- 원글 번호 -->
+							<input type="hidden" name="qna_no" value="${dto.qna_no }">  
+							<textarea name="coment" id="coment" placeholder="&nbsp;&nbsp;댓글을 입력하세요."></textarea>
+							<input type="submit" value="댓글 등록하기">
+						</form>
+					</c:if>
+				<ul id="replyList">
+				</ul>
+			</div> 
+		</div>
+		
+		<div style="width:100%;">
+			<div id="btn">
+				<p><button>마음에 들어요&nbsp;<img src="<%= request.getContextPath()%>/img/Component 2.png"/></button></p>
+				<c:if test="${logId == dto.userid}">
+					<p><button onclick="location.href='<%=request.getContextPath() %>/Qna/QnaEdit?qna_no=${dto.qna_no}'">게시글 수정하기</button></p>
+					<p><button onclick="delChk()">게시글 삭제하기</button></p>
+				</c:if>
+			</div>
+			<div id="recommend">
+				<div style="margin-bottom:10px;">추천 게시글</div>
+				<div id="recommendContent">
+					<li>Figma 활용법</li>
+					<li><span>스킬</span><span>태그</span></li>
+					<li>홍길동</li>
+				</div>
+				<div id="recommendContent">
+					<li>디자인 시스템 이해</li>
+					<li><span>스킬</span><span>태그</span></li>
+					<li>홍길동</li>
+				</div>
+				<div id="recommendContent">
+					<li>자바스크립트 이해 및 활용</li>
+					<li><span>스킬</span><span>태그</span></li>
+					<li>홍길동</li>
+				</div>
+		
+			</div>
+		</div>
 	</div>
 </main>

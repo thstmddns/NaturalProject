@@ -1,25 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <main>
+	<input type="hidden" value="${dto.mission_no}">
    <div id="missionView">
       <div id="missionLeft">
          <div id="missionInfo">
-            <li>Persona(페르소나) 분석</li>
-            <li><span>상품기획</span><span>분석론</span><span>데이터</span></li>
-            <div>수 많은 데이터가 축적되고 데이터를 활용하는 인공지능 기술도 좋아지면서 고객의 관심과 니즈를 파악하는 맥락적 고객 명험의 시대가 왔습니다. 한 명의 고객에게도 시간과 장소를 같이 하는 사람에 따라 맥락을 다르게 봐야하는 시대입니다. 이 이션은 고객 데이터를 딥러닝 기반 클러스터링(Clustering, 군집화) 기법을 통해 다양한 마이크로 세그먼트로 분류합니다. 빅데이터로 여러 다양한 페르소나를 한꺼번에 찾아내고, 각가의 맥락에 대해 데이터가 리얼하게 보여주며 수치로 증명하여 객관성을 갖도록 합니다.</div>
-            <li>소요시간<span>8시간</span><span>카테고리</span><span>상품기획</span></li>
+            <li>${dto.mission_title}</li>
+            <li><c:forEach items="${fn:split(dto.mission_tag, ',')}" var="category">
+                <span>${category}</span></c:forEach></li>
+            <div> ${dto.mission_content}</div>
+            <li>소요시간<span>8시간</span><span>카테고리</span><c:forEach items="${fn:split(dto.mission_cate, ',')}" var="category2">
+                <span>${category2}</span></c:forEach></li>
          </div>
          
          <div id="missionMaster">
             <li>이 미션의 랜선 <span style="color:#F93D18;">사수</span></li>
-            <li style="font-size:1.2em;">홍길동<span>가전제품 상품기획 DCX Analyst</span></li>
+            <li style="font-size:1.2em;">${dto.userid}<span>가전제품 상품기획 DCX Analyst</span></li>
             <li>팔로워<span>100</span><span>팔로잉</span><span>100</span></li>
          </div>
          
          <div id="learnSkill">
             <li>미션을 통해 습득할 <span style="color:#F93D18;">스킬</span></li>
             <li>이 미션을 수행하면 이런 스킬을 획득할 수 있어요!</li>
-            <li><span>스킬 1</span><span>스킬 2</span><span>스킬 3</span><span>스킬 4</span><span>스킬 5</span><span>스킬 6</span></li>
+            <li><c:forEach items="${fn:split(dto.mission_skill, ',')}" var="category3">
+                <span>${category3}</span></c:forEach></li>
          </div>
          
          <div id="require">
@@ -27,32 +32,33 @@
             <div class="ingredients">
                <div class="ingredient">
                   <li>데이터<span>이런 파일 확장자를 사용합니다.</span></li>
-                  <div><span>csv</span><span>html</span><span>css</span></div>
+                  <div><c:forEach items="${fn:split(dto.mission_data, ',')}" var="category4">
+                <span>${category4}</span></c:forEach></div>
                </div>
                <div class="ingredient">
-                  <li>Tool<span>이런 툴을 사용합니다. </li></p>
-                  <div><span>엑셀</span><span>워드</span></div>
+                  <li>Tool<span>이런 툴을 사용합니다.</span> </li>
+                  <div><c:forEach items="${fn:split(dto.mission_tool, ',')}" var="category5">
+                <span>${category5}</span></c:forEach></div>
                </div>
             </div>
          </div>
          
          <div id="missionPractice">      
          <div style="margin: 80px 0 20px 0; font-size: 1.5em;">미션 실행하기</div>
-         <%-- <c:if test=""> --%>
-         <div style="margin: 80px 0 20px 0; font-size: 1.5em;">완료한 STEP</div>
-         <%--       </c:if> --%>
             <div class="missionStep">
-               <div class="missionStepDetail">
-                  <div>
-                  <li style="font-size:1.2em;"><span>step 1</span>전처리 데이터 가져오기</li>
-                  <li>미션 스텝 제출 여부<span>제출 완료</span><span>미션 스텝 제출 일시</span><span>2000.00.00</span></li>
-                  </div>
-                  <div><button class="complete">완료  <img src="<%= request.getContextPath()%>/img/체크.png"/></button></div>
-               </div>
+            <c:forEach var="StepDTO" items="${Steplist}">
+	               <div class="missionStepDetail">
+	                  <div>
+	                  <li style="font-size:1.2em;"><span>step ${StepDTO.step}</span>${StepDTO.step_title}</li>
+	                  <li>미션 스텝 제출 여부<span>제출 완료</span><span>미션 스텝 제출 일시</span><span>2000.00.00</span></li>
+	                  </div>
+	                  <div><button class="complete">완료  <img src="<%= request.getContextPath()%>/img/체크.png"/></button></div>
+	               </div>
+            </c:forEach>
                <div class="missionStepDetail">
                   <div>
                   <li style="font-size:1.2em;"><span>step 2</span>주피터 노트북 세팅</li>
-                  <li>미션 스텝 제출 여부<span>제출 안 함</span><span>미션 스텝 제출 일시</span><span>-<span></li>
+                  <li>미션 스텝 제출 여부<span>제출 안 함</span><span>미션 스텝 제출 일시</span><span>-</span></li>
                   </div>
                   <div><button class="ing">진행 중</button></div>
                </div>
@@ -106,7 +112,7 @@
          <div id="missionQnA">
             <div style="margin-top: 80px; font-size: 1.5em;">Q&A<span style="font-size: 0.6em; color:#869AAF; float:right;">더보기 ></span></div>
             <div id="QnAContent">
-               <button onclick="location.href='<%=request.getContextPath() %>/main/QnAWrite'">질문이 있으신가요? <span style="text-decoration:underline;">Q&A 작성하기</span></button>
+               <button onclick="location.href='<%=request.getContextPath() %>/Qna/QnaWrite?no=${dto.mission_no}&mission_title=${dto.mission_title}'">질문이 있으신가요? <span style="text-decoration:underline;">Q&A 작성하기</span></button>
                <div class="QnADetail">
                   <li>[질문] 백엔드 코드를 아름답게 분리하고 싶어요</li>
                   <li><span>Q&A</span><span>질문</span><span>태그</span></li>
@@ -149,7 +155,7 @@
       <%-- <c:if  test="${}"> --%>
          <form id="reviewWriteForm">
             <div id="reviewWrite">
-               <input type="hidden" name="mission_no" value="${dto.no }">
+               <input type="hidden" name="mission_no" value="${dto.mission_no }">
                <p>Persona(페르소나) 분석</p>
                <p>피드백까지 미션 스텝이 모두 완료되었습니다!</p>
                <p>평점을 입력해주세요!</p>
@@ -173,7 +179,7 @@
    
       <div id="missionRight">
          <div id="date">
-            <li>등록일<span>22.00.00</span></li>
+            <li>등록일<span>${dto.created_at.split(' ')[0] }</span></li>
             <li>시작일<span>22.00.00</span></li>
             <li>완료일<span>22.00.00</span></li>
             <li>진행률<span>20%</span></li>
@@ -202,10 +208,10 @@
          
          <div id="missionBtn">
             <button>미션 추천하기 <img src="<%= request.getContextPath()%>/img/Thumbs-up.png"/></button>
-            <%-- <c:if test=""> --%>
+            <c:if test="${logId == dto.userid}">
             <button>미션 수정하기</button>
-            <button>미션 삭제하기</button>
-            <%--       </c:if> --%>      
+            <button onclick="delChk()">미션 삭제하기</button>
+            </c:if>     
          </div>
          
          <div id="recommend">
@@ -238,8 +244,10 @@
 
 </main>
 
-<script>
 
+<script src="https://cdn.ckeditor.com/ckeditor5/38.0.1/super-build/ckeditor.js"></script>
+<!-- <script>
+	
 
    $("#reviewWriteForm").submit(function() {
       // form 태그의 기본 이동 기능을 가진 action으로 이동하는 것을 해제
@@ -275,4 +283,4 @@
    
 
 
-</script>
+</script> -->

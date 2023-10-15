@@ -3,9 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.ozz.dao.PerformersDAO">
-	<select id="getPerfomersList"
-		resultType="kr.or.ozz.dto.PerformersDTO">
-		
+	<select id="getPerfomersList" resultType="kr.or.ozz.dto.PerformersDTO">
 		SELECT tp.userid, tm.mission_title,
 		  (SELECT COUNT(task_no)
 		   FROM t_mission_task t
@@ -134,5 +132,4 @@
 		        GROUP BY m.mission_no
 		        )) * 100 = 100)
 	</select>
-	
 </mapper>

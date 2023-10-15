@@ -6,10 +6,10 @@
 <mapper namespace="kr.or.ozz.dao.UserDAO">
 	<insert id="UserInsert">
 		insert into t_user(userid, pwd, username,
-		email, years, work, concern, created_at)
+		email, years, work, concern, created_at, intro)
 		values(#{userid}, #{pwd}, #{username},
 		#{email}, #{years},
-		#{work}, #{concern}, sysdate)
+		#{work}, #{concern}, sysdate, #{intro})
 	</insert>
 
 	<select id="loginOk" resultType="kr.or.ozz.dto.UserDTO">
