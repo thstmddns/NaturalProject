@@ -1,12 +1,16 @@
 package kr.or.ozz.controller;
 
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,7 +18,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.ozz.dto.ReplyDTO;
@@ -31,12 +37,12 @@ import kr.or.ozz.service.ReviewService;
 import kr.or.ozz.service.StepService;
 import kr.or.ozz.service.TaskService;
 
-// @Controller : ¸ğµ¨, ºä¸¦ ¸®ÅÏÇØÁØ´Ù.
+// @Controller : ï¿½ï¿½, ï¿½ä¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½.
 //				 ModelAndView,
 //				 Model, String
 
-// @RestController : ¸ğµ¨ÀÌ ¸®ÅÏµÈ´Ù.
-//					 Model+viewPage -> ModelAndView·Î ¸®ÅÏ
+// @RestController : ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ÏµÈ´ï¿½.
+//					 Model+viewPage -> ModelAndViewï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 @RestController
 @RequestMapping("/Mission")
 public class MissionController {
@@ -57,10 +63,10 @@ public class MissionController {
 
 	@GetMapping("/Missionlist")
 	public ModelAndView Missionlist(PagingDTO pDTO) {
-		// ÃÑ·¹ÄÚµå¼ö
+		// ï¿½Ñ·ï¿½ï¿½Úµï¿½ï¿½
 		pDTO.setM_totalRecord(service.m_totalRecord(pDTO));
 
-		// ÇØ´çÆäÀÌÁöÀÇ ·¹ÄÚµå ¼±ÅÃ
+		// ï¿½Ø´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Úµï¿½ ï¿½ï¿½ï¿½ï¿½
 		List<MissionDTO> list = service.Missionlist(pDTO);
 
 		// ModelAndView
@@ -82,7 +88,7 @@ public class MissionController {
 		return mav;
 	}
 
-	// ±Û¾²±â ÆûÀ¸·Î ÀÌµ¿
+	// ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
 	@GetMapping("/Missionwrite")
 	public ModelAndView Missionwrite() {
 		ModelAndView mav = new ModelAndView();
@@ -90,7 +96,7 @@ public class MissionController {
 		return mav;
 	}
 
-	// ±Û¾²±â DB ±â·Ï
+	// ï¿½Û¾ï¿½ï¿½ï¿½ DB ï¿½ï¿½ï¿½
 	@PostMapping("/MissionwriteOk")
 	public ResponseEntity<String> MissionwriteOk(MissionDTO dto, HttpServletRequest request) {
 //		@RequestParam("file_name_base64") String base64ImageData
@@ -105,48 +111,72 @@ public class MissionController {
 		// HttpServletRequest -> request, HttpSession
 		// HttpSession -> session
 
-		// no, hit, writedate -> ¿À¶óÅ¬
-		// userid -> ¼¼¼Ç
+		// no, hit, writedate -> ï¿½ï¿½ï¿½ï¿½Å¬
+		// userid -> ï¿½ï¿½ï¿½ï¿½
 
 		// HttpSession session = request.getSession();
 		// String userid = (String)session.getAttribute("logId");
 		// dto.setUserid(userid);
-		// ¼¼°³ ÇÕÄ¡¸é ¾Æ·¡ ÄÚµå¶û µ¿ÀÏ
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½Æ·ï¿½ ï¿½Úµï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		dto.setUserid((String) request.getSession().getAttribute("logId"));
 
 		int result = 0;
 		try {
 			result = service.MissionwriteOk(dto);
 		} catch (Exception e) {
-			System.out.println("°Ô½ÃÆÇ ±Û µî·Ï ¿¹¿Ü¹ß»ı..." + e.getMessage());
+			System.out.println("ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ü¹ß»ï¿½..." + e.getMessage());
 		}
-		// µî·Ï°á°ú¿¡ µû¸¥ ½ºÅ©¸³Æ® »ı¼ºÇÏ±â
+		// ï¿½ï¿½Ï°ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
 		String tag = "<script>";
-		if (result > 0) { // ¼º°ø -> °Ô½ÃÆÇ ¸ñ·Ï
+		if (result > 0) { // ï¿½ï¿½ï¿½ï¿½ -> ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 			tag += "location.href='/ozz/main/mainMission';";
-		} else { // ½ÇÆĞ -> ±Û µî·Ï ÆûÀ¸·Î ÀÌµ¿
-			tag += "alert('±Û µî·ÏÀÌ ½ÇÆĞÇÏ¿´½À´Ï´Ù.');";
+		} else { // ï¿½ï¿½ï¿½ï¿½ -> ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
+			tag += "alert('ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.');";
 			tag += "history.back();";
 		}
 		tag += "</script>";
 
-		// ResponseEntity °´Ã¼´Â ÇÁ·ĞÆ®ÆäÀÌÁö¸¦ ÀÛ¼ºÇÒ ¼ö ÀÖ´Ù.
+		// ResponseEntity ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½.
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(new MediaType("text", "html", Charset.forName("UTF-8")));
 		return new ResponseEntity<String>(tag, headers, HttpStatus.OK);
 	}
 
-	// ±Û³»¿ëº¸±â
+	// ï¿½Û³ï¿½ï¿½ëº¸ï¿½ï¿½
 	@GetMapping("/MissionView")
-	public ModelAndView MissionView(int no, PagingDTO pDTO) {
-		//Á¶È¸¼ö Áõ°¡
+	public ModelAndView MissionView(@RequestParam("no")int no, PagingDTO pDTO) {
+		//ï¿½ï¿½È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		service.hitCount(no);
-		// ·¹ÄÚµå¼±ÅÃ
+		// ï¿½ï¿½ï¿½Úµå¼±ï¿½ï¿½
 		MissionDTO dto = service.getMission(no);
 		List<StepDTO> Steplist = Sservice.Steplist(no, pDTO);
 		List<QnaDTO> M_Qnalist = Qservice.M_Qnalist(no);
 		List<ReviewDTO> M_Reviewlist = Rservice.M_Reviewlist(no);
+		
+		// FastAPIì— ì „ì†¡í•  ë°ì´í„°ë¥¼ ìƒì„±
+		List<String> contents = new ArrayList<String>();
+		contents.add(dto.getMission_cate());
 
+        // FastAPI ì—”ë“œí¬ì¸íŠ¸ URL
+        String fastApiUrl = "http://localhost:8000/dmission_recommand"; // FastAPI ì„œë²„ URLë¡œ ìˆ˜ì •
+
+        // FastAPIì— HTTP POST ìš”ì²­ì„ ë³´ëƒ…ë‹ˆë‹¤.
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        Map<String, Object> requestBody = new HashMap<String, Object>();
+        requestBody.put("contents", contents);
+        
+        HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<Map<String, Object>>(requestBody, headers);
+        
+        ResponseEntity<String> response = restTemplate.postForEntity(fastApiUrl, requestEntity, String.class);
+
+        // FastAPIì—ì„œ ë°›ì€ ê²°ê³¼ ë°ì´í„°ë¥¼ ì‚¬ìš©í•˜ì—¬ ModelAndView ìƒì„±
+        String resultData = response.getBody();
+        
+        System.out.println(contents);
+        System.out.println(resultData);
+//		List<> contents = dto.getMission_content();
 //	    byte[] imageData = dto.getFile_name();
 //        String base64ImageData = Base64.getEncoder().encodeToString(imageData);
 //        dto.setFile_name_base64(base64ImageData);
@@ -156,17 +186,18 @@ public class MissionController {
 		mav.addObject("M_Qnalist", M_Qnalist);
 		mav.addObject("M_Reviewlist", M_Reviewlist);
 		mav.addObject("pDTO", pDTO);
+		mav.addObject("contents", resultData);
 		mav.setViewName("Mission/missionView");
 
 		return mav;
 	}
 
-	// ±Û ¼öÁ¤ Æû
+	// ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 	@GetMapping("/MissionEdit")
 	public ModelAndView MissionEdit(int no) {
 //		MissionDTO dto = service.getMission(no);
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("dto", service.getMission(no)); // dto º¯¼ö »ı¼º ´ë½Å Á÷Á¢ÀÔ·Â
+		mav.addObject("dto", service.getMission(no)); // dto ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô·ï¿½
 		mav.setViewName("Mission/MissionEdit");
 
 		return mav;
@@ -180,23 +211,23 @@ public class MissionController {
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("no", dto.getMission_no());
-		if (result > 0) { // ±Û¼öÁ¤¼º°ø -> ±Û ³»¿ë º¸±â
+		if (result > 0) { // ï¿½Û¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ -> ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			mav.setViewName("redirect:MissionView");
-		} else { // ±Û¼öÁ¤½ÇÆĞ -> ¼öÁ¤ÆûÀ¸·Î
+		} else { // ï¿½Û¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ -> ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			mav.setViewName("redirect:MissionEdit");
 		}
 		return mav;
 	}
 
-	// ±Û»èÁ¦
+	// ï¿½Û»ï¿½ï¿½ï¿½
 	@GetMapping("/MissionDel")
 	public ModelAndView MissionDel(int no, HttpSession session) {
 		int result = service.MissionDel(no, (String) session.getAttribute("logId"));
 
 		ModelAndView mav = new ModelAndView();
-		if (result > 0) {// »èÁ¦¼º°ø -> ¸ñ·Ï
+		if (result > 0) {// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ -> ï¿½ï¿½ï¿½
 			mav.setViewName("redirect:Missionlist");
-		} else {// »èÁ¦½ÇÆĞ -> ±Û³»¿ë
+		} else {// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ -> ï¿½Û³ï¿½ï¿½ï¿½
 			mav.addObject("no", no);
 			mav.setViewName("redirect:MissionView");
 		}
@@ -204,10 +235,10 @@ public class MissionController {
 	}
 	
 	/*
-	 * // ¸®ºä µî·Ï
+	 * // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	 * 
 	 * @PostMapping("/review/reviewWrite") public String reviewWrite(ReplyDTO dto,
-	 * HttpSession session) { // session ±Û¾´ÀÌ ±¸ÇÏ±â
+	 * HttpSession session) { // session ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï±ï¿½
 	 * dto.setUserid((String)session.getAttribute("logId"));
 	 * 
 	 * int result = service.replyInsert(dto);
