@@ -66,13 +66,15 @@ public class QnaController {
 	}
 
 	//글쓰기 폼으로 이동
-	@GetMapping("/Qnawrite")
-	public ModelAndView Qnawrite(int m_no) {
+	@GetMapping("/QnaWrite")
+	public ModelAndView Qnawrite(int no, String mission_title) {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("m_no", m_no);
-		mav.setViewName("Qna/Qnawrite");
+		mav.addObject("m_no", no);
+		mav.addObject("mission_title", mission_title);
+		mav.setViewName("Mission/QnA");
 		return mav;
 	}
+	
 	//글쓰기 DB 기록
 	@PostMapping("/QnawriteOk")
 	public ResponseEntity<String> QnawriteOk(QnaDTO dto, HttpServletRequest request, @RequestParam("file_name_base64") String base64ImageData) {
@@ -174,7 +176,7 @@ public class QnaController {
 	
 		ModelAndView mav = new ModelAndView();
 		if(result>0) {//삭제성공 -> 목록
-			mav.setViewName("redirect:Qnalist");
+			mav.setViewName("main/searchCom");
 		}else {//삭제실패 -> 글내용
 			mav.addObject("no", no);
 			mav.setViewName("redirect:QnaView");

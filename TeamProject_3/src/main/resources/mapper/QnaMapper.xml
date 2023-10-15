@@ -3,6 +3,14 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.ozz.dao.QnaDAO">
+
+	<select id="QnaWrite">
+		
+	
+	
+	
+	</select>
+	
 	<insert id="QnawriteOk">
 		<if test="mission_no != 0">
 			insert into t_qna(qna_no, mission_no, userid, qna_title, qna_content, created_at, file_name, hit)
@@ -59,4 +67,8 @@
 			WHERE ROWNUM <= 5
 		]]>
 	</select>
+	
+	<update id="hitCount">
+		update t_qna set hit=hit+1 where qna_no=${param1}
+	</update>
 </mapper>
