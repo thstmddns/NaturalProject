@@ -66,7 +66,7 @@ async def generate_description(input: DescriptionInput):
     
 class landingInput(BaseModel):
     concern : list
-    Tag : list
+    
     
 @app.post("/dlanding_recommand")
 async def dlanding_recommand(input : landingInput):
