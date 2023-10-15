@@ -122,7 +122,7 @@ public class frontController {
 		return "mission/QnA";
 	}
 	
-	@GetMapping("/feedbackWrite")
+	@GetMapping("/feedback")
 	public String feedbackWrite() {
 		return "mission/feedback";
 	}
@@ -212,7 +212,7 @@ public class frontController {
 	
 	@GetMapping("/missionStep")
 	public String missionStep() {
-		return "mission/missionStep";
+		return "Mission/missionStep";
 	}
 	
 	@GetMapping("/missionMake")
