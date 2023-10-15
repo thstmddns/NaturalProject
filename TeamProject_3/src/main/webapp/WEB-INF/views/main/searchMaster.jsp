@@ -12,7 +12,7 @@
       <div id="searchResultMaster">
       <c:if test="${empty U_list}">
       	<div class="nosearch">
-	         <div><span class="highlight">${pDTO.searchWord}</span> 에 대한 마스터 검색 결과가 없습니다.</div>
+	         <div><span class="highlight">"${pDTO.searchWord}"</span> 에 대한 마스터 검색 결과가 없습니다.</div>
 	         <li>직접 마스터가 되어보세요. <a href="/ozz/register/registerJoin"  class="goMake">회원가입하기</a></li>
          </div>
       </c:if>

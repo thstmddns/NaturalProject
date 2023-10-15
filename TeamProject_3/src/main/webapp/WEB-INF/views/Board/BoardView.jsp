@@ -141,6 +141,24 @@
 </script>
 
 <main>
+<div class="comViewMa">
+					<div><img src="<%= request.getContextPath()%>/img/Frame 2.png"/></div>
+					<div class="comViewMaInfo">
+						<ul>
+							<li>${dto.userid}<span></span><span>가전제품 상품기획 DCX Analyst</span></li>
+							<li><span>팔로우 100</span><span>팔로잉 100</span></li>
+						</ul>
+					</div>
+					<div><button>팔로우 하기</button></div>
+			</div>
+			<div id="commuInfo">
+				<div style="font-size:1.5em; margin-bottom: 10px;">${dto.board_title}</div>
+				<div><%-- <c:forEach items="${fn:split(dto.work_cate, ',')}" var="category"><span class="spanTag">${category}</span></c:forEach></div>
+				<div class="commuMission"><p>관련 미션 : 페르소나 분석하기 > STEP 2. 전처리 데이터 가져오기</p></div> --%>
+				<div id="commuContent">${dto.board_content}
+					<div id="download"><img src="<%= request.getContextPath()%>/img/Download.png"/><p>${dto.file_name}</p></div>
+				</div>
+			</div>
 	<h1>게시판 내용보기</h1>
 	<div>
 		<a href='/ozz/Board/Boardlist?nowPage=${pDTO.nowPage}<c:if test="${pDTO.searchWord != null}">&searchKey=${pDTO.searchKey}&searchWord=${pDTO.searchWord}</c:if>'>목록</a>
