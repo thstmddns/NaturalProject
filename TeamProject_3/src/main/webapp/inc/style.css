@@ -1631,12 +1631,17 @@ hr:last-child {
 	float:right;
 	font-size: 0.9em;
   }
+ .reviewTitle {
+ 	height:auto;
+ 	padding: 10px 15px;
+ 	margin-top: 20px;
+ }
  .reviewText {
  	background:white; 
  	height:auto; 
  	padding: 10px 15px;
  	border-radius: 16px;
- 	margin-top: 20px;
+ 	margin-top: 10px;
  }
 #missionQnA {
 	width: 90%;
@@ -1701,7 +1706,7 @@ hr:last-child {
   	border-radius: 10px;
   	border: 1px solid #869AAF;
   }
-  .QnADetail li:last-child span {
+  .QnACreate {
   	margin-left: 30px;
   	font-size: 0.8em;
   	color: #869AAF;
