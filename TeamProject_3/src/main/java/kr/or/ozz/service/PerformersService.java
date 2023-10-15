@@ -17,6 +17,10 @@ public interface PerformersService  {
 
     public List<PerformersDTO> getPerfomersEndList(String userid);
 
-    public List<PerformersDTO> getoneMission(String userid);
+    //진행중인 미션 개수
+    public List<PerformersDTO> missioningcnt(String userid);
+    
+    //완료된 미션 개수
+    public List<PerformersDTO> missionendcnt(String userid);
 
 }

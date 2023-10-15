@@ -68,11 +68,20 @@ public class frontController {
        
        // 현재 사용자의 달성률 정보를 가져옴 (예시: 사용자 아이디로 달성률 정보를 가져옴)
        List<PerformersDTO> mymissionList = Pservice.getPerfomersList(userid);
-       System.out.println("UserId from session: " + userid);
+       //System.out.println("UserId from session: " + userid);
        
        // 모델에 데이터 추가
        mav.addObject("mymissionList", mymissionList);
+       
+       
+       
+       List<PerformersDTO> mymissioningCnt = Pservice.missioningcnt(userid);
+       List<PerformersDTO> mymissionendCnt = Pservice.missionendcnt(userid);
+       
+       mav.addObject("mymissioningCnt", mymissioningCnt);
+       mav.addObject("mymissionendCnt", mymissionendCnt);
        mav.setViewName("main/landing");
+       
        return mav; // 뷰 이름 설정
    
 	}
