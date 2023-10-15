@@ -156,7 +156,7 @@ public class MissionController {
 		mav.addObject("M_Qnalist", M_Qnalist);
 		mav.addObject("M_Reviewlist", M_Reviewlist);
 		mav.addObject("pDTO", pDTO);
-		mav.setViewName("Mission/MissionView");
+		mav.setViewName("Mission/missionView");
 
 		return mav;
 	}

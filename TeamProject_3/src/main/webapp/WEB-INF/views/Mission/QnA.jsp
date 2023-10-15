@@ -55,8 +55,8 @@
 	</div>
 	<form id="QnAWriteForm" style="width:500px;" method="post" action="/ozz/Qna/QnawriteOk">
 		<ul>
-			<%-- <input type="hidden" name="no" value="${dto.no }"> --%>
-			<li class="subject">미션 명</li>
+			<input type="hidden" name="mission_no" id="mission_no" value="${m_no}">
+			<li class="subject">${mission_title}</li>
 			<li style="font-size: 18px; margin-top: 60px;">QnA 제목</li>		
 			<li style="margin: 15px 0 60px 0;"><input type="text" name="qna_title" id="qna_title" placeholder="&nbsp;&nbsp;&nbsp;&nbsp;제목을 입력해주세요."/></li>
 			<li style="font-size: 18px; margin-bottom: 15px">QnA 내용 입력</li>
