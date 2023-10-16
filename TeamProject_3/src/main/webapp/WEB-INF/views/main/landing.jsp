@@ -92,8 +92,8 @@
 	<div style="font-size:1.6em; margin-top: 90px;">맞춤 추천 미션</div>
 	<div id="recommendM">
 		<div id="recommendMList">
-			<div class="rMInfo">
-				<li><img src="<%= request.getContextPath()%>/img/Frame 2526 (1).png"/></li>
+	 		<div class="rMInfo">
+				<li><img src="<%= request.getContextPath()%>/img/Frame 2526 (3).png"/></li>
 				<li>ChatGPT로 영어공부 하기</li>
 				<li>ChatGPT를 나만의 영어 멘토로: 영어 공부 활용법(단어장 템플릿 제공) 일잘러의 업무스킬</li>
 				<li><span>ChatGPT</span><span>영어</span></li>
