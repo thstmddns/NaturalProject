@@ -39,6 +39,7 @@ public class DescriptionController {
 
       try {
          String uploadPath = request.getSession().getServletContext().getRealPath("/upload");
+         System.out.println(uploadPath);
          Path path = Paths.get(uploadPath, pdf.getOriginalFilename());
 
          Files.createDirectories(path.getParent());

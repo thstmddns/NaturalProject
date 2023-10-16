@@ -14,4 +14,5 @@ public class TaskDTO {
 	private int task_yn;			// 태스크 완료여부
 	private String file_name;		// 태스크 첨부파일
 	private MultipartFile task_file_name;
+	private int task;
 }

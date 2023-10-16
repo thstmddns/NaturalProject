@@ -252,7 +252,7 @@
     		      var formData = new FormData(document.getElementById('main'));
     		      
     		      $.ajax({
-    		         url : "${pageContext.request.contextPath}/mission/aiGenerate",
+    		         url : "${pageContext.request.contextPath}/Mission/aiGenerate",
     		         type : 'post',
     		         data : formData,
     		         processData : false,
@@ -260,7 +260,7 @@
     		         success : function(result) {
     		            if (result == "success") {
     		               alert('ai를 통한 미션 자동 생성은 3~5분정도 소요될 수 있습니다.');
-    		               window.location.replace("${pageContext.request.contextPath}/");
+    		               window.location.replace("${pageContext.request.contextPath}/main/mainMission");
     		            } else {
     		               alert("미션 자동 생성이 실패하였습니다. 다시 시도 부탁드립니다.");
     		               window.location.reload();
