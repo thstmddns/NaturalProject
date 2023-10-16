@@ -83,10 +83,11 @@ public class ReviewController {
 	 @PostMapping("/ReviewwriteOk")
 	 public String ReviewwriteOk(ReviewDTO dto, HttpSession session) {
 
-	dto.setUserid((String)session.getAttribute("lodId"));
+		 dto.setUserid((String)session.getAttribute("logId"));
 		int result = service.ReviewwriteOk(dto);
 	
-	return result+"";	
+		System.out.println(dto);
+		return result+"";	
 	 }
 	 
 	// 글내용보기

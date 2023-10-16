@@ -176,6 +176,14 @@
 		    <version>2.15.2</version>
 		</dependency>
 		
+		<!-- 윤재님이 보내준 코드 -->
+		<dependency>
+         <groupId>org.codehaus.jackson</groupId>
+         <artifactId>jackson-mapper-asl</artifactId>
+         <version>1.4.2</version>
+      	</dependency>
+		
+		
 		<!-- 이메일 보내기 -->
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
 		<dependency>

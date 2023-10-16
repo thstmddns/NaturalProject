@@ -102,30 +102,45 @@
          
          <div id="missionReview" style="width:90%;">
             <div style="margin-top: 80px; font-size: 1.5em;">리뷰<span style="font-size: 0.6em; color:#869AAF; float:right;">더보기 ></span></div>
-               <c:forEach var="M_Reviewlist" items="${M_Reviewlist}">
-               <div class="missionReviewExam">
-                  <li>${M_Reviewlist.userid}<span>${M_Reviewlist.created_at}</span><span>평점: ${M_Reviewlist.review_score}</span></li>
-                  <div class="reviewTitle">${M_Reviewlist.review_title}</div>
-                  <div class="reviewText">${M_Reviewlist.review_content}</div>
-               </div>
-               </c:forEach>
+            <c:choose>
+		        <c:when test="${not empty M_Reviewlist}">
+		            <c:forEach var="M_Reviewlist" items="${M_Reviewlist}">
+		                <div class="missionReviewExam">
+		                    <li>${M_Reviewlist.userid}<span>${M_Reviewlist.created_at}</span><span>평점: ${M_Reviewlist.review_score}</span></li>
+		                    <div class="reviewTitle">${M_Reviewlist.review_title}</div>
+		                    <div class="reviewText">${M_Reviewlist.review_content}</div>
+		                </div>
+		            </c:forEach>
+		        </c:when>
+		        <c:otherwise>
+		            <div class="missionReviewExam" style="color: #4E657E;">리뷰가 없습니다. 미션을 완료하고 리뷰를 작성해보세요!</div>
+		        </c:otherwise>
+    		</c:choose>
          </div>
          
+       
          
          <div id="missionQnA">
             <div style="margin-top: 80px; font-size: 1.5em;">Q&A<span style="font-size: 0.6em; color:#869AAF; float:right;">더보기 ></span></div>
             <div id="QnAContent">
                <button onclick="location.href='<%=request.getContextPath() %>/Qna/QnaWrite?no=${dto.mission_no}&mission_title=${dto.mission_title}'">질문이 있으신가요? <span style="text-decoration:underline;">Q&A 작성하기</span></button>
-               <c:forEach var="M_Qnalist" items="${M_Qnalist}">
-               <div class="QnADetail">
-                  <li>[질문] ${M_Qnalist.qna_title}</li>
-                  <li><span>Q&A</span></li>
-                  <li>${M_Qnalist.userid}<span class="QnACreate">${M_Qnalist.created_at.split(' ')[0] }</span></li>
-                  <c:if  test="${logStatus=='Y'}">
-                  <input type="textarea" placeholder="  ↳  답변 달기">
-                  </c:if>
-               </div>
-               </c:forEach>
+               <c:choose>
+			       <c:when test="${not empty M_Qnalist}">
+	               <c:forEach var="M_Qnalist" items="${M_Qnalist}">
+	               <div class="QnADetail">
+	                  <li>[질문] ${M_Qnalist.qna_title}</li>
+	                  <li><span>Q&A</span></li>
+	                  <li>${M_Qnalist.userid}<span class="QnACreate">${M_Qnalist.created_at.split(' ')[0] }</span></li>
+	                  <c:if  test="${logStatus=='Y'}">
+	                  <input type="textarea" placeholder="  ↳  답변 달기">
+	                  </c:if>
+	               </div>
+	               </c:forEach>
+	               </c:when>
+			        <c:otherwise>
+			            <div class="QnADetail" style="color: #4E657E;">QnA가 없습니다. 미션에 대한 질문을 작성해보세요!</div>
+			        </c:otherwise>
+    			</c:choose>
             </div>
          </div>
          
@@ -144,7 +159,7 @@
       <%-- <c:if  test="${}"> --%>
          <form id="reviewWriteForm">
             <div id="reviewWrite">
-               <input type="hidden" name="no" value="${dto.mission_no }">
+               <input type="hidden" name="mission_no" value="${dto.mission_no }">
                <p>${dto.mission_title}</p>
                <p>피드백까지 미션 스텝이 모두 완료되었습니다!</p>
                <p>평점을 입력해주세요!</p>
@@ -170,7 +185,7 @@
          <div id="date">
             <li>등록일<span>${dto.created_at.split(' ')[0] }</span></li>
             <li>시작일<span>22.00.00</span></li>
-            <li>완료일<span>22.00.00</span></li>
+            <li>완료일<span>-</span></li>
             <li>진행률<span>20%</span></li>
          </div>
          <%-- <c:if test=""> --%>
@@ -185,13 +200,9 @@
          <div>
          <p>${dto.mission_title}</p>
          <div id="totalStep2">
-            <li>1.  파이썬 설치해보자 !</li>
-            <li>2.  자바설치 및 설정</li>
-            <li>3.  주피터 노트북 세팅</li>
-            <li>4.  분석할 코드 만들기</li>
-            <li>5.  파라메터 조정</li>
-            <li>6.  코드 실행 : 클러스터링</li>
-            <li>7.  최종 산출물 제출</li>
+         <c:forEach var="StepDTO" items="${Steplist}">
+            <li>${StepDTO.step}.  ${StepDTO.step_title}</li>
+         </c:forEach>
          </div>
          
    <%--       </c:if> --%>
@@ -209,17 +220,17 @@
          <div style="margin-bottom:10px;">추천 미션</div>
          <div id="recommendContent">
             <li>Figma 활용법</li>
-            <li><span>스킬</span><span>태그</span></li>
+            <li><span>웹</span><span>jsp</span></li>
             <li>홍길동</li>
          </div>
          <div id="recommendContent">
             <li>디자인 시스템 이해</li>
-            <li><span>스킬</span><span>태그</span></li>
+            <li><span>디자인</span><span>웹</span></li>
             <li>홍길동</li>
          </div>
          <div id="recommendContent">
             <li>자바스크립트 이해 및 활용</li>
-            <li><span>스킬</span><span>태그</span></li>
+            <li><span>javaScript</span><span>java</span></li>
             <li>홍길동</li>
          </div>
       
@@ -240,7 +251,7 @@
 <script>
 	
 
-  /*  $("#reviewWriteForm").submit(function() {
+    $("#reviewWriteForm").submit(function() {
       // form 태그의 기본 이동 기능을 가진 action으로 이동하는 것을 해제
       // button으로 만들면 action 없음
       event.preventDefault();  
@@ -266,7 +277,7 @@
          success:function(result) {
             console.log(result);
             // 이미 DB에 등록된 글 폼에서 지우기
- 	    $("#reviewWriteForm").css('display', 'None')
+ 	    $("#reviewWriteForm").css('display', 'None');
             
          },
          error:function(e){
@@ -274,7 +285,7 @@
          } 
       });
          
-   }); */
+   }); 
 
    // 리뷰 제출 버튼을 클릭할 때 이벤트 핸들러를 실행
   /*  $("#reviewWriteForm").submit(function(event) {

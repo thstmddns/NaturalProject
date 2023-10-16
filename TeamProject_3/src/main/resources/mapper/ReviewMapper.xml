@@ -4,9 +4,8 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.ozz.dao.ReviewDAO">
 	<insert id="ReviewwriteOk">
-			insert into t_mission_review(review_no, mission_no, review_title, review_score, review_content, created_at, userid, file_name, hit)
-			values(review_no_seq.nextval, #{mission_no}, #{review_title}, #{review_score}, #{review_content}, sysdate, #{userid}, #{file_name}, 0)
-
+			insert into t_mission_review(review_no, mission_no, review_title, review_score, review_content, created_at, userid, hit)
+			values(review_no_seq.nextval, #{mission_no}, #{review_title}, #{review_score}, #{review_content}, sysdate, #{userid}, 0)
 	</insert>
 	
 	<select id="Reviewlist" resultType="kr.or.ozz.dto.ReviewDTO">

@@ -46,20 +46,31 @@
 		</span>
 	</div>
 	
-	<form id="main" method="post" action="/ozz/Mission/MissionwriteOk">
+	<form id="main" method="post" action="/ozz/Mission/MissionwriteOk" enctype="multipart/form-data">
 		<div class="fileUpload">
+		
 		<label class="file-label" for="chooseFile">파일 선택</label>
-		<input class="file" id="chooseFile" type="file" multiple>
+		<input class="file" name="pdf" id="chooseFile" type="file">
 		</div>
+		<li class="title">미션 설명</li>
+		<li><input type="text" name="title" id="title" placeholder="미션에 대한 설명을 적어주세요."></li>
 		<li class="title">미션 제목</li>
 		<li><input type="text" placeholder="제목을 입력해주세요." name="mission_title" id="mission_title"></li>
+		<li class="title" style="margin-bottom:0;">소요 시간</li>
+			<li>
+				<input type="text" placeholder="00" class="totalTime" name="">
+				<span style="margin: 0 10px">시간</span>
+				<input type="text" placeholder="00"  class="totalTime" name="">
+				<span style="margin: 0 10px">분 소요</span>
+		</li>
 		<li class="title">미션 태그</li>
             <div class="form-group">
             	<input type="hidden" value=""  name="mission_tag" id="mission_tag"/>
             	<input type="text"   id="tag" size="7" placeholder="엔터로 해시태그를 등록해주세요." style="width: 180px;"/>
            </div>
              <ul id="tag-list"></ul>           
-		<li></li>
+		<li class="title">미션 스킬</li>
+		<li><input type="text" placeholder="스킬을 입력해주세요." name="mission_skill" id="mission_skill"></li>
 		<li class="title">미션 재료</li>
 		<li><input type="text" placeholder="데이터를 입력해주세요." name="mission_data" id="mission_data" style="margin-bottom:0 !important"></li>
 		<li><input type="text" placeholder="툴을 입력해주세요." name="mission_tool" id="mission_tool" style="margin-top:5px !important"></li>	
@@ -108,32 +119,9 @@
 					<li><input type="checkbox" name="mission_cate" id="mission_cate" value="자격증">자격증</li>
 				</div>	
 			</div>	
-			
-		<div>
-			<li class="title" style="margin-bottom: 10px;">스텝</li>
-			<ul id="step-list"></ul>
-			<button class="plus" id="addStep" style="margin-bottom: 50px;">+  스텝 추가하기</button>
-		</div>
+			<button type="button" id="aiGenerate">AI로 생성하기</button>
+			<button type="button" onclick="selfGenerate();">직접 생성하기</button>
 		
-		<div id="stepPlus">
-			<li class="title">스텝 제목</li>
-			<li><input type="text" name="" placeholder="제목을 입력해주세요."></li>
-			<li class="title" style="margin-bottom:0;">소요 시간</li>
-			<li>
-				<input type="text" placeholder="00" class="totalTime" name="">
-				<span style="margin: 0 10px">시간</span>
-				<input type="text" placeholder="00"  class="totalTime" name="">
-				<span style="margin: 0 10px">분 소요</span>
-			</li>
-			<div class="task">
-				<li class="title">태스크 제목</li>
-				<li><input type="text" name="" placeholder="태스크 제목을 입력해주세요."></li>
-				<li class="title" style="margin-bottom:0;">태스크 내용</li>
-				<li><input type="text" name="" placeholder="설명을 입력해주세요."></li>
-				<button class="removeButton" style="background:white; border:none;"><img src="<%= request.getContextPath()%>/img/Variant5.jpg"/></button>
-			</div>
-			<button class="plus" id="addTask">+  태스크 추가하기</button>
-		</div>
 	</form>
 
 </main>
@@ -256,5 +244,36 @@
     			$("#stepPlus").append(tag);
     		})
     	});
+    	
+    	
+    	 $(document).ready(function(){
+    		     $(document).on("click", "#aiGenerate", function() {
+    		      event.preventDefault();
+    		      var formData = new FormData(document.getElementById('main'));
+    		      
+    		      $.ajax({
+    		         url : "${pageContext.request.contextPath}/mission/aiGenerate",
+    		         type : 'post',
+    		         data : formData,
+    		         processData : false,
+    		         contentType : false,
+    		         success : function(result) {
+    		            if (result == "success") {
+    		               alert('ai를 통한 미션 자동 생성은 3~5분정도 소요될 수 있습니다.');
+    		               window.location.replace("${pageContext.request.contextPath}/");
+    		            } else {
+    		               alert("미션 자동 생성이 실패하였습니다. 다시 시도 부탁드립니다.");
+    		               window.location.reload();
+    		            }
+    		         }
+    		      });
+    		   });
+    		      
+    		   });
+    		   // 수동 생성 코드 수동 생성은 스텝하고 태스크까지 생성하고 ajax로 메시지 띄워주는게 맞는거같아서 ajax 처리 안함
+    		      function selfGenerate() {
+    		         document.getElementById('main').action = '${pageContext.request.contextPath}/Mission/selfGenerate'; 
+    		         document.getElementById('main').submit();
+    		    }
     
 </script>
