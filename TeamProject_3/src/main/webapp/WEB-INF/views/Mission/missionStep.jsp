@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <main>
+	<input type="hidden" value="${dto.step_no}">
 	<div id="missionView">
 		<div id="missionLeft">
 			<div id="stepSub">
@@ -41,10 +42,11 @@
 						<div>
 							${TaskDTO.task_content}
 						</div>
+						<button class="next">다음 단계로 넘어가기↓</button>
 					</div>
 					</c:if>
        				</c:forEach>
-					<div class="StepDetail">
+					<%-- <div class="StepDetail">
 						<li style="font-size:1.2em;">주피터 노트북을 실행<span>완료  <img src="<%= request.getContextPath()%>/img/체크.png"/></span></li>
 						<div>상세 절차를 확인합니다.</div>
 						<li class="edit">수정하기</li>
@@ -64,13 +66,13 @@
 						<li style="font-size:1.2em;">텍스트 작성하기<span>진행 중</span></li>
 						<div>(텍스트 작성에 대한 설명)</div>
 						<li class="edit">수정하기</li>
-					</div>
+					</div> --%>
 					<%-- <c:if test="${}"> --%>
 					<button class="noComplete" disabled>완료하고 스텝 제출하기</button>
 					<%-- </c:if> --%>
-				<%-- 	<c:if test="${}"> 
+					<%-- <c:if test="${}">  --%>
 					<button class="yesComplete">완료하고 스텝 제출하기</button>
-					 </c:if>--%>
+					 <%-- </c:if> --%>
 				</div> 
 			</div>
 		</div>	
@@ -97,8 +99,8 @@
 			<div>
 			<p>${Mdto.mission_title}</p>
 			<div id="totalStep">
-			<c:forEach var="dto" items="${dto}">
-					<li>${dto.step}.  ${dto.step_title}</li>
+			<c:forEach var="Steplist" items="${Steplist}">
+					<li>${Steplist.step}.  ${Steplist.step_title}</li>
 					<!-- <li>2.  자바설치 및 설정</li>
 					<li>3.  주피터 노트북 세팅</li>
 					<li>4.  분석할 코드 만들기</li>

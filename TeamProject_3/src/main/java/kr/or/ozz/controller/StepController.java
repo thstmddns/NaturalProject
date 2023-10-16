@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -102,13 +103,15 @@ public class StepController {
 
 	// 글내용보기
 	@GetMapping("/StepView")
-	public ModelAndView StepView(int no, PagingDTO pDTO) {
+	public ModelAndView StepView(@RequestParam("no") int no, @RequestParam("mission_no") int mission_no, PagingDTO pDTO) {
 		// 레코드선택
 		StepDTO dto = service.getStep(no);
 		
+		List<StepDTO> Steplist = service.Steplist(mission_no, pDTO);
+		
 		List<TaskDTO> Tasklist = Tservice.Tasklist(no, pDTO);
 		
-		MissionDTO Mdto = Mservice.getMission(no);
+		MissionDTO Mdto = Mservice.getMission(mission_no);
 
 //	    byte[] imageData = dto.getFile_name();
 //        String base64ImageData = Base64.getEncoder().encodeToString(imageData);
@@ -116,6 +119,7 @@ public class StepController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("no", no);
 		mav.addObject("dto", dto);
+		mav.addObject("Steplist", Steplist);
 		mav.addObject("Tasklist", Tasklist);
 		mav.addObject("Mdto", Mdto);
 		mav.addObject("pDTO", pDTO);

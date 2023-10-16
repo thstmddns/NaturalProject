@@ -49,7 +49,7 @@
             <c:forEach var="StepDTO" items="${Steplist}">
 	               <div class="missionStepDetail">
 	                  <div>
-	                  <li style="font-size:1.2em;"><span>step ${StepDTO.step}</span>${StepDTO.step_title}</li>
+	                  <li style="font-size:1.2em;"><span>step ${StepDTO.step}</span><a href="/ozz/Step/StepView?no=${StepDTO.step_no}&mission_no=${dto.mission_no}">${StepDTO.step_title}</a></li>
 	                  <li>미션 스텝 제출 여부<span>제출 완료</span><span>미션 스텝 제출 일시</span><span>2000.00.00</span></li>
 	                  </div>
 	                  <div><button class="complete">완료  <img src="<%= request.getContextPath()%>/img/체크.png"/></button></div>
