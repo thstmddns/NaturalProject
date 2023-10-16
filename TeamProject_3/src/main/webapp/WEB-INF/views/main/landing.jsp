@@ -27,7 +27,8 @@
 		</form>
 	</div>
 	
-	<c:if test="${not empty logId}">
+	<c:choose>
+  	<c:when test="${not empty logId}">
 	<div id="landInfo">
 		 <div>
 		 <c:forEach items="${mymissioningCnt}" var="ing_cnt">
@@ -35,8 +36,8 @@
 		 	<li>미션 수</li>
 		 </c:forEach>
 		 </div>
-		<c:forEach items="${mymissionendCnt}" var="end_cnt">
 		 <div>
+		 <c:forEach items="${mymissionendCnt}" var="end_cnt">
 		 	<li style="font-size:2em; margin-bottom: 10px;">${end_cnt.endcnt}</li>
 		 	<li>수행된 미션 수</li>
 		 </c:forEach>
@@ -45,11 +46,25 @@
 		 	<li style="font-size:2em; margin-bottom: 10px;">256</li>
 		 	<li>회원 수</li>
 		 </div>
-	
 	</div>
-	</c:if>
-	
-	
+	</c:when>
+	<c:otherwise>
+		<div id="landInfo">
+      <div>
+        <li style="font-size:2em; margin-bottom: 10px;">0</li>
+        <li>미션 수</li>
+      </div>
+      <div>
+        <li style="font-size:2em; margin-bottom: 10px;">0</li>
+        <li>수행된 미션 수</li>
+      </div>
+      <div>
+        <li style="font-size:2em; margin-bottom: 10px;">256</li>
+        <li>회원 수</li>
+      </div>
+    </div>
+    </c:otherwise>
+    </c:choose>
 	
 	<div id="landImage2">
 		<div>
@@ -77,23 +92,52 @@
 		<span><a href="/ozz/mypage/myPageDetail" style="font-size:0.8em; color: #869AAF; float:right;">더보기 ></a></span>
 	</div>
 	<div id="mIng">
+	<c:choose>
+		<c:when test="${not empty mymissionList}">
 		<c:forEach items="${mymissionList}" var="mission_ing">
 			<div id="ingList">
 				<div class="ingM">
 			            <li>${mission_ing.mission_title}</li>
-			            <li>진행률<span>${mission_ing.mission_rate}%</span><span>남은 스텝 수 ${mission_ing.restcnt}개</span></li>
+			            <li>진행률<span>${mission_ing.mission_rate}%</span><span>남은 스텝 수 00개</span></li>
 			            <li><progress id="progress" value="${mission_ing.mission_rate}" min="0" max="100" style="margin: 5px 0 8px 0;"></progress></li>
 			            <li><button>이어서 진행하기</button></li>
 				</div>
 			</div>
 		</c:forEach>
+		</c:when>
+		<c:otherwise>
+			<div class="notStart">진행 중인 미션이 없습니다. 미션을 진행해보세요!</div>
+		</c:otherwise>
+	</c:choose>
+		<!-- <div id="ingList">
+			<div class="ingM">
+				<li>다양한 사례로 익히는 SQL 데이터 분석</li>
+				<li>
+					<span>진행률 20%</span>
+					<span>남은 스텝 수 00개</span>
+				</li>
+				<li><progress id="progress" value="20" min="0" max="100" style="margin: 5px 0 8px 0;"></progress></li>
+				<li><button>이어서 진행하기</button></li>
+			</div>
+		</div>
+		<div id="ingList">
+			<div class="ingM">
+				<li>클라우드 서비스 AWS</li>
+				<li>
+					<span>진행률 20%</span>
+					<span>남은 스텝 수 00개</span>
+				</li>
+				<li><progress id="progress" value="20" min="0" max="100" style="margin: 5px 0 8px 0;"></progress></li>
+				<li><button>이어서 진행하기</button></li>
+			</div>
+		</div> -->
 	</div>
 	
 	<div style="font-size:1.6em; margin-top: 90px;">맞춤 추천 미션</div>
 	<div id="recommendM">
 		<div id="recommendMList">
-	 		<div class="rMInfo">
-				<li><img src="<%= request.getContextPath()%>/img/Frame 2526 (3).png"/></li>
+			<div class="rMInfo">
+				<li><img src="<%= request.getContextPath()%>/img/Frame 2526 (1).png"/></li>
 				<li>ChatGPT로 영어공부 하기</li>
 				<li>ChatGPT를 나만의 영어 멘토로: 영어 공부 활용법(단어장 템플릿 제공) 일잘러의 업무스킬</li>
 				<li><span>ChatGPT</span><span>영어</span></li>
@@ -224,4 +268,5 @@
 					</div>
 				</div>
 	</div>
+
 </main>

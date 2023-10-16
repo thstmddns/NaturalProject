@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,8 +20,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.ozz.dto.ReplyDTO;
@@ -62,7 +65,10 @@ public class MissionController {
 	@Autowired
 	ReviewService Rservice;
 	
-	
+
+	@Autowired
+	private DescriptionController descriptionController;
+
 
 	@GetMapping("/Missionlist")
 	public ModelAndView Missionlist(PagingDTO pDTO) {
@@ -147,11 +153,10 @@ public class MissionController {
 
 	// 占쌜놂옙占쎈보占쏙옙
 	@GetMapping("/MissionView")
-	public ModelAndView MissionView(@RequestParam("no")int no, PagingDTO pDTO, HttpSession session) {
+	public ModelAndView MissionView(@RequestParam("no")int no, PagingDTO pDTO) {
 		//占쏙옙회占쏙옙 占쏙옙占쏙옙
 		service.hitCount(no);
-		
-	       
+
 		// 占쏙옙占쌘드선占쏙옙
 		MissionDTO dto = service.getMission(no);
 		List<StepDTO> Steplist = Sservice.Steplist(no, pDTO);
@@ -252,5 +257,125 @@ public class MissionController {
 	 * return result+""; }
 	 */
 	
+
+	// 스텝 테스크 작성(수동)
+	   @PostMapping("/selfGenerate")
+	   public ModelAndView steptaskWrite(MissionDTO dto, HttpSession session) {
+
+	      
+	      String logId = (String)session.getAttribute("logId"); 
+	      dto.setUserid(logId);
+	      
+	      try {
+	         // 미션 생성
+	         service.missionCreate(dto);
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      }
+	      // 가장 최근 생성된 미션 번호 가져오는 로직
+	      int mission_no = service.getmission_no();
+	      ModelAndView mav = new ModelAndView();
+	      mav.addObject("mission_no", mission_no);
+	      mav.setViewName("Mission/stepMake");
+	      return mav;
+	   }
+	   
+	// 스텝 태스크 작성(자동)
+	   @PostMapping("/aiGenerate")
+	   @ResponseBody
+	   public String autoGeneration(final MissionDTO dto, @RequestParam("title") final String title,
+	         @RequestParam("pdf") final MultipartFile pdf, final HttpServletRequest request) {
+
+	      try {
+	         // 아래는 desciptioncontroller로 보내는 코드
+	         CompletableFuture.runAsync(new Runnable() {
+	            @Override
+	            public void run() {
+	               ResponseEntity<List<Map<String, Object>>> responseEntity = descriptionController
+	                     .processRequest(title, pdf, request);
+
+	               // 파이썬으로부터 생성된 json 데이터 받아옴
+	               List<Map<String, Object>> result = responseEntity.getBody();
+	               try {
+	                  // 미션 번호가 필요하기 때문에 미션 먼저 생성함
+	                  service.missionCreate(dto); // 미션을 생성합니다.
+	               } catch (Exception e) {
+	                  e.printStackTrace();
+	               }
+	               // 미션 번호 가져옴
+	               int mission_no = service.getmission_no();
+
+	               // 스텝 인덱스 아니고 화면에 표시될 스텝 순서 번호 생성
+	               int step = 1;
+
+	               // 스텝 하나씩 저장함
+	               for (Map<String, Object> stepMap : result) {
+	                  StepDTO sdto = new StepDTO();
+	                  // 파이썬 받아온 json으로 부터 스텝 이름 가져와서 step객체에 넣음
+	                  String stepName = (String) stepMap.get("단계");
+	                  sdto.setStep_title(stepName);
+
+	                  // 위에서 받아온 미션 번호 넣음
+	                  sdto.setMission_no(mission_no);
+
+	                  // 스텝 식별 번호 넣음
+	                  sdto.setStep(step);
+
+	                  // 스텝 저장함
+	                  try {
+	                	  service.stepCreate(sdto);
+	                  } catch (Exception e) {
+	                     e.printStackTrace();
+	                  }
+	                  // 저장된 스텝의 번호 가져옴(가장 최근 생성된걸로 가져오는 로직)
+	                  int step_no = service.getstep_no();
+
+	                  // 다음 스텝 식별용 번호 1올려야 하므로 더함
+	                  step++;
+
+	                  // 태스크 식별용 번호 생성
+	                  int task = 1;
+
+	                  // 스텝 객체안의 태스크 객체 반복 생성
+	                  List<Map<String, Object>> tasks = (List<Map<String, Object>>) stepMap.get("태스크");
+	                  for (Map<String, Object> taskMap : tasks) {
+	                     TaskDTO tdto = new TaskDTO();
+	                     // 파이썬의 json코드에는 태스크 이름과 코드가져와서 넣음
+	                     String taskName = (String) taskMap.get("task_name");
+	                     String taskCode = (String) taskMap.get("task_code");
+	                     tdto.setTask_title(taskName);
+	                     tdto.setTask_content(taskCode);
+
+	                     // 종속되는 스텝 인덱스 넣음
+	                     tdto.setStep_no(step_no);
+
+	                     // 태스크 식별 번호 넣음
+	                     tdto.setTask(task);
+	                     // 파일이름이 없으면 에러나기때문에 넣음. 확인해보니 이렇게 하면 db에 null로 들어감
+	                     tdto.setFile_name("");
+	                     // 태스크 생성함
+	                     try {
+	                        service.taskCreate(tdto);
+	                     } catch (Exception e) {
+	                        e.printStackTrace();
+	                     }
+
+	                     // 태스크 식별용 번호 1 더함
+	                     task++;
+	                  }
+	               }
+	            }
+	         });
+	         // 여기까지 문제없으면 성공
+	         return "success";
+	      }
+
+	      // 실패할 경우
+	      catch (Exception e) {
+	         e.printStackTrace();
+	         return "failure";
+	      }
+	   }  
+
 	
 }

@@ -64,10 +64,9 @@ public class UserController {
 
 
        // 로그인 화면으로 이동
-	   //@GetMapping("/login")
-	   //public String login() {
-	      //return "register/login";
-	   //}
+		/*
+		 * @GetMapping("/login") public String login() { return "register/login"; }
+		 */
 	   
 	   // 로그인
 	   @PostMapping("/loginOk")

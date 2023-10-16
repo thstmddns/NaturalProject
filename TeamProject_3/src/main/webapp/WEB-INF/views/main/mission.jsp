@@ -12,7 +12,7 @@
 					미션을 만들어<br />다른 사용자의 랜선사수가 되어주세요!
 				</span>
 			</div>
-			<button id="landBtn" onclick="location.href='<%=request.getContextPath() %>/main/Missionwrite'">미션 만들기</button>
+			<button id="landBtn" onclick="location.href='<%=request.getContextPath() %>/Mission/Missionwrite'">미션 만들기</button>
 		</div>
 		<div id="landingImage"
 			style="display: flex; margin-left: 70px; width: 470px; height: 320px;">
@@ -28,8 +28,9 @@
 		로그인 후 사용하세요 <a href="/ozz/register/login">로그인</a>
 	</c:if>
 		<div id="mIng">
+		<c:choose>
+			<c:when test="${logId == P_dto.userid}">
 			<c:forEach var="P_dto" items="${Perfomerslist}">
-				<c:if test="${logId == P_dto.userid}">
 					<div id="ingList">
 						<div class="ingM">
 							<li>${P_dto.mission_title}</li>
@@ -38,8 +39,12 @@
 							<li><button>이어서 진행하기</button></li>
 						</div>
 					</div>
-				</c:if>
 			</c:forEach>
+			</c:when>
+			<c:otherwise>
+			<div class="notStart">진행 중인 미션이 없습니다. 미션을 진행해보세요!</div>
+			</c:otherwise>
+			</c:choose>
 		</div>
 	</div>
 	<div style="font-size: 1.6em; margin-top: 90px;">맞춤 추천 미션</div>

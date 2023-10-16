@@ -56,4 +56,51 @@
    		]]>
 	</select>
 	
+	<insert id="missionCreate" parameterType="kr.or.ozz.dto.MissionDTO">
+      insert into t_mission(mission_no, userid, mission_title,
+      mission_tag, mission_content, created_at, mission_data,
+      mission_tool, mission_cate, hit, mission_skill)
+      values(
+      mission_no_seq.nextval, #{userid}, #{mission_title},
+      #{mission_tag}, #{mission_content},
+      sysdate, #{mission_data},
+      #{mission_tool}, #{mission_cate}, 0,
+      #{mission_skill})
+   </insert>
+   
+     <select id="getmission_no" resultType="int">
+        SELECT mission_no FROM (
+  		SELECT mission_no
+  		FROM t_mission
+  		ORDER BY mission_no DESC
+		)
+		WHERE ROWNUM = 1
+    </select>
+	
+	
+	<insert id="stepCreate" parameterType="kr.or.ozz.dto.StepDTO">
+      insert into
+      t_mission_step(step_no, mission_no, step,
+      step_title)
+      values(step_no_seq.nextval, #{mission_no}, #{step},
+      #{step_title})
+   </insert>
+   
+   <select id="getstep_no" resultType="int">
+       SELECT step_no FROM (
+		  SELECT step_no
+		  FROM t_mission_step
+		  ORDER BY step_no DESC
+		)
+		WHERE ROWNUM = 1
+   </select>
+   
+   
+   <insert id="taskCreate" parameterType="kr.or.ozz.dto.TaskDTO">
+      insert into
+      t_mission_task(task_no, step_no, task_title,
+      task_content, task, file_name)
+      values(task_no_seq.nextval, #{step_no}, #{task_title},
+      #{task_content}, #{task}, #{file_name})
+   </insert>
 </mapper>

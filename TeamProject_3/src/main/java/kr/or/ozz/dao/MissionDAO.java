@@ -3,14 +3,16 @@ package kr.or.ozz.dao;
 import java.util.List;
 
 import kr.or.ozz.dto.PagingDTO;
+import kr.or.ozz.dto.StepDTO;
+import kr.or.ozz.dto.TaskDTO;
 import kr.or.ozz.dto.MissionDTO;
 
 public interface MissionDAO {
-	//�̼ǵ��
+	//占싱션듸옙占�
 	public int MissionwriteOk(MissionDTO dto);
-	//�̼Ǹ�� ���� (paging, search)
+	//占싱션몌옙占� 占쏙옙占쏙옙 (paging, search)
 	public List<MissionDTO> Missionlist(PagingDTO pDTO);
-	//�� ���ڵ� ��
+	//占쏙옙 占쏙옙占쌘듸옙 占쏙옙
 	public int m_totalRecord(PagingDTO pDTO);
 
 	/*
@@ -19,14 +21,26 @@ public interface MissionDAO {
 	 * u_totalRecord(PagingDTO pDTO);
 	 */
 
-	//1�� ���ڵ� ����(�̼ǳ��뺸��)
+	//1占쏙옙 占쏙옙占쌘듸옙 占쏙옙占쏙옙(占싱션놂옙占쎈보占쏙옙)
 	public MissionDTO getMission(int no);
-	//��ȸ������
+	//占쏙옙회占쏙옙占쏙옙占쏙옙
 	public void hitCount(int no);
-	//�̼� ����(update)
+	//占싱쇽옙 占쏙옙占쏙옙(update)
 	public int MissionEdit(MissionDTO dto);
-	//�̼� ����(delete)
+	//占싱쇽옙 占쏙옙占쏙옙(delete)
 	public int MissionDel(int no, String userid);
-	// �α�̼� ��������
+	// 占싸깍옙抉占� 占쏙옙占쏙옙占쏙옙占쏙옙
 	public List<MissionDTO> MissionToplist();
+	
+	public int missionCreate(MissionDTO dto);
+	
+	public int getmission_no();
+
+	public int stepCreate(StepDTO sdto);
+
+	public int getstep_no();
+
+	public int taskCreate(TaskDTO tdto);
+	
+	
 }
