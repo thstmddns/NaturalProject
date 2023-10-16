@@ -47,7 +47,10 @@ set_seed(42)
 #Set your OpenAI API key
 
 openai.api_key="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"
+<<<<<<< HEAD
 
+=======
+>>>>>>> 30890a99bde67ef03f0f62047ee17474f67beabb
 
 # EasyOCR 리더 및 모델 초기화
 reader = easyocr.Reader(['ko', 'en'], gpu=True)

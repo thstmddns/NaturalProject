@@ -2,6 +2,7 @@ from fastapi import FastAPI, File, UploadFile, Form, HTTPException, Request
 from pydantic import BaseModel
 from utils import *
 from dlanding_recommand import *
+from dmission_recommand import *
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
@@ -66,9 +67,17 @@ async def generate_description(input: DescriptionInput):
     
 class landingInput(BaseModel):
     concern : list
-    Tag : list
+    
     
 @app.post("/dlanding_recommand")
 async def dlanding_recommand(input : landingInput):
     l_recommand = landing_recommand(input.concern)
     return JSONResponse(content = l_recommand)
+
+class missionInput(BaseModel):
+    contents : list
+    
+@app.post("/dmission_recommand")
+async def dmission_recommand(input : missionInput):
+    m_recommand = mission_recommand(input.contents)
+    return JSONResponse(content = m_recommand)

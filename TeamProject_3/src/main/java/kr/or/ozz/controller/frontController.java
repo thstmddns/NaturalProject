@@ -1,16 +1,31 @@
 package kr.or.ozz.controller;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import kr.or.ozz.dto.BoardDTO;
+import kr.or.ozz.dto.ItemDTO;
 import kr.or.ozz.dto.MissionDTO;
 import kr.or.ozz.dto.PagingDTO;
 import kr.or.ozz.dto.PerformersDTO;
@@ -43,7 +58,7 @@ public class frontController {
 	   UserService Uservice;
 	   
 	   @Autowired
-	   PerformersService Pservice;
+	    PerformersService Pservice;
 	
 	@GetMapping("/login")
 	public String login() {
@@ -56,24 +71,76 @@ public class frontController {
 	}
 	
 	@GetMapping("/landing")
-	public ModelAndView landing(HttpSession session) {
+	public ModelAndView landing(HttpSession session) throws JsonProcessingException {
 	   List<MissionDTO> MissionToplist = Mservice.MissionToplist();
-
 	   ModelAndView mav = new ModelAndView();
 	   mav.addObject("MissionToplist", MissionToplist);
 	   
-	   // 占쏙옙占실울옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占� 占쏙옙占싱듸옙 占쏙옙占쏙옙占쏙옙
+	   // 세션에서 현재 사용자의 아이디를 가져옴
        String userid = (String)session.getAttribute("logId");
        
+       // 사용자 정보를 가져옵니다.
+       UserDTO user = Uservice.getUser(userid);
+
+       // 사용자의 concern을 가져옵니다.
+       String concern = user.getConcern();
+       // concern을 concernList에 잠아줍니다.      
+       List<String> concernList = Arrays.asList(concern);
        
-       // 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占� 占쌨쇽옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 (占쏙옙占쏙옙: 占쏙옙占쏙옙占� 占쏙옙占싱듸옙占� 占쌨쇽옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙)
+       // FastAPI 서비스의 URL을 정의합니다.
+       String fastApiUrl = "http://127.0.0.1:8000/dlanding_recommand";
+
+       // FastAPI로 전송할 데이터를 생성합니다.
+       Map<Object, Object> requestData = new HashMap<Object, Object>();
+       requestData.put("concern", concernList);
+       System.out.println(requestData);
+       
+    // HTTP 요청을 보내기 위한 RestTemplate을 만듭니다.
+       RestTemplate restTemplate = new RestTemplate();
+
+       // HTTP 헤더 설정
+       HttpHeaders headers = new HttpHeaders();
+       headers.setContentType(MediaType.APPLICATION_JSON);
+
+       // HTTP 요청 엔티티 생성
+       HttpEntity<Map<Object,Object>> entity = new HttpEntity<Map<Object, Object>>(requestData, headers);
+
+       // FastAPI에 HTTP POST 요청을 보냅니다.
+       ResponseEntity<String> response = restTemplate.exchange(
+           fastApiUrl,
+           HttpMethod.POST,
+           entity,
+           String.class
+       );
+
+       // FastAPI에서의 응답을 처리합니다.
+       String responseBody = response.getBody();
+
+       List<String> responseBodyList = Arrays.asList(responseBody);
+       System.out.println("리스트출력" + responseBodyList);
+       // JSON 문자열을 ArrayList<Item>으로 변환
+       ObjectMapper objectMapper = new ObjectMapper();
+       
+       // 현재 사용자의 달성률 정보를 가져옴 (예시: 사용자 아이디로 달성률 정보를 가져옴)
        List<PerformersDTO> mymissionList = Pservice.getPerfomersList(userid);
-       System.out.println("UserId from session: " + userid);
+       //System.out.println("UserId from session: " + userid);
        
-       // 占쏜델울옙 占쏙옙占쏙옙占쏙옙 占쌩곤옙
+       // 모델에 데이터 추가
        mav.addObject("mymissionList", mymissionList);
+
+       
+       
+       
+       List<PerformersDTO> mymissioningCnt = Pservice.missioningcnt(userid);
+       List<PerformersDTO> mymissionendCnt = Pservice.missionendcnt(userid);
+       
+       mav.addObject("mymissioningCnt", mymissioningCnt);
+       mav.addObject("mymissionendCnt", mymissionendCnt);
+
        mav.setViewName("main/landing");
-       return mav; // 占쏙옙 占싱몌옙 占쏙옙占쏙옙
+       
+       return mav; // 뷰 이름 설정
+   
 	}
 	
 	@GetMapping("/idSearch")
@@ -87,16 +154,12 @@ public class frontController {
 	}
 
 	@GetMapping("/mainMission")
-	public ModelAndView mainMission(HttpSession session, PagingDTO pDTO) {
-	   String userid = (String)session.getAttribute("logId");
-	   List<PerformersDTO> Perfomerslist = Pservice.getPerfomersList(userid);
+	public ModelAndView MissionToplist() {
 	   List<MissionDTO> MissionToplist = Mservice.MissionToplist();
-	   List<MissionDTO> Missionlist = Mservice.Missionlist(pDTO);
-	   
+
 	   ModelAndView mav = new ModelAndView();
 	   mav.addObject("MissionToplist", MissionToplist);
-	   mav.addObject("Perfomerslist", Perfomerslist);
-	   mav.addObject("Missionlist", Missionlist);
+	   
 	   mav.setViewName("main/mission");
 	   
 	   return mav;
