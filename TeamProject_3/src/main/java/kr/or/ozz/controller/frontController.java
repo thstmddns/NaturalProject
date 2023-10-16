@@ -127,9 +127,7 @@ public class frontController {
        
        // 모델에 데이터 추가
        mav.addObject("mymissionList", mymissionList);
-
-       
-       
+ 
        
        List<PerformersDTO> mymissioningCnt = Pservice.missioningcnt(userid);
        List<PerformersDTO> mymissionendCnt = Pservice.missionendcnt(userid);

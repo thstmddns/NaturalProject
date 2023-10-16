@@ -3,6 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.ozz.dao.MissionDAO">
+
 	<insert id="MissionwriteOk">
 		insert into t_mission(mission_no, userid, mission_title, mission_tag, mission_content, created_at, mission_data, mission_tool, mission_cate, hit, mission_skill)
 		values(mission_no_seq.nextval, #{userid}, #{mission_title}, #{mission_tag}, #{mission_content}, sysdate, #{mission_data}, #{mission_tool}, #{mission_cate}, 0, #{mission_skill})

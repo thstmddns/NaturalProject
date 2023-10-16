@@ -32,17 +32,18 @@ import kr.or.ozz.dto.ReviewDTO;
 import kr.or.ozz.dto.StepDTO;
 import kr.or.ozz.dto.TaskDTO;
 import kr.or.ozz.service.MissionService;
+
 import kr.or.ozz.service.QnaService;
 import kr.or.ozz.service.ReviewService;
 import kr.or.ozz.service.StepService;
 import kr.or.ozz.service.TaskService;
 
-// @Controller : ��, �並 �������ش�.
+// @Controller : 占쏙옙, 占썰를 占쏙옙占쏙옙占쏙옙占쌔댐옙.
 //				 ModelAndView,
 //				 Model, String
 
-// @RestController : ���� ���ϵȴ�.
-//					 Model+viewPage -> ModelAndView�� ����
+// @RestController : 占쏙옙占쏙옙 占쏙옙占싹된댐옙.
+//					 Model+viewPage -> ModelAndView占쏙옙 占쏙옙占쏙옙
 @RestController
 @RequestMapping("/Mission")
 public class MissionController {
@@ -60,13 +61,15 @@ public class MissionController {
 	
 	@Autowired
 	ReviewService Rservice;
+	
+	
 
 	@GetMapping("/Missionlist")
 	public ModelAndView Missionlist(PagingDTO pDTO) {
-		// �ѷ��ڵ��
+		// 占싼뤄옙占쌘듸옙占�
 		pDTO.setM_totalRecord(service.m_totalRecord(pDTO));
 
-		// �ش��������� ���ڵ� ����
+		// 占쌔댐옙占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쌘듸옙 占쏙옙占쏙옙
 		List<MissionDTO> list = service.Missionlist(pDTO);
 
 		// ModelAndView
@@ -88,7 +91,7 @@ public class MissionController {
 		return mav;
 	}
 
-	// �۾��� ������ �̵�
+	// 占쌜억옙占쏙옙 占쏙옙占쏙옙占쏙옙 占싱듸옙
 	@GetMapping("/Missionwrite")
 	public ModelAndView Missionwrite() {
 		ModelAndView mav = new ModelAndView();
@@ -96,7 +99,7 @@ public class MissionController {
 		return mav;
 	}
 
-	// �۾��� DB ���
+	// 占쌜억옙占쏙옙 DB 占쏙옙占�
 	@PostMapping("/MissionwriteOk")
 	public ResponseEntity<String> MissionwriteOk(MissionDTO dto, HttpServletRequest request) {
 //		@RequestParam("file_name_base64") String base64ImageData
@@ -111,56 +114,58 @@ public class MissionController {
 		// HttpServletRequest -> request, HttpSession
 		// HttpSession -> session
 
-		// no, hit, writedate -> ����Ŭ
-		// userid -> ����
+		// no, hit, writedate -> 占쏙옙占쏙옙클
+		// userid -> 占쏙옙占쏙옙
 
 		// HttpSession session = request.getSession();
 		// String userid = (String)session.getAttribute("logId");
 		// dto.setUserid(userid);
-		// ���� ��ġ�� �Ʒ� �ڵ�� ����
+		// 占쏙옙占쏙옙 占쏙옙치占쏙옙 占싣뤄옙 占쌘듸옙占� 占쏙옙占쏙옙
 		dto.setUserid((String) request.getSession().getAttribute("logId"));
 
 		int result = 0;
 		try {
 			result = service.MissionwriteOk(dto);
 		} catch (Exception e) {
-			System.out.println("�Խ��� �� ��� ���ܹ߻�..." + e.getMessage());
+			System.out.println("占쌉쏙옙占쏙옙 占쏙옙 占쏙옙占� 占쏙옙占쌤발삼옙..." + e.getMessage());
 		}
-		// ��ϰ���� ���� ��ũ��Ʈ �����ϱ�
+		// 占쏙옙構占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙크占쏙옙트 占쏙옙占쏙옙占싹깍옙
 		String tag = "<script>";
-		if (result > 0) { // ���� -> �Խ��� ���
+		if (result > 0) { // 占쏙옙占쏙옙 -> 占쌉쏙옙占쏙옙 占쏙옙占�
 			tag += "location.href='/ozz/main/mainMission';";
-		} else { // ���� -> �� ��� ������ �̵�
-			tag += "alert('�� ����� �����Ͽ����ϴ�.');";
+		} else { // 占쏙옙占쏙옙 -> 占쏙옙 占쏙옙占� 占쏙옙占쏙옙占쏙옙 占싱듸옙
+			tag += "alert('占쏙옙 占쏙옙占쏙옙占� 占쏙옙占쏙옙占싹울옙占쏙옙占싹댐옙.');";
 			tag += "history.back();";
 		}
 		tag += "</script>";
 
-		// ResponseEntity ��ü�� ����Ʈ�������� �ۼ��� �� �ִ�.
+		// ResponseEntity 占쏙옙체占쏙옙 占쏙옙占쏙옙트占쏙옙占쏙옙占쏙옙占쏙옙 占쌜쇽옙占쏙옙 占쏙옙 占쌍댐옙.
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(new MediaType("text", "html", Charset.forName("UTF-8")));
 		return new ResponseEntity<String>(tag, headers, HttpStatus.OK);
 	}
 
-	// �۳��뺸��
+	// 占쌜놂옙占쎈보占쏙옙
 	@GetMapping("/MissionView")
-	public ModelAndView MissionView(@RequestParam("no")int no, PagingDTO pDTO) {
-		//��ȸ�� ����
+	public ModelAndView MissionView(@RequestParam("no")int no, PagingDTO pDTO, HttpSession session) {
+		//占쏙옙회占쏙옙 占쏙옙占쏙옙
 		service.hitCount(no);
-		// ���ڵ弱��
+		
+	       
+		// 占쏙옙占쌘드선占쏙옙
 		MissionDTO dto = service.getMission(no);
 		List<StepDTO> Steplist = Sservice.Steplist(no, pDTO);
 		List<QnaDTO> M_Qnalist = Qservice.M_Qnalist(no);
 		List<ReviewDTO> M_Reviewlist = Rservice.M_Reviewlist(no);
 		
-		// FastAPI에 전송할 데이터를 생성
+		// FastAPI�뿉 �쟾�넚�븷 �뜲�씠�꽣瑜� �깮�꽦
 		List<String> contents = new ArrayList<String>();
 		contents.add(dto.getMission_cate());
 
-        // FastAPI 엔드포인트 URL
-        String fastApiUrl = "http://localhost:8000/dmission_recommand"; // FastAPI 서버 URL로 수정
+        // FastAPI �뿏�뱶�룷�씤�듃 URL
+        String fastApiUrl = "http://localhost:8000/dmission_recommand"; // FastAPI �꽌踰� URL濡� �닔�젙
 
-        // FastAPI에 HTTP POST 요청을 보냅니다.
+        // FastAPI�뿉 HTTP POST �슂泥��쓣 蹂대깄�땲�떎.
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -171,7 +176,7 @@ public class MissionController {
         
         ResponseEntity<String> response = restTemplate.postForEntity(fastApiUrl, requestEntity, String.class);
 
-        // FastAPI에서 받은 결과 데이터를 사용하여 ModelAndView 생성
+        // FastAPI�뿉�꽌 諛쏆� 寃곌낵 �뜲�씠�꽣瑜� �궗�슜�븯�뿬 ModelAndView �깮�꽦
         String resultData = response.getBody();
         
         System.out.println(contents);
@@ -187,17 +192,18 @@ public class MissionController {
 		mav.addObject("M_Reviewlist", M_Reviewlist);
 		mav.addObject("pDTO", pDTO);
 		mav.addObject("contents", resultData);
+		
 		mav.setViewName("Mission/missionView");
 
 		return mav;
 	}
 
-	// �� ���� ��
+	// 占쏙옙 占쏙옙占쏙옙 占쏙옙
 	@GetMapping("/MissionEdit")
 	public ModelAndView MissionEdit(int no) {
 //		MissionDTO dto = service.getMission(no);
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("dto", service.getMission(no)); // dto ���� ���� ��� �����Է�
+		mav.addObject("dto", service.getMission(no)); // dto 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占� 占쏙옙占쏙옙占쌉뤄옙
 		mav.setViewName("Mission/MissionEdit");
 
 		return mav;
@@ -211,23 +217,23 @@ public class MissionController {
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("no", dto.getMission_no());
-		if (result > 0) { // �ۼ������� -> �� ���� ����
+		if (result > 0) { // 占쌜쇽옙占쏙옙占쏙옙占쏙옙 -> 占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙
 			mav.setViewName("redirect:MissionView");
-		} else { // �ۼ������� -> ����������
+		} else { // 占쌜쇽옙占쏙옙占쏙옙占쏙옙 -> 占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙
 			mav.setViewName("redirect:MissionEdit");
 		}
 		return mav;
 	}
 
-	// �ۻ���
+	// 占쌜삼옙占쏙옙
 	@GetMapping("/MissionDel")
 	public ModelAndView MissionDel(int no, HttpSession session) {
 		int result = service.MissionDel(no, (String) session.getAttribute("logId"));
 
 		ModelAndView mav = new ModelAndView();
-		if (result > 0) {// �������� -> ���
+		if (result > 0) {// 占쏙옙占쏙옙占쏙옙占쏙옙 -> 占쏙옙占�
 			mav.setViewName("redirect:Missionlist");
-		} else {// �������� -> �۳���
+		} else {// 占쏙옙占쏙옙占쏙옙占쏙옙 -> 占쌜놂옙占쏙옙
 			mav.addObject("no", no);
 			mav.setViewName("redirect:MissionView");
 		}
@@ -235,14 +241,16 @@ public class MissionController {
 	}
 	
 	/*
-	 * // ���� ���
+	 * // 占쏙옙占쏙옙 占쏙옙占�
 	 * 
 	 * @PostMapping("/review/reviewWrite") public String reviewWrite(ReplyDTO dto,
-	 * HttpSession session) { // session �۾��� ���ϱ�
+	 * HttpSession session) { // session 占쌜억옙占쏙옙 占쏙옙占싹깍옙
 	 * dto.setUserid((String)session.getAttribute("logId"));
 	 * 
 	 * int result = service.replyInsert(dto);
 	 * 
 	 * return result+""; }
 	 */
+	
+	
 }
