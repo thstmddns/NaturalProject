@@ -43,7 +43,7 @@ public class frontController {
 	   UserService Uservice;
 	   
 	   @Autowired
-	   PerformersService Pservice;
+	    PerformersService Pservice;
 	
 	@GetMapping("/login")
 	public String login() {
@@ -62,15 +62,15 @@ public class frontController {
 	   ModelAndView mav = new ModelAndView();
 	   mav.addObject("MissionToplist", MissionToplist);
 	   
-	   // 占쏙옙占실울옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占� 占쏙옙占싱듸옙 占쏙옙占쏙옙占쏙옙
+	   // 세션에서 현재 사용자의 아이디를 가져옴
        String userid = (String)session.getAttribute("logId");
        
        
-       // 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占� 占쌨쇽옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 (占쏙옙占쏙옙: 占쏙옙占쏙옙占� 占쏙옙占싱듸옙占� 占쌨쇽옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙)
+       // 현재 사용자의 달성률 정보를 가져옴 (예시: 사용자 아이디로 달성률 정보를 가져옴)
        List<PerformersDTO> mymissionList = Pservice.getPerfomersList(userid);
        //System.out.println("UserId from session: " + userid);
        
-       // 占쏜델울옙 占쏙옙占쏙옙占쏙옙 占쌩곤옙
+       // 모델에 데이터 추가
        mav.addObject("mymissionList", mymissionList);
        
        
@@ -81,9 +81,9 @@ public class frontController {
        mav.addObject("mymissioningCnt", mymissioningCnt);
        mav.addObject("mymissionendCnt", mymissionendCnt);
        mav.setViewName("main/landing");
-
-       return mav; // 占쏙옙 占싱몌옙 占쏙옙占쏙옙
-
+       
+       return mav; // 뷰 이름 설정
+   
 	}
 	
 	@GetMapping("/idSearch")
@@ -97,16 +97,12 @@ public class frontController {
 	}
 
 	@GetMapping("/mainMission")
-	public ModelAndView mainMission(HttpSession session, PagingDTO pDTO) {
-	   String userid = (String)session.getAttribute("logId");
-	   List<PerformersDTO> Perfomerslist = Pservice.getPerfomersList(userid);
+	public ModelAndView MissionToplist() {
 	   List<MissionDTO> MissionToplist = Mservice.MissionToplist();
-	   List<MissionDTO> Missionlist = Mservice.Missionlist(pDTO);
-	   
+
 	   ModelAndView mav = new ModelAndView();
 	   mav.addObject("MissionToplist", MissionToplist);
-	   mav.addObject("Perfomerslist", Perfomerslist);
-	   mav.addObject("Missionlist", Missionlist);
+	   
 	   mav.setViewName("main/mission");
 	   
 	   return mav;
