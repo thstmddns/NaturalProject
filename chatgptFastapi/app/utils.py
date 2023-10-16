@@ -45,8 +45,7 @@ def initializeModels(modelName="yoonjae97/kobart_AdamW_80000"):
     return tokenizer, model, device
 set_seed(42)
 #Set your OpenAI API key
-
-openai.api_key="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"
+openai.api_key="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"
 
 # EasyOCR 리더 및 모델 초기화
 reader = easyocr.Reader(['ko', 'en'], gpu=True)
@@ -142,7 +141,7 @@ def extractTextFromPdf(pdfPath):
             resultEasyocr : pdf로 부터 ocr을 이용해서 텍스트를 추출하고 페이지별로 나눠 저장한 리스트 반환
 
     """
-    pdfImages = convert_from_path(pdfPath,500, poppler_path="C:\\Users\\user04\\Desktop\\poppler-23.08.0\\Library\\bin")
+    pdfImages = convert_from_path(pdfPath,500, poppler_path="C:\\workspaceSpring\\poppler-23.08.0\\Library\\bin")
 
     # EasyOCR 리더 초기화
     reader = easyocr.Reader(['ko', 'en'], gpu=True)  
@@ -241,31 +240,21 @@ def extract_analysis_steps(data):
 
     # 규칙 1
     pattern = r"(.*?)출력 형식"
-
     result = re.search(pattern, data, re.DOTALL)
-
     if result:
         data = result.group(1)
-
     if '위의 단계는' in data.rsplit('\n', 1)[-1]:
         data = data.rsplit('\n', 1)[0]
-
-
     elif '위의 단계는' in data.rsplit('\n\n', 1)[-1]:
         data = data.rsplit('\n\n', 1)[0]
-
-
     if '업무 프로세스' in data.rsplit('\n', 1)[-1]:
         data = data.rsplit('\n', 1)[0]
-
-
     elif '업무 프로세스' in data.rsplit('\n\n', 1)[-1]:
         data = data.rsplit('\n\n', 1)[0]
 
     # 규칙 2
     data = data.split('단계')[1:]
     results = []
-
     for step in data:
 
         # 규칙 3    
@@ -274,43 +263,34 @@ def extract_analysis_steps(data):
 
         # 규칙 4
         tasks_txt = step.split('\n', 1)[1]
-
         if '\n - ' in tasks_txt:
             tasks = tasks_txt.split('\n -')
-
         else:
             tasks = tasks_txt.split('\n-')
 
         # 규칙 5
         task_lst = []
-
         for task in tasks:
-
             if '**' in task:
                 task_name = task.split('**')[0]
                 task_name = task_name.split(':')[1].replace(',', '').replace('\n', '')
-
                 task_code = task.split('**')[1]
-
                 if '```' in task_code:
                     task_code = '```' + task_code.split('```', 2)[1] + '```'
                 else:
-                    ask_code = task_code.replace('[', '').replace('\'', '').replace(',', '').strip()
+                    task_code = task_code.replace('[', '').replace('\'', '').replace(',', '').strip()
             else:
-
                 try:
                     task_name = task.split(':')[1].replace(',', '')
                     task_code = ""
                 except:
                     pass
                 task_code = ""
-
             task_name = task_name.strip()
             
             # 이상치 제거
             if len(task_name) >= 30:
                 continue
-
             if len(task_name) == 0:
                 continue
             
@@ -318,17 +298,13 @@ def extract_analysis_steps(data):
                 task_lst.append({"task_name":task_name, 'task_code':task_code})
             else:
                 task_lst.append({"task_name":task_name})
-                
             task_name = ''
             task_code = ''
         step_result = {
                 "단계": step_name,
                 "태스크":task_lst
-        }
-        
+        }  
         results.append(step_result)
-
-
     return results
 
 def generateGo(input):
@@ -371,5 +347,3 @@ def generateGo(input):
     result = extract_analysis_steps(reply)
     print(result)
     return result
-
-

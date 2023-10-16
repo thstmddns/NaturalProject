@@ -1,5 +1,6 @@
 package kr.or.ozz.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -93,7 +94,7 @@ public class frontController {
        // FastAPI로 전송할 데이터를 생성합니다.
        Map<Object, Object> requestData = new HashMap<Object, Object>();
        requestData.put("concern", concernList);
-       System.out.println(requestData);
+       
        
     // HTTP 요청을 보내기 위한 RestTemplate을 만듭니다.
        RestTemplate restTemplate = new RestTemplate();
@@ -112,22 +113,35 @@ public class frontController {
            entity,
            String.class
        );
+       System.out.println("FastAPI Response: " + response.getBody());
 
        // FastAPI에서의 응답을 처리합니다.
-       String responseBody = response.getBody();
+       ObjectMapper mapper = new ObjectMapper();
+       Map<String, Object> responseBody = mapper.readValue(response.getBody(), new TypeReference<Map<String, Object>>() {});
+//       Map<String, Object> responseBody = response.getBody();
 
-       List<String> responseBodyList = Arrays.asList(responseBody);
-       System.out.println("리스트출력" + responseBodyList);
+//       List<String> responseBodyList = Arrays.asList(responseBody);
+//       List<Map<String, String>> responseBodyList = new ArrayList<Map<String, String>>();
+//       for (int i = 0; i < responseBody.length(); i++) {
+//           Map<String, String> item = new HashMap<String, String>();
+//           item.put("Title", responseBody.get(i).get("Title"));
+//           item.put("Tag", responseBody.get(i).get("Tag"));
+//           item.put("Author", responseBody.get(i).get("Author"));
+//           responseBodyList.add(item);
+//       }
+
+       System.out.println("리스트출력" + responseBody);
        // JSON 문자열을 ArrayList<Item>으로 변환
-       ObjectMapper objectMapper = new ObjectMapper();
+//       ObjectMapper objectMapper = new ObjectMapper();
        
+       System.out.println(responseBody.getClass().getName());
        // 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占� 占쌨쇽옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 (占쏙옙占쏙옙: 占쏙옙占쏙옙占� 占쏙옙占싱듸옙占� 占쌨쇽옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙)
        List<PerformersDTO> mymissionList = Pservice.getPerfomersList(userid);
        System.out.println("UserId from session: " + userid);
        
        // 占쏜델울옙 占쏙옙占쏙옙占쏙옙 占쌩곤옙
        mav.addObject("mymissionList", mymissionList);
-       mav.addObject("responseBodyList", responseBodyList);
+       mav.addObject("responseBodyList", responseBody);
        mav.setViewName("main/landing");
        return mav; // 占쏙옙 占싱몌옙 占쏙옙占쏙옙
 	}
@@ -213,9 +227,13 @@ public class frontController {
 		pDTO.setR_totalRecord(Rservice.r_totalRecord(pDTO));
 		pDTO.setB_totalRecord(Bservice.b_totalRecord(pDTO));
 		pDTO.setU_totalRecord(Uservice.u_totalRecord(pDTO));
-
+		
 		
 		List<MissionDTO> list = Mservice.Missionlist(pDTO);
+		
+		// FastAPI에 전송할 데이터를 생성
+//		List<String> search = new ArrayList<String>();
+//		search.add(dto)
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("M_list", list);

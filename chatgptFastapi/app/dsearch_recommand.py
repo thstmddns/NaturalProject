@@ -8,19 +8,16 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.metrics import mean_squared_error
 
-# 랜딩페이지 추천
-def landing_recommand(concern):
-    
+# 미션페이지 추천
+def search_recommand(search):
+    print(1)
     # 데이터 불러오기
     data = pd.read_csv('preprocess_inflearn_data.csv', delimiter=',')
-    hwangjae_data = pd.read_csv('hwangjae_inflearn_data.csv', delimiter=',')
     data = data.drop('Unnamed: 0', axis=1)
     
     # 컬럼명 설정
     data.columns = ['Index', 'Title', 'Content', 'Level', 'Tag', 'Category', 'Author']
-    hwangjae_data.columns = ['Index', 'Title', 'Content', 'Level', 'Tag', 'Category', 'Author']
-    print("황재" + hwangjae_data['Content'])
-    print('데이터' + data['Content'])
+    
     # 임의의 R행렬 설정
     R = np.array([[4, np.NaN, np.NaN, 2, np.NaN ],
               [np.NaN, 5, np.NaN, 3, 1 ],
@@ -51,14 +48,14 @@ def landing_recommand(concern):
         rmse = np.sqrt(mse)
         return rmse
 
-
+    
     # R > 0 인 행 위치, 열 위치, 값을 non_zeros 리스트에 저장.
     non_zeros = [ (i, j, R[i,j]) for i in range(num_users) for j in range(num_items) if R[i, j] > 0 ]
 
     steps=1000
     learning_rate=0.01
     r_lambda=0.01
-
+    
     # SGD 기법으로 P와 Q 매트릭스를 계속 업데이트.
     for step in range(steps):
         for i, j, r in non_zeros:
@@ -75,35 +72,21 @@ def landing_recommand(concern):
     pred_matrix = np.dot(P, Q.T)
     course = pd.read_csv('preprocess_inflearn_data.csv', delimiter=',')
     
-    # tag 기준
+    # content 기준
     count_vect = CountVectorizer(min_df = 1, ngram_range=(1, 2))
-    tag_mat = count_vect.fit_transform(course['Tag'])
-    tag_sim = cosine_similarity(tag_mat, tag_mat)
-    tag_sim_sorted_ind = tag_sim.argsort()[:, ::-1]
-    def find_sim_course(df, sorted_ind, tag_names, top_n = 10):
-        
-        # tag 칼럼이 입력된 tag_name 값인 DataFrame추출
-        tag_course = df[df['Tag'].apply(lambda x: any(tag in x for tag in tag_names))]
-        tag_index = tag_course.index.values
-        similar_indexes = sorted_ind[tag_index, :(top_n)]
+    content_mat = count_vect.fit_transform(course['Content'])
+    content_sim = cosine_similarity(content_mat, content_mat)
+    content_sim_sorted_ind = content_sim.argsort()[:, ::-1]
+    def find_sim_course(df, sorted_ind, content_names, top_n = 10):
+  # title 칼럼이 입력된 title_name 값인 DataFrame추출
+        content_course = df[df['Content'].apply(lambda x: any(content in x for content in content_names))]
+        content_index = content_course.index.values
+        similar_indexes = sorted_ind[content_index, :(top_n)]
         similar_indexes = similar_indexes.reshape(-1)
+
         return df.iloc[similar_indexes]
     
-    
-    similar_course = find_sim_course(course, tag_sim_sorted_ind, concern, 5)
-    # similar_course_list = similar_course[['Title', 'Tag', 'Author']][:10].values.tolist()
-    similar_course_list = []
-    print(33)
-    data["Content"] = hwangjae_data["Content"]
-    print(44)
-    similar_course_list = {"Title" : similar_course['Title'][:10].values.tolist(), "Content" : similar_course[["Content"]][:10].values.tolist(), "Tag" : similar_course[['Tag']][:10].values.tolist(), "Author" : similar_course[['Author']][:10].values.tolist()}
-    # for i in range(10):
-    #     similar_course_list.append({"Title" : similar_course[["Title"]][i].values, "Tag" : similar_course[['Tag']][i].values, "Author" : similar_course[['Author']][i].values})
-    # for i in range(10):
-    #     title_value = similar_course.iloc[i]['Title']
-    #     tag_value = similar_course.iloc[i]['Tag']
-    #     author_value = similar_course.iloc[i]['Author']
-    #     similar_course_list.append({"Title": title_value, "Tag": tag_value, "Author": author_value})
-
+    similar_course = find_sim_course(course, content_sim_sorted_ind, search, 5)
+    similar_course_list = similar_course[["Title", "Tag", "Author"]][:10].values.tolist()
     print(similar_course_list)
     return similar_course_list
