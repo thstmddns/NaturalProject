@@ -23,6 +23,9 @@ public class PerformersDTO {
 	    private String mission_title;
 	    private int feedback_score;
 	    private int restcnt;
+	    private int ingcnt;
+	    private int endcnt;
+	    
 
 }
 

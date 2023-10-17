@@ -1,5 +1,7 @@
 package kr.or.ozz.dto;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -10,4 +12,5 @@ public class StepDTO {
 	private String step_title;		// 스텝 제목
 	private String step_time;		// 소요 시간
 	private String userid;			// 회원 아이디
+	private List<TaskDTO> tasks;
 }

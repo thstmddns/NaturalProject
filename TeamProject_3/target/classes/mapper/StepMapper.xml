@@ -18,7 +18,7 @@
 	<select id="getStep" resultType="kr.or.ozz.dto.StepDTO">
 		select step_no, mission_no, step, step_title, step_time, userid
 		from t_mission_step
-		<!-- where mission_no = ${param1} -->
+		where step_no = ${param1}
 	</select>
 	
 

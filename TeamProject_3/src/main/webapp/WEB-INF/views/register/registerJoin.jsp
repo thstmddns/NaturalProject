@@ -67,6 +67,12 @@
             return false;
         }
 		
+        if (username === "") {
+            alert("이름을 입력하세요.");
+            return false;
+        }
+        
+        
 		if (email === "") {
 			alert("이메일을 입력하세요");
 			return false;

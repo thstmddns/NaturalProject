@@ -49,7 +49,7 @@
             <c:forEach var="StepDTO" items="${Steplist}">
 	               <div class="missionStepDetail">
 	                  <div>
-	                  <li style="font-size:1.2em;"><span>step ${StepDTO.step}</span>${StepDTO.step_title}</li>
+	                  <li style="font-size:1.2em;"><span>step ${StepDTO.step}</span><a href="/ozz/Step/StepView?no=${StepDTO.step_no}&mission_no=${dto.mission_no}">${StepDTO.step_title}</a></li>
 	                  <li>미션 스텝 제출 여부<span>제출 완료</span><span>미션 스텝 제출 일시</span><span>2000.00.00</span></li>
 	                  </div>
 	                  <div><button class="complete">완료  <img src="<%= request.getContextPath()%>/img/체크.png"/></button></div>
@@ -57,35 +57,35 @@
             </c:forEach>
                <div class="missionStepDetail">
                   <div>
-                  <li style="font-size:1.2em;"><span>step 2</span>주피터 노트북 세팅</li>
+                  <li style="font-size:1.2em;"><span>step 3</span>주피터 노트북 세팅</li>
                   <li>미션 스텝 제출 여부<span>제출 안 함</span><span>미션 스텝 제출 일시</span><span>-</span></li>
                   </div>
                   <div><button class="ing">진행 중</button></div>
                </div>
                <div class="missionStepDetail">
                   <div>
-                  <li style="font-size:1.2em;"><span>step 3</span>분석할 코드 만들기</li>
+                  <li style="font-size:1.2em;"><span>step 4</span>분석할 코드 만들기</li>
                   <li>미션 스텝 제출 여부<span>제출 안 함</span><span>미션 스텝 제출 일시</span><span>-</span></li>
                   </div>
                   <div><button class="start">시작하기 ></button></div>
                </div>
                <div class="missionStepDetail">
                   <div>
-                  <li style="font-size:1.2em;"><span>step 4</span>파라메터 조정</li>
+                  <li style="font-size:1.2em;"><span>step 5</span>파라메터 조정</li>
                   <li>미션 스텝 제출 여부<span>제출 안 함</span><span>미션 스텝 제출 일시</span><span>-</span></li>
                   </div>
                   <div><button class="start">시작하기 ></button></div>
                </div>
                <div class="missionStepDetail">
                   <div>
-                  <li style="font-size:1.2em;"><span>step 5</span>코드 실행 : 클러스터링</li>
+                  <li style="font-size:1.2em;"><span>step 6</span>코드 실행 : 클러스터링</li>
                   <li>미션 스텝 제출 여부<span>제출 안 함</span><span>미션 스텝 제출 일시</span><span>-</span></li>
                   </div>
                   <div><button class="start">시작하기 ></button></div>
                </div>
                <div class="missionStepDetail">
                   <div>
-                  <li style="font-size:1.2em;"><span>step 6</span>최종 산출물 제출</li>
+                  <li style="font-size:1.2em;"><span>step 7</span>최종 산출물 제출</li>
                   <li>미션 스텝 제출 여부<span>제출 안 함</span><span>미션 스텝 제출 일시</span><span>-</span></li>
                   </div>
                   <div><button class="start">시작하기 ></button></div>
@@ -101,42 +101,46 @@
          
          
          <div id="missionReview" style="width:90%;">
-            <div style="margin-top: 80px; font-size: 1.5em;">리뷰 (3)<span style="font-size: 0.6em; color:#869AAF; float:right;">더보기 ></span></div>
-               <div class="missionReviewExam">
-                  <li>홍길동<span>2000-00-00</span><span>평점: 4.5점</span></li>
-                  <div class="reviewText">같은 살았으며, 피는 풍부하게 위하여서. 행복스럽고 능히 몸이 것이다. 긴지라 노래하며 위하여, 피어나는 원대하고, 이것이다. 얼마나 이상 이것을 그것은 심장은 이상의 있음으로써 속잎나고, 사막이다. (더미 텍스트)</div>
-               </div>
+            <div style="margin-top: 80px; font-size: 1.5em;">리뷰<span style="font-size: 0.6em; color:#869AAF; float:right;">더보기 ></span></div>
+            <c:choose>
+		        <c:when test="${not empty M_Reviewlist}">
+		            <c:forEach var="M_Reviewlist" items="${M_Reviewlist}">
+		                <div class="missionReviewExam">
+		                    <li>${M_Reviewlist.userid}<span>${M_Reviewlist.created_at}</span><span>평점: ${M_Reviewlist.review_score}</span></li>
+		                    <div class="reviewTitle">${M_Reviewlist.review_title}</div>
+		                    <div class="reviewText">${M_Reviewlist.review_content}</div>
+		                </div>
+		            </c:forEach>
+		        </c:when>
+		        <c:otherwise>
+		            <div class="missionReviewExam" style="color: #4E657E;">리뷰가 없습니다. 미션을 완료하고 리뷰를 작성해보세요!</div>
+		        </c:otherwise>
+    		</c:choose>
          </div>
          
+       
          
          <div id="missionQnA">
             <div style="margin-top: 80px; font-size: 1.5em;">Q&A<span style="font-size: 0.6em; color:#869AAF; float:right;">더보기 ></span></div>
             <div id="QnAContent">
                <button onclick="location.href='<%=request.getContextPath() %>/Qna/QnaWrite?no=${dto.mission_no}&mission_title=${dto.mission_title}'">질문이 있으신가요? <span style="text-decoration:underline;">Q&A 작성하기</span></button>
-               <div class="QnADetail">
-                  <li>[질문] 백엔드 코드를 아름답게 분리하고 싶어요</li>
-                  <li><span>Q&A</span><span>질문</span><span>태그</span></li>
-                  <li>홍길동<span>2000-00-00</span></li>
-                  <c:if  test="${logStatus=='Y'}">
-                  <input type="textarea" placeholder="  ↳  답변 달기">
-                  </c:if>
-               </div>
-               <div class="QnADetail">
-                  <li>[질문] 리액트 파일 업로드 관련</li>
-                  <li><span>Q&A</span><span>질문</span><span>태그</span></li>
-                  <li>홍길동<span>2000-00-00</span></li>
-                  <c:if  test="${logStatus=='Y'}">
-                  <input type="textarea" placeholder="  ↳  답변 달기">
-                  </c:if>
-               </div>
-               <div class="QnADetail">
-                  <li>[질문] 리액트 파일 업로드 관련</li>
-                  <li><span>Q&A</span><span>질문</span><span>태그</span></li>
-                  <li>홍길동<span>2000-00-00</span></li>
-                  <c:if  test="${logStatus=='Y'}">
-                  <input type="textarea" placeholder="  ↳  답변 달기">
-                  </c:if>
-               </div>
+               <c:choose>
+			       <c:when test="${not empty M_Qnalist}">
+	               <c:forEach var="M_Qnalist" items="${M_Qnalist}">
+	               <div class="QnADetail">
+	                  <li>[질문] ${M_Qnalist.qna_title}</li>
+	                  <li><span>Q&A</span></li>
+	                  <li>${M_Qnalist.userid}<span class="QnACreate">${M_Qnalist.created_at.split(' ')[0] }</span></li>
+	                  <c:if  test="${logStatus=='Y'}">
+	                  <input type="textarea" placeholder="  ↳  답변 달기">
+	                  </c:if>
+	               </div>
+	               </c:forEach>
+	               </c:when>
+			        <c:otherwise>
+			            <div class="QnADetail" style="color: #4E657E;">QnA가 없습니다. 미션에 대한 질문을 작성해보세요!</div>
+			        </c:otherwise>
+    			</c:choose>
             </div>
          </div>
          
@@ -156,16 +160,16 @@
          <form id="reviewWriteForm">
             <div id="reviewWrite">
                <input type="hidden" name="mission_no" value="${dto.mission_no }">
-               <p>Persona(페르소나) 분석</p>
+               <p>${dto.mission_title}</p>
                <p>피드백까지 미션 스텝이 모두 완료되었습니다!</p>
                <p>평점을 입력해주세요!</p>
-               <li><select class="select" title="평점">
+               <li><select class="select" title="평점" name="review_score">
                    <option value="">평점</option>
-                   <option name="review_score" id="review_score" value="5">★★★★★</option>
-                   <option name="review_score" id="review_score" value="4">★★★★</option>
-                   <option name="review_score" id="review_score" value="3">★★★</option>
-                   <option name="review_score" id="review_score" value="2">★★</option>
-                   <option name="review_score" id="review_score" value="1">★</option>
+                   <option  id="review_score" value="5">★★★★★</option>
+                   <option  id="review_score" value="4">★★★★</option>
+                   <option  id="review_score" value="3">★★★</option>
+                   <option  id="review_score" value="2">★★</option>
+                   <option  id="review_score" value="1">★</option>
                </select></li>
                <div>미션은 어떠셨나요? 
                </br>좋았던 점들이나 개선해야할 점들을 알려주면 마스터에게 도움이 될거에요.</div>
@@ -181,7 +185,7 @@
          <div id="date">
             <li>등록일<span>${dto.created_at.split(' ')[0] }</span></li>
             <li>시작일<span>22.00.00</span></li>
-            <li>완료일<span>22.00.00</span></li>
+            <li>완료일<span>-</span></li>
             <li>진행률<span>20%</span></li>
          </div>
          <%-- <c:if test=""> --%>
@@ -194,13 +198,11 @@
          </div>
          
          <div>
-         <p>Persona(페르소나) 분석</p>
+         <p>${dto.mission_title}</p>
          <div id="totalStep2">
-            <li>1.  전처리 데이터 가져오기</li>
-            <li>2.  주피터 노트북 세팅</li>
-            <li>3.  분석할 코드 만들기</li>
-            <li>4.  파라메터 조정</li>
-            <li>5.  코드 실행</li>
+         <c:forEach var="StepDTO" items="${Steplist}">
+            <li>${StepDTO.step}.  ${StepDTO.step_title}</li>
+         </c:forEach>
          </div>
          
    <%--       </c:if> --%>
@@ -218,17 +220,17 @@
          <div style="margin-bottom:10px;">추천 미션</div>
          <div id="recommendContent">
             <li>Figma 활용법</li>
-            <li><span>스킬</span><span>태그</span></li>
+            <li><span>웹</span><span>jsp</span></li>
             <li>홍길동</li>
          </div>
          <div id="recommendContent">
             <li>디자인 시스템 이해</li>
-            <li><span>스킬</span><span>태그</span></li>
+            <li><span>디자인</span><span>웹</span></li>
             <li>홍길동</li>
          </div>
          <div id="recommendContent">
             <li>자바스크립트 이해 및 활용</li>
-            <li><span>스킬</span><span>태그</span></li>
+            <li><span>javaScript</span><span>java</span></li>
             <li>홍길동</li>
          </div>
       
@@ -246,17 +248,21 @@
 
 
 <script src="https://cdn.ckeditor.com/ckeditor5/38.0.1/super-build/ckeditor.js"></script>
-<!-- <script>
+<script>
 	
 
-   $("#reviewWriteForm").submit(function() {
+    $("#reviewWriteForm").submit(function() {
       // form 태그의 기본 이동 기능을 가진 action으로 이동하는 것을 해제
       // button으로 만들면 action 없음
       event.preventDefault();  
       
       // 1. 댓글 입력 확인
+	if($("#review_title").val() == "") {
+         alert("리뷰 제목을 입력하세요");
+         return false;
+      }
       if($("#review_content").val() == "") {
-         alert("댓글을 입력하세요");
+         alert("리뷰 내용을 입력하세요");
          return false;
       }
       // 2. 데이터 준비   no=99&coment=댓글내용 ->  폼 내의 값을 쿼리로 만들어주는 함수(serialize())
@@ -265,13 +271,13 @@
       
       // 3. ajax 실행
       $.ajax({
-         url: '/ozz/review/reviewWrite',
+         url: '/ozz/Review/ReviewwriteOk',
          type: 'POST',
          data: params,
          success:function(result) {
             console.log(result);
             // 이미 DB에 등록된 글 폼에서 지우기
-            $("#coment").val("");
+ 	    $("#reviewWriteForm").css('display', 'None');
             
          },
          error:function(e){
@@ -279,8 +285,41 @@
          } 
       });
          
+   }); 
+
+   // 리뷰 제출 버튼을 클릭할 때 이벤트 핸들러를 실행
+  /*  $("#reviewWriteForm").submit(function(event) {
+       // 폼 제출의 기본 동작을 중지
+       event.preventDefault();
+       
+       // 리뷰 정보를 FormData 객체로 수집
+       var formData = new FormData(this);
+       
+       // Ajax 요청을 생성
+       $.ajax({
+           url: "{pageContext.request.contextPath}/Review/ReviewwriteOk", // 서버의 컨트롤러 주소로 변경
+           type: "POST",
+           data: formData,
+           contentType: false,
+           processData: false,
+           success: function (response) {
+        	   console.log(response);
+               // 서버로부터 받은 응답 처리 (예: 리뷰 등록 성공/실패 처리)
+               if (response === "success") {
+                   alert("리뷰가 성공적으로 등록되었습니다.");
+                   // 리뷰 등록 후 어떤 동작을 하고자 하는 경우에 여기에 추가
+               } else {
+                   alert("리뷰 등록에 실패했습니다.");
+                   // 실패 시 어떤 동작을 하고자 하는 경우에 여기에 추가
+               }
+           },
+           error: function (error) {
+               // 오류 처리 (예: 서버 오류)
+               console.error("리뷰 등록 중 오류 발생: " + error);
+           }
+       });
    });
-   
+ */
 
 
-</script> -->
+</script> 

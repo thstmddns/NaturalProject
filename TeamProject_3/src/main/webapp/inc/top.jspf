@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>main</title>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 <script src="https://kit.fontawesome.com/9f692e76bf.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="/ozz/inc/style.css" type="text/css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -133,7 +133,7 @@
 	    <p><span id="userid"><%= session.getAttribute("logId") %></span>님, 환영합니다.</p>
 	     <% } %>
     	<c:if test="${empty logId}">
-    	<li><a href="/ozz/register/login" class="item"><div>로그인</div></a></li>
+    	<li><a href="/ozz/main/login" class="item"><div>로그인</div></a></li>
     	<li><a href="/ozz/register/registerJoin" class="item"><div>회원가입</div></a></li>
     	</c:if>
     	<c:if test="${not empty logId}">
