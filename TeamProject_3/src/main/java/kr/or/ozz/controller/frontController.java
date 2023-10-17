@@ -118,21 +118,8 @@ public class frontController {
        // FastAPI에서의 응답을 처리합니다.
        ObjectMapper mapper = new ObjectMapper();
        Map<String, Object> responseBody = mapper.readValue(response.getBody(), new TypeReference<Map<String, Object>>() {});
-//       Map<String, Object> responseBody = response.getBody();
-
-//       List<String> responseBodyList = Arrays.asList(responseBody);
-//       List<Map<String, String>> responseBodyList = new ArrayList<Map<String, String>>();
-//       for (int i = 0; i < responseBody.length(); i++) {
-//           Map<String, String> item = new HashMap<String, String>();
-//           item.put("Title", responseBody.get(i).get("Title"));
-//           item.put("Tag", responseBody.get(i).get("Tag"));
-//           item.put("Author", responseBody.get(i).get("Author"));
-//           responseBodyList.add(item);
-//       }
 
        System.out.println("리스트출력" + responseBody);
-       // JSON 문자열을 ArrayList<Item>으로 변환
-//       ObjectMapper objectMapper = new ObjectMapper();
        
        System.out.println(responseBody.getClass().getName());
        // 占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占� 占쌨쇽옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙 (占쏙옙占쏙옙: 占쏙옙占쏙옙占� 占쏙옙占싱듸옙占� 占쌨쇽옙占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙)

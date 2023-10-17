@@ -21,6 +21,7 @@ def landing_recommand(concern):
     hwangjae_data.columns = ['Index', 'Title', 'Content', 'Level', 'Tag', 'Category', 'Author']
     print("황재" + hwangjae_data['Content'])
     print('데이터' + data['Content'])
+    
     # 임의의 R행렬 설정
     R = np.array([[4, np.NaN, np.NaN, 2, np.NaN ],
               [np.NaN, 5, np.NaN, 3, 1 ],
@@ -30,7 +31,7 @@ def landing_recommand(concern):
     num_users, num_items = R.shape
     K=3
     print(5)
-
+    
     # P와 Q 매트릭스의 크기를 지정하고 정규분포를 가진 random한 값으로 입력합니다.
     np.random.seed(1)
     P = np.random.normal(scale=1./K, size=(num_users, K))
@@ -74,7 +75,7 @@ def landing_recommand(concern):
             print(10)
     pred_matrix = np.dot(P, Q.T)
     course = pd.read_csv('preprocess_inflearn_data.csv', delimiter=',')
-    
+    course["Content"] = hwangjae_data["Content"]
     # tag 기준
     count_vect = CountVectorizer(min_df = 1, ngram_range=(1, 2))
     tag_mat = count_vect.fit_transform(course['Tag'])
@@ -87,14 +88,16 @@ def landing_recommand(concern):
         tag_index = tag_course.index.values
         similar_indexes = sorted_ind[tag_index, :(top_n)]
         similar_indexes = similar_indexes.reshape(-1)
+        
         return df.iloc[similar_indexes]
     
-    
+   
     similar_course = find_sim_course(course, tag_sim_sorted_ind, concern, 5)
     # similar_course_list = similar_course[['Title', 'Tag', 'Author']][:10].values.tolist()
     similar_course_list = []
     print(33)
     data["Content"] = hwangjae_data["Content"]
+    print(hwangjae_data["Content"])
     print(44)
     similar_course_list = {"Title" : similar_course['Title'][:10].values.tolist(), "Content" : similar_course[["Content"]][:10].values.tolist(), "Tag" : similar_course[['Tag']][:10].values.tolist(), "Author" : similar_course[['Author']][:10].values.tolist()}
     # for i in range(10):
