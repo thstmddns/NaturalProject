@@ -19,8 +19,6 @@ def landing_recommand(concern):
     # 컬럼명 설정
     data.columns = ['Index', 'Title', 'Content', 'Level', 'Tag', 'Category', 'Author']
     hwangjae_data.columns = ['Index', 'Title', 'Content', 'Level', 'Tag', 'Category', 'Author']
-    print("황재" + hwangjae_data['Content'])
-    print('데이터' + data['Content'])
     
     # 임의의 R행렬 설정
     R = np.array([[4, np.NaN, np.NaN, 2, np.NaN ],
@@ -93,20 +91,9 @@ def landing_recommand(concern):
     
    
     similar_course = find_sim_course(course, tag_sim_sorted_ind, concern, 5)
-    # similar_course_list = similar_course[['Title', 'Tag', 'Author']][:10].values.tolist()
     similar_course_list = []
     print(33)
-    data["Content"] = hwangjae_data["Content"]
-    print(hwangjae_data["Content"])
-    print(44)
     similar_course_list = {"Title" : similar_course['Title'][:10].values.tolist(), "Content" : similar_course[["Content"]][:10].values.tolist(), "Tag" : similar_course[['Tag']][:10].values.tolist(), "Author" : similar_course[['Author']][:10].values.tolist()}
-    # for i in range(10):
-    #     similar_course_list.append({"Title" : similar_course[["Title"]][i].values, "Tag" : similar_course[['Tag']][i].values, "Author" : similar_course[['Author']][i].values})
-    # for i in range(10):
-    #     title_value = similar_course.iloc[i]['Title']
-    #     tag_value = similar_course.iloc[i]['Tag']
-    #     author_value = similar_course.iloc[i]['Author']
-    #     similar_course_list.append({"Title": title_value, "Tag": tag_value, "Author": author_value})
 
     print(similar_course_list)
     return similar_course_list

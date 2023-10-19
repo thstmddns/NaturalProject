@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.or.ozz.dto.ReplyDTO;
 
@@ -150,7 +156,7 @@ public class MissionController {
 
 	// 占쌜놂옙占쎈보占쏙옙
 	@GetMapping("/MissionView")
-	public ModelAndView MissionView(@RequestParam("no")int no, PagingDTO pDTO) {
+	public ModelAndView MissionView(@RequestParam("no")int no, PagingDTO pDTO) throws JsonProcessingException{
 		//占쏙옙회占쏙옙 占쏙옙占쏙옙
 		service.hitCount(no);
 		// 占쏙옙占쌘드선占쏙옙
@@ -159,40 +165,53 @@ public class MissionController {
 		List<QnaDTO> M_Qnalist = Qservice.M_Qnalist(no);
 		List<ReviewDTO> M_Reviewlist = Rservice.M_Reviewlist(no);
 		
-		// FastAPI�뿉 �쟾�넚�븷 �뜲�씠�꽣瑜� �깮�꽦
+		// FastAPI 서비스의 URL을 정의합니다.
 		List<String> contents = new ArrayList<String>();
 		contents.add(dto.getMission_cate());
 
-        // FastAPI �뿏�뱶�룷�씤�듃 URL
+		// FastAPI 서비스의 URL을 정의합니다.
         String fastApiUrl = "http://localhost:8000/dmission_recommand"; // FastAPI �꽌踰� URL濡� �닔�젙
 
-        // FastAPI�뿉 HTTP POST �슂泥��쓣 蹂대깄�땲�떎.
+        // FastAPI로 전송할 데이터를 생성합니다.
+        Map<Object, Object> requestData = new HashMap<Object, Object>();
+        requestData.put("contents", contents);
+        
+        
+     // HTTP 요청을 보내기 위한 RestTemplate을 만듭니다.
         RestTemplate restTemplate = new RestTemplate();
+
+        // HTTP 헤더 설정
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        Map<String, Object> requestBody = new HashMap<String, Object>();
-        requestBody.put("contents", contents);
-        
-        HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<Map<String, Object>>(requestBody, headers);
-        
-        ResponseEntity<String> response = restTemplate.postForEntity(fastApiUrl, requestEntity, String.class);
 
-        // FastAPI�뿉�꽌 諛쏆� 寃곌낵 �뜲�씠�꽣瑜� �궗�슜�븯�뿬 ModelAndView �깮�꽦
-        String resultData = response.getBody();
+        // HTTP 요청 엔티티 생성
+        HttpEntity<Map<Object,Object>> entity = new HttpEntity<Map<Object, Object>>(requestData, headers);
+
+        // FastAPI에 HTTP POST 요청을 보냅니다.
+        ResponseEntity<String> contentResponse = restTemplate.exchange(
+            fastApiUrl,
+            HttpMethod.POST,
+            entity,
+            String.class
+        );
+        System.out.println("FastAPI Response: " + contentResponse.getBody());
+
+        // FastAPI에서의 응답을 처리합니다.
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Object> contentResponseBody = mapper.readValue(contentResponse.getBody(), new TypeReference<Map<String, Object>>() {});
+
+        System.out.println("리스트출력" + contentResponseBody);
         
         System.out.println(contents);
-        System.out.println(resultData);
-//		List<> contents = dto.getMission_content();
-//	    byte[] imageData = dto.getFile_name();
-//        String base64ImageData = Base64.getEncoder().encodeToString(imageData);
-//        dto.setFile_name_base64(base64ImageData);
+        System.out.println(contentResponseBody);
+        
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("dto", dto);
 		mav.addObject("Steplist", Steplist);
 		mav.addObject("M_Qnalist", M_Qnalist);
 		mav.addObject("M_Reviewlist", M_Reviewlist);
 		mav.addObject("pDTO", pDTO);
-		mav.addObject("contents", resultData);
+		mav.addObject("contents", contentResponseBody);
 		mav.setViewName("Mission/missionView");
 
 		return mav;
