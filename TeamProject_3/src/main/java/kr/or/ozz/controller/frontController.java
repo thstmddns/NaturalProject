@@ -221,8 +221,6 @@ public class frontController {
 		pDTO.setB_totalRecord(Bservice.b_totalRecord(pDTO));
 		pDTO.setU_totalRecord(Uservice.u_totalRecord(pDTO));
 		
-		
-		
 		List<MissionDTO> list = Mservice.Missionlist(pDTO);
 		ModelAndView mav = new ModelAndView();
 		
