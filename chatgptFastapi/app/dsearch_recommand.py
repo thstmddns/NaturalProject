@@ -87,6 +87,7 @@ def search_recommand(search):
         return df.iloc[similar_indexes]
     
     similar_course = find_sim_course(course, content_sim_sorted_ind, search, 5)
-    similar_course_list = similar_course[["Title", "Tag", "Author"]][:10].values.tolist()
+    similar_course_list = []
+    similar_course_list = {"Title" : similar_course['Title'][:10].values.tolist(), "Content" : similar_course[["Content"]][:10].values.tolist(), "Tag" : similar_course[['Tag']][:10].values.tolist(), "Author" : similar_course[['Author']][:10].values.tolist()}
     print(similar_course_list)
     return similar_course_list
