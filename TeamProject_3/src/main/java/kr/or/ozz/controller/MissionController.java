@@ -278,8 +278,11 @@ public class MissionController {
 	   @PostMapping("/aiGenerate")
 	   @ResponseBody
 	   public String autoGeneration(final MissionDTO dto, @RequestParam("title") final String title,
-	         @RequestParam("pdf") final MultipartFile pdf, final HttpServletRequest request) {
-
+	         @RequestParam("pdf") final MultipartFile pdf, final HttpServletRequest request, final HttpSession session) {
+		   
+		   String logId = (String)session.getAttribute("logId"); 
+		      dto.setUserid(logId);
+		      
 	      try {
 	         // 아래는 desciptioncontroller로 보내는 코드
 	         CompletableFuture.runAsync(new Runnable() {

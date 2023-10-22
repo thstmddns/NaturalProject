@@ -348,7 +348,7 @@ a:link, a:visited, a:hover{
 	margin-left: 10px;
 }
 .notStart {
-	width: 900px;
+	width: 950px;
 	height: 100px;
 	background-color: #F1F4F8;
 	color: #4E657E;
@@ -2118,19 +2118,8 @@ hr:last-child {
 	padding: 5px 10px;
 }
 #missionUp span button:first-child:hover {
-	background: #007efd;
+	background: #2B94AB;
 	color: white;
-}
-#missionUp span button:last-child {
-	border-radius: 100px;
-	background: #52B0C5;
-	color: white;
-	border: none;
-	padding: 5px 10px;
-}
-#missionUp span button:last-child:hover {
-	border: 1px solid #52B0C5;
-	background:  #007efd;
 }
 #main {
 	width: 70%;
@@ -2176,7 +2165,7 @@ hr:last-child {
 	font-size: 1.1em !important;
 }
 .totalTime {
-	width: 20px !important;
+	width: 70px !important;
 }
 .plus {
 	border-radius: 10px;
@@ -2196,4 +2185,42 @@ hr:last-child {
 .task input {
 	width: 95% !important;
 	margin-bottom: 20px !important;
+}
+#aiGenerate,.selfGenerate {
+	width: 50%;
+	background: #E8FBFF;
+	color: #2B94AB;
+	border: 1px solid #2B94AB;
+	border-radius: 16px;
+	height: 30px;
+}
+#aiGenerate:hover,.selfGenerate:hover {
+	color: white;
+	borer:none;
+	background: #52B0C5;
+}
+.finish {
+	float:right; 
+	color: white;
+	border: none;
+	background: #2B94AB;
+	border-radius: 100px;
+	padding: 5px 10px;
+}
+.finish:hover {
+	background: #E8FBFF;
+	color: #2B94AB;
+	border: 1px solid #2B94AB;
+}
+#missionMake {
+	width: 70%;
+	margin-left: 150px;
+}
+#missionMake input[type="text"] {
+	width: 97%; 
+	border-radius: 10px;
+	border: 1px solid #DAE2EB;
+	background: White;
+	padding: 10px;
+	margin: 10px 0 50px 0;
 }

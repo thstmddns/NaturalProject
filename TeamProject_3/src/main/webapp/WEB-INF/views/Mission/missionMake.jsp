@@ -41,8 +41,7 @@
 	<div id="missionUp">
 		<img src="<%= request.getContextPath()%>/img/__ (1).png"/><a href="javascript:window.history.back();"> 이전으로 돌아가기</a>
 		<span>
-			<button>임시저장</button>
-			<button type="submit" form="main">완료</button>		
+			<button>임시저장</button>		
 		</span>
 	</div>
 	
@@ -58,11 +57,8 @@
 		<li><input type="text" placeholder="제목을 입력해주세요." name="mission_title" id="mission_title"></li>
 		<li class="title" style="margin-bottom:0;">소요 시간</li>
 			<li>
-				<input type="text" placeholder="00" class="totalTime" name="">
-				<span style="margin: 0 10px">시간</span>
-				<input type="text" placeholder="00"  class="totalTime" name="">
-				<span style="margin: 0 10px">분 소요</span>
-		</li>
+				<input type="text" placeholder="00시간 00분" class="totalTime" name="">
+			</li>
 		<li class="title">미션 태그</li>
             <div class="form-group">
             	<input type="hidden" value=""  name="mission_tag" id="mission_tag"/>
@@ -75,7 +71,7 @@
 		<li><input type="text" placeholder="데이터를 입력해주세요." name="mission_data" id="mission_data" style="margin-bottom:0 !important"></li>
 		<li><input type="text" placeholder="툴을 입력해주세요." name="mission_tool" id="mission_tool" style="margin-top:5px !important"></li>	
 		<li class="title">미션 소개</li>
-		<textarea cols="96" rows="5" name="mission_content" id="mission_content" style="resize:none;" name="mission_content" id="mission_content"></textarea>
+		<textarea cols="94" rows="5" name="mission_content" id="mission_content" style="resize:none;" name="mission_content" id="mission_content"></textarea>
 		<li class="title">카테고리</li>
 		<div id="cate2">
 				<div>
@@ -119,9 +115,10 @@
 					<li><input type="checkbox" name="mission_cate" id="mission_cate" value="자격증">자격증</li>
 				</div>	
 			</div>	
-			<button type="button" id="aiGenerate">AI로 생성하기</button>
-			<button type="button" onclick="selfGenerate();">직접 생성하기</button>
-		
+			<div style="display:flex;">
+			<button type="button" id="aiGenerate" style="margin-right: 10px;">AI로 생성하기</button>
+			<button type="button" class="selfGenerate" onclick="selfGenerate();">직접 생성하기</button>
+			</div>
 	</form>
 
 </main>
@@ -200,51 +197,7 @@
             $(this).submit();
         });
     
-	    $(document).on("click", ".removeButton", function(){
-	        if(confirm("태스크를 삭제하시겠습니까?")) {
-	    	$(this).closest("div").remove();
-	        }
-	  });
-    
-    	$(document).ready(function(){
-    		$(document).on("click", "#addStep", function() {
-    			 event.preventDefault(); 
-    			
-    			var tag = "<div id='stepPlus' style='margin-top: 60px;'>";
-     			tag += "<li class='title'>스텝 제목</li>";
-     			tag += "<li><input type='text' name='' placeholder='제목을 입력해주세요.'></li>";
-     			tag += "<li class='title' style='margin-bottom:0;'>소요 시간</li>";
-     			tag += "<li><input type='text' placeholder='00' class='totalTime' name=''>";
-    			tag += "<span style='margin: 0 10px'>시간</span>";
-    			tag += "<input type='text' placeholder='00'  class='totalTime' name=''>";
-    			tag += "<span style='margin: 0 10px'>분 소요</span></li>";
-    			tag += "<div class='task'>";
-    			tag += "<li class='title'>태스크 제목</li>";
-    			tag += "<li><input type='text' name='' placeholder='태스크 제목을 입력해주세요.''></li>";
-    			tag += "<li class='title' style='margin-bottom:0;'>태스크 내용</li>";
-    			tag += "<li><input type='text' name='' placeholder='설명을 입력해주세요.'></li>";
-    			tag += '<button class="removeButton" style="background:white; border:none;"><img src="<%= request.getContextPath()%>/img/Variant5.jpg"/></button></div>';
-    			tag += "<button class='plus'>+  태스크 추가하기</button>";
-    				
-    			$("#stepPlus").append(tag);
-    		})
-    	});
-    	
-    	$(document).ready(function(){
-    		$(document).on("click", "#addTask", function() {
-    			 event.preventDefault(); 
-    			
-    			var tag = "<div class='task' style='margin-top:20px;'>";
-    			tag += "<li class='title'>태스크 제목</li>";
-    			tag += "<li><input type='text' name='' placeholder='태스크 제목을 입력해주세요.''></li>";
-    			tag += "<li class='title' style='margin-bottom:0;'>태스크 내용</li>";
-    			tag += "<li><input type='text' name='' placeholder='설명을 입력해주세요.'></li>";
-    			tag += '<button class="removeButton" style="background:white; border:none;"><img src="<%= request.getContextPath()%>/img/Variant5.jpg"/></button></div>'
-    				
-    			$("#stepPlus").append(tag);
-    		})
-    	});
-    	
+	    
     	
     	 $(document).ready(function(){
     		     $(document).on("click", "#aiGenerate", function() {

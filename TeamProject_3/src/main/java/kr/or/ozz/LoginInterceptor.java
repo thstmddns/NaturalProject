@@ -18,7 +18,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 		if (userid == null || logStatus == null || userid.equals("") || !logStatus.equals("Y")) {
 
-			response.sendRedirect("/ozz/register/login");
+			response.sendRedirect("/ozz/main/login");
 
 			return false;
 		}
