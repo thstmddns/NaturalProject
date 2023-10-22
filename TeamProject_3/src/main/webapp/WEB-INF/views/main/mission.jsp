@@ -50,54 +50,24 @@
 	<div style="font-size: 1.6em; margin-top: 90px;">맞춤 추천 미션</div>
 	<div id="recommendM">
 		<div id="recommendMList">
-			<div class="rMInfo">
-				<li><img
-					src="<%=request.getContextPath()%>/img/Frame 2526 (1).png" /></li>
-				<li>ChatGPT로 영어공부 하기</li>
-				<li>ChatGPT를 나만의 영어 멘토로: 영어 공부 활용법(단어장 템플릿 제공) 일잘러의 업무스킬</li>
-				<li><span>ChatGPT</span><span>영어</span></li>
-				<li>장호찬</li>
-			</div>
-			<div class="rMInfo">
-				<li><img
-					src="<%=request.getContextPath()%>/img/Frame 2526 (3).png" /></li>
-				<li>ChatGPT로 영어공부 하기</li>
-				<li>ChatGPT를 나만의 영어 멘토로: 영어 공부 활용법(단어장 템플릿 제공) 일잘러의 업무스킬</li>
-				<li><span>ChatGPT</span><span>영어</span></li>
-				<li>장호찬</li>
-			</div>
-			<div class="rMInfo">
-				<li><img src="<%=request.getContextPath()%>/img/Frame 2526.png" /></li>
-				<li>ChatGPT로 영어공부 하기</li>
-				<li>ChatGPT를 나만의 영어 멘토로: 영어 공부 활용법(단어장 템플릿 제공) 일잘러의 업무스킬</li>
-				<li><span>ChatGPT</span><span>영어</span></li>
-				<li>장호찬</li>
-			</div>
-			<div class="rMInfo">
-				<li><img
-					src="<%=request.getContextPath()%>/img/Frame 2526 (2).png" /></li>
-				<li>ChatGPT로 영어공부 하기</li>
-				<li>ChatGPT를 나만의 영어 멘토로: 영어 공부 활용법(단어장 템플릿 제공) 일잘러의 업무스킬</li>
-				<li><span>ChatGPT</span><span>영어</span></li>
-				<li>장호찬</li>
-			</div>
-			<div class="rMInfo">
-				<li><img
-					src="<%=request.getContextPath()%>/img/Frame 2526 (1).png" /></li>
-				<li>ChatGPT로 영어공부 하기</li>
-				<li>ChatGPT를 나만의 영어 멘토로: 영어 공부 활용법(단어장 템플릿 제공) 일잘러의 업무스킬</li>
-				<li><span>ChatGPT</span><span>영어</span></li>
-				<li>장호찬</li>
-			</div>
-			<div class="rMInfo">
-				<li><img src="<%=request.getContextPath()%>/img/Frame 2526.png" /></li>
-				<li>ChatGPT로 영어공부 하기</li>
-				<li>ChatGPT를 나만의 영어 멘토로: 영어 공부 활용법(단어장 템플릿 제공) 일잘러의 업무스킬</li>
-				<li><span>ChatGPT</span><span>영어</span></li>
-				<li>장호찬</li>
-			</div>
+			<c:forEach items="${responseBodyList['Title']}" var="title" varStatus="loop">
+	            <div class="rMInfo">
+	                <li><img src="<%= request.getContextPath()%>/img/Frame 2526 (3).png" /></li>
+	                <li>${title.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("'", "").replaceAll("\\{", "").replaceAll("\\}", "")}</li>
+	                <c:forEach items="${responseBodyList['Content'][loop.index]}" var="content">
+	            		<li>${content.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("'", "")}</li>
+	        		</c:forEach>
+	                <li>
+	                <c:forEach items="${fn:split(responseBodyList['Tag'][loop.index], ',')}" var="tag">
+	                    <span class="spanTag">${tag.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("'", "")}</span>
+	                </c:forEach>
+	                </li>
+					<c:forEach items="${responseBodyList['Author'][loop.index]}" var="author">
+	            		<li>${author.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("'", "")}</li>
+	        		</c:forEach>
+	            </div>
+        	</c:forEach>
 		</div>
-
 	</div>
 
 
