@@ -1,6 +1,11 @@
 package kr.or.ozz.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,13 +15,16 @@ import java.util.concurrent.CompletableFuture;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +33,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import kr.or.ozz.dto.ReplyDTO;
 
@@ -153,7 +166,7 @@ public class MissionController {
 
 	// 占쌜놂옙占쎈보占쏙옙
 	@GetMapping("/MissionView")
-	public ModelAndView MissionView(@RequestParam("no")int no, PagingDTO pDTO) {
+	public ModelAndView MissionView(@RequestParam("no")int no, PagingDTO pDTO) throws JsonProcessingException{
 		//占쏙옙회占쏙옙 占쏙옙占쏙옙
 		service.hitCount(no);
 
@@ -163,41 +176,55 @@ public class MissionController {
 		List<QnaDTO> M_Qnalist = Qservice.M_Qnalist(no);
 		List<ReviewDTO> M_Reviewlist = Rservice.M_Reviewlist(no);
 		
-		// FastAPI�뿉 �쟾�넚�븷 �뜲�씠�꽣瑜� �깮�꽦
+		// FastAPI 서비스의 URL을 정의합니다.
 		List<String> contents = new ArrayList<String>();
 		contents.add(dto.getMission_cate());
 
-        // FastAPI �뿏�뱶�룷�씤�듃 URL
+		// FastAPI 서비스의 URL을 정의합니다.
         String fastApiUrl = "http://localhost:8000/dmission_recommand"; // FastAPI �꽌踰� URL濡� �닔�젙
 
-        // FastAPI�뿉 HTTP POST �슂泥��쓣 蹂대깄�땲�떎.
+        // FastAPI로 전송할 데이터를 생성합니다.
+        Map<Object, Object> requestData = new HashMap<Object, Object>();
+        requestData.put("contents", contents);
+        
+        
+     // HTTP 요청을 보내기 위한 RestTemplate을 만듭니다.
         RestTemplate restTemplate = new RestTemplate();
+
+        // HTTP 헤더 설정
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        Map<String, Object> requestBody = new HashMap<String, Object>();
-        requestBody.put("contents", contents);
-        
-        HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<Map<String, Object>>(requestBody, headers);
-        
-        ResponseEntity<String> response = restTemplate.postForEntity(fastApiUrl, requestEntity, String.class);
 
-        // FastAPI�뿉�꽌 諛쏆� 寃곌낵 �뜲�씠�꽣瑜� �궗�슜�븯�뿬 ModelAndView �깮�꽦
-        String resultData = response.getBody();
+        // HTTP 요청 엔티티 생성
+        HttpEntity<Map<Object,Object>> entity = new HttpEntity<Map<Object, Object>>(requestData, headers);
+
+        // FastAPI에 HTTP POST 요청을 보냅니다.
+        ResponseEntity<String> contentResponse = restTemplate.exchange(
+            fastApiUrl,
+            HttpMethod.POST,
+            entity,
+            String.class
+        );
+        System.out.println("FastAPI Response: " + contentResponse.getBody());
+
+        // FastAPI에서의 응답을 처리합니다.
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Object> contentResponseBody = mapper.readValue(contentResponse.getBody(), new TypeReference<Map<String, Object>>() {});
+
+        System.out.println("리스트출력" + contentResponseBody);
         
         System.out.println(contents);
-        System.out.println(resultData);
-//		List<> contents = dto.getMission_content();
-//	    byte[] imageData = dto.getFile_name();
-//        String base64ImageData = Base64.getEncoder().encodeToString(imageData);
-//        dto.setFile_name_base64(base64ImageData);
+        System.out.println(contentResponseBody);
+        
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("dto", dto);
 		mav.addObject("Steplist", Steplist);
 		mav.addObject("M_Qnalist", M_Qnalist);
 		mav.addObject("M_Reviewlist", M_Reviewlist);
 		mav.addObject("pDTO", pDTO);
-		mav.addObject("contents", resultData);
-		
+
+		mav.addObject("contents", contentResponseBody);
+
 		mav.setViewName("Mission/missionView");
 
 		return mav;
@@ -284,8 +311,11 @@ public class MissionController {
 	   @PostMapping("/aiGenerate")
 	   @ResponseBody
 	   public String autoGeneration(final MissionDTO dto, @RequestParam("title") final String title,
-	         @RequestParam("pdf") final MultipartFile pdf, final HttpServletRequest request) {
-
+	         @RequestParam("pdf") final MultipartFile pdf, final HttpServletRequest request, final HttpSession session) {
+		   
+		   String logId = (String)session.getAttribute("logId"); 
+		      dto.setUserid(logId);
+		      
 	      try {
 	         // 아래는 desciptioncontroller로 보내는 코드
 	         CompletableFuture.runAsync(new Runnable() {
@@ -377,5 +407,93 @@ public class MissionController {
 	      }
 	   }  
 
-	
+	   @PostMapping(value = "steptaskWriteOk")
+	   public ResponseEntity<String> steptaskWriteOk(@ModelAttribute MissionDTO missionDTO, HttpServletRequest request) {
+
+	      int mission_no = missionDTO.getMission_no();
+	      List<StepDTO> steps = missionDTO.getSteps();
+	      // 스텝 인덱스 아니고 화면에 표시될 스텝 순서 번호 생성
+	      int step_num = 1;
+	      for (int i = 0; i < steps.size(); i++) {
+	         StepDTO step = steps.get(i);
+
+	         // 스텝 식별 번호지정
+	         step.setStep(step_num);
+
+	         // 종속되는 미션 번호 지정
+	         step.setMission_no(mission_no);
+
+	         // 스텝 저장함
+	         try {
+	            service.stepCreate(step);
+	         } catch (Exception e) {
+	            e.printStackTrace();
+	            return new ResponseEntity<>("failure", HttpStatus.BAD_REQUEST);
+	         }
+	         // 저장된 스텝의 번호 가져옴(가장 최근 생성된걸로 가져오는 로직)
+	         int step_no = service.getstep_no();
+
+	         // 다음 스텝 식별용 번호 1올려야 하므로 더함
+	         step_num++;
+
+	         // 태스크 식별용 번호 생성
+	         int task_num = 1;
+	         List<TaskDTO> tasks = step.getTasks();
+	         for (int j = 0; j < tasks.size(); j++) {
+	            TaskDTO task = tasks.get(j);
+
+	            // 종속되는 스텝 번호 넣음
+	            task.setStep_no(step_no);
+
+	            // 태스크 식별 번호 넣음
+	            task.setTask(task_num);
+
+	            // 태스크 파일이랑 경로 지정
+	            MultipartFile file = task.getTask_file_name();
+	            String path = request.getSession().getServletContext().getRealPath("/upload");
+
+	            // 파일이 업로드되지 않았을 때
+	            if (file == null || file.isEmpty()) {
+	               task.setFile_name(""); // 파일명을 null로 설정하거나 기본값으로 설정 (DB에 null 허용 시)
+	            } else {
+	               String orgFileName = file.getOriginalFilename();
+	               String baseName = FilenameUtils.getBaseName(orgFileName);
+	               String extension = FilenameUtils.getExtension(orgFileName);
+
+	               File f = new File(path, orgFileName);
+	               int counter = 1;
+
+	               while (f.exists()) {
+	                  String newFileName = baseName + " (" + counter + ")." + extension;
+	                  f = new File(path, newFileName);
+	                  counter++;
+	               }
+
+	               try {
+	                  Path filePath = Paths.get(path, f.getName());
+	                  Files.createDirectories(filePath.getParent());
+	                  Files.write(filePath, file.getBytes());
+	               } catch (IOException e) {
+	                  e.printStackTrace();
+	                  return new ResponseEntity<>("failure", HttpStatus.BAD_REQUEST);
+	               }
+
+	               task.setFile_name(f.getName());
+	            }
+
+	            try {
+	               service.taskCreate(task);
+	            } catch (Exception e) {
+	               e.printStackTrace();
+	               return new ResponseEntity<>("failure", HttpStatus.BAD_REQUEST);
+
+	            }
+
+	            task_num++;
+	         }
+
+	      }
+	      return new ResponseEntity<>("success", HttpStatus.OK);
+	   }
+>>>>>>> e7714c386e2d720faf0522e36d965948cab9ffcb
 }

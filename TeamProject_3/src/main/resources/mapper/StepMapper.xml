@@ -4,27 +4,25 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.ozz.dao.StepDAO">
 	<insert id="StepwriteOk">
-		insert into t_mission_step(step_no, mission_no, step, step_title, step_time, userid)
-		values(step_no_seq.nextval, #{mission_no}, #{step}, #{step_title}, #{step_time}, #{userid})
+		insert into t_mission_step(step_no, mission_no, step, step_title, userid)
+		values(step_no_seq.nextval, #{mission_no}, #{step}, #{step_title}, #{userid})
 	</insert>
 	
 	<select id="Steplist" resultType="kr.or.ozz.dto.StepDTO">
-        SELECT step_no, mission_no, step, step_title, step_time FROM t_mission_step
+        SELECT step_no, mission_no, step, step_title FROM t_mission_step
         WHERE mission_no=${param1}
         ORDER BY step ASC
-        
 	</select>
 	
 	<select id="getStep" resultType="kr.or.ozz.dto.StepDTO">
-		select step_no, mission_no, step, step_title, step_time, userid
+		select step_no, mission_no, step, step_title, userid
 		from t_mission_step
 		where step_no = ${param1}
 	</select>
 	
 
 	<update id="StepEdit">
-		update t_mission_step set step=#{step}, step_title=#{step_title}, 
-		step_time=#{step_time}
+		update t_mission_step set step=#{step}, step_title=#{step_title}
 		where step_no=${step_no} and userid=#{userid}
 	</update>
 	<delete id="MissionDel">

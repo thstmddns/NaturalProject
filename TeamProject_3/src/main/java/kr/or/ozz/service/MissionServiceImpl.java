@@ -91,7 +91,7 @@ public class MissionServiceImpl implements MissionService{
 	@Override
 	public int getstep_no() {
 		
-		return dao.getmission_no();
+		return dao.getstep_no();
 	}
 
 	@Override

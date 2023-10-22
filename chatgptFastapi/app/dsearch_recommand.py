@@ -9,16 +9,14 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.metrics import mean_squared_error
 
 # 미션페이지 추천
-def mission_recommand(contents):
+def search_recommand(search):
     print(1)
     # 데이터 불러오기
     data = pd.read_csv('preprocess_inflearn_data.csv', delimiter=',')
-    hwangjae_data = pd.read_csv('hwangjae_inflearn_data.csv', delimiter=',')
     data = data.drop('Unnamed: 0', axis=1)
     
     # 컬럼명 설정
     data.columns = ['Index', 'Title', 'Content', 'Level', 'Tag', 'Category', 'Author']
-    hwangjae_data.columns = ['Index', 'Title', 'Content', 'Level', 'Tag', 'Category', 'Author']
     
     # 임의의 R행렬 설정
     R = np.array([[4, np.NaN, np.NaN, 2, np.NaN ],
@@ -73,7 +71,6 @@ def mission_recommand(contents):
             print(10)
     pred_matrix = np.dot(P, Q.T)
     course = pd.read_csv('preprocess_inflearn_data.csv', delimiter=',')
-
     
     # content 기준
     count_vect = CountVectorizer(min_df = 1, ngram_range=(1, 2))
@@ -89,11 +86,8 @@ def mission_recommand(contents):
 
         return df.iloc[similar_indexes]
     
-    similar_course = find_sim_course(course, content_sim_sorted_ind, contents, 5)
+    similar_course = find_sim_course(course, content_sim_sorted_ind, search, 5)
     similar_course_list = []
-    course["Content"] = hwangjae_data["Content"]
-
     similar_course_list = {"Title" : similar_course['Title'][:10].values.tolist(), "Content" : similar_course[["Content"]][:10].values.tolist(), "Tag" : similar_course[['Tag']][:10].values.tolist(), "Author" : similar_course[['Author']][:10].values.tolist()}
-
     print(similar_course_list)
     return similar_course_list
