@@ -219,19 +219,24 @@
          <div id="recommend">
          <div style="margin-bottom:10px;">추천 미션</div>
          <div id="recommendContent">
-            <li>Figma 활용법</li>
-            <li><span>웹</span><span>jsp</span></li>
-            <li>홍길동</li>
+            <li>${contents["Title"][0].replaceAll("[\\[\\]']", '')}</li>
+            <c:forEach items="${fn:split(contents['Tag'][0], ',')}" var="tag">
+			    <span class="spanTag">${tag.replaceAll("[\\[\\]']", '')}</span>
+			</c:forEach>
+			<li>${contents["Author"][0][0].replaceAll("[\\[\\]']", '')}</li>         </div>
+         <div id="recommendContent">
+            <li>${contents["Title"][1].replaceAll("[\\[\\]']", '')}</li>
+            <c:forEach items="${fn:split(contents['Tag'][1], ',')}" var="tag">
+			    <span class="spanTag">${tag.replaceAll("[\\[\\]']", '')}</span>
+			</c:forEach>
+            <li>${contents["Author"][1][0].replaceAll("[\\[\\]']", '')}</li>
          </div>
          <div id="recommendContent">
-            <li>디자인 시스템 이해</li>
-            <li><span>디자인</span><span>웹</span></li>
-            <li>홍길동</li>
-         </div>
-         <div id="recommendContent">
-            <li>자바스크립트 이해 및 활용</li>
-            <li><span>javaScript</span><span>java</span></li>
-            <li>홍길동</li>
+            <li>${contents["Title"][2].replaceAll("[\\[\\]']", '')}</li>
+            <c:forEach items="${fn:split(contents['Tag'][0], ',')}" var="tag">
+			    <span class="spanTag">${tag.replaceAll("[\\[\\]']", '')}</span>
+			</c:forEach>
+            <li>${contents["Author"][2][0].replaceAll("[\\[\\]']", '')}</li>
          </div>
       
       </div>

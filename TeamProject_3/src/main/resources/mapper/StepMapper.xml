@@ -12,7 +12,6 @@
         SELECT step_no, mission_no, step, step_title FROM t_mission_step
         WHERE mission_no=${param1}
         ORDER BY step ASC
-        
 	</select>
 	
 	<select id="getStep" resultType="kr.or.ozz.dto.StepDTO">

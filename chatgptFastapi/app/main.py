@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from utils import *
 from dlanding_recommand import *
 from dmission_recommand import *
+from dsearch_recommand import *
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
@@ -81,3 +82,11 @@ class missionInput(BaseModel):
 async def dmission_recommand(input : missionInput):
     m_recommand = mission_recommand(input.contents)
     return JSONResponse(content = m_recommand)
+
+class SearchInput(BaseModel):
+    search : list
+
+@app.post("/dsearch_recommand")
+async def dsearch_recommand(input : SearchInput):
+    s_recommand = search_recommand(input.search)
+    return JSONResponse(content = s_recommand)

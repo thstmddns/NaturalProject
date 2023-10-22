@@ -98,19 +98,25 @@
 		<div id="recommend">
 			<div style="margin-bottom:10px;">추천 미션</div>
 			<div id="recommendContent">
-				<li>Figma 활용법</li>
-				<li><span>스킬</span><span>태그</span></li>
-				<li>홍길동</li>
+				<li>${search["Title"][0].replaceAll("[\\[\\]']", '')}</li>
+				<c:forEach items="${fn:split(search['Tag'][0], ',')}" var="tag">
+			    	<span class="spanTag">${tag.replaceAll("[\\[\\]']", '')}</span>
+				</c:forEach>
+				<li>${search["Author"][0][0].replaceAll("[\\[\\]']", '') }</li>
 			</div>
 			<div id="recommendContent">
-				<li>디자인 시스템 이해</li>
-				<li><span>스킬</span><span>태그</span></li>
-				<li>홍길동</li>
+				<li>${search["Title"][1].replaceAll("[\\[\\]']", '')}</li>
+				<c:forEach items="${fn:split(search['Tag'][1], ',')}" var="tag">
+			    	<span class="spanTag">${tag.replaceAll("[\\[\\]']", '')}</span>
+				</c:forEach>
+				<li>${search["Author"][1][0].replaceAll("[\\[\\]']", '') }</li>
 			</div>
 			<div id="recommendContent">
-				<li>자바스크립트 이해 및 활용</li>
-				<li><span>스킬</span><span>태그</span></li>
-				<li>홍길동</li>
+				<li>${search["Title"][2].replaceAll("[\\[\\]']", '')}</li>
+				<c:forEach items="${fn:split(search['Tag'][2], ',')}" var="tag">
+			    	<span class="spanTag">${tag.replaceAll("[\\[\\]']", '')}</span>
+				</c:forEach>
+				<li>${search["Author"][2][0].replaceAll("[\\[\\]']", '') }</li>
 			</div>
 		
 		</div>

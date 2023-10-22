@@ -1,5 +1,6 @@
 package kr.or.ozz.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -93,7 +95,7 @@ public class frontController {
        // FastAPI로 전송할 데이터를 생성합니다.
        Map<Object, Object> requestData = new HashMap<Object, Object>();
        requestData.put("concern", concernList);
-       System.out.println(requestData);
+       
        
     // HTTP 요청을 보내기 위한 RestTemplate을 만듭니다.
        RestTemplate restTemplate = new RestTemplate();
@@ -112,31 +114,29 @@ public class frontController {
            entity,
            String.class
        );
+       System.out.println("FastAPI Response: " + response.getBody());
 
        // FastAPI에서의 응답을 처리합니다.
-       String responseBody = response.getBody();
+       ObjectMapper mapper = new ObjectMapper();
+       Map<String, Object> responseBody = mapper.readValue(response.getBody(), new TypeReference<Map<String, Object>>() {});
 
-       List<String> responseBodyList = Arrays.asList(responseBody);
-       System.out.println("리스트출력" + responseBodyList);
-       // JSON 문자열을 ArrayList<Item>으로 변환
-       ObjectMapper objectMapper = new ObjectMapper();
+       System.out.println("리스트출력" + responseBody);
        
+
        // 현재 사용자의 달성률 정보를 가져옴 (예시: 사용자 아이디로 달성률 정보를 가져옴)
        List<PerformersDTO> mymissionList = Pservice.getPerfomersList(userid);
        //System.out.println("UserId from session: " + userid);
        
        // 모델에 데이터 추가
        mav.addObject("mymissionList", mymissionList);
-
-       
-       
+       mav.addObject("responseBodyList", responseBody);
        
        List<PerformersDTO> mymissioningCnt = Pservice.missioningcnt(userid);
        List<PerformersDTO> mymissionendCnt = Pservice.missionendcnt(userid);
        
        mav.addObject("mymissioningCnt", mymissioningCnt);
        mav.addObject("mymissionendCnt", mymissionendCnt);
-
+       mav.addObject("responseBodyList", responseBody);
        mav.setViewName("main/landing");
        
        return mav; // 뷰 이름 설정
@@ -214,21 +214,61 @@ public class frontController {
 	}
 	
 	@GetMapping("/searchMission")
-	public ModelAndView searchMission(PagingDTO pDTO) {
+	public ModelAndView searchMission(@RequestParam(name = "searchWord", required = false) String searchWord, PagingDTO pDTO) throws JsonProcessingException {
 		pDTO.setM_totalRecord(Mservice.m_totalRecord(pDTO));
 		pDTO.setQ_totalRecord(Qservice.q_totalRecord(pDTO));
 		pDTO.setR_totalRecord(Rservice.r_totalRecord(pDTO));
 		pDTO.setB_totalRecord(Bservice.b_totalRecord(pDTO));
 		pDTO.setU_totalRecord(Uservice.u_totalRecord(pDTO));
-
 		
 		List<MissionDTO> list = Mservice.Missionlist(pDTO);
-		
 		ModelAndView mav = new ModelAndView();
+		
+		// 검색어가 있으면 추출
+		if (searchWord != null && !searchWord.isEmpty()) {
+	        // 검색어 출력
+			System.out.println(searchWord);
+
+			// FastAPI 서비스의 URL을 정의합니다.
+	        String fastApiUrl = "http://localhost:8000/dsearch_recommand"; 
+
+	        // FastAPI로 전송할 데이터를 생성합니다.
+	        Map<Object, Object> requestData = new HashMap<Object, Object>();
+	        List<String> searchList = new ArrayList<>();
+	        searchList.add(searchWord);
+	        requestData.put("search", searchList);
+	        
+	        // HTTP 요청을 보내기 위한 RestTemplate을 만듭니다.
+	        RestTemplate restTemplate = new RestTemplate();
+
+	        // HTTP 헤더 설정
+	        HttpHeaders headers = new HttpHeaders();
+	        headers.setContentType(MediaType.APPLICATION_JSON);
+
+	        // HTTP 요청 엔티티 생성
+	        HttpEntity<Map<Object,Object>> entity = new HttpEntity<Map<Object, Object>>(requestData, headers);
+
+	        // FastAPI에 HTTP POST 요청을 보냅니다.
+	        ResponseEntity<String> searchResponse = restTemplate.exchange(
+	            fastApiUrl,
+	            HttpMethod.POST,
+	            entity,
+	            String.class
+	        );
+	        System.out.println("FastAPI Response: " + searchResponse.getBody());
+
+	        // FastAPI에서의 응답을 처리합니다.
+	        ObjectMapper mapper = new ObjectMapper();
+	        Map<String, Object> contentResponseBody = mapper.readValue(searchResponse.getBody(), new TypeReference<Map<String, Object>>() {});
+	        mav.addObject("search", contentResponseBody);
+		}
+		
 		mav.addObject("M_list", list);
 		mav.addObject("pDTO", pDTO);
+		
 		mav.setViewName("main/searchMission");
 		return mav;
+		
 	}
 	
 	@GetMapping("/searchMaster")

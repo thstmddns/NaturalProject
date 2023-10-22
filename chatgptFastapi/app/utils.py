@@ -303,7 +303,9 @@ def extract_analysis_steps(data):
         step_result = {
                 "단계": step_name,
                 "태스크":task_lst
+
         }
+
         results.append(step_result)
     return results
 
@@ -347,5 +349,3 @@ def generateGo(input):
     result = extract_analysis_steps(reply)
     print(result)
     return result
-
-
