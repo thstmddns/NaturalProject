@@ -45,7 +45,7 @@ def initializeModels(modelName="yoonjae97/kobart_AdamW_80000"):
     return tokenizer, model, device
 set_seed(42)
 #Set your OpenAI API key
-openai.api_key="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"
+openai.api_key="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"
 
 # EasyOCR 리더 및 모델 초기화
 reader = easyocr.Reader(['ko', 'en'], gpu=True)

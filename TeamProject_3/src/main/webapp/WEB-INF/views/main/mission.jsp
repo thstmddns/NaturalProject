@@ -20,13 +20,10 @@
 		</div>
 	</div>
 
+	<c:if test="${not empty logId}">
 	<div style="margin-top: 90px;">
-		<span style="font-size: 1.6em;">진행 중인 미션</span> <span><a
+		<span style="font-size: 1.6em;">진행 중인 미션</span> <span id="more2" style="cursor:pointer;"><a
 			style="font-size: 0.8em; color: #869AAF; float: right;">더보기 ></a></span>
-	</div>
-	<c:if test="${empty logId}">
-		로그인 후 사용하세요 <a href="/ozz/register/login">로그인</a>
-	</c:if>
 		<div id="mIng">
 		<c:choose>
 			<c:when test="${logId == P_dto.userid}">
@@ -41,12 +38,14 @@
 					</div>
 			</c:forEach>
 			</c:when>
-			<c:otherwise>
+		<c:otherwise>
 			<div class="notStart">진행 중인 미션이 없습니다. 미션을 진행해보세요!</div>
-			</c:otherwise>
-			</c:choose>
+		</c:otherwise>
+		</c:choose>
 		</div>
 	</div>
+	</c:if>
+	
 	<div style="font-size: 1.6em; margin-top: 90px;">맞춤 추천 미션</div>
 	<div id="recommendM">
 		<div id="recommendMList">
@@ -107,3 +106,15 @@
 	</div>
 
 </main>
+
+<script>
+let missionGoPopup2 = document.querySelector('span#more2');
+
+missionGoPopup2.onclick = function() {
+	let option2 = "width = 900px, height = 600px, top = 300px, left = 200px, scrollbars = yes,  location=no"
+	let openurl2 = '/ozz/mypage/mission_ing'
+	window.open(openurl2, 'missionGoPopup', option2)
+}
+
+
+</script>

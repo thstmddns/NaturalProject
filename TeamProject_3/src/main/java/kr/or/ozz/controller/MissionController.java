@@ -1,6 +1,11 @@
 package kr.or.ozz.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +15,7 @@ import java.util.concurrent.CompletableFuture;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -18,6 +24,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -297,8 +304,11 @@ public class MissionController {
 	   @PostMapping("/aiGenerate")
 	   @ResponseBody
 	   public String autoGeneration(final MissionDTO dto, @RequestParam("title") final String title,
-	         @RequestParam("pdf") final MultipartFile pdf, final HttpServletRequest request) {
-
+	         @RequestParam("pdf") final MultipartFile pdf, final HttpServletRequest request, final HttpSession session) {
+		   
+		   String logId = (String)session.getAttribute("logId"); 
+		      dto.setUserid(logId);
+		      
 	      try {
 	         // 아래는 desciptioncontroller로 보내는 코드
 	         CompletableFuture.runAsync(new Runnable() {
@@ -389,5 +399,92 @@ public class MissionController {
 	         return "failure";
 	      }
 	   }  
-	
+	   @PostMapping(value = "steptaskWriteOk")
+	   public ResponseEntity<String> steptaskWriteOk(@ModelAttribute MissionDTO missionDTO, HttpServletRequest request) {
+
+	      int mission_no = missionDTO.getMission_no();
+	      List<StepDTO> steps = missionDTO.getSteps();
+	      // 스텝 인덱스 아니고 화면에 표시될 스텝 순서 번호 생성
+	      int step_num = 1;
+	      for (int i = 0; i < steps.size(); i++) {
+	         StepDTO step = steps.get(i);
+
+	         // 스텝 식별 번호지정
+	         step.setStep(step_num);
+
+	         // 종속되는 미션 번호 지정
+	         step.setMission_no(mission_no);
+
+	         // 스텝 저장함
+	         try {
+	            service.stepCreate(step);
+	         } catch (Exception e) {
+	            e.printStackTrace();
+	            return new ResponseEntity<>("failure", HttpStatus.BAD_REQUEST);
+	         }
+	         // 저장된 스텝의 번호 가져옴(가장 최근 생성된걸로 가져오는 로직)
+	         int step_no = service.getstep_no();
+
+	         // 다음 스텝 식별용 번호 1올려야 하므로 더함
+	         step_num++;
+
+	         // 태스크 식별용 번호 생성
+	         int task_num = 1;
+	         List<TaskDTO> tasks = step.getTasks();
+	         for (int j = 0; j < tasks.size(); j++) {
+	            TaskDTO task = tasks.get(j);
+
+	            // 종속되는 스텝 번호 넣음
+	            task.setStep_no(step_no);
+
+	            // 태스크 식별 번호 넣음
+	            task.setTask(task_num);
+
+	            // 태스크 파일이랑 경로 지정
+	            MultipartFile file = task.getTask_file_name();
+	            String path = request.getSession().getServletContext().getRealPath("/upload");
+
+	            // 파일이 업로드되지 않았을 때
+	            if (file == null || file.isEmpty()) {
+	               task.setFile_name(""); // 파일명을 null로 설정하거나 기본값으로 설정 (DB에 null 허용 시)
+	            } else {
+	               String orgFileName = file.getOriginalFilename();
+	               String baseName = FilenameUtils.getBaseName(orgFileName);
+	               String extension = FilenameUtils.getExtension(orgFileName);
+
+	               File f = new File(path, orgFileName);
+	               int counter = 1;
+
+	               while (f.exists()) {
+	                  String newFileName = baseName + " (" + counter + ")." + extension;
+	                  f = new File(path, newFileName);
+	                  counter++;
+	               }
+
+	               try {
+	                  Path filePath = Paths.get(path, f.getName());
+	                  Files.createDirectories(filePath.getParent());
+	                  Files.write(filePath, file.getBytes());
+	               } catch (IOException e) {
+	                  e.printStackTrace();
+	                  return new ResponseEntity<>("failure", HttpStatus.BAD_REQUEST);
+	               }
+
+	               task.setFile_name(f.getName());
+	            }
+
+	            try {
+	               service.taskCreate(task);
+	            } catch (Exception e) {
+	               e.printStackTrace();
+	               return new ResponseEntity<>("failure", HttpStatus.BAD_REQUEST);
+
+	            }
+
+	            task_num++;
+	         }
+
+	      }
+	      return new ResponseEntity<>("success", HttpStatus.OK);
+	   }
 }

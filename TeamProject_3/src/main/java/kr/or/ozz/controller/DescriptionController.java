@@ -44,28 +44,11 @@ public class DescriptionController {
 
          Files.createDirectories(path.getParent());
 
-         String orgFileName = pdf.getOriginalFilename();
-         File f = new File(path.toString(), orgFileName);
-
-         if (f.exists()) {
-            int point = orgFileName.lastIndexOf(".");
-            String orgFile = orgFileName.substring(0, point);
-            String orgExt = orgFileName.substring(point + 1);
-
-            for (int renameNum = 1;; renameNum++) {
-               String newFileName = orgFile + " (" + renameNum + ")." + orgExt;
-               f = new File(path.toString(), newFileName);
-               if (!f.exists()) {
-                  orgFileName = newFileName;
-                  break;
-               }
-            }
-         }
-
          try {
-            Files.write(Paths.get(f.getPath()), pdf.getBytes());
+            Files.write(Paths.get(path.toString()), pdf.getBytes());
          } catch (IOException e) {
             e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
          }
 
          String fastApiUrl = "http://localhost:8000/generate_description";
@@ -76,7 +59,7 @@ public class DescriptionController {
 
          Map<String, String> body = new HashMap<>();
          body.put("title", title);
-         body.put("pdf_path", f.getPath());
+         body.put("pdf_path", path.toString());
 
          HttpEntity<Map<String, String>> requestEntity = new HttpEntity<>(body, headers);
 
