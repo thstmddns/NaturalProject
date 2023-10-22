@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <main>
 	<input type="hidden" value="${dto.step_no}">
@@ -39,7 +40,7 @@
 					<c:if test="${dto.step_no eq TaskDTO.step_no}">
 					<div class="StepDetail">
 						<li style="font-size:1.2em;">${TaskDTO.task_title}<span>완료  <img src="<%= request.getContextPath()%>/img/체크.png"/></span></li>
-						<div>
+						<div style="white-space: pre-line;">
 							${TaskDTO.task_content}
 						</div>
 						<button class="next">다음 단계로 넘어가기↓</button>

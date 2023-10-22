@@ -790,8 +790,11 @@ hr:last-child {
 	border-radius: 16px;
 	background: #F1F4F8;
 	margin-top: 15px;
-	padding: 20px 0 0 15px;
+	padding: 20px 10px 20px 15px;
 	font-size: 0.9em;
+}
+#recommendContent li:first-child {
+	margin-bottom: 5px;
 }
 #recommendContent li:nth-child(2) span{
 	color: white;
@@ -800,7 +803,7 @@ hr:last-child {
 	border-radius: 10px;
 	background-color: #52B0C5;
 	font-size: 0.8em;
-	margin: 0 5px 0 0;
+	margin: 0 3px 0 0;
 	padding: 2px 4px;
 }
 #recommendContent li:nth-child(2) {
@@ -809,6 +812,9 @@ hr:last-child {
 }
 #recommendContent li:nth-child(3) {
 	font-size: 0.8em;
+	margin-top: 15px;
+}
+#recommendContent li:last-child {
 	margin-top: 15px;
 }
 #searchResultMission {
@@ -2206,6 +2212,7 @@ hr:last-child {
 	background: #2B94AB;
 	border-radius: 100px;
 	padding: 5px 10px;
+	margin-bottom: 50px;
 }
 .finish:hover {
 	background: #E8FBFF;
@@ -2223,4 +2230,26 @@ hr:last-child {
 	background: White;
 	padding: 10px;
 	margin: 10px 0 50px 0;
+}
+#result input[type="text"] {
+	width: 97%; 
+	border-radius: 10px;
+	border: 1px solid #DAE2EB;
+	background: White;
+	padding: 10px;
+	margin: 10px 0 50px 0;
+}
+.task-info {
+	border: 1px solid #DAE2EB;
+	border-radius: 16px;
+	padding: 30px 40px;
+}
+.add-task {
+	border-radius: 10px;
+	border: 1px solid #2B94AB;
+	background: #E8FBFF;
+	width: 100%;
+	color: #2B94AB;
+	text-align: left;
+	padding: 10px 0 10px 20px;
 }
