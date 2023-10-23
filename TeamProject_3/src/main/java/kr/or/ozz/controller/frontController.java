@@ -77,70 +77,70 @@ public class frontController {
 	   List<MissionDTO> MissionToplist = Mservice.MissionToplist();
 	   ModelAndView mav = new ModelAndView();
 	   mav.addObject("MissionToplist", MissionToplist);
-	   
-	   // 세션에서 현재 사용자의 아이디를 가져옴
-       String userid = (String)session.getAttribute("logId");
-       
-       // 사용자 정보를 가져옵니다.
-       UserDTO user = Uservice.getUser(userid);
-
-       // 사용자의 concern을 가져옵니다.
-       String concern = user.getConcern();
-       // concern을 concernList에 잠아줍니다.      
-       List<String> concernList = Arrays.asList(concern);
-       
-       // FastAPI 서비스의 URL을 정의합니다.
-       String fastApiUrl = "http://127.0.0.1:8000/dlanding_recommand";
-
-       // FastAPI로 전송할 데이터를 생성합니다.
-       Map<Object, Object> requestData = new HashMap<Object, Object>();
-       requestData.put("concern", concernList);
-       
-       
-    // HTTP 요청을 보내기 위한 RestTemplate을 만듭니다.
-       RestTemplate restTemplate = new RestTemplate();
-
-       // HTTP 헤더 설정
-       HttpHeaders headers = new HttpHeaders();
-       headers.setContentType(MediaType.APPLICATION_JSON);
-
-       // HTTP 요청 엔티티 생성
-       HttpEntity<Map<Object,Object>> entity = new HttpEntity<Map<Object, Object>>(requestData, headers);
-
-       // FastAPI에 HTTP POST 요청을 보냅니다.
-       ResponseEntity<String> response = restTemplate.exchange(
-           fastApiUrl,
-           HttpMethod.POST,
-           entity,
-           String.class
-       );
-       System.out.println("FastAPI Response: " + response.getBody());
-
-       // FastAPI에서의 응답을 처리합니다.
-       ObjectMapper mapper = new ObjectMapper();
-       Map<String, Object> responseBody = mapper.readValue(response.getBody(), new TypeReference<Map<String, Object>>() {});
-
-       System.out.println("리스트출력" + responseBody);
-       
-
-       // 현재 사용자의 달성률 정보를 가져옴 (예시: 사용자 아이디로 달성률 정보를 가져옴)
-       List<PerformersDTO> mymissionList = Pservice.getPerfomersList(userid);
-       //System.out.println("UserId from session: " + userid);
-       
-       // 모델에 데이터 추가
-       mav.addObject("mymissionList", mymissionList);
-       mav.addObject("responseBodyList", responseBody);
-       
-       List<PerformersDTO> mymissioningCnt = Pservice.missioningcnt(userid);
-       List<PerformersDTO> mymissionendCnt = Pservice.missionendcnt(userid);
-       
-       mav.addObject("mymissioningCnt", mymissioningCnt);
-       mav.addObject("mymissionendCnt", mymissionendCnt);
-       mav.addObject("responseBodyList", responseBody);
-       mav.setViewName("main/landing");
-       
+	   try {
+		   // 세션에서 현재 사용자의 아이디를 가져옴
+	       String userid = (String)session.getAttribute("logId");
+	       
+	       // 사용자 정보를 가져옵니다.
+	       UserDTO user = Uservice.getUser(userid);
+	       
+	       // 사용자의 concern을 가져옵니다.
+	       String concern = user.getConcern();
+	       // concern을 concernList에 잠아줍니다.      
+	       List<String> concernList = Arrays.asList(concern);
+	       
+	       // FastAPI 서비스의 URL을 정의합니다.
+	       String fastApiUrl = "http://127.0.0.1:8000/dlanding_recommand";
+	
+	       // FastAPI로 전송할 데이터를 생성합니다.
+	       Map<Object, Object> requestData = new HashMap<Object, Object>();
+	       requestData.put("concern", concernList);
+	       
+	       
+	       // HTTP 요청을 보내기 위한 RestTemplate을 만듭니다.
+	       RestTemplate restTemplate = new RestTemplate();
+	
+	       // HTTP 헤더 설정
+	       HttpHeaders headers = new HttpHeaders();
+	       headers.setContentType(MediaType.APPLICATION_JSON);
+	
+	       // HTTP 요청 엔티티 생성
+	       HttpEntity<Map<Object,Object>> entity = new HttpEntity<Map<Object, Object>>(requestData, headers);
+	
+	       // FastAPI에 HTTP POST 요청을 보냅니다.
+	       ResponseEntity<String> response = restTemplate.exchange(
+	           fastApiUrl,
+	           HttpMethod.POST,
+	           entity,
+	           String.class
+	       );
+	       System.out.println("FastAPI Response: " + response.getBody());
+	
+	       // FastAPI에서의 응답을 처리합니다.
+	       ObjectMapper mapper = new ObjectMapper();
+	       Map<String, Object> responseBody = mapper.readValue(response.getBody(), new TypeReference<Map<String, Object>>() {});
+	
+	       System.out.println("리스트출력" + responseBody);
+	       
+	
+	       // 현재 사용자의 달성률 정보를 가져옴 (예시: 사용자 아이디로 달성률 정보를 가져옴)
+	       List<PerformersDTO> mymissionList = Pservice.getPerfomersList(userid);
+	       //System.out.println("UserId from session: " + userid);
+		   
+	       // 모델에 데이터 추가
+	       mav.addObject("mymissionList", mymissionList);
+	       mav.addObject("responseBodyList", responseBody);
+	
+	       List<PerformersDTO> mymissioningCnt = Pservice.missioningcnt(userid);
+	       List<PerformersDTO> mymissionendCnt = Pservice.missionendcnt(userid);
+	       
+	       mav.addObject("mymissioningCnt", mymissioningCnt);
+	       mav.addObject("mymissionendCnt", mymissionendCnt);
+	       mav.setViewName("main/landing");
+		}catch (Exception e) {
+			mav.setViewName("main/landing");
+		}
        return mav; // 뷰 이름 설정
-   
 	}
 	
 	@GetMapping("/idSearch")
@@ -154,14 +154,73 @@ public class frontController {
 	}
 
 	@GetMapping("/mainMission")
-	public ModelAndView MissionToplist() {
+	public ModelAndView MissionToplist(HttpSession session) {
 	   List<MissionDTO> MissionToplist = Mservice.MissionToplist();
-
 	   ModelAndView mav = new ModelAndView();
 	   mav.addObject("MissionToplist", MissionToplist);
-	   
-	   mav.setViewName("main/mission");
-	   
+	   try {
+		   // 세션에서 현재 사용자의 아이디를 가져옴
+	       String userid = (String)session.getAttribute("logId");
+	       
+	       // 사용자 정보를 가져옵니다.
+	       UserDTO user = Uservice.getUser(userid);
+	       
+	       // 사용자의 concern을 가져옵니다.
+	       String concern = user.getConcern();
+	       // concern을 concernList에 잠아줍니다.      
+	       List<String> concernList = Arrays.asList(concern);
+	       
+	       // FastAPI 서비스의 URL을 정의합니다.
+	       String fastApiUrl = "http://127.0.0.1:8000/dlanding_recommand";
+	
+	       // FastAPI로 전송할 데이터를 생성합니다.
+	       Map<Object, Object> requestData = new HashMap<Object, Object>();
+	       requestData.put("concern", concernList);
+	       
+	       
+	       // HTTP 요청을 보내기 위한 RestTemplate을 만듭니다.
+	       RestTemplate restTemplate = new RestTemplate();
+	
+	       // HTTP 헤더 설정
+	       HttpHeaders headers = new HttpHeaders();
+	       headers.setContentType(MediaType.APPLICATION_JSON);
+	
+	       // HTTP 요청 엔티티 생성
+	       HttpEntity<Map<Object,Object>> entity = new HttpEntity<Map<Object, Object>>(requestData, headers);
+	
+	       // FastAPI에 HTTP POST 요청을 보냅니다.
+	       ResponseEntity<String> response = restTemplate.exchange(
+	           fastApiUrl,
+	           HttpMethod.POST,
+	           entity,
+	           String.class
+	       );
+	       System.out.println("FastAPI Response: " + response.getBody());
+	
+	       // FastAPI에서의 응답을 처리합니다.
+	       ObjectMapper mapper = new ObjectMapper();
+	       Map<String, Object> responseBody = mapper.readValue(response.getBody(), new TypeReference<Map<String, Object>>() {});
+	
+	       System.out.println("리스트출력" + responseBody);
+	       
+	
+	       // 현재 사용자의 달성률 정보를 가져옴 (예시: 사용자 아이디로 달성률 정보를 가져옴)
+	       List<PerformersDTO> mymissionList = Pservice.getPerfomersList(userid);
+	       //System.out.println("UserId from session: " + userid);
+		   
+	       // 모델에 데이터 추가
+	       mav.addObject("mymissionList", mymissionList);
+	       mav.addObject("responseBodyList", responseBody);
+	
+	       List<PerformersDTO> mymissioningCnt = Pservice.missioningcnt(userid);
+	       List<PerformersDTO> mymissionendCnt = Pservice.missionendcnt(userid);
+	       
+	       mav.addObject("mymissioningCnt", mymissioningCnt);
+	       mav.addObject("mymissionendCnt", mymissionendCnt);
+	       mav.setViewName("main/mission");
+		}catch (Exception e) {
+			mav.setViewName("main/mission");
+		} 
 	   return mav;
 	}
 	

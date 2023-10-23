@@ -93,7 +93,7 @@ def landing_recommand(concern):
     similar_course = find_sim_course(course, tag_sim_sorted_ind, concern, 5)
     similar_course_list = []
     print(33)
-    similar_course_list = {"Title" : similar_course['Title'][:10].values.tolist(), "Content" : similar_course[["Content"]][:10].values.tolist(), "Tag" : similar_course[['Tag']][:10].values.tolist(), "Author" : similar_course[['Author']][:10].values.tolist()}
+    similar_course_list = {"Title" : similar_course['Title'][4:10].values.tolist(), "Content" : similar_course[["Content"]][4:10].values.tolist(), "Tag" : similar_course[['Tag']][4:10].values.tolist(), "Author" : similar_course[['Author']][4:10].values.tolist()}
 
     print(similar_course_list)
     return similar_course_list
