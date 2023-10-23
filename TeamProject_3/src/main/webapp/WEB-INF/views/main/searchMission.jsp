@@ -12,15 +12,15 @@
 		<div id="searchResultMission">
 			<c:if test="${empty M_list}">
 				<div class="nosearch">
-	         		<li><span class="highlight">${pDTO.searchWord}</span> 에 대한 미션 검색 결과가 없습니다.</li>
+	         		<li><span class="highlight">"${pDTO.searchWord}"</span> 에 대한 미션 검색 결과가 없습니다.</li>
 	         		<li>검색하신 키워드의 마스터신가요 ?  직접 미션을 작성해보세요. <a href="/ozz/Mission/Missionwrite" class="goMake"> 직접 미션 만들기</a></li>
 	      		</div>
       		</c:if>
       		 <c:forEach var="M_dto" items="${M_list}">
 				<div class="searchM">
-	         		<li>${M_dto.mission_title}</li>
+	         		<li><a href='/ozz/Mission/MissionView?no=${M_dto.mission_no}&nowPage=${pDTO.nowPage}<c:if test="${pDTO.searchWord != null}">&searchKey=${pDTO.searchKey}&searchWord=${pDTO.searchWord}</c:if>'>${M_dto.mission_title}</a></li>
 					<li><c:forEach items="${fn:split(M_dto.mission_tag, ',')}" var="category">
-                <span>${category}</span></c:forEach>
+                <span>${category}</span></c:forEach></li>
 						<li style="margin-top: 30px;">${M_dto.userid}<span class="masterIcon">
 							<span>${M_dto.created_at}</span>
 							<span><img src="<%= request.getContextPath()%>/img/Component 3.png"/></span>
@@ -98,19 +98,25 @@
 		<div id="recommend">
 			<div style="margin-bottom:10px;">추천 미션</div>
 			<div id="recommendContent">
-				<li>Figma 활용법</li>
-				<li><span>스킬</span><span>태그</span></li>
-				<li>홍길동</li>
+				<li>${search["Title"][0].replaceAll("[\\[\\]']", '')}</li>
+				<c:forEach items="${fn:split(search['Tag'][0], ',')}" var="tag">
+			    	<span class="spanTag">${tag.replaceAll("[\\[\\]']", '')}</span>
+				</c:forEach>
+				<li>${search["Author"][0][0].replaceAll("[\\[\\]']", '') }</li>
 			</div>
 			<div id="recommendContent">
-				<li>디자인 시스템 이해</li>
-				<li><span>스킬</span><span>태그</span></li>
-				<li>홍길동</li>
+				<li>${search["Title"][1].replaceAll("[\\[\\]']", '')}</li>
+				<c:forEach items="${fn:split(search['Tag'][1], ',')}" var="tag">
+			    	<span class="spanTag">${tag.replaceAll("[\\[\\]']", '')}</span>
+				</c:forEach>
+				<li>${search["Author"][1][0].replaceAll("[\\[\\]']", '') }</li>
 			</div>
 			<div id="recommendContent">
-				<li>자바스크립트 이해 및 활용</li>
-				<li><span>스킬</span><span>태그</span></li>
-				<li>홍길동</li>
+				<li>${search["Title"][2].replaceAll("[\\[\\]']", '')}</li>
+				<c:forEach items="${fn:split(search['Tag'][2], ',')}" var="tag">
+			    	<span class="spanTag">${tag.replaceAll("[\\[\\]']", '')}</span>
+				</c:forEach>
+				<li>${search["Author"][2][0].replaceAll("[\\[\\]']", '') }</li>
 			</div>
 		
 		</div>

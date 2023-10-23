@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import kr.or.ozz.dao.MissionDAO;
 import kr.or.ozz.dto.PagingDTO;
+import kr.or.ozz.dto.StepDTO;
+import kr.or.ozz.dto.TaskDTO;
 import kr.or.ozz.dto.MissionDTO;
 
 @Service
@@ -67,5 +69,35 @@ public class MissionServiceImpl implements MissionService{
 	public List<MissionDTO> MissionToplist(){
 	   return dao.MissionToplist();
 	   }
+
+	@Override
+	public int missionCreate(MissionDTO dto) {
+		
+		return dao.missionCreate(dto);
+	}
+
+	@Override
+	public int getmission_no() {
+		
+		return dao.getmission_no();
+	}
+
+	@Override
+	public int stepCreate(StepDTO sdto) {
+		
+		return dao.stepCreate(sdto);
+	}
+
+	@Override
+	public int getstep_no() {
+		
+		return dao.getstep_no();
+	}
+
+	@Override
+	public int taskCreate(TaskDTO tdto) {
+		
+		return dao.taskCreate(tdto);
+	}
 
 }

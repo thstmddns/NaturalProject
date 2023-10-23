@@ -1,13 +1,15 @@
 package kr.or.ozz.dto;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
 public class StepDTO {
-	private int step_no;			// ½ºÅÜ ÀÏ·Ã¹øÈ£
-	private int mission_no;			// ¹Ì¼Ç ¹øÈ£
-	private int step;				// ÇØ´ç ½ºÅÜ(°¢ ¹Ì¼Çº° ½ºÅÜ)
-	private String step_title;		// ½ºÅÜ Á¦¸ñ
-	private String step_time;		// ¼Ò¿ä ½Ã°£
-	private String userid;			// È¸¿ø ¾ÆÀÌµð
+	private int step_no;			// ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·Ã¹ï¿½È£
+	private int mission_no;			// ï¿½Ì¼ï¿½ ï¿½ï¿½È£
+	private int step;				// ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ ï¿½Ì¼Çºï¿½ ï¿½ï¿½ï¿½ï¿½)
+	private String step_title;		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	private String userid;			// È¸ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½
+	private List<TaskDTO> tasks;
 }

@@ -6,10 +6,10 @@
 <mapper namespace="kr.or.ozz.dao.UserDAO">
 	<insert id="UserInsert">
 		insert into t_user(userid, pwd, username,
-		email, years, work, concern, created_at)
+		email, years, work, concern, created_at, intro)
 		values(#{userid}, #{pwd}, #{username},
 		#{email}, #{years},
-		#{work}, #{concern}, sysdate)
+		#{work}, #{concern}, sysdate, #{intro})
 	</insert>
 
 	<select id="loginOk" resultType="kr.or.ozz.dto.UserDTO">
@@ -53,8 +53,8 @@
 	</update>
 	
 	<select id="Userlist" resultType="kr.or.ozz.dto.UserDTO">
-
 <!--       SELECT * FROM
+>>>>>>> 35ce85a6a82ab1ee99b76a92315175c1fb94bec7
          (SELECT * FROM -->
             SELECT username, work, intro FROM t_user
             <!-- 검색어가 있을 때 -->

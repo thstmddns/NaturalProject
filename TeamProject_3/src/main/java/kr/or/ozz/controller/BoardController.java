@@ -130,7 +130,7 @@ public class BoardController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("dto", dto);
 		mav.addObject("pDTO", pDTO);
-		mav.setViewName("Board/BoardView");
+		mav.setViewName("Community/communityView");
 
 		return mav;
 	}

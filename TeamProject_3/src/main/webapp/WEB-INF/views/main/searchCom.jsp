@@ -12,13 +12,13 @@
 		<div id="searchResult">
 			<c:if test="${empty Q_list and empty R_list and empty B_list}">
 				<div class="nosearch">
-	        	 	<li><span class="highlight">${pDTO.searchWord}</span> 에 대한 커뮤니티 검색 결과가 없습니다.</li>
+	        	 	<li><span class="highlight">"${pDTO.searchWord}"</span> 에 대한 커뮤니티 검색 결과가 없습니다.</li>
 	         		<li>관련 게시물이 없나요? 게시판에 직접 작성해보세요. <a href="/ozz//Board/Boardwrite" class="goMake"> 게시글 작성하기</a></li>
 	      		</div>
       		</c:if>
       		<c:forEach var="Q_dto" items="${Q_list}">
 			<div class="searchCom">
-					<li>[QnA] ${Q_dto.qna_title}</li>
+					<li><a href='/ozz/Qna/QnaView?no=${Q_dto.qna_no}&nowPage=${pDTO.nowPage}<c:if test="${pDTO.searchWord != null}">&searchKey=${pDTO.searchKey}&searchWord=${pDTO.searchWord}</c:if>'>[QnA] ${Q_dto.qna_title}</li>
 					<li class="searchContent">${Q_dto.qna_content}</li>
 					<li></li>
 					<li style="margin:5px 0 0 5px;">
@@ -52,7 +52,7 @@
 	         
 			<c:forEach var="B_dto" items="${B_list}">
 	            <div class="searchCom">
-	               <li>[${B_dto.board_cate}] ${B_dto.board_title}</li>
+	               <li><a href='/ozz/Board/BoardView?no=${B_dto.board_no}&nowPage=${pDTO.nowPage}<c:if test="${pDTO.searchWord != null}">&searchKey=${pDTO.searchKey}&searchWord=${pDTO.searchWord}</c:if>'>[${B_dto.board_cate}] ${B_dto.board_title}</a></li>
 	               <li class="searchContent">${B_dto.board_content}</li>
 	               <li><c:forEach items="${fn:split(B_dto.work_cate, ',')}" var="category">
                 <span>${category}</span>

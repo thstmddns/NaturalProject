@@ -14,13 +14,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.ozz.dto.StepDTO;
+import kr.or.ozz.dto.TaskDTO;
+import kr.or.ozz.dto.MissionDTO;
 import kr.or.ozz.dto.PagingDTO;
 import kr.or.ozz.dto.StepDTO;
+import kr.or.ozz.service.MissionService;
 import kr.or.ozz.service.StepService;
+import kr.or.ozz.service.TaskService;
 import kr.or.ozz.service.StepService;
 
 // @Controller : 모델, 뷰를 리턴해준다.
@@ -35,8 +40,11 @@ public class StepController {
 	@Autowired
 	StepService service;
 	
-//	@Autowired
-//	TaskService Tservice;
+	@Autowired
+	TaskService Tservice;
+	
+	@Autowired
+	MissionService Mservice;
 
 	// 글쓰기 폼으로 이동
 	@GetMapping("/Stepwrite")
@@ -95,11 +103,15 @@ public class StepController {
 
 	// 글내용보기
 	@GetMapping("/StepView")
-	public ModelAndView StepView(int no, PagingDTO pDTO) {
+	public ModelAndView StepView(@RequestParam("no") int no, @RequestParam("mission_no") int mission_no, PagingDTO pDTO) {
 		// 레코드선택
 		StepDTO dto = service.getStep(no);
 		
-//		List<TaskDTO> Tasklist = Tservice.Tasklist(no, pDTO);
+		List<StepDTO> Steplist = service.Steplist(mission_no, pDTO);
+		
+		List<TaskDTO> Tasklist = Tservice.Tasklist(no, pDTO);
+		
+		MissionDTO Mdto = Mservice.getMission(mission_no);
 
 //	    byte[] imageData = dto.getFile_name();
 //        String base64ImageData = Base64.getEncoder().encodeToString(imageData);
@@ -107,9 +119,11 @@ public class StepController {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("no", no);
 		mav.addObject("dto", dto);
-//		mav.addObject("Tasklist", Tasklist);
+		mav.addObject("Steplist", Steplist);
+		mav.addObject("Tasklist", Tasklist);
+		mav.addObject("Mdto", Mdto);
 		mav.addObject("pDTO", pDTO);
-		mav.setViewName("Step/StepView");
+		mav.setViewName("Mission/missionStep");
 
 		return mav;
 	}

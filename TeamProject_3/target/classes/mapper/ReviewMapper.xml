@@ -4,20 +4,13 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.ozz.dao.ReviewDAO">
 	<insert id="ReviewwriteOk">
-<!-- 		<if test="mission_no != 0"> -->
-			insert into t_mission_review(review_no, mission_no, review_title, review_score, review_content, created_at, userid, file_name, hit)
-			values(review_no_seq.nextval, #{mission_no}, #{review_title}, #{review_score}, #{review_content}, sysdate, #{userid}, #{file_name}, 0)
-<!-- 		</if>
-		<if test="mission_no == 0">
-			insert into t_mission_review(review_no, review_title, review_score, review_content, created_at, userid, file_name, hit)
-			values(review_no_seq.nextval, #{review_title}, #{review_score}, #{review_content}, sysdate, #{userid}, #{file_name}, 0)
-		</if> -->
+			insert into t_mission_review(review_no, mission_no, review_title, review_score, review_content, created_at, userid, hit)
+			values(review_no_seq.nextval, #{mission_no}, #{review_title}, #{review_score}, #{review_content}, sysdate, #{userid}, 0)
 	</insert>
 	
 	<select id="Reviewlist" resultType="kr.or.ozz.dto.ReviewDTO">
 		SELECT * FROM
          (SELECT * FROM
-
             (SELECT review_no, review_content, review_title, review_score, to_char(created_at, 'MM-DD HH:MI') created_at, userid, hit FROM t_mission_review
             <!-- 검색어가 있을 때 -->
             <if test="searchWord != null">
@@ -32,6 +25,7 @@
 
 	<select id="M_Reviewlist" resultType="kr.or.ozz.dto.ReviewDTO">
 		select review_no, mission_no, review_title, review_score, userid, created_at, hit from t_mission_review
+		where mission_no = ${param1}
 	</select>
 
 	<select id="r_totalRecord" resultType="int">

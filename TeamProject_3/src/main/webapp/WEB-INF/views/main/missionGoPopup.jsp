@@ -49,14 +49,21 @@ h2::after {
 
 <main style="width:800px; height: 500px;">
 	<h2>진행중인 미션</h2>
+	<c:choose>
+	<c:when test="${empty mymissionList}">
+      <div class="missionContent" style="color: #4E657E;">진행중인 미션이 없습니다. 미션을 시작해보세요!</div>
+    </c:when>
+    <c:otherwise>
 	<div  id="missionGoList">
 		<c:forEach items="${mymissionList}" var="mission_ing">
 		<div class="missionContent">
 			<li>${mission_ing.mission_title}</li>
-			<li>진행률<span>${mission_ing.mission_rate}%</span><span>남은 스텝 수</span><span>00</span></li>
+			<li>진행률<span>${mission_ing.mission_rate}%</span><span>남은 스텝 수</span><span>${mission_ing.restcnt}</span></li>
 			<li><progress id="progress" value="${mission_ing.mission_rate}" min="0" max="100" style="margin-top: 10px;"></progress></li>
 			<li><button>이어서 진행하기</button></li>
 		</div>
 		</c:forEach>
 	</div>
+	</c:otherwise>
+	</c:choose>
 </main>

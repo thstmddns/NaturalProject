@@ -1,5 +1,7 @@
 package kr.or.ozz.dto;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -15,5 +17,6 @@ public class MissionDTO {
 	private String mission_cate;	// 미션 카테고리
 	private int hit;				// 조회수
 	private String mission_skill;	// 미션 스킬
-	private int mission_yn;			// 미션 완료여부
+	private int mission_yn;	// 미션 완료여부
+	private List<StepDTO> steps;
 }

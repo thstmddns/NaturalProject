@@ -42,22 +42,39 @@ public class MypageController {
 	
 	//마이페이지 메인으로 이동
 	@GetMapping("/mypage_main")
-	public String Mypage () {
+	public String Mypage (HttpSession session) {
 		return "mypage/mypage_main";
 	}
+	
 	// 회원정보 가져오기
 	@GetMapping("/myPageDetail")
 	public ModelAndView UserInfo(HttpSession session) {
 		String logId = (String)session.getAttribute("logId");
 		ModelAndView mav = new ModelAndView();
 		UserDTO dto = null;
-		try {
+		
+		// 세션에서 현재 사용자의 아이디를 가져옴
+	    String userid = (String)session.getAttribute("logId");
+	       
+	       
+	     // 현재 사용자의 달성률 정보를 가져옴 (예시: 사용자 아이디로 달성률 정보를 가져옴)
+	     List<PerformersDTO> mymissionList = Pservice.getPerfomersList(userid);
+	     List<PerformersDTO> myendmissionList = Pservice.getPerfomersEndList(userid);
+	     System.out.println("UserId from session: " + userid);
+	       
+	       // 모델에 데이터 추가
+	       mav.addObject("mymissionList", mymissionList);
+	       mav.addObject("myendmissionList", myendmissionList);
+	       
+	       
+	      try {
 			dto = Uservice.getUser(logId);
 			mav.addObject("dto", dto);
 			mav.setViewName("main/mypage");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	   
 		System.out.println(dto.toString());
 		return mav;
 	}

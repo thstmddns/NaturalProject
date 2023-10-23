@@ -344,6 +344,19 @@ a:link, a:visited, a:hover{
 	background-color:#E8FBFF;
 	color: #52B0C5;
 }
+.ingM span {
+	margin-left: 10px;
+}
+.notStart {
+	width: 950px;
+	height: 100px;
+	background-color: #F1F4F8;
+	color: #4E657E;
+	border-radius: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 #recommendMList {
 	display:grid;
 	grid-template-columns: 330px 330px 330px;
@@ -777,8 +790,11 @@ hr:last-child {
 	border-radius: 16px;
 	background: #F1F4F8;
 	margin-top: 15px;
-	padding: 20px 0 0 15px;
+	padding: 20px 10px 20px 15px;
 	font-size: 0.9em;
+}
+#recommendContent li:first-child {
+	margin-bottom: 5px;
 }
 #recommendContent li:nth-child(2) span{
 	color: white;
@@ -787,7 +803,7 @@ hr:last-child {
 	border-radius: 10px;
 	background-color: #52B0C5;
 	font-size: 0.8em;
-	margin: 0 5px 0 0;
+	margin: 0 3px 0 0;
 	padding: 2px 4px;
 }
 #recommendContent li:nth-child(2) {
@@ -796,6 +812,9 @@ hr:last-child {
 }
 #recommendContent li:nth-child(3) {
 	font-size: 0.8em;
+	margin-top: 15px;
+}
+#recommendContent li:last-child {
 	margin-top: 15px;
 }
 #searchResultMission {
@@ -999,7 +1018,7 @@ hr:last-child {
 	align-items:center;
 	justify-content: center;
 }
-#replyFrm textarea {
+#coment {
 	width: 80%;
 	resize: none;
 	border: none;
@@ -1391,7 +1410,7 @@ hr:last-child {
 }
 .submit {
 	display:grid;
-	grid-template-columns: 550px 100px;	
+	grid-template-columns: 500px 150px;	
 }
 .submit li {
 	padding: 10px;
@@ -1419,7 +1438,7 @@ hr:last-child {
 	background: #52B0C5; 
 	border-radius: 100px;
 	border: none;
-	margin-top: 20px;
+	margin: 20px 20px;
 }
 .submit button:hover {
 	background: #E8FBFF;
@@ -1628,12 +1647,17 @@ hr:last-child {
 	float:right;
 	font-size: 0.9em;
   }
+ .reviewTitle {
+ 	height:auto;
+ 	padding: 10px 15px;
+ 	margin-top: 20px;
+ }
  .reviewText {
  	background:white; 
  	height:auto; 
  	padding: 10px 15px;
  	border-radius: 16px;
- 	margin-top: 20px;
+ 	margin-top: 10px;
  }
 #missionQnA {
 	width: 90%;
@@ -1698,7 +1722,7 @@ hr:last-child {
   	border-radius: 10px;
   	border: 1px solid #869AAF;
   }
-  .QnADetail li:last-child span {
+  .QnACreate {
   	margin-left: 30px;
   	font-size: 0.8em;
   	color: #869AAF;
@@ -2100,19 +2124,8 @@ hr:last-child {
 	padding: 5px 10px;
 }
 #missionUp span button:first-child:hover {
-	background: #007efd;
+	background: #2B94AB;
 	color: white;
-}
-#missionUp span button:last-child {
-	border-radius: 100px;
-	background: #52B0C5;
-	color: white;
-	border: none;
-	padding: 5px 10px;
-}
-#missionUp span button:last-child:hover {
-	border: 1px solid #52B0C5;
-	background:  #007efd;
 }
 #main {
 	width: 70%;
@@ -2158,7 +2171,7 @@ hr:last-child {
 	font-size: 1.1em !important;
 }
 .totalTime {
-	width: 20px !important;
+	width: 70px !important;
 }
 .plus {
 	border-radius: 10px;
@@ -2178,4 +2191,65 @@ hr:last-child {
 .task input {
 	width: 95% !important;
 	margin-bottom: 20px !important;
+}
+#aiGenerate,.selfGenerate {
+	width: 50%;
+	background: #E8FBFF;
+	color: #2B94AB;
+	border: 1px solid #2B94AB;
+	border-radius: 16px;
+	height: 30px;
+}
+#aiGenerate:hover,.selfGenerate:hover {
+	color: white;
+	borer:none;
+	background: #52B0C5;
+}
+.finish {
+	float:right; 
+	color: white;
+	border: none;
+	background: #2B94AB;
+	border-radius: 100px;
+	padding: 5px 10px;
+	margin-bottom: 50px;
+}
+.finish:hover {
+	background: #E8FBFF;
+	color: #2B94AB;
+	border: 1px solid #2B94AB;
+}
+#missionMake {
+	width: 70%;
+	margin-left: 150px;
+}
+#missionMake input[type="text"] {
+	width: 97%; 
+	border-radius: 10px;
+	border: 1px solid #DAE2EB;
+	background: White;
+	padding: 10px;
+	margin: 10px 0 50px 0;
+}
+#result input[type="text"] {
+	width: 97%; 
+	border-radius: 10px;
+	border: 1px solid #DAE2EB;
+	background: White;
+	padding: 10px;
+	margin: 10px 0 50px 0;
+}
+.task-info {
+	border: 1px solid #DAE2EB;
+	border-radius: 16px;
+	padding: 30px 40px;
+}
+.add-task {
+	border-radius: 10px;
+	border: 1px solid #2B94AB;
+	background: #E8FBFF;
+	width: 100%;
+	color: #2B94AB;
+	text-align: left;
+	padding: 10px 0 10px 20px;
 }

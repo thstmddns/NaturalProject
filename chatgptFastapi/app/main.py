@@ -1,6 +1,9 @@
 from fastapi import FastAPI, File, UploadFile, Form, HTTPException, Request
 from pydantic import BaseModel
 from utils import *
+from dlanding_recommand import *
+from dmission_recommand import *
+from dsearch_recommand import *
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
@@ -8,7 +11,7 @@ import time
 import shutil
 
 #initialize fast api
-app  = FastAPI()
+app  = FastAPI(debug=True)
 
 # CORS 미들웨어 추가
 app.add_middleware(
@@ -63,3 +66,27 @@ async def generate_description(input: DescriptionInput):
     except Exception as e:
         return JSONResponse(content={"error": str(e)}, status_code=400)
     
+class landingInput(BaseModel):
+    concern : list
+    
+    
+@app.post("/dlanding_recommand")
+async def dlanding_recommand(input : landingInput):
+    l_recommand = landing_recommand(input.concern)
+    return JSONResponse(content = l_recommand)
+
+class missionInput(BaseModel):
+    contents : list
+    
+@app.post("/dmission_recommand")
+async def dmission_recommand(input : missionInput):
+    m_recommand = mission_recommand(input.contents)
+    return JSONResponse(content = m_recommand)
+
+class SearchInput(BaseModel):
+    search : list
+
+@app.post("/dsearch_recommand")
+async def dsearch_recommand(input : SearchInput):
+    s_recommand = search_recommand(input.search)
+    return JSONResponse(content = s_recommand)
