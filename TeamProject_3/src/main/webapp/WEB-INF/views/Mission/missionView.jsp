@@ -218,26 +218,19 @@
          
          <div id="recommend">
          <div style="margin-bottom:10px;">추천 미션</div>
-         <div id="recommendContent">
-            <li>${contents["Title"][0].replaceAll("[\\[\\]']", '')}</li>
-            <c:forEach items="${fn:split(contents['Tag'][0], ',')}" var="tag">
-			    <span class="spanTag">${tag.replaceAll("[\\[\\]']", '')}</span>
-			</c:forEach>
-			<li>${contents["Author"][0][0].replaceAll("[\\[\\]']", '')}</li>         </div>
-         <div id="recommendContent">
-            <li>${contents["Title"][1].replaceAll("[\\[\\]']", '')}</li>
-            <c:forEach items="${fn:split(contents['Tag'][1], ',')}" var="tag">
-			    <span class="spanTag">${tag.replaceAll("[\\[\\]']", '')}</span>
-			</c:forEach>
-            <li>${contents["Author"][1][0].replaceAll("[\\[\\]']", '')}</li>
-         </div>
-         <div id="recommendContent">
-            <li>${contents["Title"][2].replaceAll("[\\[\\]']", '')}</li>
-            <c:forEach items="${fn:split(contents['Tag'][0], ',')}" var="tag">
-			    <span class="spanTag">${tag.replaceAll("[\\[\\]']", '')}</span>
-			</c:forEach>
-            <li>${contents["Author"][2][0].replaceAll("[\\[\\]']", '')}</li>
-         </div>
+          <c:forEach items="${missions}" var="mission">
+		<div id="recommendContent">
+		  
+		        <li>${mission.mission_title}</li>
+		        <li>
+		        	<c:forEach items="${fn:split(mission.mission_tag, ',')}" var="tag">
+		        		<span>${tag}</span>
+		        	</c:forEach>
+		        </li>
+		        <li>${mission.userid }</li>
+		    
+		</div>
+		</c:forEach>
       
       </div>
       </div>

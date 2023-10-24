@@ -178,7 +178,7 @@ public class MissionController {
 		
 		// FastAPI 서비스의 URL을 정의합니다.
 		List<String> contents = new ArrayList<String>();
-		contents.add(dto.getMission_cate());
+		contents.add(dto.getMission_tag());
 
 		// FastAPI 서비스의 URL을 정의합니다.
         String fastApiUrl = "http://localhost:8000/dmission_recommand"; // FastAPI �꽌踰� URL濡� �닔�젙
@@ -210,9 +210,19 @@ public class MissionController {
         // FastAPI에서의 응답을 처리합니다.
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> contentResponseBody = mapper.readValue(contentResponse.getBody(), new TypeReference<Map<String, Object>>() {});
-
-        System.out.println("리스트출력" + contentResponseBody);
+        List<Integer> missionNos = (List<Integer>) contentResponseBody.get("MISSION_NO");
         
+        List<MissionDTO> missions = new ArrayList<>();
+        for (Integer missionNO : missionNos) {
+        	MissionDTO mdto = service.getMission(missionNO);
+        	
+        	if (mdto != null) {
+        		missions.add(mdto);
+        	}
+        }
+        
+        System.out.println("리스트출력" + contentResponseBody);
+        System.out.println("hi" + missions);
         System.out.println(contents);
         System.out.println(contentResponseBody);
         
@@ -224,7 +234,11 @@ public class MissionController {
 		mav.addObject("pDTO", pDTO);
 
 		mav.addObject("contents", contentResponseBody);
+<<<<<<< HEAD
 
+=======
+		mav.addObject("missions", missions);
+>>>>>>> 0bff3fbcb854cabd70cc27c0377d40c8dd19a993
 		mav.setViewName("Mission/missionView");
 
 		return mav;
