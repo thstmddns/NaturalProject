@@ -21,7 +21,7 @@
         <c:forEach items="${mymissionList}" var="mission_ing">
             <tr>
                 <td>${mission_ing.mission_title}</td>
-                <td>${mission_ing.mission_rate}%</td>
+                <td>${mission_ing.mission_rate.toFixed(1)}%</td>
             </tr>
         </c:forEach>
         

@@ -495,5 +495,4 @@ public class MissionController {
 	      }
 	      return new ResponseEntity<>("success", HttpStatus.OK);
 	   }
->>>>>>> e7714c386e2d720faf0522e36d965948cab9ffcb
 }
