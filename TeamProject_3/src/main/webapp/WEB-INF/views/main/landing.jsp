@@ -135,9 +135,8 @@
 		<div style="font-size:1.6em; margin-top: 90px;">맞춤 추천 미션</div>
 		<div id="recommendM">
 			<div id="recommendMList">
-			 <c:if test="${not empty responseBodyList}">
-				 <c:forEach items="${responseBodyList['Title']}" var="title" varStatus="loop">
-			     	<div class="rMInfo">
+			 	<c:forEach items="${responseBodyList['Title']}" var="title" varStatus="loop">
+		            <div class="rMInfo">
 		                <li><img src="<%= request.getContextPath()%>/img/Frame 2526 (3).png" /></li>
 		                <li>${title.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("'", "").replaceAll("\\{", "").replaceAll("\\}", "")}</li>
 		                <c:forEach items="${responseBodyList['Content'][loop.index]}" var="content">
@@ -151,9 +150,8 @@
 						<c:forEach items="${responseBodyList['Author'][loop.index]}" var="author">
 		            		<li>${author.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("'", "")}</li>
 		        		</c:forEach>
-			            </div>
-			        </c:forEach>
-		        </c:if>
+		            </div>
+		        </c:forEach>
 			</div>
 		</div>
 	</c:if>
