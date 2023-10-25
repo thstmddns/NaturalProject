@@ -23,12 +23,6 @@ import kr.or.ozz.dto.StepDTO;
 import kr.or.ozz.service.BoardService;
 import kr.or.ozz.service.StepService;
 
-// @Controller : ¸ğµ¨, ºä¸¦ ¸®ÅÏÇØÁØ´Ù.
-//				 ModelAndView,
-//				 Model, String
-
-// @RestController : ¸ğµ¨ÀÌ ¸®ÅÏµÈ´Ù.
-//					 Model+viewPage -> ModelAndView·Î ¸®ÅÏ
 @RestController
 @RequestMapping("/Board")
 public class BoardController {
@@ -37,32 +31,21 @@ public class BoardController {
 
 	@GetMapping("/Boardlist")
 	public ModelAndView Boardlist(PagingDTO pDTO) {
-		// ÃÑ·¹ÄÚµå¼ö
+		// ì´ë ˆì½”ë“œìˆ˜
 		pDTO.setB_totalRecord(service.b_totalRecord(pDTO));
 
-		// ÇØ´çÆäÀÌÁöÀÇ ·¹ÄÚµå ¼±ÅÃ
+		// í•´ë‹¹í˜ì´ì§€ì˜ ë ˆì½”ë“œ ì„ íƒ
 		List<BoardDTO> list = service.Boardlist(pDTO);
 
 		// ModelAndView
 		ModelAndView mav = new ModelAndView();
-
-		/*
-		 * for (BoardDTO dto : list) { byte[] imageData = dto.getFile_name(); String
-		 * base64ImageData = Base64.getEncoder().encodeToString(imageData); String
-		 * base64ImageData; if (imageData != null) { base64ImageData =
-		 * Base64.getEncoder().encodeToString(imageData);
-		 * 
-		 * } else { base64ImageData = "None"; }
-		 * 
-		 * dto.setFile_name_base64(base64ImageData); }
-		 */
 		mav.addObject("list", list);
 		mav.addObject("pDTO", pDTO);
 		mav.setViewName("Board/Boardlist");
 		return mav;
 	}
 
-	// ±Û¾²±â ÆûÀ¸·Î ÀÌµ¿
+	// ê¸€ì“°ê¸° í¼ìœ¼ë¡œ ì´ë™
 	@GetMapping("/Boardwrite")
 	public ModelAndView Boardwrite() {
 		ModelAndView mav = new ModelAndView();
@@ -70,63 +53,40 @@ public class BoardController {
 		return mav;
 	}
 
-	// ±Û¾²±â DB ±â·Ï
+	// ê¸€ì“°ê¸° DB ê¸°ë¡
 	@PostMapping("/BoardwriteOk")
 	public ResponseEntity<String> BoardwriteOk(BoardDTO dto, HttpServletRequest request) {
-//		@RequestParam("file_name_base64") String base64ImageData
-//		byte[] imageData;
-//		if (base64ImageData == "") {
-//			imageData = new byte[0];
-//		} else {
-//			imageData = Base64.getDecoder().decode(base64ImageData.split(",")[1]);
-//		}
-//
-//		dto.setFile_name(imageData);
-		// HttpServletRequest -> request, HttpSession
-		// HttpSession -> session
-
-		// no, hit, writedate -> ¿À¶óÅ¬
-		// userid -> ¼¼¼Ç
-
-		// HttpSession session = request.getSession();
-		// String userid = (String)session.getAttribute("logId");
-		// dto.setUserid(userid);
-		// ¼¼°³ ÇÕÄ¡¸é ¾Æ·¡ ÄÚµå¶û µ¿ÀÏ
 		dto.setUserid((String) request.getSession().getAttribute("logId"));
 
 		int result = 0;
 		try {
 			result = service.BoardwriteOk(dto);
 		} catch (Exception e) {
-			System.out.println("°Ô½ÃÆÇ ±Û µî·Ï ¿¹¿Ü¹ß»ı..." + e.getMessage());
+			System.out.println("ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ü¹ß»ï¿½..." + e.getMessage());
 		}
-		// µî·Ï°á°ú¿¡ µû¸¥ ½ºÅ©¸³Æ® »ı¼ºÇÏ±â
+		// ë“±ë¡ê²°ê³¼ì— ë”°ë¥¸ ìŠ¤í¬ë¦½íŠ¸ ìƒì„±í•˜ê¸°
 		String tag = "<script>";
-		if (result > 0) { // ¼º°ø -> °Ô½ÃÆÇ ¸ñ·Ï
+		if (result > 0) { // ì„±ê³µ -> ê²Œì‹œíŒ ëª©ë¡
 			tag += "location.href='/ozz/Board/Boardlist';";
-		} else { // ½ÇÆĞ -> ±Û µî·Ï ÆûÀ¸·Î ÀÌµ¿
-			tag += "alert('±Û µî·ÏÀÌ ½ÇÆĞÇÏ¿´½À´Ï´Ù.');";
+		} else { // ì‹¤íŒ¨ -> ê¸€ ë“±ë¡ í¼ìœ¼ë¡œ ì´ë™
+			tag += "alert('ê¸€ ë“±ë¡ì´ ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤.');";
 			tag += "history.back();";
 		}
 		tag += "</script>";
 
-		// ResponseEntity °´Ã¼´Â ÇÁ·ĞÆ®ÆäÀÌÁö¸¦ ÀÛ¼ºÇÒ ¼ö ÀÖ´Ù.
+		// ResponseEntity ê°ì²´ëŠ” í”„ë¡ íŠ¸í˜ì´ì§€ë¥¼ ì‘ì„±í•  ìˆ˜ ìˆë‹¤.
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(new MediaType("text", "html", Charset.forName("UTF-8")));
 		return new ResponseEntity<String>(tag, headers, HttpStatus.OK);
 	}
 
-	// ±Û³»¿ëº¸±â
+	// ê¸€ë‚´ìš©ë³´ê¸°
 	@GetMapping("/BoardView")
 	public ModelAndView BoardView(int no, PagingDTO pDTO) {
-		//Á¶È¸¼ö Áõ°¡
+		//ì¡°íšŒìˆ˜ ì¦ê°€
 		service.hitCount(no);
-		// ·¹ÄÚµå¼±ÅÃ
+		// ë ˆì½”ë“œì„ íƒ
 		BoardDTO dto = service.getBoard(no);
-
-//	    byte[] imageData = dto.getFile_name();
-//        String base64ImageData = Base64.getEncoder().encodeToString(imageData);
-//        dto.setFile_name_base64(base64ImageData);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("dto", dto);
 		mav.addObject("pDTO", pDTO);
@@ -135,12 +95,11 @@ public class BoardController {
 		return mav;
 	}
 
-	// ±Û ¼öÁ¤ Æû
+	// ê¸€ ìˆ˜ì • í¼
 	@GetMapping("/BoardEdit")
 	public ModelAndView BoardEdit(int no) {
-//		BoardDTO dto = service.getBoard(no);
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("dto", service.getBoard(no)); // dto º¯¼ö »ı¼º ´ë½Å Á÷Á¢ÀÔ·Â
+		mav.addObject("dto", service.getBoard(no)); // dto ë³€ìˆ˜ ìƒì„± ëŒ€ì‹  ì§ì ‘ì…ë ¥
 		mav.setViewName("Board/BoardEdit");
 
 		return mav;
@@ -154,23 +113,23 @@ public class BoardController {
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("no", dto.getBoard_no());
-		if (result > 0) { // ±Û¼öÁ¤¼º°ø -> ±Û ³»¿ë º¸±â
+		if (result > 0) { // ê¸€ìˆ˜ì •ì„±ê³µ -> ê¸€ ë‚´ìš© ë³´ê¸°
 			mav.setViewName("redirect:BoardView");
-		} else { // ±Û¼öÁ¤½ÇÆĞ -> ¼öÁ¤ÆûÀ¸·Î
+		} else { // ê¸€ìˆ˜ì •ì‹¤íŒ¨ -> ìˆ˜ì •í¼ìœ¼ë¡œ
 			mav.setViewName("redirect:BoardEdit");
 		}
 		return mav;
 	}
 
-	// ±Û»èÁ¦
+	// ê¸€ì‚­ì œ
 	@GetMapping("/BoardDel")
 	public ModelAndView BoardDel(int no, HttpSession session) {
 		int result = service.BoardDel(no, (String) session.getAttribute("logId"));
 
 		ModelAndView mav = new ModelAndView();
-		if (result > 0) {// »èÁ¦¼º°ø -> ¸ñ·Ï
+		if (result > 0) {// ì‚­ì œì„±ê³µ -> ëª©ë¡
 			mav.setViewName("redirect:Boardlist");
-		} else {// »èÁ¦½ÇÆĞ -> ±Û³»¿ë
+		} else {// ì‚­ì œì‹¤íŒ¨ -> ê¸€ë‚´ìš©
 			mav.addObject("no", no);
 			mav.setViewName("redirect:BoardView");
 		}

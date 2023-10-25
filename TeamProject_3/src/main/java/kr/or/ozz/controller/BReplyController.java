@@ -19,26 +19,26 @@ public class BReplyController {
 	@Autowired
 	BReplyService service;
 	
-	//´ñ±Ûµî·Ï
+	//ëŒ“ê¸€ë“±ë¡
 	@PostMapping("/replyWrite")
 	public String replyWrite(BReplyDTO dto, HttpSession session) {
-		//session ±Û¾´ÀÌ ±¸ÇÏ±â
+		//session ê¸€ì“´ì´ êµ¬í•˜ê¸°
 		dto.setUserid((String)session.getAttribute("logId"));
 		
 		int result = service.replyInsert(dto);
 		return result+"";
 	}
-	///´ñ±Û¸ñ·Ï
+	///ëŒ“ê¸€ëª©ë¡
 	@GetMapping("/replyList")
-	public List<BReplyDTO> replyList(int board_no) {//¿ø±Û ±Û¹øÈ£
+	public List<BReplyDTO> replyList(int board_no) {//ï¿½ï¿½ï¿½ï¿½ ï¿½Û¹ï¿½È£
 		return service.replySelect(board_no);
 	}
-	//´ñ±Û¼öÁ¤(DB:update)
+	//ëŒ“ê¸€ìˆ˜ì •(DB:update)
 	@PostMapping("/replyEditOk")
 	 public String replyEditOk(BReplyDTO dto) {
 		return String.valueOf(service.replyUpdate(dto));
 	 }
-	//´ñ±Û»èÁ¦
+	//ëŒ“ê¸€ì‚­ì œ
 	@GetMapping("/replyDel")
 	public String replyDel(int board_r_no) {
 		return String.valueOf(service.replyDelete(board_r_no));

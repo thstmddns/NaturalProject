@@ -59,18 +59,6 @@ def landing_recommand(concern):
     r_lambda=0.01
 
     # SGD 기법으로 P와 Q 매트릭스를 계속 업데이트.
-    for step in range(steps):
-        for i, j, r in non_zeros:
-            # 실제 값과 예측 값의 차이인 오류 값 구함
-            eij = r - np.dot(P[i, :], Q[j, :].T)
-            # Regularization을 반영한 SGD 업데이트 공식 적용
-            P[i,:] = P[i,:] + learning_rate*(eij * Q[j, :] - r_lambda*P[i,:])
-            Q[j,:] = Q[j,:] + learning_rate*(eij * P[i, :] - r_lambda*Q[j,:])
-
-        rmse = get_rmse(R, P, Q, non_zeros)
-        if (step % 50) == 0 :
-            print("### iteration step : ", step," rmse : ", rmse)
-            print(10)
     pred_matrix = np.dot(P, Q.T)
     course = pd.read_csv('preprocess_inflearn_data.csv', delimiter=',')
     course["Content"] = hwangjae_data["Content"]

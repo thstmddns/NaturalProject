@@ -98,7 +98,7 @@
 			<div id="ingList">
 				<div class="ingM">
 			            <li>${mission_ing.mission_title}</li>
-			            <li>진행률<span>${mission_ing.mission_rate}%</span><span>남은 스텝 수 00개</span></li>
+			            <li>진행률<span>${mission_ing.mission_rate}%</span><span>남은 스텝 수</span><span>${mission_ing.restcnt}</span></li>
 			            <li><progress id="progress" value="${mission_ing.mission_rate}" min="0" max="100" style="margin: 5px 0 8px 0;"></progress></li>
 			            <li><button>이어서 진행하기</button></li>
 				</div>
@@ -135,9 +135,8 @@
 		<div style="font-size:1.6em; margin-top: 90px;">맞춤 추천 미션</div>
 		<div id="recommendM">
 			<div id="recommendMList">
-			 <c:if test="${not empty responseBodyList}">
-				 <c:forEach items="${responseBodyList['Title']}" var="title" varStatus="loop">
-			     	<div class="rMInfo">
+			 	<c:forEach items="${responseBodyList['Title']}" var="title" varStatus="loop">
+		            <div class="rMInfo">
 		                <li><img src="<%= request.getContextPath()%>/img/Frame 2526 (3).png" /></li>
 		                <li>${title.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("'", "").replaceAll("\\{", "").replaceAll("\\}", "")}</li>
 		                <c:forEach items="${responseBodyList['Content'][loop.index]}" var="content">
@@ -151,9 +150,8 @@
 						<c:forEach items="${responseBodyList['Author'][loop.index]}" var="author">
 		            		<li>${author.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("'", "")}</li>
 		        		</c:forEach>
-			            </div>
-			        </c:forEach>
-		        </c:if>
+		            </div>
+		        </c:forEach>
 			</div>
 		</div>
 	</c:if>

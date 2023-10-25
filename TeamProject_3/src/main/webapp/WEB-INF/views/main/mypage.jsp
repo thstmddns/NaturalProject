@@ -43,15 +43,15 @@
 				</div>
 				<div id="missionTotal">
 					<li>미션 수행 통계</li>
-					<li>완료한 미션<span>10</span></li>
-					<li>진행 중인 미션<span>10</span></li>
+					<li>완료한 미션<span>1</span></li>
+					<li>진행 중인 미션<span>3</span></li>
 				</div>
 				<div id="missionGo">
 					<li>진행 중인 미션<span id="more" style="cursor:pointer;">더보기 ></span></li>
 				<c:choose>
 				<c:when test="${not empty mymissionList}">
 				    <li>${mymissionList[0].mission_title}</li>
-				    <li>진행률<span>${mymissionList[0].mission_rate}%</span><span>남은 스텝 수</span><span>${mymissionList[0].restcnt}</span></li>
+				    <li>진행률<span>${mymissionList[0].mission_rate}%</span><span>남은 스텝 수</span><span>${mission_rateionList[0].restcnt}</span></li>
 				    <li><progress id="progress2" value="${mymissionList[0].mission_rate}" min="0" max="100" style="margin: 5px 0 8px 0;"></progress></li>
 				    <li><button style="cursor:pointer;">이어서 진행하기</button></li>
 				</c:when>

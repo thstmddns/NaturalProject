@@ -77,6 +77,7 @@ public class frontController {
 	   List<MissionDTO> MissionToplist = Mservice.MissionToplist();
 	   ModelAndView mav = new ModelAndView();
 	   mav.addObject("MissionToplist", MissionToplist);
+
 	   try {
 		   // 세션에서 현재 사용자의 아이디를 가져옴
 	       String userid = (String)session.getAttribute("logId");
@@ -140,6 +141,7 @@ public class frontController {
 		}catch (Exception e) {
 			mav.setViewName("main/landing");
 		}
+
        return mav; // 뷰 이름 설정
 	}
 	

@@ -1,0 +1,9 @@
+diff a/TeamProject_3/src/main/webapp/WEB-INF/views/mypage/mission_ing.jsp b/TeamProject_3/src/main/webapp/WEB-INF/views/mypage/mission_ing.jsp	(rejected hunks)
+@@ -21,6 +21,7 @@
+         <c:forEach items="${mymissionList}" var="mission_ing">
+             <tr>
+                 <td>${mission_ing.mission_title}</td>
++                <td>${mission_ing.mission_rate.toFixed(1)}%</td>
+             </tr>
+         </c:forEach>
+         

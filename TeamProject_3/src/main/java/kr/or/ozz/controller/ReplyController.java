@@ -17,26 +17,26 @@ public class ReplyController {
 	@Autowired
 	ReplyService service;
 	
-	//´ñ±Ûµî·Ï
+	//ëŒ“ê¸€ë“±ë¡
 	@PostMapping("/reply/replyWrite")
 	public String replyWrite(ReplyDTO dto, HttpSession session) {
-		//session ±Û¾´ÀÌ ±¸ÇÏ±â
+		//session ê¸€ì“´ì´ êµ¬í•˜ê¸°
 		dto.setUserid((String)session.getAttribute("logId"));
 		
 		int result = service.replyInsert(dto);
 		return result+"";
 	}
-	///´ñ±Û¸ñ·Ï
+	///ëŒ“ê¸€ëª©ë¡
 	@GetMapping("/reply/replyList")
-	public List<ReplyDTO> replyList(int qna_no) {//¿ø±Û ±Û¹øÈ£
+	public List<ReplyDTO> replyList(int qna_no) {//ì›ê¸€ ê¸€ë²ˆí˜¸
 		return service.replySelect(qna_no);
 	}
-	//´ñ±Û¼öÁ¤(DB:update)
+	//ëŒ“ê¸€ìˆ˜ì •(DB:update)
 	@PostMapping("/reply/replyEditOk")
 	 public String replyEditOk(ReplyDTO dto) {
 		return String.valueOf(service.replyUpdate(dto));
 	 }
-	//´ñ±Û»èÁ¦
+	//ëŒ“ê¸€ì‚­ì œ
 	@GetMapping("/reply/replyDel")
 	public String replyDel(int qnr_no) {
 		return String.valueOf(service.replyDelete(qnr_no));

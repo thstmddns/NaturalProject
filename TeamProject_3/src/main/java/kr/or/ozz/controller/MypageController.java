@@ -40,29 +40,29 @@ public class MypageController {
     SubscriptionService Sservice;
   
 	
-	//¸¶ÀÌÆäÀÌÁö ¸ŞÀÎÀ¸·Î ÀÌµ¿
+	//ë§ˆì´í˜ì´ì§€ ë©”ì¸ìœ¼ë¡œ ì´ë™
 	@GetMapping("/mypage_main")
 	public String Mypage (HttpSession session) {
 		return "mypage/mypage_main";
 	}
 	
-	// È¸¿øÁ¤º¸ °¡Á®¿À±â
+	// íšŒì›ì •ë³´ ê°€ì ¸ì˜¤ê¸°
 	@GetMapping("/myPageDetail")
 	public ModelAndView UserInfo(HttpSession session) {
 		String logId = (String)session.getAttribute("logId");
 		ModelAndView mav = new ModelAndView();
 		UserDTO dto = null;
 		
-		// ¼¼¼Ç¿¡¼­ ÇöÀç »ç¿ëÀÚÀÇ ¾ÆÀÌµğ¸¦ °¡Á®¿È
+		// ì„¸ì…˜ì—ì„œ í˜„ì¬ ì‚¬ìš©ìì˜ ì•„ì´ë””ë¥¼ ê°€ì ¸ì˜´
 	    String userid = (String)session.getAttribute("logId");
 	       
 	       
-	     // ÇöÀç »ç¿ëÀÚÀÇ ´Ş¼º·ü Á¤º¸¸¦ °¡Á®¿È (¿¹½Ã: »ç¿ëÀÚ ¾ÆÀÌµğ·Î ´Ş¼º·ü Á¤º¸¸¦ °¡Á®¿È)
+	     // í˜„ì¬ ì‚¬ìš©ìì˜ ë‹¬ì„±ë¥  ì •ë³´ë¥¼ ê°€ì ¸ì˜´ (ì˜ˆì‹œ: ì‚¬ìš©ì ì•„ì´ë””ë¡œ ë‹¬ì„±ë¥  ì •ë³´ë¥¼ ê°€ì ¸ì˜´)
 	     List<PerformersDTO> mymissionList = Pservice.getPerfomersList(userid);
 	     List<PerformersDTO> myendmissionList = Pservice.getPerfomersEndList(userid);
 	     System.out.println("UserId from session: " + userid);
 	       
-	       // ¸ğµ¨¿¡ µ¥ÀÌÅÍ Ãß°¡
+	       // ëª¨ë¸ì— ë°ì´í„° ì¶”ê°€
 	       mav.addObject("mymissionList", mymissionList);
 	       mav.addObject("myendmissionList", myendmissionList);
 	       
@@ -80,7 +80,7 @@ public class MypageController {
 	}
 
 	
-	// È¸¿ø¼öÁ¤ ÆûÀ¸·Î ÀÌµ¿ ->
+	// íšŒì›ìˆ˜ì • í¼ìœ¼ë¡œ ì´ë™ ->
 	@GetMapping("/myInfoEdit")
 	public ModelAndView UserUpdateForm(HttpSession session) {
 		String logId = (String)session.getAttribute("logId");
@@ -97,7 +97,7 @@ public class MypageController {
 		return mav;
 	}
 
-	// È¸¿øÁ¤º¸ ¼öÁ¤ -> 
+	// íšŒì›ì •ë³´ ìˆ˜ì • -> 
 	@PostMapping("/updateOk")
 	public ModelAndView UserUpdateOk(UserDTO dto) {
 		int result = 0;
@@ -106,66 +106,66 @@ public class MypageController {
 			result = Uservice.UserUpdate(dto);
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("¼öÁ¤½ÇÆĞ" + e.getMessage());
+			System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" + e.getMessage());
 		}
 
 		ModelAndView mav = new ModelAndView();
 		if (result > 0) {
 			mav.setViewName("main/landing");
 		} else {
-			mav.addObject("errorMessage", "ÇÁ·ÎÇÊ ¼öÁ¤¿¡ ½ÇÆĞÇß½À´Ï´Ù.");
+			mav.addObject("errorMessage", "í”„ë¡œí•„ ìˆ˜ì •ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.");
 			mav.setViewName("mypage/myinfo");
 		}
 		return mav;
 	}
 	
-	 //ÁøÇàÁßÀÌ ¹Ì¼Ç¸®½ºÆ®
+	 //ì§„í–‰ì¤‘ì´ ë¯¸ì…˜ë¦¬ìŠ¤íŠ¸
 	 @GetMapping("/mission_ing")
 	    public ModelAndView mymissionList(HttpSession session) {
-	        // ¼¼¼Ç¿¡¼­ ÇöÀç »ç¿ëÀÚÀÇ ¾ÆÀÌµğ¸¦ °¡Á®¿È
+	        // ì„¸ì…˜ì—ì„œ í˜„ì¬ ì‚¬ìš©ìì˜ ì•„ì´ë””ë¥¼ ê°€ì ¸ì˜´
 	        String userid = (String)session.getAttribute("logId");
 	        
 	        ModelAndView mav = new ModelAndView();
 	        
 	        if (userid == null) {
-				// »ç¿ëÀÚ°¡ ·Î±×ÀÎµÇ¾î ÀÖÁö ¾ÊÀ¸¸é ·Î±×ÀÎ ÆäÀÌÁö·Î ¸®´ÙÀÌ·ºÆ® ¶Ç´Â ´Ù¸¥ Ã³¸®¸¦ ÇÒ ¼ö ÀÖÀ½
+				// ì‚¬ìš©ìê°€ ë¡œê·¸ì¸ë˜ì–´ ìˆì§€ ì•Šìœ¼ë©´ ë¡œê·¸ì¸ í˜ì´ì§€ë¡œ ë¦¬ë‹¤ì´ë ‰íŠ¸ ë˜ëŠ” ë‹¤ë¥¸ ì²˜ë¦¬ë¥¼ í•  ìˆ˜ ìˆìŒ
 	            mav.setViewName("register/login");
-	        	return mav; // ·Î±×ÀÎ ÆäÀÌÁö·Î ÀÌµ¿
+	        	return mav; // ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
 	        }else {
 	        
-	        // ÇöÀç »ç¿ëÀÚÀÇ ´Ş¼º·ü Á¤º¸¸¦ °¡Á®¿È (¿¹½Ã: »ç¿ëÀÚ ¾ÆÀÌµğ·Î ´Ş¼º·ü Á¤º¸¸¦ °¡Á®¿È)
+		        // í˜„ì¬ ì‚¬ìš©ìì˜ ë‹¬ì„±ë¥  ì •ë³´ë¥¼ ê°€ì ¸ì˜´ (ì˜ˆì‹œ: ì‚¬ìš©ì ì•„ì´ë””ë¡œ ë‹¬ì„±ë¥  ì •ë³´ë¥¼ ê°€ì ¸ì˜´)
 	        List<PerformersDTO> mymissionList = Pservice.getPerfomersList(userid);
 	        System.out.println("UserId from session: " + userid);
 	        
-	        // ¸ğµ¨¿¡ µ¥ÀÌÅÍ Ãß°¡
+	        // ëª¨ë¸ì— ë°ì´í„° ì¶”ê°€
 	        mav.addObject("mymissionList", mymissionList);
 	        mav.setViewName("main/missionGoPopup");
-	        return mav; // ºä ÀÌ¸§ ¼³Á¤
+	        return mav; // ë·° ì´ë¦„ ì„¤ì •
 	    }
 	 }
 	        
-	   	 //¿Ï·áÇÑ ¹Ì¼Ç¸®½ºÆ®
+   	 //ì™„ë£Œí•œ ë¯¸ì…˜ë¦¬ìŠ¤íŠ¸
 	   	 @GetMapping("/mission_end")
 	   	    public ModelAndView myendmissionList(HttpSession session) {
-	   	        // ¼¼¼Ç¿¡¼­ ÇöÀç »ç¿ëÀÚÀÇ ¾ÆÀÌµğ¸¦ °¡Á®¿È
+	   	        // ì„¸ì…˜ì—ì„œ í˜„ì¬ ì‚¬ìš©ìì˜ ì•„ì´ë””ë¥¼ ê°€ì ¸ì˜´
 	   	        String userid = (String)session.getAttribute("logId");
 	   	        
 	   	        ModelAndView mav = new ModelAndView();
 	   	        
 	   	        if (userid == null) {
-	   				// »ç¿ëÀÚ°¡ ·Î±×ÀÎµÇ¾î ÀÖÁö ¾ÊÀ¸¸é ·Î±×ÀÎ ÆäÀÌÁö·Î ¸®´ÙÀÌ·ºÆ® ¶Ç´Â ´Ù¸¥ Ã³¸®¸¦ ÇÒ ¼ö ÀÖÀ½
+	   				// ì‚¬ìš©ìê°€ ë¡œê·¸ì¸ë˜ì–´ ìˆì§€ ì•Šìœ¼ë©´ ë¡œê·¸ì¸ í˜ì´ì§€ë¡œ ë¦¬ë‹¤ì´ë ‰íŠ¸ ë˜ëŠ” ë‹¤ë¥¸ ì²˜ë¦¬ë¥¼ í•  ìˆ˜ ìˆìŒ
 	   	            mav.setViewName("register/login");
-	   	        	return mav; // ·Î±×ÀÎ ÆäÀÌÁö·Î ÀÌµ¿
+	   	        	return mav; // ë¡œê·¸ì¸ í˜ì´ì§€ë¡œ ì´ë™
 	   	        }else {
 	   	        
-	   	        // ÇöÀç »ç¿ëÀÚÀÇ ´Ş¼º·ü Á¤º¸¸¦ °¡Á®¿È (¿¹½Ã: »ç¿ëÀÚ ¾ÆÀÌµğ·Î ´Ş¼º·ü Á¤º¸¸¦ °¡Á®¿È)
+		   	        // í˜„ì¬ ì‚¬ìš©ìì˜ ë‹¬ì„±ë¥  ì •ë³´ë¥¼ ê°€ì ¸ì˜´ (ì˜ˆì‹œ: ì‚¬ìš©ì ì•„ì´ë””ë¡œ ë‹¬ì„±ë¥  ì •ë³´ë¥¼ ê°€ì ¸ì˜´)
 	   	        List<PerformersDTO> myendmissionList = Pservice.getPerfomersEndList(userid);
 	   	        System.out.println("UserId from session: " + userid);
 	   	        
-	   	        // ¸ğµ¨¿¡ µ¥ÀÌÅÍ Ãß°¡
+	   	        // ëª¨ë¸ì— ë°ì´í„° ì¶”ê°€
 	   	        mav.addObject("myendmissionList", myendmissionList);
 	   	        mav.setViewName("mypage/mission_end");
-	   	        return mav; // ºä ÀÌ¸§ ¼³Á¤
+	   	        return mav; // ë·° ì´ë¦„ ì„¤ì •
 	   	    }
 	   	 }
 	   	 

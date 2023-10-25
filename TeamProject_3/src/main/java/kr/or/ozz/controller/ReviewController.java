@@ -22,12 +22,12 @@ import kr.or.ozz.dto.PagingDTO;
 import kr.or.ozz.dto.ReviewDTO;
 import kr.or.ozz.service.ReviewService;
 
-// @Controller : ¸ğµ¨, ºä¸¦ ¸®ÅÏÇØÁØ´Ù.
+// @Controller : ëª¨ë¸, ë·°ë¥¼ ë¦¬í„´í•´ì¤€ë‹¤.
 //				 ModelAndView,
 //				 Model, String
 
-// @RestController : ¸ğµ¨ÀÌ ¸®ÅÏµÈ´Ù.
-//					 Model+viewPage -> ModelAndView·Î ¸®ÅÏ
+// @RestController : ëª¨ë¸ì´ ë¦¬í„´ëœë‹¤.
+//					 Model+viewPage -> ModelAndViewë¡œ ë¦¬í„´
 @RestController
 @RequestMapping("/Review")
 public class ReviewController {
@@ -36,32 +36,22 @@ public class ReviewController {
 
 	@GetMapping("/Reviewlist")
 	public ModelAndView Reviewlist(PagingDTO pDTO) {
-		// ÃÑ·¹ÄÚµå¼ö
+		// ì´ë ˆì½”ë“œìˆ˜
 		pDTO.setR_totalRecord(service.r_totalRecord(pDTO));
 
-		// ÇØ´çÆäÀÌÁöÀÇ ·¹ÄÚµå ¼±ÅÃ
+		// í•´ë‹¹í˜ì´ì§€ì˜ ë ˆì½”ë“œ ì„ íƒ
 		List<ReviewDTO> list = service.Reviewlist(pDTO);
 
 		// ModelAndView
 		ModelAndView mav = new ModelAndView();
 
-		/*
-		 * for (ReviewDTO dto : list) { byte[] imageData = dto.getFile_name(); String
-		 * base64ImageData = Base64.getEncoder().encodeToString(imageData); String
-		 * base64ImageData; if (imageData != null) { base64ImageData =
-		 * Base64.getEncoder().encodeToString(imageData);
-		 * 
-		 * } else { base64ImageData = "None"; }
-		 * 
-		 * dto.setFile_name_base64(base64ImageData); }
-		 */
 		mav.addObject("list", list);
 		mav.addObject("pDTO", pDTO);
 		mav.setViewName("Review/Reviewlist");
 		return mav;
 	}
 
-	// ±Û¾²±â ÆûÀ¸·Î ÀÌµ¿
+	// ê¸€ì“°ê¸° í¼ìœ¼ë¡œ ì´ë™
 	@GetMapping("/Reviewwrite")
 	public ModelAndView Reviewwrite(int m_no) {
 		ModelAndView mav = new ModelAndView();
@@ -70,15 +60,7 @@ public class ReviewController {
 		return mav;
 	}
 
-	// ±Û¾²±â DB ±â·Ï
-	/*
-	 * @PostMapping("/ReviewwriteOk") public String ReviewwriteOk(ReviewDTO dto,
-	 * HttpServletRequest request) {
-	 * 
-	 * System.out.println(dto.toString()); return "fail";
-	 * 
-	 * }
-	 */
+	// ê¸€ì“°ê¸° DB ê¸°ë¡
 
 	 @PostMapping("/ReviewwriteOk")
 	 public String ReviewwriteOk(ReviewDTO dto, HttpSession session) {
@@ -90,17 +72,14 @@ public class ReviewController {
 		return result+"";	
 	 }
 	 
-	// ±Û³»¿ëº¸±â
+	// ê¸€ë‚´ìš©ë³´ê¸°
 	@GetMapping("/ReviewView")
 	public ModelAndView ReviewView(int no, PagingDTO pDTO) {
-		//Á¶È¸¼ö Áõ°¡
+		//ì¡°íšŒìˆ˜ ì¦ê°€
 		service.hitCount(no);
-		// ·¹ÄÚµå¼±ÅÃ
+		// ë ˆì½”ë“œì„ íƒ
 		ReviewDTO dto = service.getReview(no);
 
-//	    byte[] imageData = dto.getFile_name();
-//        String base64ImageData = Base64.getEncoder().encodeToString(imageData);
-//        dto.setFile_name_base64(base64ImageData);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("dto", dto);
 		mav.addObject("pDTO", pDTO);
@@ -109,12 +88,11 @@ public class ReviewController {
 		return mav;
 	}
 
-	// ±Û ¼öÁ¤ Æû
+	// ê¸€ ìˆ˜ì • í¼
 	@GetMapping("/ReviewEdit")
 	public ModelAndView ReviewEdit(int no) {
-//		ReviewDTO dto = service.getReview(no);
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("dto", service.getReview(no)); // dto º¯¼ö »ı¼º ´ë½Å Á÷Á¢ÀÔ·Â
+		mav.addObject("dto", service.getReview(no)); // dto ë³€ìˆ˜ ìƒì„± ëŒ€ì‹  ì§ì ‘ì…ë ¥
 		mav.setViewName("Review/ReviewEdit");
 
 		return mav;
@@ -128,65 +106,27 @@ public class ReviewController {
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("no", dto.getReview_no());
-		if (result > 0) { // ±Û¼öÁ¤¼º°ø -> ±Û ³»¿ë º¸±â
+		if (result > 0) { // ê¸€ìˆ˜ì •ì„±ê³µ -> ê¸€ ë‚´ìš© ë³´ê¸°
 			mav.setViewName("redirect:ReviewView");
-		} else { // ±Û¼öÁ¤½ÇÆĞ -> ¼öÁ¤ÆûÀ¸·Î
+		} else { // ê¸€ìˆ˜ì •ì‹¤íŒ¨ -> ìˆ˜ì •í¼ìœ¼ë¡œ
 			mav.setViewName("redirect:ReviewEdit");
 		}
 		return mav;
 	}
 
-	// ±Û»èÁ¦
+	// ê¸€ì‚­ì œ
 	@GetMapping("/ReviewDel")
 	public ModelAndView ReviewDel(int no, HttpSession session) {
 		int result = service.ReviewDel(no, (String) session.getAttribute("logId"));
 
 		ModelAndView mav = new ModelAndView();
-		if (result > 0) {// »èÁ¦¼º°ø -> ¸ñ·Ï
+		if (result > 0) {// ì‚­ì œì„±ê³µ -> ëª©ë¡
 			mav.setViewName("redirect:Reviewlist");
-		} else {// »èÁ¦½ÇÆĞ -> ±Û³»¿ë
+		} else {// ì‚­ì œì‹¤íŒ¨ -> ê¸€ë‚´ìš©
 			mav.addObject("no", no);
 			mav.setViewName("redirect:ReviewView");
 		}
 		return mav;
 	}
 	
-	/*
-	 * // ±Û¾²±â DB ±â·Ï
-	 * 
-	 * @PostMapping("/ReviewwriteOk") public String ReviewwriteOk(ReviewDTO dto,
-	 * HttpServletRequest request) { // @RequestParam("file_name_base64") String
-	 * base64ImageData // byte[] imageData; // if (base64ImageData == "") { //
-	 * imageData = new byte[0]; // } else { // imageData =
-	 * Base64.getDecoder().decode(base64ImageData.split(",")[1]); // } // //
-	 * dto.setFile_name(imageData); // HttpServletRequest -> request, HttpSession //
-	 * HttpSession -> session
-	 * 
-	 * // no, hit, writedate -> ¿À¶óÅ¬ // userid -> ¼¼¼Ç
-	 * 
-	 * // HttpSession session = request.getSession(); // String userid =
-	 * (String)session.getAttribute("logId"); // dto.setUserid(userid); // ¼¼°³ ÇÕÄ¡¸é ¾Æ·¡
-	 * ÄÚµå¶û µ¿ÀÏ dto.setUserid((String) request.getSession().getAttribute("logId"));
-	 * 
-	 * int result = 0; try { result = service.ReviewwriteOk(dto); } catch (Exception
-	 * e) { System.out.println("°Ô½ÃÆÇ ±Û µî·Ï ¿¹¿Ü¹ß»ı..." + e.getMessage()); } // µî·Ï°á°ú¿¡ µû¸¥
-	 * ½ºÅ©¸³Æ® »ı¼ºÇÏ±â // String tag = "<script>"; // if (result > 0) { // ¼º°ø -> °Ô½ÃÆÇ ¸ñ·Ï //
-	 * tag += "location.href='/ozz/Review/Reviewlist';"; // } else { // ½ÇÆĞ -> ±Û µî·Ï
-	 * ÆûÀ¸·Î ÀÌµ¿ // tag += "alert('±Û µî·ÏÀÌ ½ÇÆĞÇÏ¿´½À´Ï´Ù.');"; // tag += "history.back();"; //
-	 * } // tag += "</script>";
-	 * 
-	 * // ResponseEntity °´Ã¼´Â ÇÁ·ĞÆ®ÆäÀÌÁö¸¦ ÀÛ¼ºÇÒ ¼ö ÀÖ´Ù. // HttpHeaders headers = new
-	 * HttpHeaders(); // headers.setContentType(new MediaType("text", "html",
-	 * Charset.forName("UTF-8"))); // return new ResponseEntity<String>(tag,
-	 * headers, HttpStatus.OK); ModelAndView mav = new ModelAndView(); if (result >
-	 * 0) { // ¼º°ø ¶Ç´Â ½ÇÆĞ ¸ğµÎ ÇØ´ç URL·Î ÀÌµ¿
-	 * mav.setViewName("redirect:/Mission/MissionView?no="+dto.getMission_no()); }
-	 * else { // ½ÇÆĞ ½Ã alert ¸Ş½ÃÁö¸¸ ¶ç¿ì°í ÇØ´ç URL·Î ÀÌµ¿ mav.addObject("message",
-	 * "±Û µî·ÏÀÌ ½ÇÆĞÇÏ¿´½À´Ï´Ù.");
-	 * mav.setViewName("redirect:/Mission/MissionView?no="+dto.getMission_no()); }
-	 * 
-	 * return "fail";
-	 * 
-	 * }
-	 */
 }

@@ -66,10 +66,10 @@
 	</select>
 
 	<insert id="insertPerformers">
-		insert into t_performers(PERFORMER_NO, MISSION_NO,
-		USERID, TASK_NO, STARTED_AT, COMPLETED_AT, STEP_NO)
-		values(PERFORMER_NO_seq.nextval, #{userid}, #{TASK_NO}, #{STARTED_AT},
-		#{COMPLETED_AT}, #{STEP_NO})
+		insert into t_performers(performer_no, mission_no,
+		userid, task_no, started_at, completed_at, step_no)
+		values(performer_no_seq.nextval, #{mission_no}, #{userid}, #{task_no}, sysdate,
+		#{completed_at}, #{step_no})
 	</insert>
 	
 	<select id="missioningcnt"
