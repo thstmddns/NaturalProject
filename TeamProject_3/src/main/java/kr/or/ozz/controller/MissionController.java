@@ -48,6 +48,7 @@ import kr.or.ozz.dto.ReviewDTO;
 import kr.or.ozz.dto.StepDTO;
 import kr.or.ozz.dto.TaskDTO;
 import kr.or.ozz.service.MissionService;
+
 import kr.or.ozz.service.QnaService;
 import kr.or.ozz.service.ReviewService;
 import kr.or.ozz.service.StepService;
@@ -77,8 +78,10 @@ public class MissionController {
 	@Autowired
 	ReviewService Rservice;
 	
+
 	@Autowired
 	private DescriptionController descriptionController;
+
 
 	@GetMapping("/Missionlist")
 	public ModelAndView Missionlist(PagingDTO pDTO) {
@@ -136,6 +139,7 @@ public class MissionController {
 	public ModelAndView MissionView(@RequestParam("no")int no, PagingDTO pDTO) throws JsonProcessingException{
 		//조회수 증가
 		service.hitCount(no);
+<<<<<<< HEAD
 		// 레코드선택
 		MissionDTO dto = service.getMission(no);
 		List<StepDTO> Steplist = Sservice.Steplist(no, pDTO);
@@ -144,7 +148,7 @@ public class MissionController {
 		
 		// FastAPI 서비스의 URL을 정의합니다.
 		List<String> contents = new ArrayList<String>();
-		contents.add(dto.getMission_cate());
+		contents.add(dto.getMission_tag());
 
 		// FastAPI 서비스의 URL을 정의합니다.
         String fastApiUrl = "http://localhost:8000/dmission_recommand"; 
@@ -176,9 +180,19 @@ public class MissionController {
         // FastAPI에서의 응답을 처리합니다.
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> contentResponseBody = mapper.readValue(contentResponse.getBody(), new TypeReference<Map<String, Object>>() {});
-
-        System.out.println("리스트출력" + contentResponseBody);
+        List<Integer> missionNos = (List<Integer>) contentResponseBody.get("MISSION_NO");
         
+        List<MissionDTO> missions = new ArrayList<>();
+        for (Integer missionNO : missionNos) {
+        	MissionDTO mdto = service.getMission(missionNO);
+        	
+        	if (mdto != null) {
+        		missions.add(mdto);
+        	}
+        }
+        
+        System.out.println("리스트출력" + contentResponseBody);
+        System.out.println("hi" + missions);
         System.out.println(contents);
         System.out.println(contentResponseBody);
         
@@ -188,7 +202,10 @@ public class MissionController {
 		mav.addObject("M_Qnalist", M_Qnalist);
 		mav.addObject("M_Reviewlist", M_Reviewlist);
 		mav.addObject("pDTO", pDTO);
+
 		mav.addObject("contents", contentResponseBody);
+		mav.addObject("missions", missions);
+
 		mav.setViewName("Mission/missionView");
 
 		return mav;
@@ -358,6 +375,7 @@ public class MissionController {
 	         return "failure";
 	      }
 	   }  
+
 	   @PostMapping(value = "steptaskWriteOk")
 	   public ResponseEntity<String> steptaskWriteOk(@ModelAttribute MissionDTO missionDTO, HttpServletRequest request) {
 

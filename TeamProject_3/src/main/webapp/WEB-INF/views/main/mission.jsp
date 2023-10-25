@@ -20,28 +20,29 @@
 		</div>
 	</div>
 
-	<c:if test="${not empty logId}">
-	<div style="margin-top: 90px;">
-		<span style="font-size: 1.6em;">진행 중인 미션</span> <span id="more2" style="cursor:pointer;"><a
-			style="font-size: 0.8em; color: #869AAF; float: right;">더보기 ></a></span>
-		<div id="mIng">
-		<c:choose>
-			<c:when test="${logId == P_dto.userid}">
-			<c:forEach var="P_dto" items="${Perfomerslist}">
-					<div id="ingList">
-						<div class="ingM">
-							<li>${P_dto.mission_title}</li>
-							<li><span>진행률 ${P_dto.mission_rate}%</span> <span>남은 스텝 수 ${P_dto.restcnt}개</span></li>
-							<li><progress id="progress" value="${P_dto.mission_rate}" min="0" max="100"></li>
-							<li><button>이어서 진행하기</button></li>
-						</div>
-					</div>
-			</c:forEach>
-			</c:when>
+		<c:if test="${not empty logId}">
+	<div style="margin-top:90px;">
+		<span style="font-size:1.6em;">진행 중인 미션</span>
+		<span><a href="/ozz/mypage/myPageDetail" style="font-size:0.8em; color: #869AAF; float:right;">더보기 ></a></span>
+	</div>
+	<div id="mIng">
+	<c:choose>
+		<c:when test="${not empty mymissionList}">
+		<c:forEach items="${mymissionList}" var="mission_ing">
+			<div id="ingList">
+				<div class="ingM">
+			            <li>${mission_ing.mission_title}</li>
+			            <li>진행률<span>${mission_ing.mission_rate}%</span><span>남은 스텝 수</span><span>${mission_ing.restcnt}</span></li>
+			            <li><progress id="progress" value="${mission_ing.mission_rate}" min="0" max="100" style="margin: 5px 0 8px 0;"></progress></li>
+			            <li><button>이어서 진행하기</button></li>
+				</div>
+			</div>
+		</c:forEach>
+		</c:when>
 		<c:otherwise>
 			<div class="notStart">진행 중인 미션이 없습니다. 미션을 진행해보세요!</div>
 		</c:otherwise>
-		</c:choose>
+	</c:choose>
 		</div>
 	</div>
 	</c:if>
