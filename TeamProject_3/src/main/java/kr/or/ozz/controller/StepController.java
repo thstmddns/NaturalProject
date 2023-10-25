@@ -28,12 +28,6 @@ import kr.or.ozz.service.StepService;
 import kr.or.ozz.service.TaskService;
 import kr.or.ozz.service.StepService;
 
-// @Controller : ¸ğµ¨, ºä¸¦ ¸®ÅÏÇØÁØ´Ù.
-//				 ModelAndView,
-//				 Model, String
-
-// @RestController : ¸ğµ¨ÀÌ ¸®ÅÏµÈ´Ù.
-//					 Model+viewPage -> ModelAndView·Î ¸®ÅÏ
 @RestController
 @RequestMapping("/Step")
 public class StepController {
@@ -46,7 +40,7 @@ public class StepController {
 	@Autowired
 	MissionService Mservice;
 
-	// ±Û¾²±â ÆûÀ¸·Î ÀÌµ¿
+	// ê¸€ì“°ê¸° í¼ìœ¼ë¡œ ì´ë™
 	@GetMapping("/Stepwrite")
 	public ModelAndView Stepwrite(int m_no) {
 		ModelAndView mav = new ModelAndView();
@@ -55,56 +49,38 @@ public class StepController {
 		return mav;
 	}
 
-	// ±Û¾²±â DB ±â·Ï
+	// ê¸€ì“°ê¸° DB ê¸°ë¡
 	@PostMapping("/StepwriteOk")
-	public ResponseEntity<String> StepwriteOk(StepDTO dto, HttpServletRequest request) {
-//		@RequestParam("file_name_base64") String base64ImageData
-//		byte[] imageData;
-//		if (base64ImageData == "") {
-//			imageData = new byte[0];
-//		} else {
-//			imageData = Base64.getDecoder().decode(base64ImageData.split(",")[1]);
-//		}
-//
-//		dto.setFile_name(imageData);
-		// HttpServletRequest -> request, HttpSession
-		// HttpSession -> session
-
-		// no, hit, writedate -> ¿À¶óÅ¬
-		// userid -> ¼¼¼Ç
-
-		// HttpSession session = request.getSession();
-		// String userid = (String)session.getAttribute("logId");
-		// dto.setUserid(userid);
-		// ¼¼°³ ÇÕÄ¡¸é ¾Æ·¡ ÄÚµå¶û µ¿ÀÏ
+	public ResponseEntity<String> StepwriteOk(StepDTO dto, HttpServletRequest request) {		
+		// ì„¸ê°œ í•©ì¹˜ë©´ ì•„ë˜ ì½”ë“œë‘ ë™ì¼
 		dto.setUserid((String) request.getSession().getAttribute("logId"));
 
 		int result = 0;
 		try {
 			result = service.StepwriteOk(dto);
 		} catch (Exception e) {
-			System.out.println("°Ô½ÃÆÇ ±Û µî·Ï ¿¹¿Ü¹ß»ı..." + e.getMessage());
+			System.out.println("ê²Œì‹œíŒ ê¸€ ë“±ë¡ ì˜ˆì™¸ë°œìƒ..." + e.getMessage());
 		}
-		// µî·Ï°á°ú¿¡ µû¸¥ ½ºÅ©¸³Æ® »ı¼ºÇÏ±â
+		// ë“±ë¡ê²°ê³¼ì— ë”°ë¥¸ ìŠ¤í¬ë¦½íŠ¸ ìƒì„±í•˜ê¸°
 		String tag = "<script>";
-		if (result > 0) { // ¼º°ø -> °Ô½ÃÆÇ ¸ñ·Ï
+		if (result > 0) { // ì„±ê³µ -> ê²Œì‹œíŒ ëª©ë¡
 			tag += "location.href='/ozz/Mission/Missionlist';";
-		} else { // ½ÇÆĞ -> ±Û µî·Ï ÆûÀ¸·Î ÀÌµ¿
-			tag += "alert('±Û µî·ÏÀÌ ½ÇÆĞÇÏ¿´½À´Ï´Ù.');";
+		} else { // ì‹¤íŒ¨ -> ê¸€ ë“±ë¡ í¼ìœ¼ë¡œ ì´ë™
+			tag += "alert('ê¸€ ë“±ë¡ì´ ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤.');";
 			tag += "history.back();";
 		}
 		tag += "</script>";
 
-		// ResponseEntity °´Ã¼´Â ÇÁ·ĞÆ®ÆäÀÌÁö¸¦ ÀÛ¼ºÇÒ ¼ö ÀÖ´Ù.
+		// ResponseEntity ê°ì²´ëŠ” í”„ë¡ íŠ¸í˜ì´ì§€ë¥¼ ì‘ì„±í•  ìˆ˜ ìˆë‹¤.
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(new MediaType("text", "html", Charset.forName("UTF-8")));
 		return new ResponseEntity<String>(tag, headers, HttpStatus.OK);
 	}
 
-	// ±Û³»¿ëº¸±â
+	// ê¸€ë‚´ìš©ë³´ê¸°
 	@GetMapping("/StepView")
 	public ModelAndView StepView(@RequestParam("no") int no, @RequestParam("mission_no") int mission_no, PagingDTO pDTO) {
-		// ·¹ÄÚµå¼±ÅÃ
+		// ë ˆì½”ë“œì„ íƒ
 		StepDTO dto = service.getStep(no);
 		
 		List<StepDTO> Steplist = service.Steplist(mission_no, pDTO);
@@ -113,9 +89,6 @@ public class StepController {
 		
 		MissionDTO Mdto = Mservice.getMission(mission_no);
 
-//	    byte[] imageData = dto.getFile_name();
-//        String base64ImageData = Base64.getEncoder().encodeToString(imageData);
-//        dto.setFile_name_base64(base64ImageData);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("no", no);
 		mav.addObject("dto", dto);
@@ -128,12 +101,11 @@ public class StepController {
 		return mav;
 	}
 
-	// ±Û ¼öÁ¤ Æû
+	// ê¸€ ìˆ˜ì • í¼
 	@GetMapping("/StepEdit")
 	public ModelAndView StepEdit(int no) {
-//		StepDTO dto = service.getStep(no);
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("dto", service.getStep(no)); // dto º¯¼ö »ı¼º ´ë½Å Á÷Á¢ÀÔ·Â
+		mav.addObject("dto", service.getStep(no)); // dto ë³€ìˆ˜ ìƒì„± ëŒ€ì‹  ì§ì ‘ì…ë ¥
 		mav.setViewName("Step/StepEdit");
 
 		return mav;
@@ -147,23 +119,23 @@ public class StepController {
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("no", dto.getStep_no());
-		if (result > 0) { // ±Û¼öÁ¤¼º°ø -> ±Û ³»¿ë º¸±â
+		if (result > 0) { // ê¸€ìˆ˜ì •ì„±ê³µ -> ê¸€ ë‚´ìš© ë³´ê¸°
 			mav.setViewName("redirect:StepView");
-		} else { // ±Û¼öÁ¤½ÇÆĞ -> ¼öÁ¤ÆûÀ¸·Î
+		} else { // ê¸€ìˆ˜ì •ì‹¤íŒ¨ -> ìˆ˜ì •í¼ìœ¼ë¡œ
 			mav.setViewName("redirect:StepEdit");
 		}
 		return mav;
 	}
 
-	// ±Û»èÁ¦
+	// ê¸€ì‚­ì œ
 	@GetMapping("/StepDel")
 	public ModelAndView StepDel(int no, HttpSession session) {
 		int result = service.StepDel(no, (String) session.getAttribute("logId"));
 
 		ModelAndView mav = new ModelAndView();
-		if (result > 0) {// »èÁ¦¼º°ø -> ¸ñ·Ï
+		if (result > 0) {// ì‚­ì œì„±ê³µ -> ëª©ë¡
 			mav.setViewName("redirect:Steplist");
-		} else {// »èÁ¦½ÇÆĞ -> ±Û³»¿ë
+		} else {// ì‚­ì œì‹¤íŒ¨ -> ê¸€ë‚´ìš©
 			mav.addObject("no", no);
 			mav.setViewName("redirect:StepView");
 		}

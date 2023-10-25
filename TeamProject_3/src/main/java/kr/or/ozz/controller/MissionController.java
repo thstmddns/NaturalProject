@@ -53,12 +53,12 @@ import kr.or.ozz.service.ReviewService;
 import kr.or.ozz.service.StepService;
 import kr.or.ozz.service.TaskService;
 
-// @Controller : 占쏙옙, 占썰를 占쏙옙占쏙옙占쏙옙占쌔댐옙.
+// @Controller : 모델, 뷰를 리턴해준다.
 //				 ModelAndView,
 //				 Model, String
 
-// @RestController : 占쏙옙占쏙옙 占쏙옙占싹된댐옙.
-//					 Model+viewPage -> ModelAndView占쏙옙 占쏙옙占쏙옙
+// @RestController : 모델이 리턴된다.
+//					 Model+viewPage -> ModelAndView로 리턴
 @RestController
 @RequestMapping("/Mission")
 public class MissionController {
@@ -82,32 +82,21 @@ public class MissionController {
 
 	@GetMapping("/Missionlist")
 	public ModelAndView Missionlist(PagingDTO pDTO) {
-		// 占싼뤄옙占쌘듸옙占�
+		// 총 레코드 수
 		pDTO.setM_totalRecord(service.m_totalRecord(pDTO));
 
-		// 占쌔댐옙占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쌘듸옙 占쏙옙占쏙옙
+		// 해당페이지의 레코드 선택
 		List<MissionDTO> list = service.Missionlist(pDTO);
 
 		// ModelAndView
 		ModelAndView mav = new ModelAndView();
-
-		/*
-		 * for (MissionDTO dto : list) { byte[] imageData = dto.getFile_name(); String
-		 * base64ImageData = Base64.getEncoder().encodeToString(imageData); String
-		 * base64ImageData; if (imageData != null) { base64ImageData =
-		 * Base64.getEncoder().encodeToString(imageData);
-		 * 
-		 * } else { base64ImageData = "None"; }
-		 * 
-		 * dto.setFile_name_base64(base64ImageData); }
-		 */
 		mav.addObject("list", list);
 		mav.addObject("pDTO", pDTO);
 		mav.setViewName("Mission/Missionlist");
 		return mav;
 	}
 
-	// 占쌜억옙占쏙옙 占쏙옙占쏙옙占쏙옙 占싱듸옙
+	// 글쓰기 폼으로 이동
 	@GetMapping("/Missionwrite")
 	public ModelAndView Missionwrite() {
 		ModelAndView mav = new ModelAndView();
@@ -115,28 +104,9 @@ public class MissionController {
 		return mav;
 	}
 
-	// 占쌜억옙占쏙옙 DB 占쏙옙占�
+	// 글쓰기 DB 기록
 	@PostMapping("/MissionwriteOk")
-	public ResponseEntity<String> MissionwriteOk(MissionDTO dto, HttpServletRequest request) {
-//		@RequestParam("file_name_base64") String base64ImageData
-//		byte[] imageData;
-//		if (base64ImageData == "") {
-//			imageData = new byte[0];
-//		} else {
-//			imageData = Base64.getDecoder().decode(base64ImageData.split(",")[1]);
-//		}
-//
-//		dto.setFile_name(imageData);
-		// HttpServletRequest -> request, HttpSession
-		// HttpSession -> session
-
-		// no, hit, writedate -> 占쏙옙占쏙옙클
-		// userid -> 占쏙옙占쏙옙
-
-		// HttpSession session = request.getSession();
-		// String userid = (String)session.getAttribute("logId");
-		// dto.setUserid(userid);
-		// 占쏙옙占쏙옙 占쏙옙치占쏙옙 占싣뤄옙 占쌘듸옙占� 占쏙옙占쏙옙
+	public ResponseEntity<String> MissionwriteOk(MissionDTO dto, HttpServletRequest request) {		
 		dto.setUserid((String) request.getSession().getAttribute("logId"));
 
 		int result = 0;
@@ -145,28 +115,28 @@ public class MissionController {
 		} catch (Exception e) {
 			System.out.println("占쌉쏙옙占쏙옙 占쏙옙 占쏙옙占� 占쏙옙占쌤발삼옙..." + e.getMessage());
 		}
-		// 占쏙옙構占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙크占쏙옙트 占쏙옙占쏙옙占싹깍옙
+		// 등록결과에 따른 스크립트 생성하기
 		String tag = "<script>";
-		if (result > 0) { // 占쏙옙占쏙옙 -> 占쌉쏙옙占쏙옙 占쏙옙占�
+		if (result > 0) { // 성공 -> 게시판 목록
 			tag += "location.href='/ozz/main/mainMission';";
-		} else { // 占쏙옙占쏙옙 -> 占쏙옙 占쏙옙占� 占쏙옙占쏙옙占쏙옙 占싱듸옙
+		} else { // 실패 -> 글 등록 폼으로 이동
 			tag += "alert('占쏙옙 占쏙옙占쏙옙占� 占쏙옙占쏙옙占싹울옙占쏙옙占싹댐옙.');";
 			tag += "history.back();";
 		}
 		tag += "</script>";
 
-		// ResponseEntity 占쏙옙체占쏙옙 占쏙옙占쏙옙트占쏙옙占쏙옙占쏙옙占쏙옙 占쌜쇽옙占쏙옙 占쏙옙 占쌍댐옙.
+		// ResponseEntity 객체는 프론트페이지를 작성할 수 있다.
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(new MediaType("text", "html", Charset.forName("UTF-8")));
 		return new ResponseEntity<String>(tag, headers, HttpStatus.OK);
 	}
 
-	// 占쌜놂옙占쎈보占쏙옙
+	// 글내용보기
 	@GetMapping("/MissionView")
 	public ModelAndView MissionView(@RequestParam("no")int no, PagingDTO pDTO) throws JsonProcessingException{
-		//占쏙옙회占쏙옙 占쏙옙占쏙옙
+		//조회수 증가
 		service.hitCount(no);
-		// 占쏙옙占쌘드선占쏙옙
+		// 레코드선택
 		MissionDTO dto = service.getMission(no);
 		List<StepDTO> Steplist = Sservice.Steplist(no, pDTO);
 		List<QnaDTO> M_Qnalist = Qservice.M_Qnalist(no);
@@ -177,7 +147,7 @@ public class MissionController {
 		contents.add(dto.getMission_cate());
 
 		// FastAPI 서비스의 URL을 정의합니다.
-        String fastApiUrl = "http://localhost:8000/dmission_recommand"; // FastAPI �꽌踰� URL濡� �닔�젙
+        String fastApiUrl = "http://localhost:8000/dmission_recommand"; 
 
         // FastAPI로 전송할 데이터를 생성합니다.
         Map<Object, Object> requestData = new HashMap<Object, Object>();
@@ -224,12 +194,12 @@ public class MissionController {
 		return mav;
 	}
 
-	// 占쏙옙 占쏙옙占쏙옙 占쏙옙
+	// 글 수정 폼
 	@GetMapping("/MissionEdit")
 	public ModelAndView MissionEdit(int no) {
 //		MissionDTO dto = service.getMission(no);
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("dto", service.getMission(no)); // dto 占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占� 占쏙옙占쏙옙占쌉뤄옙
+		mav.addObject("dto", service.getMission(no)); // dto 변수 생성 대신 직접입력
 		mav.setViewName("Mission/MissionEdit");
 
 		return mav;
@@ -243,40 +213,29 @@ public class MissionController {
 
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("no", dto.getMission_no());
-		if (result > 0) { // 占쌜쇽옙占쏙옙占쏙옙占쏙옙 -> 占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙
+		if (result > 0) { // 글수정성공 -> 글 내용 보기
 			mav.setViewName("redirect:MissionView");
-		} else { // 占쌜쇽옙占쏙옙占쏙옙占쏙옙 -> 占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙
+		} else { // 글수정실패 -> 수정폼으로
 			mav.setViewName("redirect:MissionEdit");
 		}
 		return mav;
 	}
 
-	// 占쌜삼옙占쏙옙
+
+	// 글삭제
 	@GetMapping("/MissionDel")
 	public ModelAndView MissionDel(int no, HttpSession session) {
 		int result = service.MissionDel(no, (String) session.getAttribute("logId"));
 
 		ModelAndView mav = new ModelAndView();
-		if (result > 0) {// 占쏙옙占쏙옙占쏙옙占쏙옙 -> 占쏙옙占�
+		if (result > 0) {// 삭제성공 -> 목록
 			mav.setViewName("redirect:Missionlist");
-		} else {// 占쏙옙占쏙옙占쏙옙占쏙옙 -> 占쌜놂옙占쏙옙
+		} else {// 삭제실패 -> 글내용
 			mav.addObject("no", no);
 			mav.setViewName("redirect:MissionView");
 		}
 		return mav;
 	}
-	
-	/*
-	 * // 占쏙옙占쏙옙 占쏙옙占�
-	 * 
-	 * @PostMapping("/review/reviewWrite") public String reviewWrite(ReplyDTO dto,
-	 * HttpSession session) { // session 占쌜억옙占쏙옙 占쏙옙占싹깍옙
-	 * dto.setUserid((String)session.getAttribute("logId"));
-	 * 
-	 * int result = service.replyInsert(dto);
-	 * 
-	 * return result+""; }
-	 */
 	
 	// 스텝 테스크 작성(수동)
 	   @PostMapping("/selfGenerate")

@@ -78,12 +78,12 @@ public class DescriptionController {
 
    private List<Map<String, Object>> convertNewline(List<Map<String, Object>> data) {
       for (Map<String, Object> step : data) {
-         List<Map<String, Object>> tasks = (List<Map<String, Object>>) step.get("Å×½ºÅ©");
+         List<Map<String, Object>> tasks = (List<Map<String, Object>>) step.get("ï¿½×½ï¿½Å©");
          if (tasks != null) {
             for (Map<String, Object> task : tasks) {
                if (task.containsKey("task_code")) {
                   Object taskCode = task.get("task_code");
-                  task.put("task_code", convertNewlineString((String) taskCode)); // ÀÌ ºÎºĞ¿¡¼­ ¿¹¿Ü ¹ß»ı
+                  task.put("task_code", convertNewlineString((String) taskCode)); // ì´ ë¶€ë¶„ì—ì„œ ì˜ˆì™¸ ë°œìƒ
                }
             }
          }
@@ -95,7 +95,7 @@ public class DescriptionController {
       if (input != null) {
          return input.replace("\\n", "\n");
       }
-      return null; // ¶Ç´Â ´Ù¸¥ Ã³¸® ¹æ¹ı¿¡ µû¶ó ¹İÈ¯°ªÀ» ¼³Á¤ÇÏ¼¼¿ä.
+      return null; // ë˜ëŠ” ë‹¤ë¥¸ ì²˜ë¦¬ ë°©ë²•ì— ë”°ë¼ ë°˜í™˜ê°’ì„ ì„¤ì •í•˜ì„¸ìš”.
    }
 
 }

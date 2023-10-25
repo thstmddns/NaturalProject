@@ -30,7 +30,7 @@ public class PaymentController {
 	@Autowired
 	SubscriptionService Sservice;
 	
-	//°áÁ¦ÆäÀÌÁö ÀÌµ¿
+	//ê²°ì œí˜ì´ì§€ ì´ë™
 	@GetMapping("/paymentForm")
 	public ModelAndView paymentForm() {
 		ModelAndView mav = new ModelAndView();
@@ -38,30 +38,30 @@ public class PaymentController {
 		return mav;
 	}
 	
-	//°áÁ¦¿äÃ»
+	//ê²°ì œìš”ì²­
 	@PostMapping("/paymentRequest")
 	@ResponseBody
 	public String paymentRequest(PaymentDTO dto, HttpSession session) {
 		
 		try {
-	            // ¼¼¼Ç¿¡¼­ »ç¿ëÀÚ ¾ÆÀÌµğ¸¦ °¡Á®¿Í PaymentDTO¿¡ ¼³Á¤
+            // ì„¸ì…˜ì—ì„œ ì‚¬ìš©ì ì•„ì´ë””ë¥¼ ê°€ì ¸ì™€ PaymentDTOì— ì„¤ì •
 	            dto.setUserid((String)session.getAttribute("logId"));
-	            // °áÁ¦ Á¤º¸¸¦ ÀúÀå
+	            // ê²°ì œ ì •ë³´ë¥¼ ì €ì¥
 				dto.getSub_option();
 				dto.getPay_amount();
 	            service.insertPayment(dto);
 	            
-	            // °áÁ¦°¡ ¼º°øÇÏ¸é »ç¿ëÀÚ ¾ÆÀÌµğ¸¦ ¹İÈ¯
+	            // ê²°ì œê°€ ì„±ê³µí•˜ë©´ ì‚¬ìš©ì ì•„ì´ë””ë¥¼ ë°˜í™˜
 	            return dto.getUserid();
 	        } catch (Exception e) {
 	            e.printStackTrace();
-	            // °áÁ¦ ½ÇÆĞ ½Ã "fail"À» ¹İÈ¯
+	            // ê²°ì œ ì‹¤íŒ¨ ì‹œ "fail"ì„ ë°˜í™˜
 	            return "fail";
 	        }
 		 
 	    }
 	
-		//±¸µ¶³»¿ª(°áÁ¦³»¿ª) ¸®½ºÆ®
+	//êµ¬ë…ë‚´ì—­(ê²°ì œë‚´ì—­) ë¦¬ìŠ¤íŠ¸
 		@GetMapping("/subscription_list")
 		public ModelAndView mysublist(HttpSession session) {
 			ModelAndView mav = new ModelAndView();

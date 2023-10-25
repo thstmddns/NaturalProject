@@ -6,17 +6,17 @@ import lombok.Data;
 
 @Data
 public class MissionDTO {
-	private int mission_no;			// ¹Ì¼Ç ¹øÈ£
-	private String userid;			// È¸¿ø ¾ÆÀÌµğ
-	private String mission_title;	// ¹Ì¼Ç Á¦¸ñ
-	private String mission_tag;		// ¹Ì¼Ç ÅÂ±×
-	private String mission_content;	// ¹Ì¼Ç ³»¿ë(¼Ò°³)
-	private String created_at;		// ¹Ì¼Ç ÀÛ¼ºÀÏ
-	private String mission_data;	// ¹Ì¼Ç È°¿ë µ¥ÀÌÅÍ
-	private String mission_tool;	// ¹Ì¼Ç È°¿ë Åø
-	private String mission_cate;	// ¹Ì¼Ç Ä«Å×°í¸®
-	private int hit;				// Á¶È¸¼ö
-	private String mission_skill;	// ¹Ì¼Ç ½ºÅ³
-	private int mission_yn;	// ¹Ì¼Ç ¿Ï·á¿©ºÎ
+	private int mission_no;			// ë¯¸ì…˜ ë„˜ë²„
+	private String userid;			// íšŒì›ì•„ì´ë””
+	private String mission_title;	// ë¯¸ì…˜ ì œëª©
+	private String mission_tag;		// ë¯¸ì…˜ íƒœê·¸
+	private String mission_content;	// ë¯¸ì…˜ ì»¨í…ì¸ 
+	private String created_at;		// ë¯¸ì…˜ ìƒì„±ì‹œê°„
+	private String mission_data;	// ë¯¸ì…˜ ì²¨ë¶€íŒŒì¼
+	private String mission_tool;	// ë¯¸ì…˜ ë„êµ¬
+	private String mission_cate;	// ë¯¸ì…˜ ì¹´í…Œê³ ë¦¬
+	private int hit;				// ë¯¸ì…˜ ì¡°íšŒ ìˆ˜
+	private String mission_skill;	// ë¯¸ì…˜ìŠ¤í‚¬
+	private int mission_yn;
 	private List<StepDTO> steps;
 }
