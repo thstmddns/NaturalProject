@@ -139,7 +139,7 @@ public class MissionController {
 	public ModelAndView MissionView(@RequestParam("no")int no, PagingDTO pDTO) throws JsonProcessingException{
 		//조회수 증가
 		service.hitCount(no);
-<<<<<<< HEAD
+
 		// 레코드선택
 		MissionDTO dto = service.getMission(no);
 		List<StepDTO> Steplist = Sservice.Steplist(no, pDTO);
