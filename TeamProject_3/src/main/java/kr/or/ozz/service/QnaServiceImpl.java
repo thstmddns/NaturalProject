@@ -58,4 +58,9 @@ public class QnaServiceImpl implements QnaService {
 	public List<QnaDTO> QnaToplist() {
 		return dao.QnaToplist();
 	}
+
+	@Override
+	public List<QnaDTO> S_Qnalist(PagingDTO pDTO) {
+		return dao.S_Qnalist(pDTO);
+	}
 }

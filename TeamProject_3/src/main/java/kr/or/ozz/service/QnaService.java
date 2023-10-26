@@ -16,4 +16,5 @@ public interface QnaService {
 	public List<QnaDTO> M_Qnalist(int no);
 	
 	public List<QnaDTO> QnaToplist();
+	public List<QnaDTO> S_Qnalist(PagingDTO pDTO); // Search했을때 나오는 QnA리스트
 }

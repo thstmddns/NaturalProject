@@ -23,6 +23,17 @@
       ORDER BY board_no DESC
 	</select>
 	
+	<select id="S_Boardlist" resultType="kr.or.ozz.dto.BoardDTO">
+      SELECT * FROM
+         (SELECT board_no, board_title, board_content, to_char(created_at, 'MM-DD HH:MI') created_at, hit, userid, file_name, work_cate, board_cate FROM t_board
+         <!-- 검색어가 있을 때 -->
+         <if test="searchWord != null">
+           	where board_title like '%${searchWord}%'
+         </if>
+         ORDER BY board_no DESC)
+         WHERE <![CDATA[rownum <= 3]]>
+	</select>
+	
 	<select id="b_totalRecord" resultType="int">
 		select count(board_no) cnt from t_board
 		<if test="searchWord != null">

@@ -22,4 +22,6 @@ public interface ReviewDAO {
 	public int ReviewDel(int no, String userid);
 	//미션에서 리뷰 리스트 출력
 	public List<ReviewDTO> M_Reviewlist(int no);
+	//검색에서 리뷰 리스트 출력
+	public List<ReviewDTO> S_Reviewlist(PagingDTO pDTO);
 }

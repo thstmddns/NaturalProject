@@ -10,18 +10,14 @@
 	</insert>
 	
 	<select id="Missionlist" resultType="kr.or.ozz.dto.MissionDTO">
-		SELECT * FROM
-         (SELECT * FROM
-            (SELECT mission_no, mission_title, mission_tag, userid, to_char(created_at, 'YYYY-MM-DD') created_at, hit FROM t_mission
-            <!-- 검색어가 있을 때 -->
-            <if test="searchWord != null">
-            	where mission_title like '%${searchWord}%'
-            </if>
-            ORDER BY mission_no DESC)
-         WHERE <![CDATA[rownum <= ${nowPage * onePageRecord}]]>
-         ORDER BY mission_no ASC)
-      WHERE <![CDATA[rownum <= ${lastPageRecord}]]>
-      ORDER BY mission_no DESC
+        	SELECT * FROM 
+        		(SELECT mission_no, mission_title, mission_tag, userid, to_char(created_at, 'YYYY-MM-DD') created_at, hit FROM t_mission
+            	<!-- 검색어가 있을 때 -->
+            	<if test="searchWord != null">
+            		where mission_title like '%${searchWord}%'
+            	</if>
+           		ORDER BY hit DESC)
+         	WHERE <![CDATA[rownum <= 5]]>
 	</select>
 	
 	<select id="m_totalRecord" resultType="int">

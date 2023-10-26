@@ -14,4 +14,5 @@ public interface ReviewService {
 	public int ReviewEdit(ReviewDTO dto);
 	public int ReviewDel(int no, String userid);
 	public List<ReviewDTO> M_Reviewlist(int no);
+	public List<ReviewDTO> S_Reviewlist(PagingDTO pDTO);
 }

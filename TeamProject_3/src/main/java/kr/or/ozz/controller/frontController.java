@@ -260,9 +260,9 @@ public class frontController {
 		pDTO.setB_totalRecord(Bservice.b_totalRecord(pDTO));
 		pDTO.setU_totalRecord(Uservice.u_totalRecord(pDTO));
 		
-		List<QnaDTO> Q_list = Qservice.Qnalist(pDTO);
-		List<ReviewDTO> R_list = Rservice.Reviewlist(pDTO);
-		List<BoardDTO> B_list = Bservice.Boardlist(pDTO);
+		List<QnaDTO> Q_list = Qservice.S_Qnalist(pDTO);
+		List<ReviewDTO> R_list = Rservice.S_Reviewlist(pDTO);
+		List<BoardDTO> B_list = Bservice.S_Boardlist(pDTO);
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("Q_list", Q_list);

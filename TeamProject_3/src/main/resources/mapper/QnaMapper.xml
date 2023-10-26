@@ -30,6 +30,17 @@
       ORDER BY qna_no DESC
 	</select>
 	
+	<select id="S_Qnalist" resultType="kr.or.ozz.dto.QnaDTO">
+        SELECT * FROM
+            (SELECT qna_no, qna_content, mission_no, qna_title, userid, to_char(created_at, 'YYY-MM-DD') created_at, hit FROM t_qna
+            <!-- 검색어가 있을 때 -->
+            <if test="searchWord != null">
+            	where qna_title like '%${searchWord}%'
+            </if>
+            ORDER BY qna_no DESC)
+         WHERE <![CDATA[rownum <= 3]]>
+	</select>
+	
 	<select id="M_Qnalist" resultType="kr.or.ozz.dto.QnaDTO">
 		select qna_no, mission_no, qna_title, userid, created_at, hit from t_qna
 		where mission_no = ${param1}

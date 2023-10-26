@@ -15,4 +15,5 @@ public interface BoardService {
 	public int BoardDel(int no, String userid);
 	
 	public List<BoardDTO> BoardToplist();
+	public List<BoardDTO> S_Boardlist(PagingDTO pDTO);
 }

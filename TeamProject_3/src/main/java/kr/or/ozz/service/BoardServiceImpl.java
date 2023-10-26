@@ -53,4 +53,9 @@ public class BoardServiceImpl implements BoardService{
 	public List<BoardDTO> BoardToplist(){
 		return dao.BoardToplist();
 	}
+
+	@Override
+	public List<BoardDTO> S_Boardlist(PagingDTO pDTO) {
+		return dao.S_Boardlist(pDTO);
+	}
 }

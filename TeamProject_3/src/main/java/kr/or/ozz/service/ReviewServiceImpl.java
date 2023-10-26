@@ -53,4 +53,9 @@ public class ReviewServiceImpl implements ReviewService {
 	public List<ReviewDTO> M_Reviewlist(int no){
 		return dao.M_Reviewlist(no);
 	}
+
+	@Override
+	public List<ReviewDTO> S_Reviewlist(PagingDTO pDTO) {
+		return dao.S_Reviewlist(pDTO);
+	}
 }

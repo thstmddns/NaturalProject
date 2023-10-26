@@ -128,7 +128,7 @@
 			       <c:when test="${not empty M_Qnalist}">
 	               <c:forEach var="M_Qnalist" items="${M_Qnalist}">
 	               <div class="QnADetail">
-	                  <li>[질문] ${M_Qnalist.qna_title}</li>
+	                  <li>[질문] <a href="/ozz/Qna/QnaView?no=${M_Qnalist.qna_no}">${M_Qnalist.qna_title}</a></li>
 	                  <li><span>Q&A</span></li>
 	                  <li>${M_Qnalist.userid}<span class="QnACreate">${M_Qnalist.created_at.split(' ')[0] }</span></li>
 	                  <c:if  test="${logStatus=='Y'}">

@@ -41,7 +41,7 @@
 	<div>
 		<a href="/ozz/Qna/Qnawrite?m_no=0">글쓰기</a>
 	</div>
-	<div>총 레코드 수 : ${pDTO.totalRecord}개</div>
+	<div>총 레코드 수 : ${pDTO.q_totalRecord}개</div>
 	<ul class="Qna_list">
 
 		<li>no</li>

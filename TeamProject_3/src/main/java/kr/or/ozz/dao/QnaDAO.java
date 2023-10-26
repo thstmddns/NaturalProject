@@ -26,4 +26,7 @@ public interface QnaDAO {
 	
 	// 커뮤니티에서 탑 뽑는 DAO
 	public List<QnaDTO> QnaToplist();
+	
+	//Search QnA 리스트
+	public List<QnaDTO> S_Qnalist(PagingDTO pDTO);
 }

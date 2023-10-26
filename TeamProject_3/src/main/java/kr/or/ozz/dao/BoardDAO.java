@@ -20,7 +20,8 @@ public interface BoardDAO {
 	public int BoardEdit(BoardDTO dto);
 	//글 삭제(delete)
 	public int BoardDel(int no, String userid);
-	
 	// TOP5 출력
 	public List<BoardDTO> BoardToplist();
+	// 검색에서 게시판 리스트 출력
+	public List<BoardDTO> S_Boardlist(PagingDTO pDTO);
 }
